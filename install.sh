@@ -56,6 +56,11 @@ else
   git checkout main >/dev/null 2>&1
 fi
 
+echo ""
+echo "Instalando as dependências do Composer..."
+composer install
+echo "✅ Dependências do Composer instaladas."
+
 # Define o comando do alias
 alias_command="alias cvdw='php $REPO_DIR/src/cvdw'"
 

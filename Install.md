@@ -14,7 +14,7 @@ sudo yum update
 sudo yum upgrade
 ```
 
-curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh
+curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | bash
 chmod +x install.sh
 ./install.sh
 
