@@ -62,54 +62,52 @@ class Cvdw
                 'A requisição não retornou os dados esperados!',
                 'Parametros: ' . print_r($parametros, true)
             ]);
-            exit;
-        }
+        } else {
 
-        $paginas = $resposta->total_de_paginas;
+            $paginas = $resposta->total_de_paginas;
 
-        if ($paginas > 0) {
+            if ($paginas > 0) {
 
-            $this->io->text('Total de registros encontrados: ' . $resposta->total_de_registros);
-            $this->io->text('Total de páginas: ' . $resposta->total_de_paginas);
+                $this->io->text('Total de registros encontrados: ' . $resposta->total_de_registros);
+                $this->io->text('Total de páginas: ' . $resposta->total_de_paginas);
 
-            $progressBar = new ProgressBar($this->output, $resposta->total_de_paginas);
-            $progressBar->setFormat('normal'); // debug
-            $progressBar->setBarCharacter('<fg=green>=</>');
-            $progressBar->setProgressCharacter("\xF0\x9F\x9A\x80");
-            $progressBar->setFormat(" Página %current%/%max% [%bar%] %percent:3s%% \n %message%");
-            $progressBar->setMessage('Dados processados: 0');
+                $progressBar = new ProgressBar($this->output, $resposta->total_de_paginas);
+                $progressBar->setFormat('normal'); // debug
+                $progressBar->setBarCharacter('<fg=green>=</>');
+                $progressBar->setProgressCharacter("\xF0\x9F\x9A\x80");
+                $progressBar->setFormat(" Página %current%/%max% [%bar%] %percent:3s%% \n %message%");
+                $progressBar->setMessage('Dados processados: 0');
 
-            $dadosProcessados = 0;
-            for ($pagina = 1; $pagina <= $paginas; $pagina++) {
+                $dadosProcessados = 0;
+                for ($pagina = 1; $pagina <= $paginas; $pagina++) {
 
-                if ($pagina > 1) {
-                    $parametros = array(
-                        'pagina' => $pagina,
-                        'registros_por_pagina' => 500,
-                        'a_partir_data_referencia' => "$referencia_data"
-                    );
-                    $resposta = $http->requestCVDW($objeto['path'], $parametros);
-                }
-
-                $progressBar->setMessage('Dados processados: XXX ' . $dadosProcessados);
-                foreach ($resposta->dados as $linha) {
-                    //print_r($linha);
-                    $dadosProcessados++;
-                    if($this->processaSql($objeto, $linha))
-                    {
-                        $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
+                    if ($pagina > 1) {
+                        $parametros = array(
+                            'pagina' => $pagina,
+                            'registros_por_pagina' => 500,
+                            'a_partir_data_referencia' => "$referencia_data"
+                        );
+                        $resposta = $http->requestCVDW($objeto['path'], $parametros);
                     }
+
+                    $progressBar->setMessage('Dados processados: XXX ' . $dadosProcessados);
+                    foreach ($resposta->dados as $linha) {
+                        //print_r($linha);
+                        $dadosProcessados++;
+                        if ($this->processaSql($objeto, $linha)) {
+                            $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
+                        }
+                    }
+                    $progressBar->advance();
+                    // Precisa aguardar 4 segundos para não dar erro de limite de requisições
+                    // CV Bloqueia se for feito mais que 20 requisições por minuto
+                    sleep(4);
                 }
-                $progressBar->advance();
-                // Precisa aguardar 4 segundos para não dar erro de limite de requisições
-                // CV Bloqueia se for feito mais que 20 requisições por minuto
+                $progressBar->finish();
+            } else {
+                $this->io->text('<fg=green>Nenhuma informação nova foi encontrada!</fg=green>');
                 sleep(4);
             }
-            $progressBar->finish();
-
-        } else {
-            $this->io->text('<fg=green>Nenhuma informação nova foi encontrada!</fg=green>');
-            sleep(4);
         }
 
         $this->io->newLine();
@@ -126,7 +124,7 @@ class Cvdw
             ->from($tabela);
         $stmt = $queryBuilder->executeQuery();
         $dados = $stmt->fetchAssociative();
-        
+
         return $dados['referencia_data'];
     }
 
@@ -159,7 +157,8 @@ class Cvdw
         return true;
     }
 
-    protected function executaUpdate(array $objeto, object $linha): bool {
+    protected function executaUpdate(array $objeto, object $linha): bool
+    {
         $linha = $this->trataDados($objeto, $linha);
         $queryBuilder = $this->conn->createQueryBuilder();
         $queryBuilder->update($objeto['tabela']);
