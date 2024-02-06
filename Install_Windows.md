@@ -84,7 +84,7 @@ composer --version
 Agora é so executar o comando:
 
 ```bash
-curl -sSL <https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh> | bash
+curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | bash
 ```
 
 ## Conclusão
