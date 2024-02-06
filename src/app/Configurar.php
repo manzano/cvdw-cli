@@ -133,7 +133,7 @@ class Configurar extends Command
 
             $io = new SymfonyStyle($this->input, $this->output);
 
-            $http = new Http($this->input, $this->output);
+            $http = new \Manzano\CvdwCli\Services\Http($this->input, $this->output);
             $response = $http->pingAmbienteCVDW($endereco_cv);
 
             if ($response['nome'] !== null) {

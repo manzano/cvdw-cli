@@ -2,22 +2,11 @@
 
 namespace Manzano\CvdwCli\Services;
 
-use Manzano\CvdwCli\Configuracoes;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Helper\ProgressIndicator;
 
-use Doctrine\DBAL\Schema\Table as SchemaTable;
-use Doctrine\DBAL\Schema\Schema;
-use Doctrine\DBAL\Statement;
-use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Exception;
 
 use DateTime;
