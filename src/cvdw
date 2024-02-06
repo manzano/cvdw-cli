@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+require 'vendor/autoload.php';
+
+use Manzano\CvdwCli\Configurar;
+use Manzano\CvdwCli\Opcoes;
+use Manzano\CvdwCli\Executar;
+use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\Console\Style\SymfonyStyle;
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+
+salvarEnv();
+retornarEnvs();
+
+$app = new Application('Manzano // CVDW CLI', 'v1.0.0');
+$app->add(new Opcoes());
+$app->add(new Configurar());
+$app->add(new Executar());
+$app->setDefaultCommand('opcoes', false);
+$app->run();

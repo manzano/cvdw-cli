@@ -1,0 +1,319 @@
+{
+    "path": "\/repasses",
+    "tabela": "repasses",
+    "metodo": "get",
+    "descricao": "Esta api retorna os dados dos repasses a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.",
+    "nome": "Repasses (repasses)",
+    "parametros": {
+        "header": [
+            {
+                "name": "email",
+                "in": "header",
+                "required": true,
+                "description": "E-mail de autentica\u00e7\u00e3o do usu\u00e1rio administrativo",
+                "example": "email@email.com",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "token",
+                "in": "header",
+                "required": true,
+                "description": "Token criado no usu\u00e1rio administrativo do e-mail",
+                "example": "2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "query": [],
+        "path": [],
+        "cookie": []
+    },
+    "schema": "RetornarRepasses",
+    "subschema": "Repasses",
+    "body": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "a_partir_referencia": {
+            "example": 1640,
+            "type": "integer",
+            "description": "Retornar\u00e1 as vistorias a partir deste id, lembrando que est\u00e1 ordenado em ordem decrescente"
+        },
+        "a_partir_data_referencia": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias criadas a partir da data informada"
+        },
+        "a_partir_data_modificacao": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias modificadas a partir da data informada"
+        }
+    },
+    "response": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "total_de_registros": {
+            "example": 1054,
+            "type": "integer",
+            "description": "Total de registros encontrados"
+        },
+        "total_de_paginas": {
+            "example": 36,
+            "type": "integer",
+            "description": "Total de p\u00e1ginas encontradas"
+        },
+        "dados": {
+            "referencia": {
+                "example": 168523,
+                "type": "integer",
+                "description": "Identificador do repasse"
+            },
+            "referencia_data": {
+                "example": "2023-01-15 15:26:15",
+                "type": "datetime",
+                "description": "Data de refer\u00eancia"
+            },
+            "idrepasse": {
+                "example": 168523,
+                "type": "integer",
+                "description": "Identificador do repasse"
+            },
+            "idsituacao": {
+                "example": 4,
+                "type": "integer",
+                "description": "Identificador da situa\u00e7\u00e3o do repasse"
+            },
+            "situacao": {
+                "example": "Cart\u00f3rio",
+                "type": "string",
+                "description": "Nome da situa\u00e7\u00e3o do repasse"
+            },
+            "reserva": {
+                "example": 13360,
+                "type": "integer",
+                "description": "Identificador da reserva"
+            },
+            "idempreendimento": {
+                "example": 3,
+                "type": "integer",
+                "description": "Identificador do empreendimento do repasse"
+            },
+            "codigointerno_empreendimento": {
+                "example": "3654641",
+                "type": "string",
+                "description": "C\u00f3digo interno do empreendimento do repasse"
+            },
+            "empreendimento": {
+                "example": "Varandas",
+                "type": "string",
+                "description": "Nome do empreendimento do repasse"
+            },
+            "etapa": {
+                "example": "Unica",
+                "type": "string",
+                "description": "Nome da etapa do empreendimento do repasse"
+            },
+            "bloco": {
+                "example": "Sol",
+                "type": "string",
+                "description": "Nome do bloco da etapa do empreendimento do repasse"
+            },
+            "unidade": {
+                "example": "102-B",
+                "type": "string",
+                "description": "Nome da unidade do empreendimento do repasse"
+            },
+            "regiao": {
+                "example": "Nordeste",
+                "type": "string",
+                "description": "Nome da regi\u00e3o do empreendimento"
+            },
+            "idcliente": {
+                "example": 193,
+                "type": "integer",
+                "description": "Identificador do cliente do repasse"
+            },
+            "documento_cliente": {
+                "example": "12345678910",
+                "type": "string",
+                "description": "CPF\/CNPJ do cliente do repasse"
+            },
+            "cliente": {
+                "example": "Jo\u00e3o",
+                "type": "string",
+                "description": "Nome do cliente do repasse"
+            },
+            "cep_cliente": {
+                "example": "49010020",
+                "type": "string",
+                "description": "CEP do endere\u00e7o do cliente"
+            },
+            "parcela": {
+                "example": "N\u00e3o",
+                "type": "string",
+                "description": "Informa se a parcela est\u00e1 baixada (Sim; N\u00e3o)"
+            },
+            "idcontrato": {
+                "example": "154457",
+                "type": "string",
+                "description": "N\u00famero do contrato do repasse"
+            },
+            "contrato": {
+                "example": "Adimplente",
+                "type": "string",
+                "description": "Situa\u00e7\u00e3o do contrato do repasse (Adimplente; Inadimplente)"
+            },
+            "valor_previsto": {
+                "example": 340000,
+                "type": "number",
+                "description": "Valor previsto do repasse"
+            },
+            "parcela_conclusao": {
+                "example": 12000,
+                "type": "number",
+                "description": "Parcela de conclus\u00e3o do repasse"
+            },
+            "saldo_devedor": {
+                "example": 98000,
+                "type": "number",
+                "description": "Restante a ser pago do contrato com a construtora"
+            },
+            "valor_divida": {
+                "example": 460200,
+                "type": "number",
+                "description": "Valor da d\u00edvida financiada com o banco"
+            },
+            "valor_subsidio": {
+                "example": 0,
+                "type": "number",
+                "description": "Valor liberado pelo governo federal"
+            },
+            "valor_fgts": {
+                "example": 76000,
+                "type": "number",
+                "description": "Valor do fundo de garantia"
+            },
+            "valor_financiado": {
+                "example": 536200,
+                "type": "number",
+                "description": "Somat\u00f3rio dos valores de d\u00edvida, subs\u00eddio e FGTS"
+            },
+            "numero_contrato": {
+                "example": "154457",
+                "type": "string",
+                "description": "N\u00famero do contrato do repasse"
+            },
+            "data_registro": {
+                "example": "2022-05-18",
+                "type": "datetime",
+                "description": "Data de registro do contrato"
+            },
+            "correspondente": {
+                "example": "Correspondente banc\u00e1rio da empresa x",
+                "type": "string",
+                "description": "Correspondente do repasse"
+            },
+            "banco": {
+                "example": "Banco do Brasil",
+                "type": "string",
+                "description": "Banco do repasse"
+            },
+            "agencia": {
+                "example": "0102",
+                "type": "string",
+                "description": "Ag\u00eancia do banco"
+            },
+            "data_alteracao_status": {
+                "example": "2022-06-10 12:11:23",
+                "type": "datetime",
+                "description": "Data da \u00faltima altera\u00e7\u00e3o de status do repasse"
+            },
+            "data_venda": {
+                "example": "2022-03-01 09:18:58",
+                "type": "datetime",
+                "description": "Data da venda da reserva do repasse"
+            },
+            "data_contrato_contabilizado": {
+                "example": "2022-03-01",
+                "type": "datetime",
+                "description": "Data do contrato do repasse"
+            },
+            "data_assinatura_de_contrato": {
+                "example": "2022-03-03",
+                "type": "datetime",
+                "description": "Data da assinatura do contrato do repasse"
+            },
+            "idlead": {
+                "example": "166902,164524",
+                "type": "string",
+                "description": "Identificador dos leads vinculados separados por v\u00edrgula"
+            },
+            "data_recurso_liberado": {
+                "example": "2022-04-01",
+                "type": "datetime",
+                "description": "Data de libera\u00e7\u00e3o do recurso do repasse"
+            },
+            "data_sincronizacao": {
+                "example": "2022-04-01 08:16:45",
+                "type": "datetime",
+                "description": "Data da sincroniza\u00e7\u00e3o"
+            },
+            "data_cadastro": {
+                "example": "2022-04-01 08:16:45",
+                "type": "datetime",
+                "description": "Data de cadastro do repasse"
+            },
+            "idunidade": {
+                "example": 28,
+                "type": "string",
+                "description": "Identificador da unidade da unidade"
+            },
+            "data_modificacao": {
+                "example": "2022-04-01 08:16:45",
+                "type": "datetime",
+                "description": "Data da \u00faltima modifica\u00e7\u00e3o"
+            },
+            "campos_adicionais": {
+                "idcampo_adicional": {
+                    "example": 12414,
+                    "type": "integer",
+                    "description": "Identificador do campo adicional"
+                },
+                "nome": {
+                    "example": "CONTRATO - USO",
+                    "type": "string",
+                    "description": "Data de cadastro"
+                },
+                "valor": {
+                    "example": "valor informado pelo usu\u00e1rio",
+                    "type": "string",
+                    "description": "Dado que foi inserido pelo usu\u00e1rio na reserva"
+                },
+                "nome_referencia": {
+                    "example": "USO_CONTRATO",
+                    "type": "string",
+                    "description": "campo nome refer\u00eancia do campo adicional"
+                }
+            }
+        }
+    }
+}

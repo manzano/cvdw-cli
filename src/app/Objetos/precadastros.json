@@ -1,0 +1,297 @@
+{
+    "path": "\/precadastros",
+    "tabela": "precadastros",
+    "metodo": "get",
+    "descricao": "Esta api os dados dos pr\u00e9-cadastros a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.",
+    "nome": "Pre-cadastro (precadastros)",
+    "parametros": {
+        "header": [
+            {
+                "name": "email",
+                "in": "header",
+                "required": true,
+                "description": "E-mail de autentica\u00e7\u00e3o do usu\u00e1rio administrativo",
+                "example": "email@email.com",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "token",
+                "in": "header",
+                "required": true,
+                "description": "Token criado no usu\u00e1rio administrativo do e-mail",
+                "example": "2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "query": [],
+        "path": [],
+        "cookie": []
+    },
+    "schema": "RetornarPrecadastro",
+    "subschema": "Precadastro",
+    "body": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "a_partir_referencia": {
+            "example": 1640,
+            "type": "integer",
+            "description": "Retornar\u00e1 as vistorias a partir deste id, lembrando que est\u00e1 ordenado em ordem decrescente"
+        },
+        "a_partir_data_referencia": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias criadas a partir da data informada"
+        },
+        "a_partir_data_modificacao": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias modificadas a partir da data informada"
+        }
+    },
+    "response": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "total_de_registros": {
+            "example": 1054,
+            "type": "integer",
+            "description": "Total de registros encontrados"
+        },
+        "total_de_paginas": {
+            "example": 36,
+            "type": "integer",
+            "description": "Total de p\u00e1ginas encontradas"
+        },
+        "dados": {
+            "referencia": {
+                "example": 1,
+                "type": "integer",
+                "description": "Identificador do pr\u00e9-cadastro"
+            },
+            "referencia_data": {
+                "example": "2023-01-15 15:26:15",
+                "type": "datetime",
+                "description": "Data de refer\u00eancia"
+            },
+            "idprecadastro": {
+                "example": 1,
+                "type": "integer",
+                "description": "Identificador do pr\u00e9-cadastro"
+            },
+            "idsituacao": {
+                "example": 2,
+                "type": "integer",
+                "description": "Identificador da situa\u00e7\u00e3o do pr\u00e9-cadastro"
+            },
+            "situacao": {
+                "example": "Novo",
+                "type": "string",
+                "description": "Situa\u00e7\u00e3o do pr\u00e9-cadastro"
+            },
+            "condicao_aprovada": {
+                "example": "N",
+                "type": "string",
+                "description": "Condi\u00e7\u00e3o de aprova\u00e7\u00e3o do pr\u00e9-cadastro"
+            },
+            "idempreendimento": {
+                "example": 665,
+                "type": "integer",
+                "description": "Identificador do empreendimento do pr\u00e9-cadastro"
+            },
+            "empreendimento": {
+                "example": "Parque do Carmo - Condom\u00ednio 7",
+                "type": "string",
+                "description": "Empreendimento do pr\u00e9-cadastro"
+            },
+            "idcorretor": {
+                "example": 11808,
+                "type": "integer",
+                "description": "Identificador do corretor do pr\u00e9-cadastro"
+            },
+            "corretor": {
+                "example": "TSURI BRASIL",
+                "type": "string",
+                "description": "Corretor do pr\u00e9-cadastro"
+            },
+            "idempresa": {
+                "example": 1,
+                "type": "integer",
+                "description": "Identificador da empresa do pr\u00e9-cadastro"
+            },
+            "empresa": {
+                "example": "Ava",
+                "type": "string",
+                "description": "Empresa do pr\u00e9-cadastro"
+            },
+            "pessoa": {
+                "example": "GUILHERME MACEDO SILVA",
+                "type": "string",
+                "description": "Nome do cliente"
+            },
+            "cep_cliente": {
+                "example": "08223000",
+                "type": "string",
+                "description": "CEP do cliente"
+            },
+            "idusuario_correspondente": {
+                "example": 2,
+                "type": "integer",
+                "description": "Identificador do usu\u00e1rio correspondente"
+            },
+            "usuario_correspondente": {
+                "example": "Jos\u00e3o correspondente",
+                "type": "string",
+                "description": "Usu\u00e1rio correspondente"
+            },
+            "idpessoa": {
+                "example": 3,
+                "type": "integer",
+                "description": "Identificador do cliente"
+            },
+            "idlead": {
+                "example": "2,3,4",
+                "type": "string",
+                "description": "Identificador do lead"
+            },
+            "valor_avaliacao": {
+                "example": 0,
+                "type": "number",
+                "description": "Valor de avalia\u00e7\u00e3o do pr\u00e9-cadastro"
+            },
+            "valor_aprovado": {
+                "example": 0,
+                "type": "number",
+                "description": "Valor aprovado do pr\u00e9-cadastro"
+            },
+            "valor_subsidio": {
+                "example": 0,
+                "type": "number",
+                "description": "Valor de subs\u00eddio do pr\u00e9-cadastro"
+            },
+            "valor_total": {
+                "example": 0,
+                "type": "number",
+                "description": "Valor total do pr\u00e9-cadastro"
+            },
+            "valor_fgts": {
+                "example": 0,
+                "type": "number",
+                "description": "Valor de FGTS do pr\u00e9-cadastro"
+            },
+            "saldo_devedor": {
+                "example": 0,
+                "type": "number",
+                "description": "Saldo devedor do pr\u00e9-cadastro"
+            },
+            "prazo": {
+                "example": "0",
+                "type": "string",
+                "description": "Prazo do pr\u00e9-cadastro"
+            },
+            "observacoes": {
+                "example": "Nenhuma",
+                "type": "string",
+                "description": "Observa\u00e7\u00f5es do pr\u00e9-cadastro"
+            },
+            "tabela": {
+                "example": "Tabela Simples",
+                "type": "string",
+                "description": "Tabela do pr\u00e9-cadastro"
+            },
+            "valor_prestacao": {
+                "example": 0,
+                "type": "number",
+                "description": "Valor da presta\u00e7\u00e3o do pr\u00e9-cadastro"
+            },
+            "carta_credito": {
+                "example": "Sem",
+                "type": "string",
+                "description": "Carta de cr\u00e9dito do pr\u00e9-cadastro"
+            },
+            "vencimento_aprovacao": {
+                "example": "2021-03-10",
+                "type": "string",
+                "description": "Data de vencimento da aprova\u00e7\u00e3o"
+            },
+            "idmotivo_reprovacao": {
+                "example": 3,
+                "type": "integer",
+                "description": "Identificador do motivo de reprova\u00e7\u00e3o"
+            },
+            "motivo_reprovacao": {
+                "example": "Reprovado sem cr\u00e9dito",
+                "type": "string",
+                "description": "Motivo de reprova\u00e7\u00e3o"
+            },
+            "descricao_motivo_reprovacao": {
+                "example": "Sem cr\u00e9dito",
+                "type": "string",
+                "description": "Descri\u00e7\u00e3o do motivo de reprova\u00e7\u00e3o"
+            },
+            "idmotivo_cancelamento": {
+                "example": 1,
+                "type": "integer",
+                "description": "Identificador do motivo de cancelamento"
+            },
+            "motivo_cancelamento": {
+                "example": "Cancelado",
+                "type": "string",
+                "description": "Motivo de cancelamento"
+            },
+            "descricao_motivo_cancelamento": {
+                "example": "Cancelado pela empresa",
+                "type": "string",
+                "description": "Descri\u00e7\u00e3o do motivo de cancelamento"
+            },
+            "sla_vencimento": {
+                "example": "2021-03-10",
+                "type": "string",
+                "description": "Data de vencimento do SLA"
+            },
+            "data_cad": {
+                "example": "2021-03-10 11:17:50",
+                "type": "datetime",
+                "description": "Data de cadastro"
+            },
+            "empresa_correspondente": {
+                "example": "Empresa",
+                "type": "string",
+                "description": "Empresa correspondente"
+            },
+            "idsituacao_anterior": {
+                "example": 2,
+                "type": "integer",
+                "description": "Identidicador da situa\u00e7\u00e3o anterior do pr\u00e9-cadastro"
+            },
+            "situacao_anterior": {
+                "example": "Aprovado",
+                "type": "string",
+                "description": "Situa\u00e7\u00e3o anterior do pr\u00e9-cadastro"
+            },
+            "data_ultima_alteracao_situacao": {
+                "example": "2021-03-10 11:17:50",
+                "type": "datetime",
+                "description": "Data de \u00faltima altera\u00e7\u00e3o de situa\u00e7\u00e3o"
+            }
+        }
+    }
+}

@@ -1,0 +1,337 @@
+{
+    "path": "\/pessoas\/profissional",
+    "tabela": "pessoas_profissional",
+    "metodo": "get",
+    "descricao": "Esta api retorna os valores dos dados profissionais e outras rendas das pessoas a partir dos filtros solicitados.",
+    "nome": "Pessoas (pessoas_profissional)",
+    "parametros": {
+        "header": [
+            {
+                "name": "email",
+                "in": "header",
+                "required": true,
+                "description": "E-mail de autentica\u00e7\u00e3o do usu\u00e1rio administrativo",
+                "example": "email@email.com",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "token",
+                "in": "header",
+                "required": true,
+                "description": "Token criado no usu\u00e1rio administrativo do e-mail",
+                "example": "2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "query": [],
+        "path": [],
+        "cookie": []
+    },
+    "schema": "RetornarPessoasProfissional",
+    "subschema": "PessoasProfissionalRetorno",
+    "body": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "a_partir_referencia": {
+            "example": 1640,
+            "type": "integer",
+            "description": "Retornar\u00e1 as vistorias a partir deste id, lembrando que est\u00e1 ordenado em ordem decrescente"
+        },
+        "a_partir_data_referencia": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias criadas a partir da data informada"
+        },
+        "a_partir_data_modificacao": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias modificadas a partir da data informada"
+        }
+    },
+    "response": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "total_de_registros": {
+            "example": 1054,
+            "type": "integer",
+            "description": "Total de registros encontrados"
+        },
+        "total_de_paginas": {
+            "example": 36,
+            "type": "integer",
+            "description": "Total de p\u00e1ginas encontradas"
+        },
+        "dados": {
+            "referencia": {
+                "example": 269,
+                "type": "integer",
+                "description": "Identificador"
+            },
+            "referencia_data": {
+                "example": "2023-12-29 16:12:52",
+                "type": "datetime",
+                "description": "Data de Refer\u00eancia"
+            },
+            "idpessoa": {
+                "example": 269,
+                "type": "string",
+                "description": "Identificador da pessoa"
+            },
+            "idpessoa_int": {
+                "example": "726",
+                "type": "string",
+                "description": "Identificador da pessoa (C\u00f3digo Interno)"
+            },
+            "trabalho_nome_empresa": {
+                "example": "CV - CRM",
+                "type": "string",
+                "description": "Nome da empresa em que trabalha"
+            },
+            "trabalho_cnpj": {
+                "example": "24603290000126",
+                "type": "string",
+                "description": "CNPJ da empresa em que trabalha"
+            },
+            "trabalho_pais": {
+                "example": "Brasil",
+                "type": "string",
+                "description": "Pa\u00eds da empresa em que trabalha"
+            },
+            "trabalho_site": {
+                "example": "http:\/\/cvcrm.com.br",
+                "type": "string",
+                "description": "Site da empresa em que trabalha"
+            },
+            "profissao_select": {
+                "example": "Advogado(a)",
+                "type": "string",
+                "description": "Profiss\u00e3o na empresa em que trabalha"
+            },
+            "profissao": {
+                "example": "Analista",
+                "type": "string",
+                "description": "Profiss\u00e3o da empresa em que trabalha"
+            },
+            "trabalho_cargo": {
+                "example": "sdfsdf",
+                "type": "string",
+                "description": "Cargo na empresa em que trabalha"
+            },
+            "remuneracao_bruta": {
+                "example": "150.00",
+                "type": "string",
+                "description": "Remunera\u00e7\u00e3o bruta na empresa em que trabalha"
+            },
+            "remuneracao_liquida": {
+                "example": "1555.55",
+                "type": "string",
+                "description": "Remunera\u00e7\u00e3o liqu\u00edda na empresa em que trabalha"
+            },
+            "trabalho_participacao_proprietario": {
+                "example": "5.00",
+                "type": "string",
+                "description": "Porcentagem de participa\u00e7\u00e3o, caso propriet\u00e1rio, na empresa em que trabalha"
+            },
+            "trabalho_telefone": {
+                "example": "+55798498498489",
+                "type": "string",
+                "description": "Telefone comercial na empresa em que trabalha"
+            },
+            "trabalho_celular": {
+                "example": "+5579498489489",
+                "type": "string",
+                "description": "Celular comercial na empresa em que trabalha"
+            },
+            "trabalho_fax": {
+                "example": "+5579498489489",
+                "type": "string",
+                "description": "Fax comercial da empresa em que trabalha"
+            },
+            "trabalho_email": {
+                "example": "email@email.com",
+                "type": "string",
+                "description": "Email na empresa em que trabalha"
+            },
+            "trabalho_cep": {
+                "example": "49015110",
+                "type": "string",
+                "description": "CEP da empresa em que trabalha"
+            },
+            "logradouro_trabalho": {
+                "example": "Rua",
+                "type": "string",
+                "description": "Logradouro da empresa em que trabalha"
+            },
+            "trabalho_endereco": {
+                "example": "Rua Itabaiana",
+                "type": "string",
+                "description": "Endere\u00e7o da empresa em que trabalha"
+            },
+            "trabalho_bairro": {
+                "example": "S\u00e3o Jos\u00e9",
+                "type": "string",
+                "description": "Bairro da empresa em que trabalha"
+            },
+            "trabalho_numero": {
+                "example": "1233",
+                "type": "string",
+                "description": "N\u00famero da empresa em que trabalha"
+            },
+            "complemento_trabalho": {
+                "example": "12123",
+                "type": "string",
+                "description": "Complemento do endere\u00e7o da empresa em que trabalha"
+            },
+            "trabalho_estado": {
+                "example": "SE",
+                "type": "string",
+                "description": "Estado da empresa em que trabalha"
+            },
+            "trabalho_cidade": {
+                "example": "Aracaju",
+                "type": "string",
+                "description": "Cidade da empresa em que trabalha"
+            },
+            "trabalho_endereco_pais": {
+                "example": "Brasil",
+                "type": "string",
+                "description": "Pa\u00eds da empresa em que trabalha"
+            },
+            "trabalho_anterior_nome_empresa": {
+                "example": "Alfama",
+                "type": "string",
+                "description": "Nome da empresa que trabalhava anteriormente"
+            },
+            "trabalho_anterior_cnpj": {
+                "example": "45949383000187",
+                "type": "string",
+                "description": "CNPJ da empresa que trabalhava anteriormente"
+            },
+            "trabalho_anterior_data_admissao": {
+                "example": "2023-12-14",
+                "type": "datetime",
+                "description": "Data de Admiss\u00e3o da empresa que trabalhava anteriormente"
+            },
+            "trabalho_anterior_data_desligamento": {
+                "example": "2023-12-05",
+                "type": "datetime",
+                "description": "Data de Desli da empresa que trabalhava anteriormente"
+            },
+            "possui_outras_rendas": {
+                "example": "S",
+                "type": "string",
+                "description": "Informa se possui outra rendas"
+            },
+            "valor_mensal_bruto": {
+                "example": "1223.33",
+                "type": "string",
+                "description": "Valor bruto mensal"
+            },
+            "valor_mensal_liquido": {
+                "example": "121212.12",
+                "type": "string",
+                "description": "Valor l\u00edquido mensal"
+            },
+            "renda_proveniente_de": {
+                "example": "Trabalho",
+                "type": "string",
+                "description": "Informa de onde prov\u00e9m a renda"
+            },
+            "renda_comprovada_atraves_de": {
+                "example": "dsfsdf",
+                "type": "string",
+                "description": "Informa qual a forma de comprova\u00e7\u00e3o da renda"
+            },
+            "possui_aplicacao_financeira": {
+                "example": "S",
+                "type": "string",
+                "description": "Informa se possui aplica\u00e7\u00e3o financeira"
+            },
+            "valor_total_aplicacao": {
+                "example": "232.32",
+                "type": "string",
+                "description": "Valor total da aplica\u00e7\u00e3o"
+            },
+            "rendimento_mensal_aplicacao": {
+                "example": "223.23",
+                "type": "string",
+                "description": "Rendimento mensal da aplica\u00e7\u00e3o"
+            },
+            "banco_aplicacao": {
+                "example": "Banco",
+                "type": "string",
+                "description": "Banco onde est\u00e1 a aplica\u00e7\u00e3o"
+            },
+            "pretende_utilizar_fgts": {
+                "example": "S",
+                "type": "string",
+                "description": "Informa se pretende utilizar o FGTS"
+            },
+            "valor_fgts": {
+                "example": "22323.23",
+                "type": "string",
+                "description": "Valor do FGTS"
+            },
+            "possui_imovel": {
+                "example": "S",
+                "type": "string",
+                "description": "Informa se possui im\u00f3vel em seu nome"
+            },
+            "possui_onus_imovel": {
+                "example": "S",
+                "type": "string",
+                "description": "Informa se possui \u00f4nus"
+            },
+            "cep_imovel_proprietario": {
+                "example": "49015110",
+                "type": "string",
+                "description": "CEP do im\u00f3vel que possui"
+            },
+            "endereco_imovel_proprietario": {
+                "example": "Rua Itabaiana",
+                "type": "string",
+                "description": "Endere\u00e7o do im\u00f3vel que possui"
+            },
+            "bairro_imovel_proprietario": {
+                "example": "S\u00e3o Jos\u00e9",
+                "type": "string",
+                "description": "Bairro do im\u00f3vel que possui"
+            },
+            "estado_imovel_proprietario": {
+                "example": "SE",
+                "type": "string",
+                "description": "Estado do im\u00f3vel que possui"
+            },
+            "cidade_imovel_proprietario": {
+                "example": "Aracaju",
+                "type": "string",
+                "description": "Cidade do im\u00f3vel que possui"
+            },
+            "endereco_pais_imovel_proprietario": {
+                "example": "Brasil",
+                "type": "string",
+                "description": "Pa\u00eds do im\u00f3vel que possui"
+            }
+        }
+    }
+}

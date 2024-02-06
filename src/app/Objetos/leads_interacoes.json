@@ -1,0 +1,167 @@
+{
+    "path": "\/leads\/interacoes",
+    "tabela": "leads_interacoes",
+    "metodo": "get",
+    "descricao": "Esta api retorna a listagem de intera\u00e7\u00f5es dos leads.",
+    "nome": "Leads (leads_interacoes)",
+    "parametros": {
+        "header": [
+            {
+                "name": "email",
+                "in": "header",
+                "required": true,
+                "description": "E-mail de autentica\u00e7\u00e3o do usu\u00e1rio administrativo",
+                "example": "email@email.com",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "token",
+                "in": "header",
+                "required": true,
+                "description": "Token criado no usu\u00e1rio administrativo do e-mail",
+                "example": "2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "query": [],
+        "path": [],
+        "cookie": []
+    },
+    "schema": "RetornarLeadsInteracoes",
+    "subschema": "LeadsInteracoes",
+    "body": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "a_partir_referencia": {
+            "example": 1640,
+            "type": "integer",
+            "description": "Retornar\u00e1 as vistorias a partir deste id, lembrando que est\u00e1 ordenado em ordem decrescente"
+        },
+        "a_partir_data_referencia": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias criadas a partir da data informada"
+        },
+        "a_partir_data_modificacao": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias modificadas a partir da data informada"
+        }
+    },
+    "response": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "total_de_registros": {
+            "example": 1054,
+            "type": "integer",
+            "description": "Total de registros encontrados"
+        },
+        "total_de_paginas": {
+            "example": 36,
+            "type": "integer",
+            "description": "Total de p\u00e1ginas encontradas"
+        },
+        "dados": {
+            "referencia": {
+                "example": 258,
+                "type": "integer",
+                "description": "Identificador da intera\u00e7\u00e3o"
+            },
+            "referencia_data": {
+                "example": "2023-01-15 15:26:15",
+                "type": "datetime",
+                "description": "Data de refer\u00eancia"
+            },
+            "idinteracao": {
+                "example": 258,
+                "type": "integer",
+                "description": "Identificador da intera\u00e7\u00e3o"
+            },
+            "idlead": {
+                "example": 168523,
+                "type": "integer",
+                "description": "Identificador do lead"
+            },
+            "data_cad": {
+                "example": "2022-03-06 10:00:00",
+                "type": "datetime",
+                "description": "Data de cadastro"
+            },
+            "idcorretor": {
+                "example": 274,
+                "type": "integer",
+                "description": "Identificador do corretor vinculado"
+            },
+            "corretor": {
+                "example": "CORRETOR QC",
+                "type": "string",
+                "description": "Corretor da reserva"
+            },
+            "idimobiliaria": {
+                "example": 274,
+                "type": "integer",
+                "description": "Identificador da imobili\u00e1ria vinculada"
+            },
+            "imobiliaria": {
+                "example": "IMOBILI\u00c1RIA QC",
+                "type": "string",
+                "description": "Imobili\u00e1ria da reserva"
+            },
+            "tipo": {
+                "example": "L",
+                "type": "string",
+                "description": "Tipo da intera\u00e7\u00e3o"
+            },
+            "situacao": {
+                "example": "A",
+                "type": "string",
+                "description": "Situa\u00e7\u00e3o da intera\u00e7\u00e3o"
+            },
+            "descricao": {
+                "example": "Liga\u00e7\u00e3o para o Lead as 12:00h",
+                "type": "text",
+                "description": "Descri\u00e7\u00e3o da intera\u00e7\u00e3o"
+            },
+            "enviar_corretor": {
+                "example": "S",
+                "type": "string",
+                "description": "Enviado e-mail sobre intera\u00e7\u00e3o para corretor respons\u00e1vel\""
+            },
+            "enviar_imobiliaria": {
+                "example": "N",
+                "type": "string",
+                "description": "Enviado e-mail sobre intera\u00e7\u00e3o para imobiliaria respons\u00e1vel\""
+            },
+            "enviar_cliente": {
+                "example": "N",
+                "type": "string",
+                "description": "Enviado e-mail sobre intera\u00e7\u00e3o para cliente\""
+            },
+            "gestor_interacao": {
+                "example": "Kelly Lima",
+                "type": "string",
+                "description": "Gestor respons\u00e1vel\""
+            }
+        }
+    }
+}

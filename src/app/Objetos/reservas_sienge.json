@@ -1,0 +1,262 @@
+{
+    "path": "\/reservas\/sienge",
+    "tabela": "reservas_sienge",
+    "metodo": "get",
+    "descricao": "Esta api retorna os dados das reservas do Sienge a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.",
+    "nome": "Reservas (reservas_sienge)",
+    "parametros": {
+        "header": [
+            {
+                "name": "email",
+                "in": "header",
+                "required": true,
+                "description": "E-mail de autentica\u00e7\u00e3o do usu\u00e1rio administrativo",
+                "example": "email@email.com",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "token",
+                "in": "header",
+                "required": true,
+                "description": "Token criado no usu\u00e1rio administrativo do e-mail",
+                "example": "2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "query": [],
+        "path": [],
+        "cookie": []
+    },
+    "schema": "RetornarSiengeReservas",
+    "subschema": "SiengeReservas",
+    "body": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "a_partir_referencia": {
+            "example": 1640,
+            "type": "integer",
+            "description": "Retornar\u00e1 as vistorias a partir deste id, lembrando que est\u00e1 ordenado em ordem decrescente"
+        },
+        "a_partir_data_referencia": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias criadas a partir da data informada"
+        },
+        "a_partir_data_modificacao": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias modificadas a partir da data informada"
+        }
+    },
+    "response": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "total_de_registros": {
+            "example": 1054,
+            "type": "integer",
+            "description": "Total de registros encontrados"
+        },
+        "total_de_paginas": {
+            "example": 36,
+            "type": "integer",
+            "description": "Total de p\u00e1ginas encontradas"
+        },
+        "dados": {
+            "referencia": {
+                "example": 193,
+                "type": "integer",
+                "description": "Identificador da reserva do sienge no CV"
+            },
+            "referencia_data": {
+                "example": "2023-01-15 15:26:15",
+                "type": "datetime",
+                "description": "Data de refer\u00eancia"
+            },
+            "idsienge_reserva": {
+                "example": 12414,
+                "type": "integer",
+                "description": "Identificador da reserva do sienge no CV"
+            },
+            "idreserva": {
+                "example": 12414,
+                "type": "integer",
+                "description": "Identificador da reserva"
+            },
+            "previsao_entrega": {
+                "example": "2021-01-01 00:00:00",
+                "type": "string",
+                "description": "Data do prazo de entrega"
+            },
+            "nome_contrato": {
+                "example": "CV1000",
+                "type": "string",
+                "description": "Nome do contrato"
+            },
+            "tipo_contrato": {
+                "example": "Contrato",
+                "type": "string",
+                "description": "Tipo do contrato"
+            },
+            "data_contrato": {
+                "example": "2021-01-01 00:00:00",
+                "type": "datetime",
+                "description": "Data do contrato"
+            },
+            "tipo_correcao": {
+                "example": "Mensal",
+                "type": "string",
+                "description": "Tipo de corre\u00e7\u00e3o"
+            },
+            "tipo_correcao_anual": {
+                "example": "Fixa",
+                "type": "string",
+                "description": "Tipo de corre\u00e7\u00e3o anual"
+            },
+            "mes_reajuste": {
+                "example": "Novembro",
+                "type": "string",
+                "description": "M\u00eas de reajuste"
+            },
+            "corrigir_parcela_a_partir": {
+                "example": "2021-01-01 00:00:00",
+                "type": "string",
+                "description": "Corrigir parcela a partir de"
+            },
+            "gerar_residuo": {
+                "example": "Sim",
+                "type": "string",
+                "description": "Informa gera\u00e7\u00e3o de res\u00edduo"
+            },
+            "diluir_valor_residuo": {
+                "example": "Sim",
+                "type": "string",
+                "description": "Informa dilui\u00e7\u00e3o do valor do res\u00edduo"
+            },
+            "corrigir_parcela_a_cada": {
+                "example": 2,
+                "type": "integer",
+                "description": "Corrigir parcela a cada quantidade de meses"
+            },
+            "tipo_juros": {
+                "example": "Price",
+                "type": "string",
+                "description": "Tipo de juros"
+            },
+            "percentual_juros": {
+                "example": 1.21,
+                "type": "number",
+                "description": "Percentual de juros"
+            },
+            "plano_financeiro": {
+                "example": "Receita de Incorpora\u00e7\u00e3o de Im\u00f3veis",
+                "type": "string",
+                "description": "Plano financeiro"
+            },
+            "indexador": {
+                "example": "INCC-DI",
+                "type": "string",
+                "description": "Indexador"
+            },
+            "codigo_corretor": {
+                "example": 2,
+                "type": "integer",
+                "description": "C\u00f3digo do corretor"
+            },
+            "data_base": {
+                "example": "2021-01-01 00:00:00",
+                "type": "datetime",
+                "description": "Data base"
+            },
+            "qtd_meses_carencia": {
+                "example": 1,
+                "type": "integer",
+                "description": "Quantidade de meses de car\u00eancia"
+            },
+            "data_base_juros": {
+                "example": "2021-01-01 00:00:00",
+                "type": "datetime",
+                "description": "Data base de juros"
+            },
+            "data_cad": {
+                "example": "2021-01-01 00:00:00",
+                "type": "datetime",
+                "description": "Data de cadastro"
+            },
+            "enviado": {
+                "example": "Sim",
+                "type": "string",
+                "description": "Informa se reserva foi enviada para o Sienge"
+            },
+            "data_envio": {
+                "example": "2021-01-01 00:00:00",
+                "type": "datetime",
+                "description": "Data de envio"
+            },
+            "ativo": {
+                "example": "Sim",
+                "type": "string",
+                "description": "Informa se est\u00e1 ativo"
+            },
+            "coincidir_vencimentos": {
+                "example": "Sim",
+                "type": "string",
+                "description": "Informa se vai coincidir vencimentos"
+            },
+            "enviar_valor_com_comissao": {
+                "example": "N\u00e3o",
+                "type": "string",
+                "description": "Informa se vai enviar valor com comiss\u00e3o"
+            },
+            "percentual_multa_acrescimo_mora": {
+                "example": 7.89,
+                "type": "number",
+                "description": "Percentual de multa para acr\u00e9scimo de mora"
+            },
+            "calculo_acrescimo_mora_diario": {
+                "example": "Sim",
+                "type": "string",
+                "description": "Informa se vai calcular acr\u00e9scimo de mora di\u00e1rio"
+            },
+            "valor_mora_diario": {
+                "example": 100.49,
+                "type": "number",
+                "description": "Valor de mora di\u00e1rio em reais"
+            },
+            "data_contabil": {
+                "example": "2021-01-01 00:00:00",
+                "type": "datetime",
+                "description": "Data cont\u00e1bil"
+            },
+            "juros_mora_mensal": {
+                "example": 0.7412,
+                "type": "number",
+                "description": "Percentual de juros de mora mensal"
+            },
+            "data_modificacao": {
+                "example": "2022-08-02 13:06:58",
+                "type": "datetime",
+                "description": "Data da \u00faltima modifica\u00e7\u00e3o"
+            }
+        }
+    }
+}

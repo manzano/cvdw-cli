@@ -1,0 +1,127 @@
+{
+    "path": "\/reservas\/coordenador",
+    "tabela": "reservas_coordenador",
+    "metodo": "get",
+    "descricao": "Esta api retorna os dados dos coordenadores do produto da reservas a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.",
+    "nome": "Reservas (reservas_coordenador)",
+    "parametros": {
+        "header": [
+            {
+                "name": "email",
+                "in": "header",
+                "required": true,
+                "description": "E-mail de autentica\u00e7\u00e3o do usu\u00e1rio administrativo",
+                "example": "email@email.com",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "token",
+                "in": "header",
+                "required": true,
+                "description": "Token criado no usu\u00e1rio administrativo do e-mail",
+                "example": "2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "query": [],
+        "path": [],
+        "cookie": []
+    },
+    "schema": "RetornarReservasCoordenadorProduto",
+    "subschema": "ReservasCoordenadorProduto",
+    "body": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "a_partir_referencia": {
+            "example": 1640,
+            "type": "integer",
+            "description": "Retornar\u00e1 as vistorias a partir deste id, lembrando que est\u00e1 ordenado em ordem decrescente"
+        },
+        "a_partir_data_referencia": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias criadas a partir da data informada"
+        },
+        "a_partir_data_modificacao": {
+            "example": "2022-05-18",
+            "type": "string",
+            "description": "Retornar\u00e1 as vistorias modificadas a partir da data informada"
+        }
+    },
+    "response": {
+        "pagina": {
+            "example": 1,
+            "type": "integer",
+            "description": "P\u00e1gina que deseja visualizar os registros"
+        },
+        "registros_por_pagina": {
+            "example": 30,
+            "type": "integer",
+            "description": "Quantidade de registro por p\u00e1gina, m\u00e1ximo 500 registros"
+        },
+        "total_de_registros": {
+            "example": 1054,
+            "type": "integer",
+            "description": "Total de registros encontrados"
+        },
+        "total_de_paginas": {
+            "example": 36,
+            "type": "integer",
+            "description": "Total de p\u00e1ginas encontradas"
+        },
+        "dados": {
+            "referencia": {
+                "example": 193,
+                "type": "integer",
+                "description": "Identificador"
+            },
+            "referencia_data": {
+                "example": "2023-01-15 15:26:15",
+                "type": "datetime",
+                "description": "Data de refer\u00eancia"
+            },
+            "idreserva_coordenador_produto": {
+                "example": 12414,
+                "type": "integer",
+                "description": "Identificador do coordenador produto da reserva"
+            },
+            "idreserva": {
+                "example": 12414,
+                "type": "integer",
+                "description": "Identificador da reserva"
+            },
+            "data_cad": {
+                "example": "2022-02-23 13:20:05",
+                "type": "datetime",
+                "description": "Data que foi gravado no banco"
+            },
+            "data_modificacao": {
+                "example": "2022-02-23 13:20:05",
+                "type": "datetime",
+                "description": "Data da \u00faltima altera\u00e7\u00e3o de situa\u00e7\u00e3o"
+            },
+            "idusuario": {
+                "example": 1221,
+                "type": "integer",
+                "description": "ID do usu\u00e1rio que gravou os dados no banco"
+            },
+            "usuario": {
+                "example": "Fulando de tal",
+                "type": "string",
+                "description": "Usu\u00e1rio que gravou os dados no banco"
+            }
+        }
+    }
+}

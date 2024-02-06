@@ -1,0 +1,64 @@
+<?php
+
+namespace Manzano\CvdwCli\Services;
+
+use Manzano\CvdwCli\Configuracoes;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Helper\Table;
+
+class Objeto
+{
+
+    protected SymfonyStyle $io;
+    public InputInterface $input;
+    public OutputInterface $output;
+
+    public function __construct(InputInterface $input, OutputInterface $output)
+    {
+        $this->io = new SymfonyStyle($input, $output);
+        $this->input = $input;
+        $this->output = $output;
+    }
+
+    public function retornarObjetos(string $objeto = null) : array
+    {
+        if ($objeto) {
+            if (isset(OBJETOS[$objeto])) {
+                return ["$objeto" => OBJETOS[$objeto]];
+            } else {
+                return false;
+            }
+        } else {
+            return OBJETOS;
+        }
+    }
+
+    public function retornarObjeto(string $objeto, string $formato = 'json') : array
+    {
+        // Verifica se o objeto existe em OBJETOS
+        if (!array_key_exists($objeto, OBJETOS)) {
+            return false;
+        } else {
+            $objetoFile = __DIR__ . "/../Objetos/{$objeto}.json";
+            $objeto = file_get_contents($objetoFile);
+            return json_decode($objeto, true);
+        }
+    }
+
+    public function identificarTipoDeDados(array $dados) : string
+    {
+        foreach ($dados as $valor) {
+            if (is_array($valor)) {
+                return "TABELA";
+            }
+        }
+        return "COMPONETE";
+    }    
+
+
+}
