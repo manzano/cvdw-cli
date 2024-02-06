@@ -43,7 +43,7 @@ function getEnvEscope(): array
 
 function getEnvDir(): string
 {
-    $envPath = dirname(Phar::running(false)) ?: getcwd();
+    $envPath = __DIR__ . '/../..';
     $envFile = $envPath . '/.env';
     return $envFile;
 }

@@ -1,6 +1,6 @@
 # Configuração do Ambiente e Instalação do CVDW
 
-Este guia fornece uma visão geral detalhada dos passos necessários para configurar seu ambiente Amazon Linux e instalar o CVDW, incluindo a instalação do PHP 8.2 e suas extensões necessárias.
+Este guia fornece uma visão geral detalhada dos passos necessários para configurar seu ambiente Linux / Mac / Windows e instalar o CVDW, incluindo a instalação do PHP 8.2 e suas extensões necessárias.
 
 ## Atualizar o Sistema
 
@@ -13,6 +13,10 @@ sudo yum clean metadata
 sudo yum update
 sudo yum upgrade
 ```
+
+curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh
+chmod +x install.sh
+./install.sh
 
 ## Instalação de Ferramentas e Extensões PHP
 

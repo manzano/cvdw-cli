@@ -4,8 +4,9 @@ set -e
 
 echo "Instalando do CVDW-CLI"
 echo "============================"
-
+echo ""
 echo "🔍 Verificando os pre-requisitos..."
+echo ""
 
 # Checando se o Git está instalado
 if ! command -v git >/dev/null 2>&1; then
@@ -28,13 +29,15 @@ if ! command -v composer >/dev/null 2>&1; then
 fi
 echo "✅ Composer encontrado."
 
-echo "🚀 Iniciando a instalação do CVDW-CLI..."
+echo ""
+echo "🚀 Iniciando a instalação do CVDW-CLI."
 
 REPO_DIR="$HOME/cvdw-cli"
 
 # Check if repository already exists
 if [ -d "$REPO_DIR" ]; then
-  echo "🔄 O Cvdw-cli já está instalado em $REPO_DIR - Iniciciando o Update..."
+  echo "🔄 O CVDW-CLI já está instalado em $REPO_DIR - Iniciciando o Update."
+  echo ""
   cd "$REPO_DIR"
   git checkout main
   git pull 2>&1 || {
@@ -54,7 +57,7 @@ else
 fi
 
 # Define o comando do alias
-alias_command="alias cvdw='php $REPO_DIR/cvdw'"
+alias_command="alias cvdw='php $REPO_DIR/src/cvdw'"
 
 # Função para adicionar alias ao Bash
 add_alias_bash() {
@@ -66,8 +69,10 @@ add_alias_bash() {
     if ! grep -qF -- "$alias_command" "$profile_file"; then
         echo "$alias_command" >> "$profile_file"
         echo "Alias adicionado ao $profile_file para Bash."
+        echo ""
     else
         echo "Alias já existe no $profile_file para Bash."
+        echo ""
     fi
 }
 
@@ -78,12 +83,15 @@ add_alias_zsh() {
     if ! grep -qF -- "$alias_command" "$profile_file"; then
         echo "$alias_command" >> "$profile_file"
         echo "Alias adicionado ao $profile_file para Zsh."
+        echo ""
     else
         echo "Alias já existe no $profile_file para Zsh."
+        echo ""
     fi
 }
 
 echo "📁 Salvando o alias em seu terminal..."
+echo ""
 
 # Detecta o shell atual e aplica a configuração apropriada
 if [[ "$SHELL" == */bash ]]; then
@@ -94,5 +102,7 @@ else
     echo "Shell não suportado. Alias não adicionado."
 fi
 
+echo ""
 echo "Alias instalado. Por favor, execute 'source ~/.bashrc' (para Bash) ou 'source ~/.zshrc' (para Zsh), ou reinicie seu terminal para aplicar as alterações."
+echo ""
 echo "✅ Instalação do CVDW-CLI concluída com sucesso!"
