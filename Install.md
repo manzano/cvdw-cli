@@ -13,7 +13,9 @@ curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | b
 Caso precise instalar os pré-requisitos:
 
 Windows, siga as [instruções de instalação](Install_Windows.md).
+
 Mac, siga as [instruções de instalação](Install_Macs.md).
+
 Linux, siga as [instruções de instalação](Install_Windows.md).
 
 ## Conclusão
