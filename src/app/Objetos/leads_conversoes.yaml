@@ -1,0 +1,134 @@
+path: /leads/conversoes
+tabela: leads_conversoes
+metodo: get
+descricao: Esta api retorna os dados das conversões dos leads.
+nome: Leads (leads_conversoes)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarLeadsConversoes
+subschema: LeadsConversoes
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 168523
+      type: integer
+      description: Identificador do lead
+    referencia_data:
+      example: 2023-01-15 15:26:15
+      type: datetime
+      description: Data de referência
+    idlead:
+      example: 168523
+      type: integer
+      description: Identificador do lead
+    data_cad:
+      example: 2022-03-06 10:00:00
+      type: datetime
+      description: Data de cadastro
+    nome:
+      example: Saulo Nunes
+      type: string
+      description: Nome do lead
+    email:
+      example: importacao_nandes2.3@hotmail.com
+      type: string
+      description: E-mail do lead
+    telefone:
+      example: "31984658621"
+      type: string
+      description: Telefone do lead
+    origem_conversao:
+      example: Facebook
+      type: string
+      description: Conversão original do lead
+    conversao:
+      example: Facebook
+      type: string
+      description: Conversão do lead
+    origem:
+      example: FB
+      type: string
+      description: Origem do lead
+    idorigem_ultimo:
+      example: 8
+      type: integer
+      description: Identificador da última origem do lead
+    origem_ultimo:
+      example: FB
+      type: string
+      description: Última origem do lead
+    midia:
+      example: Facebook Ads
+      type: string
+      description: Mídia original do lead
+    midia_conversao:
+      example: Facebook Ads
+      type: string
+      description: Mídia de conversao do lead
+    gestor:
+      example: 100
+      type: integer
+      description: Gestor atual vinculado ao lead
+    gestor_ultimo:
+      example: 101
+      type: integer
+      description: Último gestor vinculado ao lead
+    empreendimento_ultimo:
+      example: 100
+      type: integer
+      description: Último empreendimento vinculado ao lead

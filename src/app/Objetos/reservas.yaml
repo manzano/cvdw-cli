@@ -1,0 +1,368 @@
+path: /reservas
+tabela: reservas
+metodo: get
+descricao: Esta api retorna os dados das reservas a partir dos filtros
+  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
+nome: Reservas (reservas)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarReservas
+subschema: Reservas
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 1
+      type: integer
+      description: Identificador
+    referencia_data:
+      example: 2023-12-29 16:12:52
+      type: datetime
+      description: Data de Referência
+    idreserva:
+      example: 12414
+      type: integer
+      description: Identificador da reserva
+    aprovada:
+      example: Sim
+      type: string
+      description: Aprovação da reserva
+    data_cad:
+      example: 2021-01-01 00:00:00
+      type: datetime
+      description: Data de cadastro da reserva
+    data_venda:
+      example: 2021-01-01 00:00:00
+      type: datetime
+      description: Data de venda da reserva
+    situacao:
+      example: Vendida
+      type: string
+      description: Situação da reserva
+    idsituacao:
+      example: 3
+      type: integer
+      description: ID da situação da reserva
+    situacao_comercial:
+      example: Pre-vendas
+      type: string
+      description: Nome da situação comercial
+    idempreendimento:
+      example: 589
+      type: integer
+      description: Código identificador do empreendimento
+    codigointerno_empreendimento:
+      example: "58934"
+      type: string
+      description: Código interno do empreendimento
+    empreendimento:
+      example: Retiro Teixeira
+      type: string
+      description: Empreendimento da reserva
+    data_entrega_chaves_contrato_cliente:
+      example: 2023-01-01
+      type: datetime
+      description: Data de entrega das chaves conforme contrato com cliente
+    bloco:
+      example: Bloco E06
+      type: string
+      description: Bloco do empreendimento
+    unidade:
+      example: "3"
+      type: string
+      description: Unidade do empreendimento
+    regiao:
+      example: Sul
+      type: string
+      description: Região do empreendimento da reserva
+    venda:
+      example: Sim
+      type: string
+      description: Informa se a reserva foi vendida
+    idcliente:
+      example: 30491
+      type: integer
+      description: Código identificador do cliente
+    documento_cliente:
+      example: "04461372197"
+      type: string
+      description: Número do documento (CPF/CNPJ) do cliente
+    cliente:
+      example: KARLINE ARAUJO DOS SANTOS
+      type: string
+      description: Nome do cliente da reserva
+    email:
+      example: karline@email.com
+      type: string
+      description: E-mail do cliente da reserva
+    cidade:
+      example: Estância
+      type: string
+      description: Cidade de origem do cliente
+    cep_cliente:
+      example: "49052260"
+      type: string
+      description: CEP do cliente
+    renda:
+      example: 10000
+      type: number
+      description: Renda do cliente da reserva
+    sexo:
+      example: Feminino
+      type: string
+      description: Sexo do cliente da reserva
+    idade:
+      example: 23
+      type: integer
+      description: Idade do cliente da reserva
+    estado_civil:
+      example: Casado(a)
+      type: string
+      description: Estado civil do cliente da reserva
+    idcorretor:
+      example: 274
+      type: integer
+      description: Identificador do corretor vinculado
+    corretor:
+      example: CORRETOR QC
+      type: string
+      description: Corretor da reserva
+    idimobiliaria:
+      example: 274
+      type: integer
+      description: Identificador da imobiliária vinculada
+    imobiliaria:
+      example: IMOBILIÁRIA QC
+      type: string
+      description: Imobiliária da reserva
+    valor_contrato:
+      example: 150000
+      type: number
+      description: Valor do contrato da reserva
+    vencimento:
+      example: 2022-02-23 14:20:05
+      type: string
+      description: Vencimento da reserva
+    campanha:
+      example: Campanha
+      type: string
+      description: Campanha da reserva
+    cessao:
+      example: Não
+      type: string
+      description: Mudança de cliente da reserva
+    motivo_cancelamento:
+      example: Motivo
+      type: string
+      description: Título da razão do cancelamento
+    espacos_complementares:
+      example: Espaços
+      type: text
+      description: Nome do espaço complementar
+    idlead:
+      example: 168523,4322
+      type: text
+      description: Identificador dos leads vinculados separados por ,
+    data_ultima_alteracao_situacao:
+      example: 2022-02-23 13:20:05
+      type: datetime
+      description: Data da última alteração de situação
+    empresa_correspondente:
+      example: Nascimento
+      type: string
+      description: Empresa correspondente vinculada à reserva
+    valor_fgts:
+      example: 3232
+      type: number
+      description: Valor do FGTS usado na reserva
+    valor_financiamento:
+      example: 0
+      type: number
+      description: Valor do financiamento
+    valor_subsidio:
+      example: 0
+      type: number
+      description: Valor do subsidio da reserva
+    nome_usuario:
+      example: Nome
+      type: string
+      description: Nome do usuário
+    idunidade:
+      example: 232
+      type: integer
+      description: Identificador da unidade
+    idprecadastro:
+      example: 234
+      type: integer
+      description: Identificador do pré cadastro
+    idmidia:
+      example: 2
+      type: integer
+      description: Identificador da mídia
+    midia:
+      example: Midia
+      type: string
+      description: Nome da mídia
+    descricao_motivo_cancelamento:
+      example: Cancelamento
+      type: string
+      description: Descrição da razão do cancelamento
+    idsituacao_anterior:
+      example: 3
+      type: integer
+      description: Identificador da situação anterior
+    situacao_anterior:
+      example: Vendida
+      type: string
+      description: Nome da situação anterior
+    idtabela:
+      example: 100
+      type: integer
+      description: Identificador da tabela de preço
+    nometabela:
+      example: Tabela de Janeiro
+      type: string
+      description: Nome da tabela de preço
+    codigointernotabela:
+      example: JAN23
+      type: string
+      description: Código interno da tabela de preço
+    data_contrato:
+      example: 2022-12-23
+      type: datetime
+      description: Data de contrato da reserva
+    valor_proposta:
+      example: 650000.5
+      type: number
+      description: Valor da proposta da reserva
+    vpl_tabela:
+      example: 631520.44
+      type: number
+      description: VPL da tabela de preço da reserva
+    vpl_reserva:
+      example: 628176.55
+      type: number
+      description: VPL da reserva
+    usuario_aprovacao:
+      example: Manoel Gomes
+      type: string
+      description: Usuário que aprovou a reserva
+    data_aprovacao:
+      example: 2022-12-07
+      type: datetime
+      description: Data que o usuário aprovou a reserva
+    juros_condicao_aprovada:
+      example: 0
+      type: number
+      description: Valor do juros da aprovação
+    juros_apos_entrega_condicao_aprovada:
+      example: 0
+      type: number
+      description: Valor do juros futuro da aprovação
+    idtabela_condicao_aprovada:
+      example: 168523
+      type: integer
+      description: Id da tabela da condição aprovada
+    data_primeira_aprovacao:
+      example: 2022-12-07
+      type: datetime
+      description: Data que o usuário aprovou a reserva pela primeira vez
+    aprovacao_absoluto:
+      example: 0
+      type: number
+      description: indicar o valor máximo (em porcentagem) para a aprovação.
+    aprovacao_vpl_valor:
+      example: 0
+      type: number
+      description: Porcentagem máxima permitida para a aprovação do VPL
+    idtipovenda:
+      example: 2
+      type: integer
+      description: Identificador do tipo de venda
+    tipovenda:
+      example: Financiamento
+      type: string
+      description: Tipo de venda da reserva
+    idgrupo:
+      example: 1
+      type: integer
+      description: Identificador do grupo de situação
+    grupo:
+      example: Grupo Teste
+      type: string
+      description: Nome do grupo de situação
+    data_modificacao:
+      example: 2022-12-07
+      type: datetime
+      description: Data de modificação da reserva
+    campos_adicionais:
+      idcampo_adicional:
+        example: 12414
+        type: integer
+        description: Identificador do campo adicional
+      nome:
+        example: CONTRATO - USO
+        type: string
+        description: Descrição do campo adicional
+      valor:
+        example: valor informado pelo usuário
+        type: string
+        description: Dado que foi inserido pelo usuário na reserva
+      nome_referencia:
+        example: USO_CONTRATO
+        type: string
+        description: Campo nome referência do campo adicional

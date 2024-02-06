@@ -1,0 +1,123 @@
+path: /pessoas/bancarios
+tabela: pessoas_bancarios
+metodo: get
+descricao: Esta api retorna os valores dos dados bancários das pessoas a partir
+  dos filtros solicitados.
+nome: Pessoas (pessoas_bancarios)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarPessoasBancarios
+subschema: PessoasBancariosRetorno
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 269
+      type: integer
+      description: Identificador
+    referencia_data:
+      example: 2023-12-29 16:12:52
+      type: datetime
+      description: Data de Referência
+    idpessoa:
+      example: 269
+      type: string
+      description: Identificador da pessoa
+    idpessoa_int:
+      example: "726"
+      type: string
+      description: Identificador da pessoa (Código Interno)
+    banco:
+      example: Banco Bankpar S.A.
+      type: string
+      description: Nome do banco (select)
+    banco_nome:
+      example: Banco Bankpar S.A.
+      type: string
+      description: Nome do banco (campo aberto)
+    banco_agencia:
+      example: "1212"
+      type: string
+      description: Agência do banco
+    banco_conta:
+      example: "121"
+      type: string
+      description: Conta do banco
+    banco_nome_titular:
+      example: Manoel Silva
+      type: string
+      description: Titular do banco
+    banco_tipo_doc:
+      example: CPF
+      type: string
+      description: Tipo de documento da conta no banco
+    banco_cpf_titular:
+      example: "77064304058"
+      type: string
+      description: CPF do titular
+    banco_cnpj_titular:
+      example: null
+      type: string
+      description: CNPJ do titular
+    banco_chave_pix:
+      example: "1213112"
+      type: string
+      description: Chave PIX no banco
+    banco_observacoes:
+      example: Conta ativa desde 2011
+      type: string
+      description: Identificador do banco

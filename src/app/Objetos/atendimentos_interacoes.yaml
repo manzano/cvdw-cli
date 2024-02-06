@@ -1,0 +1,114 @@
+path: /atendimentos/interacoes
+tabela: atendimentos_interacoes
+metodo: get
+descricao: Esta api retorna as interações dos atendimentos.
+nome: Atendimentos (atendimentos_interacoes)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarAtendimentosInteracao
+subschema: AtendimentosInteracao
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 3
+      type: integer
+      description: Identificador da interação
+    referencia_data:
+      example: 2023-01-15 15:26:15
+      type: datetime
+      description: Data de referência
+    idinteracao:
+      example: 3
+      type: integer
+      description: Identificador da interação
+    idatendimento:
+      example: 443
+      type: integer
+      description: Identificador do atendimento
+    idusuario:
+      example: 12
+      type: integer
+      description: Identificador do usuário
+    usuario:
+      example: Maria
+      type: string
+      description: Nome do usuário
+    data_cad:
+      example: 2022-01-14 18:05:35
+      type: datetime
+      description: Data de cadastro
+    ativo:
+      example: S
+      type: string
+      description: Informa se a interação está ativa
+    descricao:
+      example: Nova interação
+      type: text
+      description: Descrição da interação
+    idcanal:
+      example: 1
+      type: integer
+      description: Identificador do canal
+    canal:
+      example: Internet
+      type: string
+      description: Nome do canal
+    data_modificacao:
+      example: 2022-01-14 18:05:35
+      type: datetime
+      description: Data de modificação do item

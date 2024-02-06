@@ -1,0 +1,112 @@
+path: /reservas/historico
+tabela: reservas_historico
+metodo: get
+descricao: Esta api retorna os dados dos históricos das reservas a partir dos
+  filtros solicitados, caso deseje saber o que cada campo representa basta ir no
+  schema.
+nome: Reservas (reservas_historico)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarReservasHistoricos
+subschema: ReservasHistoricos
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 12414
+      type: integer
+      description: ID do histórico registrado no histórico
+    referencia_data:
+      example: 2023-01-15 15:26:15
+      type: datetime
+      description: Data de referência
+    idhistorico:
+      example: 12414
+      type: integer
+      description: ID do histórico registrado no histórico
+    idreserva:
+      example: 12414
+      type: integer
+      description: ID da reserva registrada na situação
+    data_cad:
+      example: 2012-04-20 00:00:00
+      type: datetime
+      description: Data de cadastro do histórico
+    usuario:
+      example: Usuário CV
+      type: string
+      description: Nome do usuário que realizou a operação
+    tipo:
+      example: reserva
+      type: string
+      description: Tipo do histórico
+    acao:
+      example: liberou
+      type: string
+      description: Ação do histórico
+    de:
+      example: N
+      type: text
+      description: Valor antes da operação
+    para:
+      example: S
+      type: text
+      description: Valor depois da operação
+    situacao_atual:
+      example: Nova Reserva
+      type: string
+      description: Situação atual da reserva

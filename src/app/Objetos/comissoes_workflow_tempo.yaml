@@ -1,0 +1,104 @@
+path: /comissoes/workflow/tempo
+tabela: comissoes_workflow_tempo
+metodo: get
+descricao: Esta api retorna o tempo das comissões em cada situação do workflow a
+  partir dos filtros solicitados, caso deseje saber o que cada campo representa
+  basta ir no schema.
+nome: Comissões (comissoes_workflow_tempo)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarComissoesWorkflowTempo
+subschema: ComissoesWorkflowTempo
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 193
+      type: integer
+      description: Identificador
+    referencia_data:
+      example: 2023-01-15 15:26:15
+      type: datetime
+      description: Data de referência
+    idcomissao:
+      example: 5166
+      type: integer
+      description: Número identificador da comissão
+    idsituacao:
+      example: 1
+      type: integer
+      description: Número identificador da situaçao da comissão
+    situacao:
+      example: Comissão Gerada (1)
+      type: string
+      description: Nome da situação da comissão
+    sigla:
+      example: CG
+      type: string
+      description: Sigla da situação da comissão
+    idtempo:
+      example: 40
+      type: integer
+      description: Número identificador do tempo de workflow
+    tempo:
+      example: 60
+      type: integer
+      description: Tempo que a comissão ficou na situação (Em minutos)
+    data_cad:
+      example: 2022-01-14 18:05:35
+      type: datetime
+      description: Data de cadastro desse tempo de workflow

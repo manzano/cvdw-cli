@@ -1,0 +1,108 @@
+path: /leads/momentos
+tabela: leads_momentos
+metodo: get
+descricao: Esta api retorna os dados dos momentos dos leads a partir dos filtros
+  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
+nome: Leads (leads_momentos)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarLeadsMomentos
+subschema: LeadsMomentos
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 3
+      type: integer
+      description: Identificador do momento do lead
+    referencia_data:
+      example: 2023-01-15 15:26:15
+      type: datetime
+      description: Data de referência
+    idmomento_lead:
+      example: 3
+      type: integer
+      description: Identificador do momento do lead
+    idlead:
+      example: 1
+      type: integer
+      description: Identificador do lead referente ao momento
+    idusuario:
+      example: 2
+      type: integer
+      description: Identificador do ID do usuario que vinculou o momento ao lead
+    nome_usuario:
+      example: Marcelo da Silva
+      type: string
+      description: Nome do usuário que vinculou o momento ao lead
+    painel_usuario:
+      example: gestor
+      type: string
+      description: Painel pelo qual o usuario estava logado qunando vinculou o momento
+        ao lead
+    momentos_lead:
+      example: Momento Quente
+      type: string
+      description: Nome pelo qual o momento do lead foi cadastrado
+    data_cad:
+      example: 2021-03-10 11:17:50
+      type: datetime
+      description: Data de cadastro
+    data_sincronizacao:
+      example: 2022-04-01 08:16:45
+      type: datetime
+      description: Data da sincronização

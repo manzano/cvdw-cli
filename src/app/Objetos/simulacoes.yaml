@@ -1,0 +1,404 @@
+path: /simulacoes
+tabela: simulacoes
+metodo: get
+descricao: Esta api retorna os dados das simulações a partir dos filtros
+  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
+nome: Simulações (simulacoes)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarSimulacoes
+subschema: Simulacoes
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 12414
+      type: integer
+      description: Identificador da simulação
+    referencia_data:
+      example: 2023-01-15 15:26:15
+      type: datetime
+      description: Data de referência
+    idsimulacao:
+      example: 12414
+      type: integer
+      description: Identificador da simulação
+    data_cad:
+      example: 2021-01-01 00:00:00
+      type: datetime
+      description: Data de cadastro da simulação
+    data_vencimento:
+      example: 2021-01-01 00:00:00
+      type: datetime
+      description: Data de vencimento da reserva
+    data_email_venc_corretor:
+      example: 2021-01-01 00:00:00
+      type: datetime
+      description: Data e hora de envio do e-mail de vencimento para corretor
+    situacao_simulacao:
+      example: Vendida
+      type: string
+      description: Situação da simulação
+    idsituacao:
+      example: 3
+      type: integer
+      description: ID da situação da simulação
+    idusuario:
+      example: 1
+      type: integer
+      description: Identificador do usuário administrativo que criou a simulação
+    idusuario_imobiliaria:
+      example: 589
+      type: integer
+      description: Identificador do usuário da imobiliária que cadastrou a simulação
+    corretor:
+      example: Corretor CV
+      type: string
+      description: Nome do corretor vinculado a simulação
+    idreserva:
+      example: 123
+      type: integer
+      description: Identificador da reserva vinculada a simulação
+    idprecadastro:
+      example: 123
+      type: integer
+      description: Identificador do pré-cadastro vinculado a simulação
+    imobiliaria:
+      example: Imob CV
+      type: string
+      description: Nome da imobiliária vinculada a simulação
+    lead:
+      example: Lead CV
+      type: string
+      description: Nome do lead vinculado a simulação
+    empreendimento:
+      example: Empreendimento CV
+      type: string
+      description: Nome do empreendimento vinculado a simulação
+    etapa:
+      example: Etapa CV
+      type: string
+      description: Nome da etapa vinculada a simulação
+    bloco:
+      example: Bloco CV
+      type: string
+      description: Nome do bloco vinculado a simulação
+    unidade:
+      example: Unidade CV
+      type: string
+      description: Nome da unidade vinculada a simulação
+    idtabela:
+      example: 30491
+      type: integer
+      description: Identificador da tabela de preço
+    data_alteracao_situacao:
+      example: 2022-11-17 12:24:30
+      type: datetime
+      description: Data e hora de alteração da situação
+    quantidade_mensagens:
+      example: 1
+      type: integer
+      description: Quantidade de mensagens enviadas
+    solicitacao_aprovacao:
+      example: Não
+      type: string
+      description: Informa a solicitação de aprovação da simulação
+    condicao_aprovada:
+      example: Sim
+      type: string
+      description: Informa a aprovação da simulação
+    data_primeira_aprovacao:
+      example: 2022-11-17 12:24:30
+      type: datetime
+      description: Data e hora de alteração da primeira aprovação
+    data_entrega:
+      example: 2024-08-01
+      type: datetime
+      description: Data de entrega
+    data_base_calculo_juros:
+      example: 2024-08-01
+      type: datetime
+      description: Data base para cálculo de juros
+    descricao_motivo_reprovacao:
+      example: ""
+      type: string
+      description: Descrição do motivo da reprovação da simulação
+    idmotivo_cancelamento:
+      example: 1
+      type: integer
+      description: Identificador do motivo do cancelamento
+    descricao_motivo_cancelamento:
+      example: ""
+      type: string
+      description: Descrição do motivo de cancelamento da simulação
+    valor_contrato:
+      example: 130995.95
+      type: integer
+      description: Valor do contrato
+    valor_presente:
+      example: 101834.95
+      type: integer
+      description: Valor do contrato
+    juros_vpl:
+      example: 0.5
+      type: integer
+      description: Percentual de juros trabalhado no VPL
+    juros_vpl_apos_entrega:
+      example: 0.5
+      type: integer
+      description: Percentual de juros trabalhado no VPL após a entrega
+    juros_futuro:
+      example: 0.5
+      type: integer
+      description: Percentual de juros futuro da simulação
+    juros_vpl_fixa_adicional:
+      example: 0
+      type: integer
+      description: Percentual adicional dos juros trabalhado no VPL para séries fixas
+    renda_familiar:
+      example: 7900
+      type: integer
+      description: Renda familiar
+    sla_vencimento:
+      example: 2024-08-01
+      type: string
+      description: Data de vencimento do sla
+    data_condicao_aprovada:
+      example: 2024-08-01
+      type: datetime
+      description: Data de aprovação da simulação
+    idusuario_condicao_aprovada:
+      example: 12
+      type: integer
+      description: Identificador do usuário administrativo que aprovou a simulação
+    idtabela_condicao_aprovada:
+      example: 13
+      type: integer
+      description: Tabela aprovada na simulação
+    juros_condicao_aprovada:
+      example: 0
+      type: integer
+      description: Juros da condição aprovada
+    juros_apos_entrega_condicao_aprovada:
+      example: 0
+      type: integer
+      description: Percentual de juros trabalhado no VPL após a entrega aprovado
+    idlead:
+      example: 244
+      type: integer
+      description: Identificador do lead da simulação
+    aprovacao_vpl_valor:
+      example: 0
+      type: integer
+      description: Valor do VPL aprovado na simulação
+    aprovacao_vpl:
+      example: 0
+      type: integer
+      description: VPL aprovado na simulação
+    aprovacao_absoluto:
+      example: 0
+      type: integer
+      description: Valor absoluto aprovado na simulação
+    aprovacao_absoluto_percentual:
+      example: 0
+      type: integer
+      description: Percentual absoluto aprovado na simulação
+    aprovacao_margem:
+      example: 0
+      type: integer
+      description: Margem de aprovação da simulação
+    desconto:
+      example: 0
+      type: integer
+      description: Valor do desconto
+    idalcada:
+      example: 1
+      type: integer
+      description: Identificador da alçada
+    percentual_custa_escrituracao:
+      example: 0
+      type: integer
+      description: Percentual de custas de escrituração
+    juros:
+      example: Não
+      type: string
+      description: Informa se vai ter juros
+    juros_embutido:
+      example: Não
+      type: string
+      description: Informa se vai ter juros embutido
+    quantidade_parcelas_min:
+      example: 1
+      type: integer
+      description: Quantidade de parcelas mínima
+    quantidade_parcelas_max:
+      example: 2
+      type: integer
+      description: Quantidade de parcelas máxima
+    data_base_juros_futuro_cadastro:
+      example: 2022-06-20
+      type: datetime
+      description: Data base para cálculo de juros futuro
+    data_base_calculo_pv:
+      example: 2022-06-20
+      type: datetime
+      description: Data base para cálculo de valor PV
+    data_base_calculo_pv_alterada:
+      example: Não
+      type: string
+      description: Informa se a data base para cálculo de valor PV foi modificada
+    data_contrato_aprovacao_comercial:
+      example: 2022-06-20
+      type: datetime
+      description: Data de contrato da simulação
+    usuario_preencheu_data_contrato:
+      example: Não
+      type: string
+      description: Informa se o usuário preencheu a data de contrato
+    porcentagem_total_comissao:
+      example: 0
+      type: integer
+      description: Percentual total da comissão
+    pagamento_total_comissao:
+      example: VGV
+      type: string
+      description: Pagamento total da comissão
+    porcentagem_total_premiacao:
+      example: 100
+      type: integer
+      description: Porcetagem total da premiação
+    pagamento_total_premiacao:
+      example: VGV
+      type: string
+      description: Pagamento total da premiação
+    adimplencia_premiada:
+      example: 2300
+      type: integer
+      description: Valor da adimplência premiada
+    ignorar_validacao_adimplencia_premiada:
+      example: Não
+      type: string
+      description: Informa se vai ignorara validação de adimplência premiada
+    calculo_juros_price_baseado_em:
+      example: DB
+      type: string
+      description: Informa qual a data base que será usada para cálculo de juros
+    porcentagem_total_contrato:
+      example: 10
+      type: integer
+      description: Porcentagem máxima de comissão no contrato
+    pagamento_total_contrato:
+      example: VGV
+      type: string
+      description: Tipo de cálculo para máxima comissão no contrato
+    porcentagem_total_fora_contrato:
+      example: 20
+      type: integer
+      description: Porcentagem máxima da comissão fora do contrato
+    pagamento_total_fora_contrato:
+      example: VGV
+      type: string
+      description: Tipo de cálculo para máxima comissão fora do contrato
+    idtipovenda:
+      example: 1
+      type: integer
+      description: Identificador do tipo de venda da simulação
+    hash:
+      example: 52fdb887e6c4ea35038aa15b3ed3c28f
+      type: string
+      description: Valor hash identificado da simulação
+    condicoes_pagamento:
+      nome:
+        example: Ato
+        type: string
+        description: Nome da série de pagamento
+      idserie:
+        example: 123
+        description: Identificador da série de pagamento
+        type: integer
+      qtd_parcelas:
+        example: "1"
+        type: string
+        description: Quantidade de parcelas da série de pagamento
+      valor:
+        example: 15000
+        type: integer
+        description: Valor da série de pagamento
+      valor_com_juros:
+        example: 17000
+        type: integer
+        description: Valor com juros da série de pagamento
+      vencimento:
+        example: 2022-11-30
+        type: string
+        description: Vencimento da série de pagamento
+      idportador:
+        example: 1
+        type: integer
+        description: Identificador do portador da série
+      idindexador:
+        example: 1
+        type: integer
+        description: Identificador do indexador da série
+      data_base_juros_futuro:
+        example: 1
+        type: string
+        description: Data base para cálculo do juros futuro
+      juros_futuro:
+        example: 1.00005
+        type: integer
+        description: Juros futuro

@@ -332,7 +332,7 @@ class Configurar extends Command
 
     }
 
-    private function criarTabelas(): int
+    private function criarTabelas(): bool
     {
 
         $io = new SymfonyStyle($this->input, $this->output);
@@ -353,6 +353,8 @@ class Configurar extends Command
 
         $this->voltarProMenu = true;
         $this->voltarProMenu();
+
+        return true;
 
     }
 
@@ -397,7 +399,7 @@ class Configurar extends Command
                         ''
                     ]);
                     if ($io->confirm('Quer tentar novamente?', true)) {
-                        return $this->limparTabelas($io);
+                        $this->limparTabelas($io);
                     }
                 }
             }
@@ -436,11 +438,14 @@ class Configurar extends Command
                 'Pronto!'
             ]);
         }
-
+        $this->voltarProMenu = true;
         $this->voltarProMenu();
+
+        return true;
+
     }
 
-    private function apagarTabelas(): int
+    private function apagarTabelas(): bool
     {
 
         $io = new SymfonyStyle($this->input, $this->output);
@@ -522,8 +527,13 @@ class Configurar extends Command
             ]);
         }
 
+        $this->voltarProMenu = true;
         $this->voltarProMenu();
+
+        return true;
+
     } 
+
     protected function voltarProMenu()
     {
         $io = new SymfonyStyle($this->input, $this->output);

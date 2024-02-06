@@ -95,7 +95,7 @@ class DatabaseSetup
             if (!$objeto) {
                 $this->io->error("O objeto {$objeto} não existe.");
             }
-
+            
             $tabelas[$key] = $objeto['nome'];
             // Verificar se há subtabelas no objeto
             foreach ($objeto["response"]["dados"] as $coluna => $valor) {

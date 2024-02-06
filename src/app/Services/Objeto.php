@@ -11,6 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Helper\Table;
 
+use Symfony\Component\Yaml\Yaml;
+
 class Objeto
 {
 
@@ -44,9 +46,9 @@ class Objeto
         if (!array_key_exists($objeto, OBJETOS)) {
             return false;
         } else {
-            $objetoFile = __DIR__ . "/../Objetos/{$objeto}.json";
+            $objetoFile = __DIR__ . "/../Objetos/{$objeto}.yaml";
             $objeto = file_get_contents($objetoFile);
-            return json_decode($objeto, true);
+            return Yaml::parse($objeto);
         }
     }
 
@@ -58,7 +60,7 @@ class Objeto
             }
         }
         return "COMPONETE";
-    }    
+    }
 
 
 }

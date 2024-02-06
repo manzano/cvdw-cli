@@ -1,0 +1,219 @@
+path: /reservas/comissoes
+tabela: reservas_comissoes
+metodo: get
+descricao: Esta api retorna os dados das comissões na reserva a partir dos
+  filtros solicitados, caso deseje saber o que cada campo representa basta ir no
+  schema.
+nome: Reservas (reservas_comissoes)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarReservasComissoes
+subschema: ReservasComissoes
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 269
+      type: integer
+      description: Identificador
+    referencia_data:
+      example: 2023-12-29 16:12:52
+      type: datetime
+      description: Data de Referência
+    id:
+      example: 12414
+      type: integer
+      description: Identificador da regra de comissão na reserva
+    data_cad:
+      example: 2021-01-01 00:00:00
+      type: datetime
+      description: Data de cadastro
+    ativo:
+      example: S
+      type: string
+      description: Informa se está ativo S (Sim) e N (Não)
+    diferenca:
+      example: S
+      type: string
+      description: Informa quem vai receber a diferença da comissão, ou seja, o valor
+        que sobra da comissão que foi estipulada S (Sim) e N (Não)
+    tipo:
+      example: S
+      type: string
+      description: "Informa o tipo: C (corretor), I (imobiliária)"
+    valor:
+      example: 1000
+      type: number
+      description: Informa o valor da regra
+    porcentagem:
+      example: 100
+      type: number
+      description: Informa a porcentagem da regra
+    descricao:
+      example: Teste
+      type: string
+      description: Informa a descrição da regra
+    idreserva:
+      example: 12414
+      type: integer
+      description: Identificador da reserva
+    idimobiliaria:
+      example: 274
+      type: integer
+      description: Identificador da imobiliária vinculada
+    idcorretor:
+      example: 20
+      type: integer
+      description: Identificador do corretor vinculado
+    comissao_tipo:
+      example: C
+      type: string
+      description: "Informa o tipo da comissão: C (comissão), P (prêmio), E (prêmio extra)"
+    comissao_pagamento_tipo:
+      example: VGV
+      type: string
+      description: "Informa o tipo de pagamento da comissão: VGV e PV"
+    codigointerno:
+      example: "123"
+      type: string
+      description: Informa o código interno
+    tipo_valor:
+      example: P
+      type: string
+      description: "Informa o tipo da comissão: P (porcentagem), V (valor), VSC (valor
+        da série), PRT (premiação regra da tabela de preço)"
+    forma_pagamento:
+      example: B
+      type: string
+      description: Informa a sigla da forma de pagamento
+    pago_pela_condicao_reserva:
+      example: S
+      type: string
+      description: Informa se a regra vai ser paga pela condição da reserva S (Sim) e
+        N (Não)
+    contrato:
+      example: S
+      type: string
+      description: Informa se a regra vai retirar do subtotal S (Sim) e N (Não)
+    para:
+      example: IC
+      type: string
+      description: "Informa para: IC (imobiliária), IR (imobiliária da reserva), CO
+        (imobiliária coordenação), CC (corretor), CR (corretor da reserva), CP
+        (coordenador do produto), UI (usuário da imobiliária), UA (usuário
+        administratico)"
+    quem:
+      example: 10
+      type: integer
+      description: Informa o identificador da pessoa quem da regra
+    ordem:
+      example: 1
+      type: integer
+      description: Informa a ordem da regra
+    enviar_pagadoria:
+      example: S
+      type: string
+      description: Informa se vai enviar para pagadoria S (Sim) e N (Não)
+    editado:
+      example: S
+      type: string
+      description: Informa se a regra foi editada S (Sim) e N (Não)
+    para_pagamento:
+      example: S
+      type: string
+      description: "Informa quais os dados para o pagamento: DU (dados do usuário), DF
+        (dados do faturamento)"
+    idusuario_nivel:
+      example: 1
+      type: integer
+      description: Informa o nível do usuário administrativo
+    idusuario_categoria:
+      example: 1
+      type: integer
+      description: Informa a categoria do usuário administrativo
+    idcorretor_nivel:
+      example: 1
+      type: integer
+      description: Informa o nível do corretor
+    idcorretor_categoria:
+      example: 1
+      type: integer
+      description: Informa a categoria do corretor
+    fifty:
+      example: S
+      type: string
+      description: Informa se a regra passou por fifty S (Sim) e N (Não)
+    fifty_idreferencia:
+      example: 1
+      type: integer
+      description: Informa identificador de referência para o fifty
+    id_sub_regra_comissao:
+      example: 1
+      type: integer
+      description: Identificador da sub regra
+    idlancamento:
+      example: 1
+      type: integer
+      description: Identificador do lançamento
+    idreserva_comissao_lancamento:
+      example: 1
+      type: integer
+      description: Identificador da comissão lançamento
+    valor_porcentagem_premiacao:
+      example: 1000
+      type: number
+      description: Informa o valor da porcentagem da premiação

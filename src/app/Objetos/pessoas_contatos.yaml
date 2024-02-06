@@ -1,0 +1,175 @@
+path: /pessoas/contatos
+tabela: pessoas_contatos
+metodo: get
+descricao: Esta api retorna os valores dos dados de contatos das pessoas a
+  partir dos filtros solicitados.
+nome: Pessoas (pessoas_contatos)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarPessoasContatos
+subschema: PessoasContatosRetorno
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 269
+      type: integer
+      description: Identificador da pessoa
+    referencia_data:
+      example: 2023-12-29 16:12:52
+      type: datetime
+      description: Data de Referência
+    idpessoa_int:
+      example: "726"
+      type: string
+      description: Identificador da pessoa (Código Interno)
+    idpessoa:
+      example: 269
+      type: integer
+      description: Identificador da pessoa
+    email:
+      example: email@email.com
+      type: string
+      description: E-mail de contato
+    telefone:
+      example: (25) 99988-7766
+      type: string
+      description: Telefone de contato
+    celular:
+      example: (79) 99988-7766
+      type: string
+      description: Celular de contato
+    referencia_nome:
+      example: Contato Referência
+      type: string
+      description: Nome do contato de referência
+    referencia_telefone:
+      example: +557999988-7766
+      type: string
+      description: Telefone do contato de referência
+    referencia_parentesco:
+      example: Amigo
+      type: string
+      description: Parêntesco do contato de referência
+    cep_contato_relacionamento:
+      example: "49015120"
+      type: string
+      description: CEP do dados opcionais para contato e relacionamento
+    endereco_contato_relacionamento:
+      example: Rua Itabaiana
+      type: string
+      description: Endereço do dados opcionais para contato e relacionamento
+    bairro_contato_relacionamento:
+      example: São José
+      type: string
+      description: Bairro do dados opcionais para contato e relacionamento
+    numero_contato_relacionamento:
+      example: "150"
+      type: string
+      description: Número do dados opcionais para contato e relacionamento
+    complemento_contato_relacionamento:
+      example: ap 9191
+      type: string
+      description: Complemento do dados opcionais para contato e relacionamento
+    estado_contato_relacionamento:
+      example: SE
+      type: string
+      description: Estado do dados opcionais para contato e relacionamento
+    cidade_contato_relacionamento:
+      example: Aracaju
+      type: string
+      description: Cidade do dados opcionais para contato e relacionamento
+    pais_contato_relacionamento:
+      example: Brasil
+      type: string
+      description: País do dados opcionais para contato e relacionamento
+    telefone_contato_relacionamento:
+      example: "+557984848484"
+      type: string
+      description: Telefone do dados opcionais para contato e relacionamento
+    celular_contato_relacionamento:
+      example: "+55978949448484"
+      type: string
+      description: Celular do dados opcionais para contato e relacionamento
+    email_contato_relacionamento:
+      example: email@email.com
+      type: string
+      description: Email do dados opcionais para contato e relacionamento
+    nome_representante_pj:
+      example: Manoel Gomes
+      type: string
+      description: Nome do representante PJ
+    documento_representante_pj:
+      example: 111.111.111-11
+      type: string
+      description: Documento do representante PJ
+    cargo_pj:
+      example: Analista
+      type: string
+      description: Cargo do representante PJ
+    email_relacionamento_pj:
+      example: email@email.com
+      type: string
+      description: E-mail do representante PJ
+    telefone_relacionamento_pj:
+      example: "+5579498489489"
+      type: string
+      description: Telefone do representante PJ
+    genero_representante:
+      example: Masculino
+      type: string
+      description: Gênero do representante PJ

@@ -1,0 +1,215 @@
+path: /assistencias
+tabela: assistencias
+metodo: get
+descricao: Esta api retorna os dados das assistências a partir dos filtros
+  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
+nome: Assistências (assistencias)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarAssistencias
+subschema: Assistencia
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 193
+      type: integer
+      description: Identificador da assistência
+    referencia_data:
+      example: 2023-01-15 15:26:15
+      type: datetime
+      description: Data de referência
+    idassistencia:
+      example: 11
+      type: integer
+      description: Identificador da assistência
+    idcliente:
+      example: 345
+      type: integer
+      description: Identificador do cliente vinculado à assistência
+    documento_cliente:
+      example: "12345678900"
+      type: string
+      description: Documento do cliente
+    cliente:
+      example: Joao da silva
+      type: string
+      description: Nome do cliente
+    cep_cliente:
+      example: "49010020"
+      type: string
+      description: Cep do cliente
+    idempreendimento:
+      example: 3
+      type: integer
+      description: Identificador do empreendimento vinculado à assistência
+    codigointerno_empreendimento:
+      example: "222"
+      type: string
+      description: Identificador do empreendimento para integrações
+    empreendimento:
+      example: Varandas
+      type: string
+      description: Nome do empreendimento vinculado à assistência
+    etapa:
+      example: Unica
+      type: string
+      description: Etapa do empreendimento vinculado à assistência
+    bloco:
+      example: Bloco B
+      type: string
+      description: Bloco do empreendimento vinculado à assistência
+    unidade:
+      example: "103"
+      type: string
+      description: Unidade do empreendimento vinculado à assistência
+    ativo:
+      example: S
+      type: string
+      description: Status atual da assistência
+    data_cad:
+      example: 2021-12-20
+      type: datetime
+      description: Data de cadastro da assistência
+    idsituacao:
+      example: 3
+      type: integer
+      description: Identificador da situação da assistência
+    situacao:
+      example: Inicial
+      type: string
+      description: Situação da assistência
+    unidade_manual:
+      example: "103"
+      type: string
+      description: Unidade informada na criação da assitência
+    bloco_manual:
+      example: Bloco manual
+      type: string
+      description: Bloco informado na criação da assistência
+    empreendimento_manual:
+      example: Empreendimento
+      type: string
+      description: Empreendimento informado na criação da assistência
+    data_prevista_termino:
+      example: 2027-01-01
+      type: datetime
+      description: Data prevista para a conclusão da assistência
+    data_conclusao:
+      example: 2027-01-01
+      type: datetime
+      description: Data de conclusão da assistência
+    recorrente:
+      example: S
+      type: string
+      description: Informa se a assistência é recorrente
+    total_horas:
+      example: 1070
+      type: integer
+      description: Total de horas necessárias
+    custo_previsto:
+      example: 343334.33
+      type: number
+      description: Custo previsto para a assistência
+    idatendimento:
+      example: 22
+      type: integer
+      description: Identificador do atendimento vinculado à assistência
+    empreendimento_localidade:
+      example: Localudade
+      type: string
+      description: Seleção feita na criação da assistência
+    unidade_area:
+      example: 1070
+      type: string
+      description: Tipo do espaço
+    idlocalidade:
+      example: 3
+      type: integer
+      description: Identificador da localidade
+    localidade:
+      example: Localidade
+      type: string
+      description: Localidade informada
+    descricao_localidade:
+      example: Descrição localidade
+      type: string
+      description: Descrição da localidade
+    idarea:
+      example: 1
+      type: integer
+      description: Identificador da área
+    area:
+      example: Externa
+      type: string
+      description: Área informada
+    descricao_area:
+      example: Sem descrição
+      type: string
+      description: Descrição da área
+    prioridade:
+      example: N
+      type: string
+      description: Prioridade informada
+    ultima_atualizacao_situacao:
+      example: 2022-10-10
+      type: string
+      description: Data da última atualização da situação da assistência
+    data_modificacao:
+      example: 2022-10-10
+      type: datetime
+      description: Data de modificação do registro
