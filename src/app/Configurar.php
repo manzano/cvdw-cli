@@ -71,6 +71,7 @@ class Configurar extends Command
         if ($this->variaveisAmbiente['configurar'] === 'Sair (CTRL+C)') {
             $io->text(['Até mais!', '']);
             return Command::SUCCESS;
+            exit;
         }
         $io->text(['Você escolheu: ' . $this->variaveisAmbiente['configurar'], '']);
 

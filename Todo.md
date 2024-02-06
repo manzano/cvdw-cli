@@ -7,6 +7,8 @@ Aqui está uma lista de tarefas pendentes para melhorar e otimizar o projeto CVD
 
 - **Recarregar .env no Final das Configurações**: Garantir que o arquivo `.env` seja recarregado automaticamente após quaisquer alterações nas configurações para que as novas variáveis de ambiente sejam aplicadas imediatamente.
 
+- **Continuar após o erro**: Se der erro em algum requisição, seguir com a execução dos outros endpoints.
+
 - **Controle de requisições vazias por minuto**: Garantir que o a quantidade de requisições por minuto não ultrapasse o limite quando o retorno for vazio.
 
 - **Validar no Executar se Já Estamos Configurados**: Antes de executar qualquer comando, verificar se o ambiente já está configurado corretamente para evitar a repetição de configurações ou erros de execução.
