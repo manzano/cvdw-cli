@@ -1,0 +1,168 @@
+path: /pessoas/patrimoniais
+tabela: pessoas_patrimoniais
+metodo: get
+descricao: Esta api retorna os valores dos dados patrimoniais das pessoas a
+  partir dos filtros solicitados.
+nome: Pessoas (pessoas_patrimoniais)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarPessoasPatrimoniais
+subschema: PessoasPatrimoniaisRetorno
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 269
+      type: integer
+      description: Identificador
+    referencia_data:
+      example: 2023-12-29 16:12:52
+      type: datetime
+      description: Data de Referência
+    idpessoa:
+      example: 269
+      type: integer
+      description: Identificador da pessoa
+    idpessoa_int:
+      example: "726"
+      type: string
+      description: Identificador da pessoa (Código Interno)
+    possui_bem:
+      example: S
+      type: string
+      description: Informa se possui bens
+    quantidade_imoveis_possui:
+      example: 1
+      type: integer
+      description: Quantidade de bens que possui
+    quais_bens:
+      example: Descrição dos bens que possui
+      type: string
+      description: Identificador
+    situacao_do_bem:
+      example: Quitado
+      type: string
+      description: Situação do bem
+    valor_do_bem:
+      example: "16151.15"
+      type: string
+      description: Identificador
+    novos_bens:
+      idpessoa_novo_bem:
+        example: 5
+        type: string
+        description: Identificador do bem
+      data_cad:
+        example: 2020-09-30 17:55:19
+        type: string
+        description: Data de cadastro do bem
+      tipo_novo_bem:
+        example: Imóveis
+        type: string
+        description: Tipo do bem - Imóveis ou Automóvel
+      cep_novo_bem:
+        example: "49037550"
+        type: string
+        description: CEP do bem
+      endereco_novo_bem:
+        example: Avenida Rotary
+        type: string
+        description: Endereço do bem
+      bairro_novo_bem:
+        example: Atalaia
+        type: string
+        description: Bairro do bem
+      valor_onus_mensal_novo_bem:
+        example: null
+        type: string
+        description: Valor ônus mensal do bem
+      prazo_meses_novo_bem:
+        example: null
+        type: string
+        description: Prazo em meses do bem
+      marca_modelo_automovel_novo_bem:
+        example: null
+        type: string
+        description: Marca/Modelo do bem automóvel
+      ano_automovel_novo_bem:
+        example: null
+        type: string
+        description: Ano do bem automóvel
+      placa_renavam_automovel_novo_bem:
+        example: null
+        type: string
+        description: Placa/Renavam do bem automóvel
+      situacao_automovel_novo_bem:
+        example: null
+        type: string
+        description: Situação do bem automóvel
+      quantidade_parcelas_automovel_novo_bem:
+        example: null
+        type: string
+        description: Situação do bem automóvel
+      valor_parcela_automovel_novo_bem:
+        example: null
+        type: string
+        description: Valor parcela do bem automóvel
+      estado:
+        example: Sergipe
+        type: string
+        description: Estado do bem
+      cidade:
+        example: Aracaju
+        type: string
+        description: Cidade do bem

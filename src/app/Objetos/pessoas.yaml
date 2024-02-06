@@ -1,0 +1,432 @@
+path: /pessoas
+tabela: pessoas
+metodo: get
+descricao: Esta api retorna os valores das pessoas a partir dos filtros
+  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
+nome: Pessoas (pessoas)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarPessoas
+subschema: PessoasRetorno
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 1
+      type: integer
+      description: Identificador
+    referencia_data:
+      example: 2023-12-29 16:12:52
+      type: datetime
+      description: Data de Referência
+    idpessoa:
+      example: 1
+      type: integer
+      description: Identificador da pessoa
+    idpessoa_int:
+      example: 1
+      type: string
+      description: Identificador da pessoa (Código Interno)
+    idpessoa_legado:
+      example: 1
+      type: string
+      description: Identificador da pessoa (legado)
+    data_cad:
+      example: 2017-12-18 15:20:45
+      type: datetime
+      description: Data de cadastro
+    ativo_painel:
+      example: Sim
+      type: string
+      description: Informa se a pessoa está ativa
+    ativo_login:
+      example: Sim
+      type: string
+      description: Informa se a pessoa te login ativo
+    situacao:
+      example: Cliente
+      type: string
+      description: Informa a situação da Pessoa (Cliente; Não cliente; Prospect)
+    validado:
+      example: Sim
+      type: string
+      description: Informa se a pessoa está validada
+    documento_tipo:
+      example: CPF
+      type: string
+      description: Tipo do documento
+    documento:
+      example: 111.111.111-11
+      type: string
+      description: Documento
+    pessoa_estrangeira:
+      example: Não
+      type: string
+      description: Informa se pessoa estrangeira
+    nome:
+      example: Associado Silva Santos
+      type: string
+      description: Nome
+    reconhecimento_firma:
+      example: null
+      type: string
+      description: Reconhecimento de firma
+    sexo:
+      example: Masculino
+      type: string
+      description: Sexo da pessoa (Feminino; Masculino; Não desejo informar)
+    data_nasc:
+      example: 1985-05-12
+      type: datetime
+      description: Data de nascimento
+    estado_civil:
+      example: Casado(a) - Participação final nos aquestos
+      type: string
+      description: Estado civil
+    data_casamento:
+      example: 2023-03-01
+      type: datetime
+      description: Data de casamento
+    pacto_antenupcial_livro:
+      example: Informação do Pacto antenupcial
+      type: string
+      description: Informação do Pacto antenupcial, Livro
+    folha:
+      example: "12"
+      type: string
+      description: Folha
+    cartorio:
+      example: Cartório
+      type: string
+      description: Cartório
+    pais:
+      example: Brasil
+      type: string
+      description: País
+    naturalidade:
+      example: Aracaju
+      type: string
+      description: Naturalidade
+    possui_dependentes:
+      example: Sim
+      type: string
+      description: Informa se possui dependentes
+    quantidade_dependentes:
+      example: 1
+      type: integer
+      description: Quantidade de dependentes
+    possui_procuracao:
+      example: Sim
+      type: string
+      description: Informa se possui procuração
+    possui_pacto_antenupcial:
+      example: Não
+      type: string
+      description: Informa se possui pacto antenupcial
+    menor_nao_emancipado:
+      example: Sim
+      type: string
+      description: Informa se é menor e não emancipado
+    grau_instrucao:
+      example: Ensino médio incompleto
+      type: string
+      description: Grau de instrução
+    renda_familiar:
+      example: "5000.00"
+      type: string
+      description: Renda familiar
+    marketing_pos_venda:
+      example: Sim
+      type: string
+      description: Marketing Pós-venda
+    rg:
+      example: 25465-1
+      type: string
+      description: Número do RG
+    rg_orgao_emissor:
+      example: ssp-SE
+      type: string
+      description: Orgão emissor do RG
+    rg_data_emissao:
+      example: 1984-12-12
+      type: datetime
+      description: Data de emissão do RG
+    rne:
+      example: 25465-1
+      type: string
+      description: Número do RNE
+    rne_orgao_emissor:
+      example: PF
+      type: string
+      description: Orgão emissor do RNE
+    rne_data_emissao:
+      example: 2012-05-25
+      type: datetime
+      description: Data de emissão do RNE
+    passaporte:
+      example: CS265436
+      type: string
+      description: Número do passaporte
+    passaporte_orgao_emissor:
+      example: PF
+      type: string
+      description: Orgão emissor do passaporte
+    passaporte_data_emissao:
+      example: 2023-05-25
+      type: datetime
+      description: Data de emissão do passaporte
+    cnh:
+      example: "03662589788"
+      type: string
+      description: Número da CNH
+    cnh_orgao_emissor:
+      example: Detran
+      type: string
+      description: Orgão emissor da CNH
+    data_primeira_habilitacao_cnh:
+      example: 2018-05-25
+      type: datetime
+      description: Data da primeira habilitação da CNH
+    data_fim_validade_cnh:
+      example: 2024-05-25
+      type: datetime
+      description: Data de validade da CNH
+    cnh_data_emissao:
+      example: 2022-02-28
+      type: datetime
+      description: Data de emissão da CNH
+    rnm:
+      example: A123456-7
+      type: string
+      description: Número do RNM
+    rnm_orgao_emissor:
+      example: PF
+      type: string
+      description: Orgão emissor do RNM
+    rnm_data_emissao:
+      example: 2022-02-28
+      type: datetime
+      description: Data de emissão do RNM
+    filiacao_mae:
+      example: Nome da mãe
+      type: string
+      description: Filiação Mãe/2
+    filiacao_pai:
+      example: Nome do pai
+      type: string
+      description: Filiação Pai/1
+    razao_social:
+      example: Empresa Nome LTDA
+      type: string
+      description: Razão Social
+    segmento_razao:
+      example: Cosméticos
+      type: string
+      description: Segmento/Ramo
+    razao_social_anterior:
+      example: Empresa Nome Família LTDA
+      type: string
+      description: Razão social anterior
+    sucessao:
+      example: Sim
+      type: string
+      description: Sucessão
+    forma_constituicao:
+      example: LTDA
+      type: string
+      description: Forma de constituição
+    data_constituicao:
+      example: 2023-11-13
+      type: datetime
+      description: Data de constituição
+    numero_junta_comercial:
+      example: "178"
+      type: string
+      description: Número da junta comercial
+    classificacao:
+      example: Pessoa
+      type: string
+      description: Classificação da pessoa
+    insc_estadual:
+      example: 34853689-5
+      type: string
+      description: Inscrição estadual
+    insc_municipal:
+      example: 985.308.573.887
+      type: string
+      description: Inscrição municipal
+    cep:
+      example: "49030210"
+      type: string
+      description: CEP
+    logradouro:
+      example: Avenida
+      type: string
+      description: Logradou
+    endereco:
+      example: Pastora Maria
+      type: string
+      description: Endereço
+    bairro:
+      example: Farolândia
+      type: string
+      description: Bairro
+    numero:
+      example: "3232"
+      type: string
+      description: Número
+    complemento:
+      example: Apartamento 708
+      type: string
+      description: Complemento
+    estado:
+      example: SE
+      type: string
+      description: Estado
+    cidade:
+      example: Aracaju
+      type: string
+      description: Cidade
+    endereco_pais:
+      example: Brasil
+      type: string
+      description: País
+    tipo_residencia:
+      example: Própria com financiamento
+      type: string
+      description: Tipo da resdência
+    reside_com:
+      example: Com os pais
+      type: string
+      description: Com quem Reside
+    valor_aluguel:
+      example: "1750.00"
+      type: string
+      description: Valor de aluguel
+    tempo_residencia:
+      example: 1
+      type: integer
+      description: Tempo de residência (mês)
+    tipo_correspondencia:
+      example: Residencial
+      type: string
+      description: Tipo de correspondência
+    politicamente_exposta:
+      example: Não
+      type: string
+      description: Pessoa politicamente exposta
+    ppe_cargo:
+      example: null
+      type: string
+      description: Cargo/Função
+    ppe_exercicio:
+      example: 2001-2004
+      type: string
+      description: Período de exercício
+    suspeito:
+      example: Não
+      type: string
+      description: Pessoa contemplada na lista de indivíduos suspeitos/envolvidos em
+        lavagem de dinheiro e financiamento ao terrorismo
+    residente_municipio_fronteira:
+      example: Não
+      type: string
+      description: Pessoa residente em município de faixa de fronteira
+    relacionamento_ppe:
+      example: Não
+      type: string
+      description: Relacionamento com um PPE
+    relacionamento_ppe_nome:
+      example: João Gomes
+      type: string
+      description: Nome do relacionamento
+    relacionamento_ppe_parentesco:
+      example: Irmão
+      type: string
+      description: Parentesco do relacionamento
+    relacionamento_ppe_cargo:
+      example: Analista
+      type: string
+      description: Cargo/Função do relacionamento
+    relacionamento_ppe_exercicio:
+      example: 2001-
+      type: string
+      description: Período de exercício do relacionamento
+    relacionamento_ppe_identificacao:
+      example: 12544-85
+      type: string
+      description: Número de identificação do relacionamento
+    relacionamento_ppe_orgao_emissor:
+      example: SSP
+      type: string
+      description: Orgão emissor do relacionamento
+    relacionamento_ppe_data_nasc:
+      example: 2011-05-28
+      type: datetime
+      description: Data de nascimento do relacionamento
+    relacionamento_ppe_cpf:
+      example: 111.111.111-11
+      type: string
+      description: CPF do relacionamento
+    numero_pis:
+      example: "21212"
+      type: string
+      description: Número do PIS
+    observacoes:
+      example: Observações
+      type: text
+      description: Observações

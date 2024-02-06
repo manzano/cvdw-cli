@@ -1,0 +1,116 @@
+path: /pessoas/bens-empresa
+tabela: pessoas_bens_empresa
+metodo: get
+descricao: Esta api retorna os valores dos bens da empresa das pessoas (PJ) a
+  partir dos filtros solicitados.
+nome: Pessoas (pessoas_bens_empresa)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarPessoasBensEmpresa
+subschema: PessoasBensEmpresaRetorno
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 269
+      type: integer
+      description: Identificador
+    referencia_data:
+      example: 2023-12-29 16:12:52
+      type: datetime
+      description: Data de Referência
+    idpessoa:
+      example: 269
+      type: integer
+      description: Identificador da pessoa
+    idpessoa_int:
+      example: "726"
+      type: string
+      description: Identificador da pessoa (Código Interno)
+    bens_empresa:
+      idpessoa_bem_empresa:
+        example: 4
+        type: string
+        description: Identificador do bem da empresa
+      data_cad:
+        example: 2024-01-22 11:14:34
+        type: string
+        description: Data de cadastro
+      idpessoa:
+        example: 10034
+        type: string
+        description: Identificador da pessoa
+      tipo:
+        example: Carro
+        type: string
+        description: Tipo do bem
+      valor_atual:
+        example: "150000.00"
+        type: string
+        description: Valor atual do bems
+      onus:
+        example: Sim
+        type: string
+        description: Informa se possui ônus
+      numero_parcelas:
+        example: 12
+        type: string
+        description: Número de parcelas
+      valor_parcelas_mensais:
+        example: "350.00"
+        type: string
+        description: Valor mensal da parcela

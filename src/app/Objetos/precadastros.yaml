@@ -1,0 +1,235 @@
+path: /precadastros
+tabela: precadastros
+metodo: get
+descricao: Esta api os dados dos pré-cadastros a partir dos filtros solicitados,
+  caso deseje saber o que cada campo representa basta ir no schema.
+nome: Pre-cadastro (precadastros)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarPrecadastro
+subschema: Precadastro
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 1
+      type: integer
+      description: Identificador do pré-cadastro
+    referencia_data:
+      example: 2023-01-15 15:26:15
+      type: datetime
+      description: Data de referência
+    idprecadastro:
+      example: 1
+      type: integer
+      description: Identificador do pré-cadastro
+    idsituacao:
+      example: 2
+      type: integer
+      description: Identificador da situação do pré-cadastro
+    situacao:
+      example: Novo
+      type: string
+      description: Situação do pré-cadastro
+    condicao_aprovada:
+      example: N
+      type: string
+      description: Condição de aprovação do pré-cadastro
+    idempreendimento:
+      example: 665
+      type: integer
+      description: Identificador do empreendimento do pré-cadastro
+    empreendimento:
+      example: Parque do Carmo - Condomínio 7
+      type: string
+      description: Empreendimento do pré-cadastro
+    idcorretor:
+      example: 11808
+      type: integer
+      description: Identificador do corretor do pré-cadastro
+    corretor:
+      example: TSURI BRASIL
+      type: string
+      description: Corretor do pré-cadastro
+    idempresa:
+      example: 1
+      type: integer
+      description: Identificador da empresa do pré-cadastro
+    empresa:
+      example: Ava
+      type: string
+      description: Empresa do pré-cadastro
+    pessoa:
+      example: GUILHERME MACEDO SILVA
+      type: string
+      description: Nome do cliente
+    cep_cliente:
+      example: "08223000"
+      type: string
+      description: CEP do cliente
+    idusuario_correspondente:
+      example: 2
+      type: integer
+      description: Identificador do usuário correspondente
+    usuario_correspondente:
+      example: Josão correspondente
+      type: string
+      description: Usuário correspondente
+    idpessoa:
+      example: 3
+      type: integer
+      description: Identificador do cliente
+    idlead:
+      example: 2,3,4
+      type: string
+      description: Identificador do lead
+    valor_avaliacao:
+      example: 0
+      type: number
+      description: Valor de avaliação do pré-cadastro
+    valor_aprovado:
+      example: 0
+      type: number
+      description: Valor aprovado do pré-cadastro
+    valor_subsidio:
+      example: 0
+      type: number
+      description: Valor de subsídio do pré-cadastro
+    valor_total:
+      example: 0
+      type: number
+      description: Valor total do pré-cadastro
+    valor_fgts:
+      example: 0
+      type: number
+      description: Valor de FGTS do pré-cadastro
+    saldo_devedor:
+      example: 0
+      type: number
+      description: Saldo devedor do pré-cadastro
+    prazo:
+      example: "0"
+      type: string
+      description: Prazo do pré-cadastro
+    observacoes:
+      example: Nenhuma
+      type: string
+      description: Observações do pré-cadastro
+    tabela:
+      example: Tabela Simples
+      type: string
+      description: Tabela do pré-cadastro
+    valor_prestacao:
+      example: 0
+      type: number
+      description: Valor da prestação do pré-cadastro
+    carta_credito:
+      example: Sem
+      type: string
+      description: Carta de crédito do pré-cadastro
+    vencimento_aprovacao:
+      example: 2021-03-10
+      type: string
+      description: Data de vencimento da aprovação
+    idmotivo_reprovacao:
+      example: 3
+      type: integer
+      description: Identificador do motivo de reprovação
+    motivo_reprovacao:
+      example: Reprovado sem crédito
+      type: string
+      description: Motivo de reprovação
+    descricao_motivo_reprovacao:
+      example: Sem crédito
+      type: string
+      description: Descrição do motivo de reprovação
+    idmotivo_cancelamento:
+      example: 1
+      type: integer
+      description: Identificador do motivo de cancelamento
+    motivo_cancelamento:
+      example: Cancelado
+      type: string
+      description: Motivo de cancelamento
+    descricao_motivo_cancelamento:
+      example: Cancelado pela empresa
+      type: string
+      description: Descrição do motivo de cancelamento
+    sla_vencimento:
+      example: 2021-03-10
+      type: string
+      description: Data de vencimento do SLA
+    data_cad:
+      example: 2021-03-10 11:17:50
+      type: datetime
+      description: Data de cadastro
+    empresa_correspondente:
+      example: Empresa
+      type: string
+      description: Empresa correspondente
+    idsituacao_anterior:
+      example: 2
+      type: integer
+      description: Identidicador da situação anterior do pré-cadastro
+    situacao_anterior:
+      example: Aprovado
+      type: string
+      description: Situação anterior do pré-cadastro
+    data_ultima_alteracao_situacao:
+      example: 2021-03-10 11:17:50
+      type: datetime
+      description: Data de última alteração de situação

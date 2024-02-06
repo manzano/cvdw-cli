@@ -1,0 +1,173 @@
+path: /imobiliarias
+tabela: imobiliarias
+metodo: get
+descricao: Esta api retorna os dados das imobiliarias a partir dos filtros
+  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
+nome: Imobiliarias (imobiliarias)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarImobiliarias
+subschema: Imobiliaria
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 1
+      type: integer
+      description: Identificador da imobiliaria
+    referencia_data:
+      example: 2023-01-15 15:26:15
+      type: datetime
+      description: Data de referência
+    idimobiliaria:
+      example: 1
+      type: integer
+      description: Identificador da imobiliaria
+    ativo:
+      example: S
+      type: string
+      description: Indica se imobiliária está ativa
+    data_cad:
+      example: 2021-03-10 11:17:50
+      type: datetime
+      description: Data de Cadastro da Imobiliária
+    idestado:
+      example: 1
+      type: integer
+      description: Identificação do estado da imobiliária
+    idcidade:
+      example: 1
+      type: integer
+      description: Identificação da cidade da imobiliária
+    nome:
+      example: Imobiliaria teste
+      type: string
+      description: Nome da Imobiliária
+    razao_social:
+      example: Razao Social
+      type: string
+      description: Razao Social da Imobiliára
+    cnpj:
+      example: 12.345.678/0001-55
+      type: string
+      description: CNPJ da Imobiliária
+    cnpj_faturamento:
+      example: 12.345.678/0001-55
+      type: string
+      description: CNPJ da faturmanto da Imobiliária
+    idlogradouro:
+      example: 1
+      type: integer
+      description: Logradouro da Imobiliária
+    endereco:
+      example: rua teste
+      type: string
+      description: Endereço da Imobiliária
+    complemento:
+      example: apartamento
+      type: string
+    numero:
+      example: 32 A
+      type: string
+    bairro:
+      example: bairro teste
+      type: string
+    cep:
+      example: 49500-235
+      type: string
+    telefone:
+      example: "7999858588"
+      type: string
+    celular:
+      example: "7999858588"
+      type: string
+    email:
+      example: teste@cvcrm.com.br
+      type: string
+    creci:
+      example: "123456"
+      type: string
+    avatar_nome:
+      example: photo
+      type: string
+    validade_creci:
+      example: 2021-03-10
+      type: string
+    gerente_nome:
+      example: Nome gerente
+      type: string
+    gerente_cpf:
+      example: 123.456.789-10
+      type: string
+    gerente_telefone:
+      example: 799945-8585
+      type: string
+    gerente_celular:
+      example: 799945-8585
+      type: string
+    gerente_email:
+      example: gerente@cvcrm.com.br
+      type: string
+    sigla:
+      example: TS
+      type: string
+    codigointerno:
+      example: "123456"
+      type: string
+    observacoes:
+      example: observacao iumobiliaria
+      type: string

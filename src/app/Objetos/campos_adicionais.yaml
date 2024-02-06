@@ -1,0 +1,108 @@
+path: /campos_adicionais
+tabela: campos_adicionais
+metodo: get
+descricao: Esta api retorna os valores dos Campos Adicionais a partir dos
+  filtros solicitados, caso deseje saber o que cada campo representa basta ir no
+  schema.
+nome: Campos Adicionais (campos_adicionais)
+parametros:
+  header:
+    - name: email
+      in: header
+      required: true
+      description: E-mail de autenticação do usuário administrativo
+      example: email@email.com
+      schema:
+        type: string
+    - name: token
+      in: header
+      required: true
+      description: Token criado no usuário administrativo do e-mail
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarCamposAdicionais
+subschema: CamposAdicionaisRetorno
+body:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  a_partir_referencia:
+    example: 1640
+    type: integer
+    description: Retornará as vistorias a partir deste id, lembrando que está
+      ordenado em ordem decrescente
+  a_partir_data_referencia:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias criadas a partir da data informada
+  a_partir_data_modificacao:
+    example: 2022-05-18
+    type: string
+    description: Retornará as vistorias modificadas a partir da data informada
+response:
+  pagina:
+    example: 1
+    type: integer
+    description: Página que deseja visualizar os registros
+  registros_por_pagina:
+    example: 30
+    type: integer
+    description: Quantidade de registro por página, máximo 500 registros
+  total_de_registros:
+    example: 1054
+    type: integer
+    description: Total de registros encontrados
+  total_de_paginas:
+    example: 36
+    type: integer
+    description: Total de páginas encontradas
+  dados:
+    referencia:
+      example: 1
+      type: integer
+      description: Identificador
+    referencia_data:
+      example: 2023-12-29 16:12:52
+      type: datetime
+      description: Data de Referência
+    idcampovalor:
+      example: 12414
+      type: integer
+      description: Identificador do campo adicional
+    idcampo:
+      example: CONTRATO - USO
+      type: string
+      description: Identificador do campo
+    campo_nome:
+      example: valor informado pelo usuário
+      type: string
+      description: Nome do campo
+    idfuncionalidade:
+      example: USO_CONTRATO
+      type: string
+      description: Identificador da funcionalidade do campo
+    funcionalidade:
+      example: USO_CONTRATO
+      type: string
+      description: Funcionalidade do campo
+    valor:
+      example: USO_CONTRATO
+      type: string
+      description: Valor do campo
+    data_cad:
+      example: USO_CONTRATO
+      type: datetime
+      description: Data de cadastro
+    data_sincronizacao:
+      example: USO_CONTRATO
+      type: datetime
+      description: Data de sincronização
