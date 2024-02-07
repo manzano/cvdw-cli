@@ -59,6 +59,7 @@ fi
 echo ""
 echo "Instalando as dependências do Composer..."
 composer install
+composer dump-autoload --optimize
 echo "✅ Dependências do Composer instaladas."
 
 # Define o comando do alias

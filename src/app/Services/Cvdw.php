@@ -14,6 +14,7 @@ use DateTime;
 use Manzano\CvdwCli\Services\Http;
 use Manzano\CvdwCli\Services\DatabaseSetup;
 use Manzano\CvdwCli\Services\Objeto;
+use Manzano\CvdwCli\Services\Console\CvdwProgressBar;
 
 class Cvdw
 {
@@ -23,37 +24,46 @@ class Cvdw
     public \Doctrine\DBAL\Connection $conn;
     public DatabaseSetup $database;
     public object $resposta;
+    public object $logObjeto;
     public array $objeto;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
-        $this->io = new SymfonyStyle($input, $output);
         $this->input = $input;
         $this->output = $output;
         $this->conn = conectarDB($input, $output);
     }
 
-    public function processar(array $objeto): bool
+    public function processar(array $objeto, $io, $inputDataReferencia = false, $logObjeto = null): bool
     {
 
+        $this->io = $io;
+        $this->logObjeto = $logObjeto;
+
         $this->database = new DatabaseSetup($this->input, $this->output);
-
         $http = new Http($this->input, $this->output);
-        $referencia_data = $this->buscaUltimaData($objeto['tabela']);
-        if ($referencia_data) {
-            $referencia_data = new DateTime($referencia_data); // Cria um objeto DateTime a partir da sua data de referência
-            $referencia_data->modify('+1 seconds'); // Subtrai X segundo(s)
-            // Formata a data para o formato desejado e atribui de volta à variável
-            $referencia_data = $referencia_data->format('d/m/Y H:i:s');
+
+        if ($inputDataReferencia) {
+            $this->io->text('Data de referência: <fg=red>Ignorada</>');
+            $parametros = array(
+                'pagina' => 1,
+                'registros_por_pagina' => 500
+            );
+        } else {
+            $referencia_data = $this->buscaUltimaData($objeto['tabela']);
+            if ($referencia_data) {
+                $referencia_data = new DateTime($referencia_data); // Cria um objeto DateTime
+                $referencia_data->modify('+1 seconds'); // Subtrai X segundo(s)
+                // Formata a data para o formato desejado e atribui de volta à variável
+                $referencia_data = $referencia_data->format('d/m/Y H:i:s');
+            }
+            $this->io->text('Data de referência: ' . $referencia_data);
+            $parametros = array(
+                'pagina' => 1,
+                'registros_por_pagina' => 500,
+                'a_partir_data_referencia' => "$referencia_data"
+            );
         }
-
-        $this->io->text('Data de referência: ' . $referencia_data);
-
-        $parametros = array(
-            'pagina' => 1,
-            'registros_por_pagina' => 500,
-            'a_partir_data_referencia' => "$referencia_data"
-        );
         $resposta = $http->requestCVDW($objeto['path'], $parametros);
 
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
@@ -71,7 +81,7 @@ class Cvdw
                 $this->io->text('Total de registros encontrados: ' . $resposta->total_de_registros);
                 $this->io->text('Total de páginas: ' . $resposta->total_de_paginas);
 
-                $progressBar = new ProgressBar($this->output, $resposta->total_de_paginas);
+                $progressBar = new ProgressBar($this->output, $resposta->total_de_registros);
                 $progressBar->setFormat('normal'); // debug
                 $progressBar->setBarCharacter('<fg=green>=</>');
                 $progressBar->setProgressCharacter("\xF0\x9F\x9A\x80");
@@ -82,23 +92,34 @@ class Cvdw
                 for ($pagina = 1; $pagina <= $paginas; $pagina++) {
 
                     if ($pagina > 1) {
-                        $parametros = array(
-                            'pagina' => $pagina,
-                            'registros_por_pagina' => 500,
-                            'a_partir_data_referencia' => "$referencia_data"
-                        );
-                        $resposta = $http->requestCVDW($objeto['path'], $parametros);
+
+                        if ($inputDataReferencia) {
+                            $parametros = array(
+                                'pagina' => $pagina,
+                                'registros_por_pagina' => 500
+                            );
+                        } else {
+                            $parametros = array(
+                                'pagina' => $pagina,
+                                'registros_por_pagina' => 500,
+                                'a_partir_data_referencia' => "$referencia_data"
+                            );
+                        }
+                        $resposta = $http->requestCVDW($objeto['path'], $parametros, $inputDataReferencia);
                     }
 
-                    $progressBar->setMessage('Dados processados: XXX ' . $dadosProcessados);
+                    $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
+                    $progressBar->display();
                     foreach ($resposta->dados as $linha) {
                         //print_r($linha);
                         $dadosProcessados++;
                         if ($this->processaSql($objeto, $linha)) {
                             $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
+                            $progressBar->advance();
+                            $progressBar->display();
                         }
                     }
-                    $progressBar->advance();
+                    
                     // Precisa aguardar 4 segundos para não dar erro de limite de requisições
                     // CV Bloqueia se for feito mais que 20 requisições por minuto
                     sleep(4);
@@ -182,6 +203,10 @@ class Cvdw
 
         try {
             $queryBuilder->executeStatement();
+
+            if ($this->logObjeto) {
+                $this->logObjeto->escreverLog("  - Atualizado: " . $linha->referencia);
+            }
         } catch (Exception $e) {
             $this->io->error([
                 'Erro ao tentar executar o SQL! (Update)',
@@ -213,6 +238,10 @@ class Cvdw
 
         try {
             $queryBuilder->executeStatement();
+
+            if ($this->logObjeto) {
+                $this->logObjeto->escreverLog("  - Inserido: " . $linha->referencia);
+            }
         } catch (Exception $e) {
             $this->io->error([
                 'Erro ao tentar executar o SQL! (Insert)',
