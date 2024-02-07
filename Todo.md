@@ -21,7 +21,7 @@ Aqui está uma lista de tarefas pendentes para melhorar e otimizar o projeto CVD
 
 - **Modo Detalhado `--detalhado` (Verbose)**: Introduzir um modo detalhado (ou verbose) que forneça aos usuários mais informações durante a execução dos comandos, facilitando o diagnóstico e a compreensão dos processos internos.
 
-- **Salvar Log `--salvarlog`**: Implementar uma opção para salvar logs de execução, permitindo aos usuários armazenar e revisar logs para análise ou depuração de problemas.
+- ~~**Salvar Log `--salvarlog`**: Implementar uma opção para salvar logs de execução, permitindo aos usuários armazenar e revisar logs para análise ou depuração de problemas.~~
 
 ---
 
