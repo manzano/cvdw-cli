@@ -56,6 +56,8 @@ else
   git checkout main >/dev/null 2>&1
 fi
 
+chmod u+w $REPO_DIR
+
 echo ""
 echo "Instalando as dependências do Composer..."
 composer install
