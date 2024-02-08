@@ -5,6 +5,16 @@ Aqui está uma lista de tarefas pendentes para melhorar e otimizar o projeto CVD
 
 ## Tarefas Pendentes
 
+- **Sub Tabelas**: Carregar dados que retornam na Api como um Array em Sub Tabelas. Ex: reservas_sub_campos_adicionais.
+
+- **Criação de tabelas**: Ao criar tabelas do banco de dados, o terminal está imprimindo a tabelas várias vezes.
+
+- **Verificar Ambiente**: Criar opção para verificar ambiente. (Versão, Api, Acesso Banco, Dicionario vs Banco)
+
+- **Atualizar Ambiente**: Criar opção para atualizar ambiente. curl | bash
+
+- **Analisar Banco de dados**: Executar alterações do banco de dados após a atualização Verificar colunas e tipos.
+
 - ~~**Recarregar .env no Final das Configurações**: Garantir que o arquivo `.env` seja recarregado automaticamente após quaisquer alterações nas configurações para que as novas variáveis de ambiente sejam aplicadas imediatamente.~~
 
 - ~~**Ignorar data de referencia**: Usar o argumento --ignorar-data-referencia.~~
