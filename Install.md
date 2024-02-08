@@ -16,7 +16,7 @@ Windows, siga as [instruções de instalação](Install_Windows.md).
 
 Mac, siga as [instruções de instalação](Install_Macs.md).
 
-Linux, siga as [instruções de instalação](Install_Windows.md).
+Linux, siga as [instruções de instalação](Install_Linux.md).
 
 ## Conclusão
 
