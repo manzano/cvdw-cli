@@ -24,7 +24,7 @@ class Cvdw
     public \Doctrine\DBAL\Connection $conn;
     public DatabaseSetup $database;
     public object $resposta;
-    public object $logObjeto;
+    public $logObjeto;
     public array $objeto;
 
     public function __construct(InputInterface $input, OutputInterface $output)
@@ -38,7 +38,9 @@ class Cvdw
     {
 
         $this->io = $io;
-        $this->logObjeto = $logObjeto;
+        if(is_object($logObjeto)) {
+            $this->logObjeto = $logObjeto;
+        }
 
         $this->database = new DatabaseSetup($this->input, $this->output);
         $http = new Http($this->input, $this->output);
@@ -123,6 +125,7 @@ class Cvdw
                     // Precisa aguardar 4 segundos para não dar erro de limite de requisições
                     // CV Bloqueia se for feito mais que 20 requisições por minuto
                     sleep(4);
+                    
                 }
                 $progressBar->finish();
             } else {
@@ -204,7 +207,7 @@ class Cvdw
         try {
             $queryBuilder->executeStatement();
 
-            if ($this->logObjeto) {
+            if (!is_null($this->logObjeto) && is_object($this->logObjeto)) {
                 $this->logObjeto->escreverLog("  - Atualizado: " . $linha->referencia);
             }
         } catch (Exception $e) {
