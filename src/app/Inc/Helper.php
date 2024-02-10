@@ -29,6 +29,7 @@ function salvarEnv(array $newEnv = []): void
         $envContent .= "$key=" . $novoEnv[$key] . "\n";
     }
     file_put_contents($envVars, $envContent);
+    retornarEnvs();
 }
 
 /**

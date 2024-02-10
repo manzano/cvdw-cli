@@ -8,13 +8,14 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Input\InputOption;
 
 use Symfony\Component\Console\Completion\CompletionInput;
 use Symfony\Component\Console\Completion\CompletionSuggestions;
 
 use Manzano\CvdwCli\Services\Objeto;
-use Manzano\CvdwCli\Services\CVDW;
+use Manzano\CvdwCli\Services\Log;
+use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 
 #[AsCommand(
     name: 'executar',
@@ -25,6 +26,8 @@ use Manzano\CvdwCli\Services\CVDW;
 class Executar extends Command
 {
     protected static $defaultName = 'executar';
+    protected $dirLog = null;
+    protected $logObjeto = false;
     protected InputInterface $input;
     protected OutputInterface $output;
     /**
@@ -37,21 +40,43 @@ class Executar extends Command
     {
         $this->setName('executar')
             ->setDescription('Executar o CVDW-CLI')
-            ->addArgument('objeto', InputArgument::OPTIONAL, 'Qual objeto deseja executar');
+            ->addArgument('objeto', InputArgument::OPTIONAL, 'Qual objeto deseja executar')
+            ->addOption(
+                'ignorar-data-referencia', // Nome da opção
+                'idr', // Atalho, pode ser NULL se não quiser um atalho
+                InputOption::VALUE_NONE, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+                'Ignorar a data de referência.',
+            )
+            ->addOption(
+                'salvarlog', // Nome da opção
+                'log', // Atalho, pode ser NULL se não quiser um atalho
+                InputOption::VALUE_NONE, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+                'Salvar Log da execução no diretorio de instalação.',
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-    
+
+        if ($input->getOption('salvarlog')) {
+            $this->dirLog = __DIR__;
+            // Remover /src/app de $dir
+            $this->dirLog = str_replace('/src/app', '', $this->dirLog);
+            $this->dirLog .= '/logs';
+            $this->arquivoLog = $this->dirLog . '/log_' . date('Y-m-d_H-i-s') . '.log';
+            $this->logObjeto = new Log($this->arquivoLog);
+        }
+        $io = new CvdwSymfonyStyle($input, $output, $this->logObjeto);
         $this->limparTela();
+        $this->validarConfiguracao($io);
         
-        $io = new SymfonyStyle($input, $output);
         $this->input = $input;
         $this->output = $output;
 
         $inputObjeto = $input->getArgument('objeto');
+        $inputDataReferencia = $input->getOption('ignorar-data-referencia');
         if ($inputObjeto) {
-            $this->executarObjeto($io, $inputObjeto);
+            $this->executarObjeto($io, $inputObjeto, $inputDataReferencia);
             return Command::SUCCESS;
         }
 
@@ -74,7 +99,7 @@ class Executar extends Command
                 $this->exibirObjetos($io);
                 break;
             case 'Executar todos os objetos':
-                $this->executarObjeto($io, 'all');
+                $this->executarObjeto($io, 'all', $inputDataReferencia);
                 break;
             case 'Executar um objeto especifico':
                 $this->executarObjetoOpcoes($io);
@@ -100,6 +125,20 @@ class Executar extends Command
         }
     }
 
+    public function validarConfiguracao($io) : void
+    {
+        $envVars = getEnvEscope();
+        // Listar todas as variáveis de $envVars e verificar se todas tem valor
+        foreach ($envVars as $envVar => $value) {
+            if (!isset($_ENV[$value]) || $_ENV[$value] == '') {
+                $io->error('Configuração não encontrada, invalida ou incompleta.');
+                $io->text(['Por favor use o comando "cvdw configurar" para configurar o CVDW-CLI.']);
+                $io->text(['']);
+                exit;
+            }
+        }
+    }
+
     public function exibirObjetos($io)
     {
         $objetos = new Objeto($this->input, $this->output);
@@ -114,8 +153,13 @@ class Executar extends Command
         $this->voltarProMenu($io);
     }
 
-    public function executarObjeto($io, $inputObjeto)
+    public function executarObjeto($io, $inputObjeto, $inputDataReferencia = false)
     {
+
+        if ($this->input->getOption('salvarlog')) {
+            $io->text(['Salvando o Log em: ' . $this->arquivoLog]);
+            $io->text(['']);
+        }
 
         if ($inputObjeto) {
             if ($inputObjeto == 'all') {
@@ -125,7 +169,7 @@ class Executar extends Command
             } else {
                 $objetos = new Objeto($this->input, $this->output);
                 $objetosArray = $objetos->retornarObjetos($inputObjeto);
-                if (is_array($objetosArray) && count($objetosArray) > 0) {
+                if (count($objetosArray) > 0) {
                     $io->text(['Executando objeto: ' . $inputObjeto]);
                 } else {
                     $io->error('Objeto não encontrado.');
@@ -137,10 +181,12 @@ class Executar extends Command
             $cvdw = new \Manzano\CvdwCli\Services\Cvdw($this->input, $this->output);
 
             foreach ($objetosArray as $objeto => $dados) {
+                $io->text('');
+                $io->text('');
                 $objeto = $objetoObj->retornarObjeto($objeto);
                 $io->section($dados['nome']);
                 $io->text('Executando objeto: ' . $dados['nome'] . ' (' . $objeto['subschema'] . ')');
-                $cvdw->processar($objeto);
+                $cvdw->processar($objeto, $io, $inputDataReferencia, $this->logObjeto);
                 //$this->limparTela();
             }
         } else {
@@ -168,6 +214,10 @@ class Executar extends Command
             if($dados['nome'] == $inputObjeto){
                 $inputObjeto = $objeto;
             }
+        }
+
+        if($inputObjeto == 'Sair (CTRL+C)') {
+            exit;
         }
 
         $this->limparTela();

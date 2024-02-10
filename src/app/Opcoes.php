@@ -23,7 +23,13 @@ class Opcoes extends Command
     protected function configure()
     {
         $this->setDescription('Lista os comandos disponíveis.')
-            ->setHelp('Este comando lista os comandos disponíveis no aplicativo CVDW-CLI.');
+            ->setHelp('Este comando lista os comandos disponíveis no aplicativo CVDW-CLI.')
+            ->addOption(
+                'dir', // Nome da opção
+                'diretorio', // Atalho, pode ser NULL se não quiser um atalho
+                InputOption::VALUE_NONE, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+                'Imprime o diretorio onde o CVDW-CLI está instalado.', 
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -32,6 +38,17 @@ class Opcoes extends Command
 
         // Aqui você pode personalizar a saída do comando de ajuda
         $io->title('Manzano // CVDW CLI v1.0.0');
+
+        if ($input->getOption('dir')) {
+            $dir = __DIR__;
+            // Remover /src/app de $dir
+            $dir = str_replace('/src/app', '', $dir);
+            $io->section('Instalação:');
+            $io->text([
+                'Diretório: ' . $dir
+            ]);
+        }
+
         $io->section('Como usar:');
         $io->text([
             'cvdw [comando] [opcao] [argumento]'

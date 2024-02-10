@@ -141,10 +141,12 @@ class DatabaseSetup
                         substr($coluna, 0, 2) == "id" &&
                         $especificacao["type"] == "integer")
                 ) {
-                    $tabelaObj->addIndex(array("{$nomeColuna}"), "{$nomeColuna}_idx");
+                    $nomeIndice = $this->criarNomeIndice($nomeColuna);
+                    $tabelaObj->addIndex(array("{$nomeColuna}"), "{$nomeIndice}_idx");
                 }
                 if (strpos($coluna, "data") !== false) {
-                    $tabelaObj->addIndex(array("{$nomeColuna}"), "{$nomeColuna}_idx");
+                    $nomeIndice = $this->criarNomeIndice($nomeColuna);
+                    $tabelaObj->addIndex(array("{$nomeColuna}"), "{$nomeIndice}_idx");
                 }
             }
 
@@ -168,6 +170,21 @@ class DatabaseSetup
             }
         }
         
+    }
+
+    private function criarNomeIndice(string $nomeCompleto) : string
+    {
+        // Trunca o nome para 30 caracteres
+        $nomeTruncado = substr($nomeCompleto, 0, 30);
+
+        // Gera um hash único de 6 caracteres
+        // Usando mt_rand para maior variedade e convertendo para base 36 para encurtar
+        $hashUnico = substr(base_convert(mt_rand(0, 1679615), 10, 36), 0, 6);
+
+        // Combina o nome truncado com o hash único
+        $nomeIndice = $nomeTruncado . '_' . $hashUnico;
+
+        return $nomeIndice;
     }
 
     private function tratarColuna(string $coluna, array $especificacao): array

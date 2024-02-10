@@ -1,3 +1,5 @@
 .env
 vendor/*
+logs/*.log
+!logs/.gitkeep
 .phpunit.cache

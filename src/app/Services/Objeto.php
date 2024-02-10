@@ -33,7 +33,7 @@ class Objeto
             if (isset(OBJETOS[$objeto])) {
                 return ["$objeto" => OBJETOS[$objeto]];
             } else {
-                return false;
+                return [];
             }
         } else {
             return OBJETOS;
