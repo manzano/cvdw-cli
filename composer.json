@@ -1,44 +1,45 @@
 {
-  "name": "manzano/cvdw-cli",
-  "description": "Suite para buscar dados da API do CV CVDW para um banco de dados",
-  "homepage": "https://manzano.me",
-  "license": "MIT",
-  "version": "1.0.0",
-  "minimum-stability": "stable",
-  "type": "library",
-  "require": {
-    "php": "^8.0",
-    "symfony/finder": "^6.3",
-    "doctrine/dbal": "^3.7",
-    "doctrine/migrations": "^3.6",
-    "symfony/console": "^6.3",
-    "symfony/dotenv": "^6.3",
-    "symfony/yaml": "^6.3",
-    "doctrine/doctrine-migrations-bundle": "^3.2",
-    "doctrine/sql-formatter": "^1.1"
-  },
-  "require-dev": {
-    "doctrine/dbal": "^3.7",
-    "doctrine/migrations": "^3.6",
-    "phpstan/phpstan": "^1.10"
-  },
-  "autoload": {
-    "psr-4": {
-      "Manzano\\CvdwCli\\": "src/app/"
+    "name": "manzano/cvdw-cli",
+    "description": "Suite para buscar dados da API do CV CVDW para um banco de dados",
+    "homepage": "https://manzano.me",
+    "license": "MIT",
+    "version": "1.0.0",
+    "minimum-stability": "stable",
+    "type": "library",
+    "require": {
+        "php": "^8.0",
+        "symfony/finder": "^6.3",
+        "doctrine/dbal": "^3.7",
+        "doctrine/migrations": "^3.6",
+        "symfony/console": "^6.3",
+        "symfony/dotenv": "^6.3",
+        "symfony/yaml": "^6.3",
+        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/sql-formatter": "^1.1"
     },
-    "files": [
-      "src/app/Inc/Objetos.php",
-      "src/app/Inc/Helper.php",
-      "src/app/Inc/Conexao.php"
+    "require-dev": {
+        "doctrine/dbal": "^3.7",
+        "doctrine/migrations": "^3.6",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Manzano\\CvdwCli\\": "src/app/"
+        },
+        "files": [
+            "src/app/Inc/Objetos.php",
+            "src/app/Inc/Helper.php",
+            "src/app/Inc/Conexao.php"
+        ]
+    },
+    "bin": [
+        "app"
+    ],
+    "authors": [
+        {
+            "name": "Gabriel Manzano",
+            "email": "gabriel@cvcrm.com.br"
+        }
     ]
-  },
-  "bin": [
-    "app"
-  ],
-  "authors": [
-    {
-      "name": "Gabriel Manzano",
-      "email": "gabriel@cvcrm.com.br"
-    }
-  ]
 }
