@@ -3,3 +3,4 @@ vendor/*
 logs/*.log
 !logs/.gitkeep
 .phpunit.cache
+coverage-report/*

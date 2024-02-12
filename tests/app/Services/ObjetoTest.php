@@ -26,10 +26,22 @@ class ObjetoTest extends TestCase
 
     public function testRetornarObjetos()
     {
-        
         $objeto = new Objeto($this->input, $this->output);
         $this->assertEquals(OBJETOS, $objeto->retornarObjetos());
     }
+
+    public function testRetornarObjetosEspecifico()
+    {
+        $objeto = new Objeto($this->input, $this->output);
+        $objetoAssert['leads'] = OBJETOS['leads'];
+        $this->assertEquals($objetoAssert, $objeto->retornarObjetos('leads'));
+    }
+
+    public function testRetornarObjetosNaoExistengte()
+    {
+        $objeto = new Objeto($this->input, $this->output);
+        $this->assertEquals(array(), $objeto->retornarObjetos('leads_xxx'));
+    } 
 
     public function testRetornarObjeto()
     {
@@ -42,16 +54,31 @@ class ObjetoTest extends TestCase
             );
     }
 
-    public function testIdentificarTipoDeDados()
+    public function testObjetoNaoEncontrado()
     {
         $objeto = new Objeto($this->input, $this->output);
-        $this->assertEquals("TABELA", 
+        $arquivoNome = "leads_naoexiste";
+        $arquivoCaminho = __DIR__ . "/../../../src/app/Objetos/{$arquivoNome}.yaml";
+        $this->assertEquals(
+            [],
+            $objeto->retornarObjeto($arquivoNome)
+        );
+    }
+
+    public function testIdentificarTipoDeDadosTabela()
+    {
+        $objeto = new Objeto($this->input, $this->output);
+        $this->assertEquals("TABELA",
                             $objeto->identificarTipoDeDados([
                                                                 "nome" => "João",
                                                                 ["nome" => "Maria", "idade" => 30]
                                                             ]));
+    }
 
-        $this->assertEquals("COMPONETE", $objeto->identificarTipoDeDados(["nome" => "João", "idade" => 25]));
+    public function testIdentificarTipoDeDadosComponente()
+    {
+        $objeto = new Objeto($this->input, $this->output);
+        $this->assertEquals("COMPONENTE", $objeto->identificarTipoDeDados(["nome" => "João", "idade" => 25]));
     }
 
 }

@@ -44,7 +44,7 @@ class Objeto
     {
         // Verifica se o objeto existe em OBJETOS
         if (!array_key_exists($objeto, OBJETOS)) {
-            return false;
+            return [];
         } else {
             $objetoFile = __DIR__ . "/../Objetos/{$objeto}.yaml";
             $objeto = file_get_contents($objetoFile);
@@ -59,7 +59,7 @@ class Objeto
                 return "TABELA";
             }
         }
-        return "COMPONETE";
+        return "COMPONENTE";
     }
 
 
