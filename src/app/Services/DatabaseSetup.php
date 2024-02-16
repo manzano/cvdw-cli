@@ -15,7 +15,10 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\DBAL\Statement;
+use Doctrine\DBAL\Schema\Column;
+use Doctrine\DBAL\Schema\ColumnDiff;
+use Doctrine\DBAL\Schema\TableDiff;
+use Doctrine\DBAL\Types\Type;
 
 class DatabaseSetup
 {
@@ -187,7 +190,7 @@ class DatabaseSetup
         return $nomeIndice;
     }
 
-    private function tratarColuna(string $coluna, array $especificacao): array
+    public function tratarColuna(string $coluna, array $especificacao): array
     {
 
         $opcoes = array();
@@ -214,6 +217,7 @@ class DatabaseSetup
     public function tratarNomeColuna(string $nomeColuna): string
     {
 
+        $nomeColuna = strtolower($nomeColuna);
         $nomeColuna = str_replace(' ', '_', $nomeColuna);
         $nomeColuna = str_replace('-', '_', $nomeColuna);
         $caracteresNaoPermitidos = array('(', ')', '/', '?', '!', ';', ':', '.', ',', '\'', '"', '`', '´', '=', '+', '*', '&', '%', '$', '#', '@', '§', 'ª', 'º', '°', '¨', '~', '^', '>');
@@ -242,6 +246,81 @@ class DatabaseSetup
         return in_array($tabela, $tabelas);
     }
 
+    public function retornarEstruturaTabela(string $nomeTabela): array
+    {
+        $estrutura = array();
+        $schemaManager = $this->conn->createSchemaManager();
+        $estrutura['nome'] = $nomeTabela;
+        // Obtenha detalhes da tabela
+        $estrutura['colunas'] = $schemaManager->listTableColumns($nomeTabela);
+        $estrutura['indices'] = $schemaManager->listTableIndexes($nomeTabela);
+        return $estrutura;
+    }
+
+    public function compararTabelaObjeto(array $tabela, array $objeto)
+    {
+
+        // Criar um progress bar
+
+        $objetoObj = new Objeto($this->input, $this->output);
+
+        $colunasTabela = $tabela['colunas'];
+        $colunasObjeto = $objeto['response']['dados'];
+        $colunasObjetoTratado = array();
+
+        $logs = array();
+        $diferencas = array();
+
+        foreach($colunasObjeto as $coluna => $especificacao){
+            $tipoDeDados = $objetoObj->identificarTipoDeDados($especificacao);
+            if($tipoDeDados == "TABELA"){
+                continue;
+            }
+            $especificacao['nomeTratado'] = $this->tratarNomeColuna($coluna);
+            $colunasObjetoTratado[$especificacao['nomeTratado']] = strtolower($coluna);
+            
+            // Verificar se a coluna nao existe na tabela
+            $colunaBanco = strtolower($especificacao['nomeTratado']);
+            if(!array_key_exists($colunaBanco, $colunasTabela)){
+                $diferencas['add'][] = $especificacao;
+                $logs[] = "A coluna {$especificacao['nomeTratado']} não existe na tabela\n";
+            } else {
+                
+                $especificacaoAux = $this->tratarColuna($coluna, $especificacao);
+                $especificacao = $especificacaoAux[0];
+                $especificacao['opcoes'] = $especificacaoAux[1];
+                
+                // Verificar se a coluna tem o mesmo tipo
+                $tipoBanco = $colunasTabela[$colunaBanco]->getType()->getName();
+                $tipoObjeto = $especificacao['type'];
+                if($tipoBanco != $tipoObjeto){
+                    $logs[] = "A coluna {$especificacao['nomeTratado']} tem tipo diferente ($tipoObjeto|$tipoBanco)\n";
+                    $diferencas['change'][] = $especificacao;
+                }
+            }
+        }
+        foreach($colunasTabela as $coluna => $especificacao){
+            // Verificar se a coluna nao existe no objeto
+            if(!array_key_exists($coluna, $colunasObjetoTratado) ){
+                $diferencas['remove'][] = $especificacao;
+                $logs[] = "A coluna {$coluna} não existe no objeto\n";
+            }
+        }
+
+        return array($logs, $diferencas);
+    }
+
+    protected function compararColunaObjeto(array $colunaTabela, array $colunaObjeto): array
+    {
+        $diferencas = array();
+        // Verificar se a coluna tem o mesmo tipo
+        if ($colunaTabela['type'] != $colunaObjeto['especificacao']['type']) 
+        {
+            $diferencas[$colunaObjeto['nomeTratado']]['de'] = $colunaTabela['type'];
+            $diferencas[$colunaObjeto['nomeTratado']]['para'] = $colunaObjeto['especificacao']['type'];
+        }
+        return $diferencas;
+    }
 
     public function limparTabela(string $tabela): \Doctrine\DBAL\Result
     {
@@ -251,5 +330,57 @@ class DatabaseSetup
     public function apagarTabela(string $tabela): \Doctrine\DBAL\Result
     {
         return $this->conn->executeQuery("DROP TABLE {$tabela}");
+    }
+
+    public function inserirColuna(string $tabela, string $coluna, array $especificacao):bool
+    {
+        $especificacao = $this->tratarColuna($coluna, $especificacao);
+        $schemaManager = $this->conn->createSchemaManager();
+        $newColumnType = Type::getType($especificacao[0]['type']); // ou use o tipo de dado desejado, e.g., 'integer'
+        $newColumnOptions = $especificacao[1];
+        $newColumn = new Column($coluna, $newColumnType, $newColumnOptions);
+        $tableDiff = new TableDiff($tabela);
+        $tableDiff->addedColumns[$coluna] = $newColumn;
+        try {
+            $schemaManager->alterTable($tableDiff);
+            return true;
+        } catch (\Doctrine\DBAL\Exception $e) {
+            echo "Erro ao tentar inserir a coluna: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function removerColuna(string $tabela, string $coluna): bool
+    {
+        $schemaManager = $this->conn->createSchemaManager();
+        // Prepare a coluna a ser removida (o tipo não é estritamente necessário aqui, mas é requerido pela assinatura do método)
+        $columnToRemove = new Column($coluna, Type::getType('string'));
+        // Crie um objeto TableDiff para a tabela existente
+        $tableDiff = new TableDiff($tabela, [], [], [$columnToRemove]);
+        // Aplique as mudanças
+        try {
+            $schemaManager->alterTable($tableDiff);
+            return true;
+        } catch (\Doctrine\DBAL\Exception $e) {
+            echo "Erro ao tentar remover a coluna: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function alterarColuna(string $tabela, string $coluna, array $especificacao): bool
+    {
+        $schemaManager = $this->conn->createSchemaManager();
+        $newColumnType = Type::getType($especificacao['type']);
+        unset($especificacao['type']);
+        $newColumn = new Column($coluna, $newColumnType, $especificacao);
+        $columnDiff = new ColumnDiff($coluna, $newColumn, []);
+        $tableDiff = new TableDiff($tabela, [], [$columnDiff], [], [], []);
+        try {
+            $schemaManager->alterTable($tableDiff);
+            return true;
+        } catch (\Doctrine\DBAL\Exception $e) {
+            echo "Erro ao tentar alterar a coluna: " . $e->getMessage();
+            return false;
+        }
     }
 }

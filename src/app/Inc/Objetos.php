@@ -367,17 +367,18 @@
             "arquivo" => "pessoas_financeiros.yaml"
             
         ],
-        
-        "reservas_registros_flags" => [
-            "nome" => "Reservas (/reservas/registros/flags)",
-            "arquivo" => "reservas_registros_flags.yaml"
-            
-        ],
+    
         
         "pesquisas" => [
             "nome" => "Pesquisas (/pesquisas)",
             "arquivo" => "pesquisas.yaml"
             
         ],
-         ]
+        
+        "reservas_registros_flags" => [
+            "nome" => "Reservas (/reservas/registros/flags)",
+            "arquivo" => "reservas_registros_flags.yaml"
+
+        ],
+    ]
 );

@@ -7,7 +7,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-function conectarDB(InputInterface $input, OutputInterface $output) : \Doctrine\DBAL\Connection
+function conectarDB(InputInterface $input, OutputInterface $output, $showException = true) : \Doctrine\DBAL\Connection
 {
     $io = new SymfonyStyle($input, $output);
     $config = new Configuration();
@@ -25,8 +25,10 @@ function conectarDB(InputInterface $input, OutputInterface $output) : \Doctrine\
         try {
             $conn->connect();
         } catch (\Exception $e) {
-            $io->error('Não foi possível conectar ao banco de dados.');
-            $io->error('Encontrei esse erro: ' . $e->getMessage());
+            if($showException){
+                $io->error('Não foi possível conectar ao banco de dados.');
+                $io->error('Encontrei esse erro: ' . $e->getMessage());
+            }
         }
     } 
     return $conn;

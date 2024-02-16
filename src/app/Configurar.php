@@ -15,7 +15,7 @@ use Doctrine\DBAL\DriverManager;
 
 use Manzano\CvdwCli\Services\DatabaseSetup;
 use Manzano\CvdwCli\Services\Http;
-use Manzano\CvdwCli\Services\CVDW;
+use Manzano\CvdwCli\Services\Objeto;
 
 #[AsCommand(
     name: 'configurar',
@@ -36,6 +36,7 @@ class Configurar extends Command
      */
     public array $variaveisAmbiente = [];
     public bool $voltarProMenu = false;
+    public \Doctrine\DBAL\Connection $conn;
 
     protected function configure()
     {
@@ -101,16 +102,160 @@ class Configurar extends Command
 
     private function verificarInstalacao(): bool
     {
+        $objetoObj = new Objeto($this->input, $this->output);
+        $http = new Http($this->input, $this->output);
         $io = new SymfonyStyle($this->input, $this->output);
+        $diferencasBanco = array();
+
         $io->text([
             'Vamos lá!',
             'Validando a instalação...',
-            '...',
             ''
         ]);
 
+        // Validando conexão com a api do CVDW
+        $response = $http->pingAmbienteAutenticadoCVDW(
+            $_ENV['CV_URL'],
+            "/imobiliarias",
+            $_ENV['CV_EMAIL'],
+            $_ENV['CV_TOKEN']
+        );
+        if (isset($response['registros'])) {
+            $io->text('<bg=green>[OK]</> Conexão com o CVDW está funcionando!');
+        } else {
+            $io->text('<fg=white;bg=red>[PROBLEMA]</> Não consegui acessar o ambiente do CVDW!');
+            $validarObjetos = false;
+        }
+
+        // Validar conexao com o banco de dados
+        $validarObjetos = true;
+        $this->conn = conectarDB($this->input, $this->output, false);
+        if($this->conn->isConnected()) {
+            $io->text('<bg=green>[OK]</> Conexão com o banco de dados está funcionando!');
+            $databaseObj = new DatabaseSetup($this->input, $this->output);
+        } else {
+            $io->text('<fg=white;bg=red>[PROBLEMA]</> Não consegui acessar o banco de dados!');
+            $validarObjetos = false;
+        }
+        
+
+        // Validando objetos
+        if(!$validarObjetos) {
+            $io->note('Como o Banco ou Api não está acessível, não posso validar os objetos.');
+        } else {
+
+            $io->text([
+                '',
+                'Agora vamos validar os objetos...',
+                ''
+            ]);
+
+            $bancoProblemas = false;
+            foreach(OBJETOS as $key => $dados) {
+                $existe = $databaseObj->verificarSeTabelaExiste($key);
+                if ($existe) {
+                    $estrutura = $databaseObj->retornarEstruturaTabela($key);
+                    $objeto = $objetoObj->retornarObjeto($key);
+                    $logDiferencas = $databaseObj->compararTabelaObjeto($estrutura, $objeto);
+                    $diferencas = $logDiferencas[1];
+                    $logs = $logDiferencas[0];
+                    if(count($diferencas) > 0) {
+                        $diferencasBanco[$key] = $diferencas;
+                        $bancoProblemas = true;
+                        $io->text('<fg=white;bg=red>[PROBLEMA]</> Encontrei algo na tabela ' . $key . '!');
+                        foreach ($logs as $log) {
+                            $io->text('- '.$log);
+                        }
+                    } else {
+                        $io->text('<bg=green>[OK]</> A tabela ' . $key . ' está atualizada!');
+                    }
+                } else {
+                    $bancoProblemas = true;
+                    $io->text('<fg=white;bg=red>[PROBLEMA]</> A tabela ' . $key . ' não foi encontrada!');
+                }
+            }
+        }
+
+        if($bancoProblemas) {
+            $io->text([
+                '',
+                'Encontrei problemas no banco de dados, vamos tentar corrigir?',
+                ''
+            ]);
+            if ($io->confirm('Quer tentar corrigir?', true)) {
+                $this->executarCorrecoes($diferencasBanco);
+            } else {
+                $io->text([
+                    '',
+                    'Ok, vamos parar por aqui...',
+                    ''
+                ]);
+            }
+        } else {
+            $io->text([
+                '',
+                'Parece que esta tudo ok!',
+                ''
+            ]);
+        }
+
+        $this->voltarProMenu = true;
         $this->voltarProMenu();
         return true;
+    }
+
+    private function executarCorrecoes($diferencasBanco) {
+        $io = new SymfonyStyle($this->input, $this->output);
+        $databaseObj = new DatabaseSetup($this->input, $this->output);
+        $objetoObj = new Objeto($this->input, $this->output);
+        $io->text([
+            '',
+            'Vamos lá!',
+            'Corrigindo as diferenças...',
+            ''
+        ]);
+        foreach($diferencasBanco as $tabela => $diferencas) {
+            $io->text('Corrigindo a tabela ' . $tabela);
+            $objeto = $objetoObj->retornarObjeto($tabela);
+            if(isset($diferencas['add'])){
+                foreach($diferencas['add'] as $campo => $estrutura) {
+                    $adicionado = $databaseObj->inserirColuna($tabela, $estrutura['nomeTratado'], $estrutura);
+                    if($adicionado){
+                        $io->text('<bg=green>[OK]</> Adicionando a coluna ' . $estrutura['nomeTratado']);
+                    } else {
+                        $io->text('<fg=white;bg=red>[PROBLEMA]</> Não foi possível adicionar a coluna ' . $estrutura['nomeTratado']);
+                    }
+                }
+            }
+            if(isset($diferencas['remove'])){
+                foreach($diferencas['remove'] as $campo => $estrutura) {
+                    $coluna = $estrutura->getName();
+                    $removido = $databaseObj->removerColuna($tabela, $coluna);
+                    if($removido){
+                        $io->text('<bg=green>[OK]</> Removendo a coluna ' . $estrutura->getName());
+                    } else {
+                        $io->text('<fg=white;bg=red>[PROBLEMA]</> Não foi possível remover a coluna ' . $estrutura->getName());
+                    }
+                }
+            }
+            if(isset($diferencas['change'])){
+                foreach($diferencas['change'] as $coluna => $estrutura) {
+                    $estrutura['opcoes']['type'] = $estrutura['type'];
+                    $alterado = $databaseObj->alterarColuna($tabela, $estrutura['nomeTratado'], $estrutura['opcoes']);
+                    if($alterado){
+                        $io->text('<bg=green>[OK]</> Alterando a coluna ' . $estrutura['nomeTratado']);
+                    } else {
+                        $io->text('<fg=white;bg=red>[PROBLEMA]</> Não foi possível alterar a coluna ' . $estrutura['nomeTratado']);
+                    }
+                }
+            }
+            $io->text('');
+        }
+
+        $io->text([
+            '',
+            'Pronto!'
+        ]);
     }
 
     private function configurarCV(): int
