@@ -13,6 +13,8 @@ Aqui está uma lista de tarefas pendentes para melhorar e otimizar o projeto CVD
 
 - **Atualizar Ambiente**: Criar opção para atualizar ambiente. curl | bash
 
+- **Validar Dicionário de dados e Versão**: Criar opção para comprar dicionário de dados e versão.
+
 - **Analisar Banco de dados**: Executar alterações do banco de dados após a atualização Verificar colunas e tipos.
 
 - ~~**Recarregar .env no Final das Configurações**: Garantir que o arquivo `.env` seja recarregado automaticamente após quaisquer alterações nas configurações para que as novas variáveis de ambiente sejam aplicadas imediatamente.~~
