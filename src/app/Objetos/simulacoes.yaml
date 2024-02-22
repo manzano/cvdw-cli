@@ -175,7 +175,7 @@ response:
       description: Data base para cálculo de juros
     descricao_motivo_reprovacao:
       example: ""
-      type: string
+      type: text
       description: Descrição do motivo da reprovação da simulação
     idmotivo_cancelamento:
       example: 1
@@ -183,39 +183,39 @@ response:
       description: Identificador do motivo do cancelamento
     descricao_motivo_cancelamento:
       example: ""
-      type: string
+      type: text
       description: Descrição do motivo de cancelamento da simulação
     valor_contrato:
       example: 130995.95
-      type: integer
+      type: number
       description: Valor do contrato
     valor_presente:
       example: 101834.95
-      type: integer
+      type: number
       description: Valor do contrato
     juros_vpl:
       example: 0.5
-      type: integer
+      type: number
       description: Percentual de juros trabalhado no VPL
     juros_vpl_apos_entrega:
       example: 0.5
-      type: integer
+      type: number
       description: Percentual de juros trabalhado no VPL após a entrega
     juros_futuro:
       example: 0.5
-      type: integer
+      type: number
       description: Percentual de juros futuro da simulação
     juros_vpl_fixa_adicional:
       example: 0
-      type: integer
+      type: number
       description: Percentual adicional dos juros trabalhado no VPL para séries fixas
     renda_familiar:
       example: 7900
-      type: integer
+      type: number
       description: Renda familiar
     sla_vencimento:
       example: 2024-08-01
-      type: string
+      type: datetime
       description: Data de vencimento do sla
     data_condicao_aprovada:
       example: 2024-08-01
@@ -231,11 +231,11 @@ response:
       description: Tabela aprovada na simulação
     juros_condicao_aprovada:
       example: 0
-      type: integer
+      type: number
       description: Juros da condição aprovada
     juros_apos_entrega_condicao_aprovada:
       example: 0
-      type: integer
+      type: number
       description: Percentual de juros trabalhado no VPL após a entrega aprovado
     idlead:
       example: 244
@@ -243,27 +243,27 @@ response:
       description: Identificador do lead da simulação
     aprovacao_vpl_valor:
       example: 0
-      type: integer
+      type: number
       description: Valor do VPL aprovado na simulação
     aprovacao_vpl:
       example: 0
-      type: integer
+      type: number
       description: VPL aprovado na simulação
     aprovacao_absoluto:
       example: 0
-      type: integer
+      type: number
       description: Valor absoluto aprovado na simulação
     aprovacao_absoluto_percentual:
       example: 0
-      type: integer
+      type: number
       description: Percentual absoluto aprovado na simulação
     aprovacao_margem:
       example: 0
-      type: integer
+      type: number
       description: Margem de aprovação da simulação
     desconto:
       example: 0
-      type: integer
+      type: number
       description: Valor do desconto
     idalcada:
       example: 1
@@ -271,7 +271,7 @@ response:
       description: Identificador da alçada
     percentual_custa_escrituracao:
       example: 0
-      type: integer
+      type: number
       description: Percentual de custas de escrituração
     juros:
       example: Não
@@ -311,23 +311,23 @@ response:
       description: Informa se o usuário preencheu a data de contrato
     porcentagem_total_comissao:
       example: 0
-      type: integer
+      type: number
       description: Percentual total da comissão
     pagamento_total_comissao:
       example: VGV
-      type: string
+      type: number
       description: Pagamento total da comissão
     porcentagem_total_premiacao:
       example: 100
-      type: integer
+      type: number
       description: Porcetagem total da premiação
     pagamento_total_premiacao:
       example: VGV
-      type: string
+      type: number
       description: Pagamento total da premiação
     adimplencia_premiada:
       example: 2300
-      type: integer
+      type: number
       description: Valor da adimplência premiada
     ignorar_validacao_adimplencia_premiada:
       example: Não
@@ -339,7 +339,7 @@ response:
       description: Informa qual a data base que será usada para cálculo de juros
     porcentagem_total_contrato:
       example: 10
-      type: integer
+      type: number
       description: Porcentagem máxima de comissão no contrato
     pagamento_total_contrato:
       example: VGV
@@ -347,7 +347,7 @@ response:
       description: Tipo de cálculo para máxima comissão no contrato
     porcentagem_total_fora_contrato:
       example: 20
-      type: integer
+      type: number
       description: Porcentagem máxima da comissão fora do contrato
     pagamento_total_fora_contrato:
       example: VGV
@@ -376,15 +376,15 @@ response:
         description: Quantidade de parcelas da série de pagamento
       valor:
         example: 15000
-        type: integer
+        type: number
         description: Valor da série de pagamento
       valor_com_juros:
         example: 17000
-        type: integer
+        type: number
         description: Valor com juros da série de pagamento
       vencimento:
         example: 2022-11-30
-        type: string
+        type: datetime
         description: Vencimento da série de pagamento
       idportador:
         example: 1
@@ -396,9 +396,9 @@ response:
         description: Identificador do indexador da série
       data_base_juros_futuro:
         example: 1
-        type: string
+        type: datetime
         description: Data base para cálculo do juros futuro
       juros_futuro:
         example: 1.00005
-        type: integer
+        type: number
         description: Juros futuro
