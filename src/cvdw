@@ -17,6 +17,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+\Sentry\init([
+    'dsn' => 'https://5a57b7ef5b7feaaeaca4a1db1c3fda4e@o4506804358414336.ingest.sentry.io/4506804360183808',
+    // Specify a fixed sample rate
+    'traces_sample_rate' => 1.0,
+    // Set a sampling rate for profiling - this is relative to traces_sample_rate
+    'profiles_sample_rate' => 1.0,
+]);
+
 salvarEnv();
 retornarEnvs();
 

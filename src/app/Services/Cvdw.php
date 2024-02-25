@@ -112,13 +112,34 @@ class Cvdw
 
                     $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
                     $progressBar->display();
-                    foreach ($resposta->dados as $linha) {
-                        //print_r($linha);
-                        $dadosProcessados++;
-                        if ($this->processaSql($objeto, $linha)) {
-                            $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
-                            $progressBar->advance();
-                            $progressBar->display();
+                    if(!isset($resposta->dados)) {
+                        $this->io->error([
+                            'A requisição não retornou os dados esperados!'
+                        ]);
+                    }
+                    if(is_array($resposta->dados)) {
+
+                        $dadosNoPadrao = $this->verificaPadrao($resposta->dados[0]);
+                        if(!$dadosNoPadrao) {
+                            $progressBar->finish();
+                            $messagem = 'Os dados de ' . $objeto['path'] . ' não estão no padrão esperado!';
+                            $this->io->error([
+                                $messagem,
+                            ]);
+                            \Sentry\captureMessage($messagem);
+
+                            break;
+                        }
+
+                        foreach ($resposta->dados as $linha) {
+                            //print_r($linha);
+                            $dadosProcessados++;
+
+                            if ($this->processaSql($objeto, $linha)) {
+                                $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
+                                $progressBar->advance();
+                                $progressBar->display();
+                            }
                         }
                     }
                     
@@ -137,6 +158,15 @@ class Cvdw
         $this->io->newLine();
 
         return true;
+    }
+
+    protected function verificaPadrao(object $linha): bool
+    {
+        $dadosNoPadrao = true;
+        if(!isset($linha->referencia) || !isset($linha->referencia_data)) {
+            $dadosNoPadrao = false;
+        }
+        return $dadosNoPadrao;
     }
 
     protected function buscaUltimaData(string $tabela): ?string
@@ -211,6 +241,11 @@ class Cvdw
                 $this->logObjeto->escreverLog("  - Atualizado: " . $linha->referencia);
             }
         } catch (Exception $e) {
+            \Sentry\addBreadcrumb(
+                category: $objeto['tabela'],
+                metadata: ['acao' => 'update']
+            );
+            \Sentry\captureException($e);
             $this->io->error([
                 'Erro ao tentar executar o SQL! (Update)',
                 'Objeto: ' . print_r($linha, true),
@@ -246,6 +281,11 @@ class Cvdw
                 $this->logObjeto->escreverLog("  - Inserido: " . $linha->referencia);
             }
         } catch (Exception $e) {
+            \Sentry\addBreadcrumb(
+                category: $objeto['tabela'],
+                metadata: ['acao' => 'insert']
+            );
+            \Sentry\captureException($e);
             $this->io->error([
                 'Erro ao tentar executar o SQL! (Insert)',
                 'Objeto: ' . print_r($linha, true),
@@ -282,7 +322,7 @@ class Cvdw
                 if ($linha->$coluna == '') {
                     $linha->$coluna = null;
                 }
-                if ($valor["type"] == "number") {
+                if ($valor["type"] == "number" && $linha->$coluna != null) {
                     $linha->$coluna = number_format($linha->$coluna, 2, '.', '');
                 }
             }
