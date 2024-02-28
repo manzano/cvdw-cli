@@ -35,6 +35,7 @@ class Http
         $url = $url . '?' . $parametrosUrl;
         
         $curl = curl_init();
+        $verbose = fopen('php://temp', 'w+');
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
@@ -48,10 +49,24 @@ class Http
             CURLOPT_POSTFIELDS => json_encode($parametros),
             CURLOPT_HTTPHEADER => $cabecalho,
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => false)
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_VERBOSE => true,
+            CURLOPT_STDERR => $verbose)
         );
-
         $response = curl_exec($curl);
+
+        if ($this->output->isDebug()) {
+            rewind($verbose);
+            $verboseLog = stream_get_contents($verbose);
+            $verboseLog = "Verbose information:\n". htmlspecialchars($verboseLog);
+            $this->io->info([
+                'URL: ' . $url,
+                'Parametros: ' . json_encode($parametros),
+                'Resposta: ' . $response,
+                'Verbose: ' . $verboseLog
+            ]);
+        }
+
         curl_close($curl);
         
         $responseJson = json_decode($response);
