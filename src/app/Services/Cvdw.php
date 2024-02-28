@@ -53,12 +53,14 @@ class Cvdw
             );
         } else {
             $referencia_data = $this->buscaUltimaData($objeto['tabela']);
+            /*
             if ($referencia_data) {
                 $referencia_data = new DateTime($referencia_data); // Cria um objeto DateTime
-                $referencia_data->modify('+1 seconds'); // Subtrai X segundo(s)
+                $referencia_data->modify('+1 seconds'); 
                 // Formata a data para o formato desejado e atribui de volta à variável
-                $referencia_data = $referencia_data->format('d/m/Y H:i:s');
+                $referencia_data = $referencia_data->format('Y-m-d H:i:s');
             }
+            */
             $this->io->text('Data de referência: ' . $referencia_data);
             $parametros = array(
                 'pagina' => 1,

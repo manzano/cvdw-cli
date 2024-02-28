@@ -28,8 +28,11 @@ class Http
             'token: ' . $_ENV['CV_TOKEN'] . '',
             'Content-Type: application/json'
         );
-        
+        // Converter o array de parametros em string
+        $parametrosUrl = http_build_query($parametros);
+
         $url = 'https://' . $_ENV['CV_URL'] . '.cvcrm.com.br/api/v1/cvdw'. $path;
+        $url = $url . '?' . $parametrosUrl;
         
         $curl = curl_init();
         curl_setopt_array($curl, array(
