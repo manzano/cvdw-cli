@@ -2,20 +2,26 @@
 
 namespace Manzano\CvdwCli\Services;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+
+use Manzano\CvdwCli\Services\Objeto;
+use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 
 class Http
 {
 
-    protected SymfonyStyle $io;
+    protected CvdwSymfonyStyle $io;
     public InputInterface $input;
     public OutputInterface $output;
+    public $logObjeto;
 
-    public function __construct(InputInterface $input, OutputInterface $output)
+    public function __construct(InputInterface $input, OutputInterface $output, $io = null, $logObjeto = false)
     {
-        $this->io = new SymfonyStyle($input, $output);
+        if(is_object($logObjeto)) {
+            $this->logObjeto = $logObjeto;
+        }
+        $this->io = $io;
         $this->input = $input;
         $this->output = $output;
     }
@@ -32,7 +38,7 @@ class Http
         $parametrosUrl = http_build_query($parametros);
 
         $url = 'https://' . $_ENV['CV_URL'] . '.cvcrm.com.br/api/v1/cvdw'. $path;
-        $url = $url . '?' . $parametrosUrl;
+        //$url = $url . '?' . $parametrosUrl;
         
         $curl = curl_init();
         $verbose = fopen('php://temp', 'w+');
@@ -71,7 +77,8 @@ class Http
         
         $responseJson = json_decode($response);
 
-        // Se nao for setado $resposta->total_de_registros, imprimir uma mensagem de erro e tentar novamente em 3 segundos
+        // Se nao for setado $resposta->total_de_registros,
+        // imprimir uma mensagem de erro e tentar novamente em 3 segundos
         if(!isset($responseJson->total_de_registros) && $novaTentativa){
             $segundos = 3;
             $this->io->error([
@@ -96,6 +103,7 @@ class Http
         if (isset($responseJson->total_de_registros) && $responseJson->total_de_registros !== null) {
             return $responseJson;
         } else {
+            
             $this->io->error([
                 'Erro ao tentar fazer a requisição!',
                 'Retorno: '. $response

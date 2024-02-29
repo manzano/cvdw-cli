@@ -27,6 +27,7 @@ class Executar extends Command
 {
     protected static $defaultName = 'executar';
     protected $dirLog = null;
+    protected $arquivoLog = null;
     protected $logObjeto = false;
     protected InputInterface $input;
     protected OutputInterface $output;

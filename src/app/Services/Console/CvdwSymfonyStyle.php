@@ -44,6 +44,21 @@ class CvdwSymfonyStyle extends SymfonyStyle
                 $this->logObjeto->escreverLog('[ERRO] ' . $message);
             }
         }
+    }
+
+    public function info($message)
+    {
+        parent::info($message);
+        if ($this->logObjeto) {
+            // Se $message for um array, então fazemos um foreach para escrever cada mensagem no arquivo de log
+            if (is_array($message)) {
+                foreach ($message as $msg) {
+                    $this->logObjeto->escreverLog('[INFO] '. $msg);
+                }
+            } else {
+                $this->logObjeto->escreverLog('[INFO] ' . $message);
+            }
+        }
     }    
 
     public function section($message)

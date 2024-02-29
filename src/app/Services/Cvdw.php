@@ -2,7 +2,6 @@
 
 namespace Manzano\CvdwCli\Services;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -14,17 +13,17 @@ use DateTime;
 use Manzano\CvdwCli\Services\Http;
 use Manzano\CvdwCli\Services\DatabaseSetup;
 use Manzano\CvdwCli\Services\Objeto;
-use Manzano\CvdwCli\Services\Console\CvdwProgressBar;
+use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 
 class Cvdw
 {
-    protected SymfonyStyle $io;
+    protected CvdwSymfonyStyle $io;
     public InputInterface $input;
     public OutputInterface $output;
     public \Doctrine\DBAL\Connection $conn;
     public DatabaseSetup $database;
     public object $resposta;
-    public $logObjeto;
+    public $logObjeto = false;
     public array $objeto;
 
     public function __construct(InputInterface $input, OutputInterface $output)
@@ -43,7 +42,7 @@ class Cvdw
         }
 
         $this->database = new DatabaseSetup($this->input, $this->output);
-        $http = new Http($this->input, $this->output);
+        $http = new Http($this->input, $this->output, $io, $this->logObjeto);
 
         if ($inputDataReferencia) {
             $this->io->text('Data de referência: <fg=red>Ignorada</>');
@@ -54,19 +53,22 @@ class Cvdw
         } else {
             $referencia_data = $this->buscaUltimaData($objeto['tabela']);
             
+            $parametros = array(
+                'pagina' => 1,
+                'registros_por_pagina' => 500
+            );
+
             if ($referencia_data) {
                 $referencia_data = new DateTime($referencia_data); // Cria um objeto DateTime
                 $referencia_data->modify('+1 seconds');
                 $referencia_data_UI = $referencia_data->format('d/m/Y H:i:s');
                 $referencia_data = $referencia_data->format('Y-m-d H:i:s');
+                $parametros['a_partir_data_referencia'] = $referencia_data;
+            } else {
+                $referencia_data_UI = 'Nenhuma data encontrada';
             }
             
             $this->io->text('Data de referência: ' . $referencia_data_UI);
-            $parametros = array(
-                'pagina' => 1,
-                'registros_por_pagina' => 500,
-                'a_partir_data_referencia' => "$referencia_data"
-            );
         }
         $resposta = $http->requestCVDW($objeto['path'], $parametros);
 
