@@ -16,6 +16,7 @@ use Symfony\Component\Console\Completion\CompletionSuggestions;
 use Manzano\CvdwCli\Services\Objeto;
 use Manzano\CvdwCli\Services\Log;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
+use Manzano\CvdwCli\Services\Monitor\Eventos;
 
 #[AsCommand(
     name: 'executar',
@@ -36,6 +37,8 @@ class Executar extends Command
      */
     public array $variaveisAmbiente = [];
     public bool $voltarProMenu = false;
+    protected $eventosObj;
+    protected $evento = 'Executar';
 
     protected function configure()
     {
@@ -59,6 +62,8 @@ class Executar extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
+        $this->eventosObj = new Eventos();
+
         if ($input->getOption('salvarlog')) {
             $this->dirLog = __DIR__;
             // Remover /src/app de $dir
@@ -81,6 +86,8 @@ class Executar extends Command
             return Command::SUCCESS;
         }
 
+        $this->eventosObj->registrarEvento($this->evento, 'Início');
+
         $this->variaveisAmbiente['executar'] = $io->choice('O que deseja fazer agora?', [
             'Listar todos os objetos disponíveis no CVDW-CLI',
             'Executar todos os objetos',
@@ -93,6 +100,7 @@ class Executar extends Command
             return Command::SUCCESS;
         }
         $io->text(['Você escolheu: ' . $this->variaveisAmbiente['executar'], '']);
+        $this->eventosObj->registrarEvento($this->evento, $this->variaveisAmbiente['executar']);
         $this->voltarProMenu = true;
 
         switch ($this->variaveisAmbiente['executar']) {
@@ -187,6 +195,9 @@ class Executar extends Command
                 $objeto = $objetoObj->retornarObjeto($objeto);
                 $io->section($dados['nome']);
                 $io->text('Executando objeto: ' . $dados['nome'] . ' (' . $objeto['subschema'] . ')');
+                
+                $this->eventosObj->registrarEvento($this->evento, 'executar', $dados['nome']);
+
                 $cvdw->processar($objeto, $io, $inputDataReferencia, $this->logObjeto);
                 //$this->limparTela();
             }

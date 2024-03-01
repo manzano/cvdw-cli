@@ -17,6 +17,8 @@ use Manzano\CvdwCli\Services\DatabaseSetup;
 use Manzano\CvdwCli\Services\Http;
 use Manzano\CvdwCli\Services\Objeto;
 
+use Manzano\CvdwCli\Services\Monitor\Eventos;
+
 #[AsCommand(
     name: 'configurar',
     description: 'Configure o CVDW-CLI',
@@ -37,6 +39,8 @@ class Configurar extends Command
     public array $variaveisAmbiente = [];
     public bool $voltarProMenu = false;
     public \Doctrine\DBAL\Connection $conn;
+    protected $eventosObj;
+    protected $evento = 'Configurar';
 
     protected function configure()
     {
@@ -48,6 +52,9 @@ class Configurar extends Command
     {
 
         $this->limparTela();
+
+        $this->eventosObj = new Eventos();
+    
         
         $io = new CvdwSymfonyStyle($input, $output);
 
@@ -55,6 +62,7 @@ class Configurar extends Command
         $this->output = $output;
 
         $io->title('Configurando o CVDW-CLI');
+        $this->eventosObj->registrarEvento($this->evento, 'Início');
 
         $this->variaveisAmbiente['configurar'] = $io->choice('O que deseja configurar agora?', [
             'Acesso ao CVDW API',
@@ -72,6 +80,7 @@ class Configurar extends Command
             exit;
         }
         $io->text(['Você escolheu: ' . $this->variaveisAmbiente['configurar'], '']);
+        $this->eventosObj->registrarEvento($this->evento, $this->variaveisAmbiente['configurar']);
 
         switch ($this->variaveisAmbiente['configurar']) {
             case 'Acesso ao CVDW API':
@@ -260,6 +269,7 @@ class Configurar extends Command
 
     private function configurarCV(): int
     {
+
         $io = new CvdwSymfonyStyle($this->input, $this->output);
         $io->text([
             'Vamos lá!',

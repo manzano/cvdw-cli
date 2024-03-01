@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
+use Manzano\CvdwCli\Services\Monitor\Eventos;
 
 class Http
 {
@@ -14,6 +15,8 @@ class Http
     public InputInterface $input;
     public OutputInterface $output;
     public $logObjeto;
+    protected $eventosObj;
+    protected $evento = 'Requisição';
 
     public function __construct(InputInterface $input, OutputInterface $output,
                                     CvdwSymfonyStyle $io, $logObjeto = false)
@@ -24,11 +27,16 @@ class Http
         $this->io = $io;
         $this->input = $input;
         $this->output = $output;
+
+        $this->eventosObj = new Eventos();
+
     }
 
     public function requestCVDW(string $path, array $parametros = [], bool $novaTentativa = true) : object
     {
 
+        $this->eventosObj->registrarEvento($this->evento, $path);
+        
         $cabecalho = array(
             'email: '. $_ENV['CV_EMAIL'] .'',
             'token: ' . $_ENV['CV_TOKEN'] . '',

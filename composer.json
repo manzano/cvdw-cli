@@ -15,7 +15,8 @@
     "symfony/yaml": "^6.3",
     "doctrine/doctrine-migrations-bundle": "^3.2",
     "doctrine/sql-formatter": "^1.1",
-    "sentry/sentry": "^4.6"
+    "sentry/sentry": "^4.6",
+    "mixpanel/mixpanel-php": "^2.11"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.10",
