@@ -13,7 +13,7 @@ class Eventos
     public function __construct()
     {
         // Token da conta do Mixpanel do CVDW-CLI
-        $this->gestor = \Mixpanel::getInstance($this->token, array("debug" => true));
+        $this->gestor = \Mixpanel::getInstance($this->token, array("debug" => false));
         $this->registraAmbiente();
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Manzano\CvdwCli\Services;
+namespace Manzano\CvdwCli\Services\Monitor;
 
 class Sentry
 {
