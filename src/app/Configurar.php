@@ -6,7 +6,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\ProgressBar;
 
@@ -30,7 +30,7 @@ class Configurar extends Command
     protected static $defaultName = 'configurar';
     protected InputInterface $input;
     protected OutputInterface $output;
-    protected SymfonyStyle $io;
+    protected CvdwSymfonyStyle $io;
     /**
      * @var string[]
      */
@@ -49,7 +49,7 @@ class Configurar extends Command
 
         $this->limparTela();
         
-        $io = new SymfonyStyle($input, $output);
+        $io = new CvdwSymfonyStyle($input, $output);
 
         $this->input = $input;
         $this->output = $output;
@@ -103,8 +103,8 @@ class Configurar extends Command
     private function verificarInstalacao(): bool
     {
         $objetoObj = new Objeto($this->input, $this->output);
-        $http = new Http($this->input, $this->output);
-        $io = new SymfonyStyle($this->input, $this->output);
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $http = new Http($this->input, $this->output, $io);
         $diferencasBanco = array();
 
         $io->text([
@@ -205,7 +205,7 @@ class Configurar extends Command
     }
 
     private function executarCorrecoes($diferencasBanco) {
-        $io = new SymfonyStyle($this->input, $this->output);
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
         $databaseObj = new DatabaseSetup($this->input, $this->output);
         $objetoObj = new Objeto($this->input, $this->output);
         $io->text([
@@ -260,7 +260,7 @@ class Configurar extends Command
 
     private function configurarCV(): int
     {
-        $io = new SymfonyStyle($this->input, $this->output);
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
         $io->text([
             'Vamos lá!',
             'Primeiro vamos configurar as variáveis do CV...'
@@ -273,9 +273,9 @@ class Configurar extends Command
 
         $io->ask('Me diz o subdominio do ambiente seu CV:', $_ENV['CV_URL'], function (string $endereco_cv): string {
 
-            $io = new SymfonyStyle($this->input, $this->output);
+            $io = new CvdwSymfonyStyle($this->input, $this->output);
 
-            $http = new \Manzano\CvdwCli\Services\Http($this->input, $this->output);
+            $http = new \Manzano\CvdwCli\Services\Http($this->input, $this->output, $io);
             $response = $http->pingAmbienteCVDW($endereco_cv);
 
             if ($response['nome'] !== null) {
@@ -323,7 +323,7 @@ class Configurar extends Command
             'Ok! Agora vou tentar fazer uma requisição para tentar validar os dados...'
         ]);
 
-        $http = new Http($this->input, $this->output);
+        $http = new Http($this->input, $this->output, $io);
         $response = $http->pingAmbienteAutenticadoCVDW(
             $this->variaveisAmbiente['endereco_cv'],
             "/imobiliarias",
@@ -366,7 +366,7 @@ class Configurar extends Command
 
     private function configurarBanco(): int
     {
-        $io = new SymfonyStyle($this->input, $this->output);
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
 
         $io->text([
             '',
@@ -480,7 +480,7 @@ class Configurar extends Command
     private function criarTabelas(): bool
     {
 
-        $io = new SymfonyStyle($this->input, $this->output);
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
 
         $io->text('Serão criadas as tabelas abaixo:');
 
@@ -506,7 +506,7 @@ class Configurar extends Command
     private function limparTabelas(): bool
     {
 
-        $io = new SymfonyStyle($this->input, $this->output);
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
         
         $io->warning([
             '',
@@ -593,7 +593,7 @@ class Configurar extends Command
     private function apagarTabelas(): bool
     {
 
-        $io = new SymfonyStyle($this->input, $this->output);
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
         
         $io->warning([
             '',
@@ -681,7 +681,7 @@ class Configurar extends Command
 
     protected function voltarProMenu()
     {
-        $io = new SymfonyStyle($this->input, $this->output);
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
         
         if ($this->voltarProMenu) {
             if ($io->confirm('Vamos voltar pro menu anterior?', true)) {

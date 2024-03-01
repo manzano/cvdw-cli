@@ -3,13 +3,13 @@
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 function conectarDB(InputInterface $input, OutputInterface $output, $showException = true) : \Doctrine\DBAL\Connection
 {
-    $io = new SymfonyStyle($input, $output);
+    $io = new CvdwSymfonyStyle($input, $output);
     $config = new Configuration();
     $connectionParams = array(
         'dbname' => $_ENV['DB_DATABASE'],

@@ -5,7 +5,6 @@ namespace Manzano\CvdwCli\Services;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Manzano\CvdwCli\Services\Objeto;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 
 class Http
@@ -16,7 +15,8 @@ class Http
     public OutputInterface $output;
     public $logObjeto;
 
-    public function __construct(InputInterface $input, OutputInterface $output, $io = null, $logObjeto = false)
+    public function __construct(InputInterface $input, OutputInterface $output,
+                                    CvdwSymfonyStyle $io, $logObjeto = false)
     {
         if(is_object($logObjeto)) {
             $this->logObjeto = $logObjeto;

@@ -5,12 +5,9 @@ namespace Manzano\CvdwCli\Services;
 use Manzano\CvdwCli\Configuracoes;
 use Manzano\CvdwCli\Services\Objeto;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Console\Input\InputArgument;
+use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\ProgressBar;
 
@@ -22,7 +19,7 @@ use Doctrine\DBAL\Types\Type;
 
 class DatabaseSetup
 {
-    protected SymfonyStyle $io;
+    protected CvdwSymfonyStyle $io;
     public InputInterface $input;
     public OutputInterface $output;
     public \Doctrine\DBAL\Connection $conn;
@@ -32,7 +29,7 @@ class DatabaseSetup
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
-        $this->io = new SymfonyStyle($input, $output);
+        $this->io = new CvdwSymfonyStyle($input, $output);
         $this->input = $input;
         $this->output = $output;
         $this->conn = conectarDB($input, $output);
