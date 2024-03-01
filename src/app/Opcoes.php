@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 
 // Classe de exemplo de comando para listar comandos
 class Opcoes extends Command
@@ -34,7 +34,7 @@ class Opcoes extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output);
+        $io = new CvdwSymfonyStyle($input, $output);
 
         // Aqui você pode personalizar a saída do comando de ajuda
         $io->title('Manzano // CVDW CLI v1.0.0');
