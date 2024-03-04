@@ -132,7 +132,7 @@ class DatabaseSetup
                 $especificacao = $colunaTratada[0];
                 $opcoes = $colunaTratada[1];
 
-                $nomeColuna = $this->tratarNomeColuna($coluna);
+                $nomeColuna = $this->tratarNomeColuna($coluna, $especificacao);
 
                 $tabelaObj->addColumn("{$nomeColuna}", $especificacao["type"], $opcoes);
                 if (
@@ -211,7 +211,7 @@ class DatabaseSetup
         return array($especificacao, $opcoes);
     }
 
-    public function tratarNomeColuna(string $nomeColuna): string
+    public function tratarNomeColuna(string $nomeColuna, array $configuracao): string
     {
 
         $nomeColuna = strtolower($nomeColuna);
@@ -219,6 +219,13 @@ class DatabaseSetup
         $nomeColuna = str_replace('-', '_', $nomeColuna);
         $caracteresNaoPermitidos = array('(', ')', '/', '?', '!', ';', ':', '.', ',', '\'', '"', '`', '´', '=', '+', '*', '&', '%', '$', '#', '@', '§', 'ª', 'º', '°', '¨', '~', '^', '>');
         $nomeColuna = str_replace($caracteresNaoPermitidos, '', $nomeColuna);
+
+        if(isset($configuracao['prefixo'])){
+            $nomeColuna = $configuracao['prefixo'] . $nomeColuna;
+        }
+        if(isset($configuracao['sufixo'])){
+            $nomeColuna = $nomeColuna . $configuracao['sufixo'];
+        }
 
         // Se a coluna tiver mais que 60 caracteres
         if (strlen($nomeColuna) > 60) {
@@ -273,7 +280,7 @@ class DatabaseSetup
             if($tipoDeDados == "TABELA"){
                 continue;
             }
-            $especificacao['nomeTratado'] = $this->tratarNomeColuna($coluna);
+            $especificacao['nomeTratado'] = $this->tratarNomeColuna($coluna, $especificacao);
             $colunasObjetoTratado[$especificacao['nomeTratado']] = strtolower($coluna);
             
             // Verificar se a coluna nao existe na tabela
@@ -291,7 +298,8 @@ class DatabaseSetup
                 $tipoBanco = $colunasTabela[$colunaBanco]->getType()->getName();
                 $tipoObjeto = $especificacao['type'];
                 if($tipoBanco != $tipoObjeto){
-                    $logs[] = "A coluna {$especificacao['nomeTratado']} tem tipo diferente ($tipoObjeto|$tipoBanco)\n";
+                    $logs[] = "A coluna {$especificacao['nomeTratado']} 
+                                tem tipo diferente ($tipoObjeto > $tipoBanco)\n";
                     $diferencas['change'][] = $especificacao;
                 }
             }

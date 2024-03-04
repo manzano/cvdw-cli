@@ -187,7 +187,7 @@ response:
       description: Localidade informada
     descricao_localidade:
       example: Descrição localidade
-      type: string
+      type: text
       description: Descrição da localidade
     idarea:
       example: 1
@@ -199,7 +199,7 @@ response:
       description: Área informada
     descricao_area:
       example: Sem descrição
-      type: string
+      type: text
       description: Descrição da área
     prioridade:
       example: N

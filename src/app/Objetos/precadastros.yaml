@@ -195,7 +195,7 @@ response:
       description: Motivo de reprovação
     descricao_motivo_reprovacao:
       example: Sem crédito
-      type: string
+      type: text
       description: Descrição do motivo de reprovação
     idmotivo_cancelamento:
       example: 1
@@ -207,7 +207,7 @@ response:
       description: Motivo de cancelamento
     descricao_motivo_cancelamento:
       example: Cancelado pela empresa
-      type: string
+      type: text
       description: Descrição do motivo de cancelamento
     sla_vencimento:
       example: 2021-03-10

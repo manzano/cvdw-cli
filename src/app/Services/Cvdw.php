@@ -194,7 +194,6 @@ class Cvdw
             ->from($tabela)
             ->where("referencia = :referencia")
             ->setParameter('referencia', $referencia);
-        //echo $queryBuilder->getSQL();
         $stmt = $queryBuilder->executeQuery();
         $row = $stmt->fetchAssociative();
         if ($row['total'] > 0) {
@@ -222,10 +221,11 @@ class Cvdw
         $queryBuilder->update($objeto['tabela']);
 
         $indice = 0;
-
+        
         foreach ($objeto['response']['dados'] as $colunaInd => $valor) {
 
-            $nomeColuna = $this->database->tratarNomeColuna($colunaInd);
+            
+            $nomeColuna = $this->database->tratarNomeColuna($colunaInd, $valor);
 
             if (isset($linha->$colunaInd) && !is_array($linha->$colunaInd)) {
 
@@ -268,8 +268,9 @@ class Cvdw
         $queryBuilder->insert($objeto['tabela']);
 
         $indice = 0;
+
         foreach ($objeto['response']['dados'] as $colunaInd => $valor) {
-            $nomeColuna = $this->database->tratarNomeColuna($colunaInd);
+            $nomeColuna = $this->database->tratarNomeColuna($colunaInd, $valor);
 
             if (isset($linha->$colunaInd) && !is_array($linha->$colunaInd)) {
                 $queryBuilder->setValue($nomeColuna, '?');

@@ -279,7 +279,7 @@ response:
       description: Tag(s) do lead
     descricao_motivo_cancelamento:
       example: Não quis mais
-      type: string
+      type: text
       description: Descrição do motivo de cancelamento do lead
     possibilidade_venda:
       example: 4

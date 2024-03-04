@@ -123,6 +123,7 @@ response:
       description: Nome da imobiliária vinculada a simulação
     lead:
       example: Lead CV
+      sufixo: "_nome"
       type: string
       description: Nome do lead vinculado a simulação
     empreendimento:

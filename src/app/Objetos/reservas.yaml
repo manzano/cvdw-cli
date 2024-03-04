@@ -259,7 +259,7 @@ response:
       description: Nome da mídia
     descricao_motivo_cancelamento:
       example: Cancelamento
-      type: string
+      type: text
       description: Descrição da razão do cancelamento
     idsituacao_anterior:
       example: 3
