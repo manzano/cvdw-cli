@@ -130,7 +130,13 @@ class Cvdw
                             $this->io->error([
                                 $messagem,
                             ]);
-                            \Sentry\captureMessage($messagem);
+                            if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
+                                \Sentry\addBreadcrumb(
+                                    category: 'CVDW',
+                                    metadata: ['acao' => 'processar']
+                                );
+                                \Sentry\captureMessage($messagem);
+                            }
 
                             break;
                         }
@@ -245,17 +251,19 @@ class Cvdw
                 $this->logObjeto->escreverLog("  - Atualizado: " . $linha->referencia);
             }
         } catch (Exception $e) {
-            \Sentry\addBreadcrumb(
-                category: $objeto['tabela'],
-                metadata: ['acao' => 'update']
-            );
-            \Sentry\captureException($e);
             $this->io->error([
                 'Erro ao tentar executar o SQL! (Update)',
                 'Objeto: ' . print_r($linha, true),
                 'SQL: ' . $queryBuilder->getSQL(),
                 'Erro: ' . $e->getMessage()
             ]);
+            if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
+                \Sentry\addBreadcrumb(
+                    category: $objeto['tabela'],
+                    metadata: ['acao' => 'update']
+                );
+                \Sentry\captureException($e);
+            }
             exit;
         }
         return true;
@@ -286,17 +294,19 @@ class Cvdw
                 $this->logObjeto->escreverLog("  - Inserido: " . $linha->referencia);
             }
         } catch (Exception $e) {
-            \Sentry\addBreadcrumb(
-                category: $objeto['tabela'],
-                metadata: ['acao' => 'insert']
-            );
-            \Sentry\captureException($e);
             $this->io->error([
                 'Erro ao tentar executar o SQL! (Insert)',
                 'Objeto: ' . print_r($linha, true),
                 'SQL: ' . $queryBuilder->getSQL(),
                 'Erro: ' . $e->getMessage()
             ]);
+            if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
+                \Sentry\addBreadcrumb(
+                    category: $objeto['tabela'],
+                    metadata: ['acao' => 'insert']
+                );
+                \Sentry\captureException($e);
+            }            
             exit;
         }
 

@@ -22,9 +22,9 @@ function salvarEnv(array $newEnv = []): void
     $envContent = '';
     $escopo = getEnvEscope();
     $envContent = '';
-    foreach ($escopo as $key) {
+    foreach ($escopo as $key => $valor) {
         if (!isset($novoEnv[$key])) {
-            $novoEnv[$key] = "";
+            $novoEnv[$key] = $valor;
         }
         $envContent .= "$key=" . $novoEnv[$key] . "\n";
     }
@@ -39,7 +39,18 @@ function salvarEnv(array $newEnv = []): void
  */
 function getEnvEscope(): array
 {
-    return ['CV_URL', 'CV_EMAIL', 'CV_TOKEN', 'DB_CONNECTION', 'DB_HOST', 'DB_PORT', 'DB_DATABASE', 'DB_USERNAME', 'DB_PASSWORD'];
+    return [
+            'CV_URL' => null,
+            'CV_EMAIL' => null,
+            'CV_TOKEN' => null,
+            'DB_CONNECTION' => null,
+            'DB_HOST' => null,
+            'DB_PORT' => null,
+            'DB_DATABASE' => null,
+            'DB_USERNAME' => null,
+            'DB_PASSWORD' => null,
+            'CVDW_AMBIENTE' => 'PRD'
+        ];
 }
 
 function getEnvDir(): string

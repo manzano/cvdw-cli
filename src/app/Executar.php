@@ -139,8 +139,8 @@ class Executar extends Command
         $envVars = getEnvEscope();
         // Listar todas as variáveis de $envVars e verificar se todas tem valor
         foreach ($envVars as $envVar => $value) {
-            if (!isset($_ENV[$value]) || $_ENV[$value] == '') {
-                $io->error('Configuração não encontrada, invalida ou incompleta.');
+            if (!isset($_ENV[$envVar]) || $_ENV[$envVar] == '') {
+                $io->error('Configuração não encontrada, invalida ou incompleta. (' . $envVar . ')');
                 $io->text(['Por favor use o comando "cvdw configurar" para configurar o CVDW-CLI.']);
                 $io->text(['']);
                 exit;

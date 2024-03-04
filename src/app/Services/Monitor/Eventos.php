@@ -6,7 +6,6 @@ class Eventos
 {
     protected $token = "222ea4d3c6c73db6002c8895c94c302e";
     protected $gestor;
-    protected $usuario = false;
     protected $evento;
     protected $dados;
 
@@ -14,24 +13,28 @@ class Eventos
     {
         // Token da conta do Mixpanel do CVDW-CLI
         $this->gestor = \Mixpanel::getInstance($this->token, array("debug" => false));
-        $this->registraAmbiente();
+        
     }
 
-    public function registraAmbiente()
+    public function registraAmbiente() : void
     {
-        if(isset($_ENV['CV_URL']) && $_ENV['CV_URL'] != ''){
-            $this->usuario = $this->gestor->people->set($_ENV['CV_URL'], array(
+        if(isset($_ENV['CV_URL']) && $_ENV['CV_URL'] != '' 
+                && isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD'){
+            $this->gestor->identify($_ENV['CV_URL']);
+            $this->gestor->people->set($_ENV['CV_URL'], array(
                 '$first_name'       => $_ENV['CV_URL'],
                 '$last_name'        => "",
                 '$email'            => $_ENV['CV_EMAIL'],
                 "ultima_execucao"    => date('Y-m-d H:i:s')
             ));
         }
-        //echo "Ambiente registrado no Mixpanel\n";
+        
     }
-    public function registrarEvento(string $evento, string $acao, $subacao = null, $dados = null)
+    public function registrarEvento(string $evento, string $acao, $subacao = null, $dados = null) : void
     {
-        if($this->usuario){
+        if(isset($_ENV['CV_URL']) && $_ENV['CV_URL'] != '' 
+                && isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD'){
+            $this->registraAmbiente();
             $this->evento = $evento;
             $this->dados = array(
                 "acao" => $acao,
@@ -40,6 +43,5 @@ class Eventos
             );
             $this->gestor->track($this->evento, $this->dados);
         }
-        //echo "Evento registrado no Mixpanel\n";
     }
 }
