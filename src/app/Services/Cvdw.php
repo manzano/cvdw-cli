@@ -116,41 +116,40 @@ class Cvdw
 
                     $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
                     $progressBar->display();
-                    if(!isset($resposta->dados)) {
+                    if(!isset($resposta->dados) && is_array($resposta->dados) && count($resposta->dados) > 0) {
                         $this->io->error([
                             'A requisição não retornou os dados esperados!'
                         ]);
-                    }
-                    if(is_array($resposta->dados)) {
+                    } else {
 
-                        $dadosNoPadrao = $this->verificaPadrao($resposta->dados[0]);
-                        if(!$dadosNoPadrao) {
-                            $progressBar->finish();
-                            $messagem = 'Os dados de ' . $objeto['path'] . ' não estão no padrão esperado!';
-                            $this->io->error([
-                                $messagem,
-                            ]);
-                            if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
-                                \Sentry\addBreadcrumb(
-                                    category: 'CVDW',
-                                    metadata: ['acao' => 'processar']
-                                );
-                                \Sentry\captureMessage($messagem);
+                            $dadosNoPadrao = $this->verificaPadrao($resposta->dados[0]);
+                            if(!$dadosNoPadrao) {
+                                $progressBar->finish();
+                                $messagem = 'Os dados de ' . $objeto['path'] . ' não estão no padrão esperado!';
+                                $this->io->error([
+                                    $messagem,
+                                ]);
+                                if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
+                                    \Sentry\addBreadcrumb(
+                                        category: 'CVDW',
+                                        metadata: ['acao' => 'processar']
+                                    );
+                                    \Sentry\captureMessage($messagem);
+                                }
+
+                                break;
                             }
 
-                            break;
-                        }
+                            foreach ($resposta->dados as $linha) {
+                                //print_r($linha);
+                                $dadosProcessados++;
 
-                        foreach ($resposta->dados as $linha) {
-                            //print_r($linha);
-                            $dadosProcessados++;
-
-                            if ($this->processaSql($objeto, $linha)) {
-                                $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
-                                $progressBar->advance();
-                                $progressBar->display();
+                                if ($this->processaSql($objeto, $linha)) {
+                                    $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
+                                    $progressBar->advance();
+                                    $progressBar->display();
+                                }
                             }
-                        }
                     }
                     
                     // Precisa aguardar 4 segundos para não dar erro de limite de requisições
@@ -306,7 +305,7 @@ class Cvdw
                     metadata: ['acao' => 'insert']
                 );
                 \Sentry\captureException($e);
-            }            
+            }
             exit;
         }
 
