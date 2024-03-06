@@ -167,7 +167,7 @@ response:
       description: Bloco da etapa do empreendimento
     unidade:
       example: 102-B
-      type: string
+      type: text
       description: Unidade do empreendimento do atendimento
     idcliente:
       example: 193
