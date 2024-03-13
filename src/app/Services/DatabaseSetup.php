@@ -219,6 +219,7 @@ class DatabaseSetup
         $nomeColuna = str_replace('-', '_', $nomeColuna);
         $caracteresNaoPermitidos = array('(', ')', '/', '?', '!', ';', ':', '.', ',', '\'', '"', '`', '´', '=', '+', '*', '&', '%', '$', '#', '@', '§', 'ª', 'º', '°', '¨', '~', '^', '>');
         $nomeColuna = str_replace($caracteresNaoPermitidos, '', $nomeColuna);
+        $nomeColuna = trim($nomeColuna);
 
         if(isset($configuracao['prefixo'])){
             $nomeColuna = $configuracao['prefixo'] . $nomeColuna;
@@ -274,20 +275,31 @@ class DatabaseSetup
 
         $logs = array();
         $diferencas = array();
+        $subtabelas = array();
 
         foreach($colunasObjeto as $coluna => $especificacao){
-            $tipoDeDados = $objetoObj->identificarTipoDeDados($especificacao);
-            if($tipoDeDados == "TABELA"){
-                continue;
-            }
+
             $especificacao['nomeTratado'] = $this->tratarNomeColuna($coluna, $especificacao);
             $colunasObjetoTratado[$especificacao['nomeTratado']] = strtolower($coluna);
+            $colunaBanco = strtolower($especificacao['nomeTratado']);
+
+            $tipoDeDados = $objetoObj->identificarTipoDeDados($especificacao);
+            if($tipoDeDados == "TABELA"){
+                // Adicionar referência para a sub-tabela
+                $subtabela['nome'] = $tabela['nome'] . "_sub_" . $coluna;
+                $subtabela['objeto']['nome'] = $coluna;
+                $subtabela['objeto']['dados']['referencia'] = $colunasObjeto['referencia'];
+                $subtabela['objeto']['dados']['referencia_data'] = $colunasObjeto['referencia_data'];
+                $subtabela['objeto']['dados'] += $colunasObjeto[$coluna];
+                $subtabelas[] = $subtabela;
+                continue;
+            }
             
             // Verificar se a coluna nao existe na tabela
-            $colunaBanco = strtolower($especificacao['nomeTratado']);
+            
             if(!array_key_exists($colunaBanco, $colunasTabela)){
                 $diferencas['add'][] = $especificacao;
-                $logs[] = "A coluna {$especificacao['nomeTratado']} não existe na tabela\n";
+                $logs[] = "A coluna {$especificacao['nomeTratado']} não existe na tabela";
             } else {
                 
                 $especificacaoAux = $this->tratarColuna($coluna, $especificacao);
@@ -298,8 +310,7 @@ class DatabaseSetup
                 $tipoBanco = $colunasTabela[$colunaBanco]->getType()->getName();
                 $tipoObjeto = $especificacao['type'];
                 if($tipoBanco != $tipoObjeto){
-                    $logs[] = "A coluna {$especificacao['nomeTratado']} 
-                                tem tipo diferente ($tipoObjeto > $tipoBanco)\n";
+                    $logs[] = "A coluna {$especificacao['nomeTratado']} tem tipo diferente ($tipoObjeto > $tipoBanco)";
                     $diferencas['change'][] = $especificacao;
                 }
             }
@@ -308,11 +319,11 @@ class DatabaseSetup
             // Verificar se a coluna nao existe no objeto
             if(!array_key_exists($coluna, $colunasObjetoTratado) ){
                 $diferencas['remove'][] = $especificacao;
-                $logs[] = "A coluna {$coluna} não existe no objeto\n";
+                $logs[] = "A coluna {$coluna} não existe no objeto";
             }
         }
 
-        return array($logs, $diferencas);
+        return array($logs, $diferencas, $subtabelas);
     }
 
     protected function compararColunaObjeto(array $colunaTabela, array $colunaObjeto): array

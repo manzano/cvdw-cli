@@ -205,13 +205,13 @@
             "arquivo" => "precadastro_historico_situacoes.yaml"
             
         ],
-        /*
+        
         "repasses" => [
             "nome" => "Repasses (/repasses)",
             "arquivo" => "repasses.yaml"
             
         ],
-        */
+        
         "repasses_workflow_tempo" => [
             "nome" => "Repasses (/repasses/workflow/tempo)",
             "arquivo" => "repasses_workflow_tempo.yaml"
@@ -241,13 +241,13 @@
             "arquivo" => "reservas_comissoes_programacao.yaml"
             
         ],
-        /*
+        
         "reservas_coordenador" => [
             "nome" => "Reservas (/reservas/coordenador)",
             "arquivo" => "reservas_coordenador.yaml"
             
         ],
-        */
+
         "reservas_historico_situacoes" => [
             "nome" => "Reservas (/reservas/historico/situacoes)",
             "arquivo" => "reservas_historico_situacoes.yaml"
@@ -313,13 +313,13 @@
             "arquivo" => "reservas_sienge.yaml"
             
         ],
-        /*
+        
         "unidades_precos" => [
             "nome" => "Unidades (/unidades-precos)",
             "arquivo" => "unidades_precos.yaml"
             
         ],
-        */
+        
         "campos_adicionais" => [
             "nome" => "Campos Adicionais (/campos_adicionais)",
             "arquivo" => "campos_adicionais.yaml"

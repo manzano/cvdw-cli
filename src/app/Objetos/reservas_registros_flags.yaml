@@ -44,10 +44,6 @@ body:
     example: 2022-05-18
     type: string
     description: Retornará as vistorias criadas a partir da data informada
-  a_partir_data_modificacao:
-    example: 2022-05-18
-    type: string
-    description: Retornará as vistorias modificadas a partir da data informada
 response:
   pagina:
     example: 1
@@ -67,8 +63,8 @@ response:
     description: Total de páginas encontradas
   dados:
     referencia:
-      example: 193
-      type: integer
+      example: 193 ou 193_30
+      type: string
       description: Número de identificação da reserva
     referencia_data:
       example: 2023-01-15 15:26:15

@@ -60,7 +60,7 @@ class Cvdw
 
             if ($referencia_data) {
                 $referencia_data = new DateTime($referencia_data); // Cria um objeto DateTime
-                $referencia_data->modify('+1 seconds');
+                $referencia_data->modify('-1 seconds');
                 $referencia_data_UI = $referencia_data->format('d/m/Y H:i:s');
                 $referencia_data = $referencia_data->format('Y-m-d H:i:s');
                 $parametros['a_partir_data_referencia'] = $referencia_data;
@@ -91,8 +91,8 @@ class Cvdw
                 $progressBar->setFormat('normal'); // debug
                 $progressBar->setBarCharacter('<fg=green>=</>');
                 $progressBar->setProgressCharacter("\xF0\x9F\x9A\x80");
-                $progressBar->setFormat(" Página %current%/%max% [%bar%] %percent:3s%% \n %message%");
-                $progressBar->setMessage('Dados processados: 0');
+                $progressBar->setFormat(" Dados processados %current% de %max% [%bar%] %percent:3s%% \n %message%");
+                $progressBar->setMessage('Dados processados na página: 0');
 
                 $dadosProcessados = 0;
                 for ($pagina = 1; $pagina <= $paginas; $pagina++) {
@@ -114,7 +114,7 @@ class Cvdw
                         $resposta = $http->requestCVDW($objeto['path'], $parametros, $inputDataReferencia);
                     }
 
-                    $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
+                    $progressBar->setMessage('Dados processados na página: ' . $dadosProcessados);
                     $progressBar->display();
                     if(!isset($resposta->dados) && is_array($resposta->dados) && count($resposta->dados) > 0) {
                         $this->io->error([
@@ -145,17 +145,26 @@ class Cvdw
                                 $dadosProcessados++;
 
                                 if ($this->processaSql($objeto, $linha)) {
-                                    $progressBar->setMessage('Dados processados: ' . $dadosProcessados);
+                                    $progressBar->setMessage('Dados processados na página: ' . $dadosProcessados);
                                     $progressBar->advance();
                                     $progressBar->display();
                                 }
                             }
                     }
-                    
-                    // Precisa aguardar 4 segundos para não dar erro de limite de requisições
+
+                    // Precisa aguardar 3 segundos para não dar erro de limite de requisições
                     // CV Bloqueia se for feito mais que 20 requisições por minuto
-                    sleep(4);
-                    
+                    for($i=3; $i>0; $i--) {
+                        if($i == 1) {
+                            $progressBar->setMessage('<fg=green>'.$i.' segundo para a próxima requisição...</>');
+                        } else {
+                            $progressBar->setMessage('<fg=green>'.$i.' segundos para a próxima requisição...</>');
+                        }
+                        $progressBar->display();
+                        sleep(1);
+                    }
+                    $progressBar->setMessage('Executando próxima requisiçao...');
+                    $progressBar->display();
                 }
                 $progressBar->finish();
             } else {

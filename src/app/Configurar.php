@@ -162,12 +162,14 @@ class Configurar extends Command
             $bancoProblemas = false;
             foreach(OBJETOS as $key => $dados) {
                 $existe = $databaseObj->verificarSeTabelaExiste($key);
+                $objeto = $objetoObj->retornarObjeto($key);
                 if ($existe) {
                     $estrutura = $databaseObj->retornarEstruturaTabela($key);
-                    $objeto = $objetoObj->retornarObjeto($key);
+                    
                     $logDiferencas = $databaseObj->compararTabelaObjeto($estrutura, $objeto);
                     $diferencas = $logDiferencas[1];
                     $logs = $logDiferencas[0];
+                    $subtabelas = $logDiferencas[2];
                     if(count($diferencas) > 0) {
                         $diferencasBanco[$key] = $diferencas;
                         $bancoProblemas = true;
@@ -178,10 +180,41 @@ class Configurar extends Command
                     } else {
                         $io->text('<bg=green>[OK]</> A tabela ' . $key . ' está atualizada!');
                     }
+
                 } else {
                     $bancoProblemas = true;
                     $io->text('<fg=white;bg=red>[PROBLEMA]</> A tabela ' . $key . ' não foi encontrada!');
                 }
+
+                if(isset($subtabelas) && is_array($subtabelas) && count($subtabelas) > 0){
+                    foreach($subtabelas as $subespecificacao){
+                        $existe = $databaseObj->verificarSeTabelaExiste($subespecificacao['nome']);
+                        if($existe){
+                            $subestrutura = $databaseObj->retornarEstruturaTabela($subespecificacao['nome']);
+                            $subobjeto = array();
+                            $subobjeto['response']['dados'] = $subespecificacao['objeto']['dados'];
+                            
+                            $logDiferencas = $databaseObj->compararTabelaObjeto($subestrutura, $subobjeto);
+                            $diferencas = $logDiferencas[1];
+                            $logs = $logDiferencas[0];
+                            if (count($diferencas) > 0) {
+                                $diferencasBanco[$subespecificacao['nome']] = $diferencas;
+                                $bancoProblemas = true;
+                                $io->text('<fg=white;bg=red>[PROBLEMA]</> -> Encontrei algo na sub-tabela ' . $estrutura['nome'] . '!');
+                                foreach ($logs as $log) {
+                                    $io->text('-- ' . $log);
+                                }
+                            } else {
+                                $io->text('<bg=green>[OK]</> -> A sub-tabela ' . $estrutura['nome'] . ' está atualizada!');
+                            }
+                        } else {
+                            $bancoProblemas = true;
+                            $io->text(' <fg=white;bg=red>[PROBLEMA]</> -> A sub-tabela ' . $estrutura['nome'] . ' não foi encontrada!');
+                        
+                        }
+                    }
+                }
+
             }
         }
 
@@ -261,10 +294,20 @@ class Configurar extends Command
             $io->text('');
         }
 
-        $io->text([
-            '',
-            'Pronto!'
-        ]);
+        if ($io->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
+            $tabelasLimpar = array();
+            foreach ($diferencasBanco as $tabela => $diferencas) {
+                $tabelasLimpar[$tabela] = [];
+            }
+            $this->limparTabelas($tabelasLimpar);
+        } else {
+            $io->text([
+                '',
+                'Tubo bem! Finalizamos...',
+                ''
+            ]);
+        }
+
     }
 
     private function configurarCV(): int
@@ -513,11 +556,12 @@ class Configurar extends Command
 
     }
 
-    private function limparTabelas(): bool
+    private function limparTabelas($tabelasLimpar = false): bool
     {
 
         $io = new CvdwSymfonyStyle($this->input, $this->output);
-        
+        $database = new DatabaseSetup($this->input, $this->output);
+
         $io->warning([
             '',
             'Essa opção apaga todos os dados das tabelas ok?'
@@ -532,29 +576,30 @@ class Configurar extends Command
                 }
             );
 
-            $database = new DatabaseSetup($this->input, $this->output);
-            $tabelasLimpar = array();
-            if ($tabela === 'all') {
-                $io->text([
-                    'Ok! Vou limpar todas as tabelas.',
-                    ''
-                ]);
-                $tabelasLimpar = $database->listarTabelasArray();
-            } else {
-
-                if ($database->verificarSeTabelaExiste($tabela)) {
-                    $tabelasLimpar[$tabela] = "";
+            if(!is_array($tabelasLimpar)){
+                $tabelasLimpar = array();
+                if ($tabela === 'all') {
                     $io->text([
-                        'Encontrei a tabela "' . $tabela . '".',
+                        'Ok! Vou limpar todas as tabelas.',
                         ''
                     ]);
+                    $tabelasLimpar = $database->listarTabelasArray();
                 } else {
-                    $io->text([
-                        'Não encontrei a tabela "' . $tabela . '".',
-                        ''
-                    ]);
-                    if ($io->confirm('Quer tentar novamente?', true)) {
-                        $this->limparTabelas($io);
+
+                    if ($database->verificarSeTabelaExiste($tabela)) {
+                        $tabelasLimpar[$tabela] = "";
+                        $io->text([
+                            'Encontrei a tabela "' . $tabela . '".',
+                            ''
+                        ]);
+                    } else {
+                        $io->text([
+                            'Não encontrei a tabela "' . $tabela . '".',
+                            ''
+                        ]);
+                        if ($io->confirm('Quer tentar novamente?', true)) {
+                            $this->limparTabelas($io);
+                        }
                     }
                 }
             }

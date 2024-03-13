@@ -47,6 +47,19 @@ class Objeto
         }
     }
 
+    public function retornarObjetoTabelas($objeto) : array
+    {
+        $objeto = $this->retornarObjeto($objeto);
+        $componentes = $objeto['response']['dados'];
+        $tabelas = [];
+        foreach ($componentes['body']['response']['dados'] as $componente => $dados) {
+            if ($this->identificarTipoDeDados($dados) == "TABELA") {
+                $tabelas[$componente] = $dados;
+            }
+        }
+        return $tabelas;
+    }
+
     public function identificarTipoDeDados(array $dados) : string
     {
         foreach ($dados as $valor) {
