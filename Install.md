@@ -14,7 +14,7 @@ Caso precise instalar os pré-requisitos:
 
 Windows, siga as [instruções de instalação](Install_Windows.md).
 
-Mac, siga as [instruções de instalação](Install_Macs.md).
+Mac, siga as [instruções de instalação](Install_Mac.md).
 
 Linux, siga as [instruções de instalação](Install_Linux.md).
 

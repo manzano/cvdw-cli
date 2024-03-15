@@ -20,7 +20,11 @@
   },
   "require-dev": {
     "phpstan/phpstan": "^1.10",
-    "phpunit/phpunit": "^11"
+    "phpunit/phpunit": "^11",
+    "codeception/codeception": "^5.1",
+    "codeception/module-rest": "^3.3",
+    "codeception/module-phpbrowser": "^3.0",
+    "codeception/module-asserts": "*"
   },
   "autoload": {
     "psr-4": {
@@ -31,6 +35,11 @@
       "src/app/Inc/Helper.php",
       "src/app/Inc/Conexao.php"
     ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
   },
   "scripts": {
     "test": [

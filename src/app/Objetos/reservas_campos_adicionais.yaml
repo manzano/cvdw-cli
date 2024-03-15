@@ -32,7 +32,7 @@ body:
     example: 1
     type: integer
     description: Página que deseja visualizar os registros
-  registros_por_pagina:
+  registros:
     example: 30
     type: integer
     description: Quantidade de registro por página, máximo 500 registros
@@ -42,7 +42,7 @@ body:
     description: Retornará as vistorias a partir deste id, lembrando que está
       ordenado em ordem decrescente
   a_partir_data_referencia:
-    example: 2022-05-18
+    example: 2022-05-18 10:45:30
     type: string
     description: Retornará as vistorias criadas a partir da data informada
 response:
@@ -50,7 +50,7 @@ response:
     example: 1
     type: integer
     description: Página que deseja visualizar os registros
-  registros_por_pagina:
+  registros:
     example: 30
     type: integer
     description: Quantidade de registro por página, máximo 500 registros

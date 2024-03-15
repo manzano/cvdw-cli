@@ -1,0 +1,9 @@
+actor: ApiTester
+suite_namespace: Tests\ApiCVDW
+modules:
+    enabled:
+        - REST:
+            url: https://localhost.cvcrm.com.br/api/v1/cvdw
+            depends: PhpBrowser
+step_decorators:
+    - \Codeception\Step\AsJson
