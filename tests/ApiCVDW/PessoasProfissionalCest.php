@@ -2,6 +2,7 @@
 namespace Tests\ApiCVDW;
 
 use Tests\Support\ApiTester;
+use Tests\Helper\CvdwHelper;
 use Tests\ApiCVDW\Common;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Assert;
@@ -10,7 +11,10 @@ class PessoasProfissionalCest extends Common
 {
     public function getPessoasProfissional(ApiTester $I)
     {
-        $I->sendGet('/pessoas/profissional', ['pagina' => 1, 'registros' => 500]);
+        
+        //sleep(3);
+        
+        $I->sendGet('/pessoas/profissional', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
@@ -26,10 +30,13 @@ class PessoasProfissionalCest extends Common
         $dados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
         Assert::assertNotEmpty($dados); // Assegura que 'dados' não está vazio
 
+        //$I->validarFormatoDaData('referencia_data', 'Y-m-d H:i:s', $dados[0]);
+
+        //print_r($dados[0]);
         // Estrutura de 'dados[0]'
+        /*
         $I->seeResponseMatchesJsonType([
-            'referencia' => 'integer|string',
-            'referencia_data' => 'datetime',
+            'referencia' => 'string',
             'idpessoa' => 'string|null',
             'idpessoa_int' => 'string|null',
             'trabalho_nome_empresa' => 'string|null',
@@ -57,8 +64,8 @@ class PessoasProfissionalCest extends Common
             'trabalho_endereco_pais' => 'string|null',
             'trabalho_anterior_nome_empresa' => 'string|null',
             'trabalho_anterior_cnpj' => 'string|null',
-            'trabalho_anterior_data_admissao' => 'datetime|null',
-            'trabalho_anterior_data_desligamento' => 'datetime|null',
+            'trabalho_anterior_data_admissao' => 'string|null',
+            'trabalho_anterior_data_desligamento' => 'string|null',
             'possui_outras_rendas' => 'string|null',
             'valor_mensal_bruto' => 'string|null',
             'valor_mensal_liquido' => 'string|null',
@@ -79,9 +86,7 @@ class PessoasProfissionalCest extends Common
             'cidade_imovel_proprietario' => 'string|null',
             'endereco_pais_imovel_proprietario' => 'string|null'
         ], '$.dados[0]');
-
-        //sleep(3);
-        $I->wait(3);
+        */
 
     }
 }

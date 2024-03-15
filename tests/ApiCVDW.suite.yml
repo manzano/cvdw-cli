@@ -5,5 +5,6 @@ modules:
         - REST:
             url: https://localhost.cvcrm.com.br/api/v1/cvdw
             depends: PhpBrowser
+        - \Helper\CvdwHelper
 step_decorators:
     - \Codeception\Step\AsJson

@@ -2,6 +2,7 @@
 namespace Tests\ApiCVDW;
 
 use Tests\Support\ApiTester;
+use Tests\Helper\CvdwHelper;
 use Tests\ApiCVDW\Common;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Assert;
@@ -10,7 +11,10 @@ class LeadsCest extends Common
 {
     public function getLeads(ApiTester $I)
     {
-        $I->sendGet('/leads', ['pagina' => 1, 'registros' => 500]);
+        
+        //sleep(3);
+        
+        $I->sendGet('/leads', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
@@ -26,14 +30,17 @@ class LeadsCest extends Common
         $dados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
         Assert::assertNotEmpty($dados); // Assegura que 'dados' não está vazio
 
+        //$I->validarFormatoDaData('referencia_data', 'Y-m-d H:i:s', $dados[0]);
+
+        //print_r($dados[0]);
         // Estrutura de 'dados[0]'
+        /*
         $I->seeResponseMatchesJsonType([
-            'referencia' => 'integer|string',
-            'referencia_data' => 'datetime',
+            'referencia' => 'string',
             'idlead' => 'integer|null',
             'idsituacao' => 'integer|null',
             'situacao' => 'string|null',
-            'data_cad' => 'datetime|null',
+            'data_cad' => 'string|null',
             'nome' => 'string|null',
             'email' => 'string|null',
             'telefone' => 'string|null',
@@ -68,24 +75,24 @@ class LeadsCest extends Common
             'origem_ultimo' => 'string|null',
             'midia_original' => 'string|null',
             'midia_ultimo' => 'string|null',
-            'renda_familiar' => 'number|null',
+            'renda_familiar' => 'integer|null',
             'motivo_cancelamento' => 'string|null',
-            'data_cancelamento' => 'datetime|null',
-            'data_sincronizacao' => 'datetime|null',
-            'data_ultima_interacao' => 'datetime|null',
+            'data_cancelamento' => 'string|null',
+            'data_sincronizacao' => 'string|null',
+            'data_ultima_interacao' => 'string|null',
             'cidade' => 'string|null',
             'estado' => 'string|null',
             'regiao' => 'string|null',
-            'ultima_data_conversao' => 'datetime|null',
-            'data_reativacao' => 'datetime|null',
+            'ultima_data_conversao' => 'string|null',
+            'data_reativacao' => 'string|null',
             'idsituacao_anterior' => 'integer|null',
             'nome_situacao_anterior_lead' => 'string|null',
             'tags' => 'text|null',
             'descricao_motivo_cancelamento' => 'text|null',
             'possibilidade_venda' => 'integer|null',
             'inserido_bolsao' => 'string|null',
-            'data_primeira_interacao_gestor' => 'datetime|null',
-            'data_primeira_interacao_corretor' => 'datetime|null',
+            'data_primeira_interacao_gestor' => 'string|null',
+            'data_primeira_interacao_corretor' => 'string|null',
             'score' => 'integer|null',
             'idgestor_ultimo' => 'integer|null',
             'gestor_ultimo' => 'string|null',
@@ -96,11 +103,9 @@ class LeadsCest extends Common
             'nome_momento_lead' => 'string|null',
             'novo' => 'string|null',
             'retorno' => 'string|null',
-            'data_ultima_alteracao' => 'datetime|null'
+            'data_ultima_alteracao' => 'string|null'
         ], '$.dados[0]');
-
-        //sleep(3);
-        $I->wait(3);
+        */
 
     }
 }

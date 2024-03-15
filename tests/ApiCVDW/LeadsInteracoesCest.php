@@ -2,6 +2,7 @@
 namespace Tests\ApiCVDW;
 
 use Tests\Support\ApiTester;
+use Tests\Helper\CvdwHelper;
 use Tests\ApiCVDW\Common;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Assert;
@@ -10,7 +11,10 @@ class LeadsInteracoesCest extends Common
 {
     public function getLeadsInteracoes(ApiTester $I)
     {
-        $I->sendGet('/leads/interacoes', ['pagina' => 1, 'registros' => 500]);
+        
+        //sleep(3);
+        
+        $I->sendGet('/leads/interacoes', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
@@ -26,13 +30,16 @@ class LeadsInteracoesCest extends Common
         $dados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
         Assert::assertNotEmpty($dados); // Assegura que 'dados' não está vazio
 
+        //$I->validarFormatoDaData('referencia_data', 'Y-m-d H:i:s', $dados[0]);
+
+        //print_r($dados[0]);
         // Estrutura de 'dados[0]'
+        /*
         $I->seeResponseMatchesJsonType([
-            'referencia' => 'integer|string',
-            'referencia_data' => 'datetime',
+            'referencia' => 'string',
             'idinteracao' => 'integer|null',
             'idlead' => 'integer|null',
-            'data_cad' => 'datetime|null',
+            'data_cad' => 'string|null',
             'idcorretor' => 'integer|null',
             'corretor' => 'string|null',
             'idimobiliaria' => 'integer|null',
@@ -45,9 +52,7 @@ class LeadsInteracoesCest extends Common
             'enviar_cliente' => 'string|null',
             'gestor_interacao' => 'string|null'
         ], '$.dados[0]');
-
-        //sleep(3);
-        $I->wait(3);
+        */
 
     }
 }

@@ -1,4 +1,4 @@
-path: /unidades-precos
+path: /unidades/precos
 tabela: unidades_precos
 metodo: get
 descricao: Esta api retorna os valores das unidades das tabelas dinâmicas (Valor

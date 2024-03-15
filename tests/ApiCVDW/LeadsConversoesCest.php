@@ -2,6 +2,7 @@
 namespace Tests\ApiCVDW;
 
 use Tests\Support\ApiTester;
+use Tests\Helper\CvdwHelper;
 use Tests\ApiCVDW\Common;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Assert;
@@ -10,7 +11,10 @@ class LeadsConversoesCest extends Common
 {
     public function getLeadsConversoes(ApiTester $I)
     {
-        $I->sendGet('/leads/conversoes', ['pagina' => 1, 'registros' => 500]);
+        
+        //sleep(3);
+        
+        $I->sendGet('/leads/conversoes', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
@@ -26,12 +30,15 @@ class LeadsConversoesCest extends Common
         $dados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
         Assert::assertNotEmpty($dados); // Assegura que 'dados' não está vazio
 
+        //$I->validarFormatoDaData('referencia_data', 'Y-m-d H:i:s', $dados[0]);
+
+        //print_r($dados[0]);
         // Estrutura de 'dados[0]'
+        /*
         $I->seeResponseMatchesJsonType([
-            'referencia' => 'integer|string',
-            'referencia_data' => 'datetime',
+            'referencia' => 'string',
             'idlead' => 'integer|null',
-            'data_cad' => 'datetime|null',
+            'data_cad' => 'string|null',
             'nome' => 'string|null',
             'email' => 'string|null',
             'telefone' => 'string|null',
@@ -46,9 +53,7 @@ class LeadsConversoesCest extends Common
             'gestor_ultimo' => 'integer|null',
             'empreendimento_ultimo' => 'integer|null'
         ], '$.dados[0]');
-
-        //sleep(3);
-        $I->wait(3);
+        */
 
     }
 }

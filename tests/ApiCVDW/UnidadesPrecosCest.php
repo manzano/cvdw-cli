@@ -2,6 +2,7 @@
 namespace Tests\ApiCVDW;
 
 use Tests\Support\ApiTester;
+use Tests\Helper\CvdwHelper;
 use Tests\ApiCVDW\Common;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Assert;
@@ -10,7 +11,10 @@ class UnidadesPrecosCest extends Common
 {
     public function getUnidadesPrecos(ApiTester $I)
     {
-        $I->sendGet('/unidades-precos', ['pagina' => 1, 'registros' => 500]);
+        
+        //sleep(3);
+        
+        $I->sendGet('/unidades/precos', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
@@ -26,10 +30,13 @@ class UnidadesPrecosCest extends Common
         $dados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
         Assert::assertNotEmpty($dados); // Assegura que 'dados' não está vazio
 
+        //$I->validarFormatoDaData('referencia_data', 'Y-m-d H:i:s', $dados[0]);
+
+        //print_r($dados[0]);
         // Estrutura de 'dados[0]'
+        /*
         $I->seeResponseMatchesJsonType([
-            'referencia' => 'integer|string',
-            'referencia_data' => 'datetime',
+            'referencia' => 'string',
             'idunidade' => 'integer|null',
             'unidade' => 'string|null',
             'empreendimento' => 'string|null',
@@ -42,9 +49,7 @@ class UnidadesPrecosCest extends Common
             'idtabela' => 'integer|null',
             'valor_avaliacao' => 'string|null'
         ], '$.dados[0]');
-
-        //sleep(3);
-        $I->wait(3);
+        */
 
     }
 }

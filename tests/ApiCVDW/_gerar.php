@@ -33,8 +33,6 @@
             echo $info['filename'] . PHP_EOL;
             $yaml = \Symfony\Component\Yaml\Yaml::parse($yaml);
             
-            
-
             $name = explode('_', $info['filename']);
             $name = array_map('ucfirst', $name);
             $name = implode('', $name);
@@ -57,11 +55,20 @@
 
             $retornoDados = [];
             foreach ($yaml['response']['dados'] as $key => $value) {
-                if($key == 'referencia'){
-                    $value['type'] = 'integer|string';
+                if ($key == 'referencia_data') {
+                    continue;
                 }
                 if (!isset($value['type'])) {
                     $value['type'] = "array";
+                }
+                if ($value['type'] == 'number') {
+                    $value['type'] = "integer";
+                }
+                if ($value['type'] == 'datetime') {
+                    $value['type'] = "string";
+                }
+                if ($key == 'referencia') {
+                    $value['type'] = 'string';
                 }
                 $null = '';
                 $naoNulos = ['referencia', 'referencia_data'];

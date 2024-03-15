@@ -77,10 +77,6 @@ response:
       example: S
       type: string
       description: Informa se está ativo S (Sim) e N (Não)
-    ativo_painel:
-      example: S
-      type: string
-      description: Informa se está ativo ou não
     tipo_login:
       example: CV
       type: string

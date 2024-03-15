@@ -194,8 +194,8 @@ response:
       type: string
       description: Nome da mídia
     idtabela:
-      example: integer
-      type: string
+      example: 3
+      type: integer
       description: Identificador da tabela de preço
     idtipovenda:
       example: 234
@@ -214,7 +214,7 @@ response:
       type: string
       description: Identificador da tabela de preço para integrações  
     idlead:
-      example: 168523,4322 (TEXT)
-      type: text
+      example: 16852
+      type: integer
       description: Identificador dos leads vinculados separados por ,
       

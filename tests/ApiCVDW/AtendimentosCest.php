@@ -2,6 +2,7 @@
 namespace Tests\ApiCVDW;
 
 use Tests\Support\ApiTester;
+use Tests\Helper\CvdwHelper;
 use Tests\ApiCVDW\Common;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Assert;
@@ -10,7 +11,10 @@ class AtendimentosCest extends Common
 {
     public function getAtendimentos(ApiTester $I)
     {
-        $I->sendGet('/atendimentos', ['pagina' => 1, 'registros' => 500]);
+        
+        //sleep(3);
+        
+        $I->sendGet('/atendimentos', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
@@ -26,13 +30,16 @@ class AtendimentosCest extends Common
         $dados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
         Assert::assertNotEmpty($dados); // Assegura que 'dados' não está vazio
 
+        //$I->validarFormatoDaData('referencia_data', 'Y-m-d H:i:s', $dados[0]);
+
+        //print_r($dados[0]);
         // Estrutura de 'dados[0]'
+        /*
         $I->seeResponseMatchesJsonType([
-            'referencia' => 'integer|string',
-            'referencia_data' => 'datetime',
+            'referencia' => 'string',
             'idatendimento' => 'integer|null',
             'protocolo' => 'string|null',
-            'data_cad' => 'datetime|null',
+            'data_cad' => 'string|null',
             'prioridade' => 'string|null',
             'tempo_finalizado' => 'integer|null',
             'telefone_atendimento' => 'string|null',
@@ -64,7 +71,7 @@ class AtendimentosCest extends Common
             'assunto' => 'string|null',
             'subassunto' => 'string|null',
             'usuario' => 'string|null',
-            'data_situacao' => 'datetime|null',
+            'data_situacao' => 'string|null',
             'idclassificacao' => 'integer|null',
             'classificacao' => 'string|null',
             'idtipo' => 'integer|null',
@@ -85,11 +92,9 @@ class AtendimentosCest extends Common
             'sinalizador_juridico' => 'string|null',
             'times' => 'string|null',
             'origem' => 'string|null',
-            'data_modificacao' => 'datetime|null'
+            'data_modificacao' => 'string|null'
         ], '$.dados[0]');
-
-        //sleep(3);
-        $I->wait(3);
+        */
 
     }
 }

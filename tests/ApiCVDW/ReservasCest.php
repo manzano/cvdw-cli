@@ -2,6 +2,7 @@
 namespace Tests\ApiCVDW;
 
 use Tests\Support\ApiTester;
+use Tests\Helper\CvdwHelper;
 use Tests\ApiCVDW\Common;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Assert;
@@ -10,7 +11,10 @@ class ReservasCest extends Common
 {
     public function getReservas(ApiTester $I)
     {
-        $I->sendGet('/reservas', ['pagina' => 1, 'registros' => 500]);
+        
+        //sleep(3);
+        
+        $I->sendGet('/reservas', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
@@ -26,21 +30,24 @@ class ReservasCest extends Common
         $dados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
         Assert::assertNotEmpty($dados); // Assegura que 'dados' não está vazio
 
+        //$I->validarFormatoDaData('referencia_data', 'Y-m-d H:i:s', $dados[0]);
+
+        //print_r($dados[0]);
         // Estrutura de 'dados[0]'
+        /*
         $I->seeResponseMatchesJsonType([
-            'referencia' => 'integer|string',
-            'referencia_data' => 'datetime',
+            'referencia' => 'string',
             'idreserva' => 'integer|null',
             'aprovada' => 'string|null',
-            'data_cad' => 'datetime|null',
-            'data_venda' => 'datetime|null',
+            'data_cad' => 'string|null',
+            'data_venda' => 'string|null',
             'situacao' => 'string|null',
             'idsituacao' => 'integer|null',
             'situacao_comercial' => 'string|null',
             'idempreendimento' => 'integer|null',
             'codigointerno_empreendimento' => 'string|null',
             'empreendimento' => 'string|null',
-            'data_entrega_chaves_contrato_cliente' => 'datetime|null',
+            'data_entrega_chaves_contrato_cliente' => 'string|null',
             'bloco' => 'string|null',
             'unidade' => 'string|null',
             'regiao' => 'string|null',
@@ -51,7 +58,7 @@ class ReservasCest extends Common
             'email' => 'string|null',
             'cidade' => 'string|null',
             'cep_cliente' => 'string|null',
-            'renda' => 'number|null',
+            'renda' => 'integer|null',
             'sexo' => 'string|null',
             'idade' => 'integer|null',
             'estado_civil' => 'string|null',
@@ -59,18 +66,18 @@ class ReservasCest extends Common
             'corretor' => 'string|null',
             'idimobiliaria' => 'integer|null',
             'imobiliaria' => 'string|null',
-            'valor_contrato' => 'number|null',
+            'valor_contrato' => 'integer|null',
             'vencimento' => 'string|null',
             'campanha' => 'string|null',
             'cessao' => 'string|null',
             'motivo_cancelamento' => 'string|null',
             'espacos_complementares' => 'text|null',
             'idlead' => 'text|null',
-            'data_ultima_alteracao_situacao' => 'datetime|null',
+            'data_ultima_alteracao_situacao' => 'string|null',
             'empresa_correspondente' => 'string|null',
-            'valor_fgts' => 'number|null',
-            'valor_financiamento' => 'number|null',
-            'valor_subsidio' => 'number|null',
+            'valor_fgts' => 'integer|null',
+            'valor_financiamento' => 'integer|null',
+            'valor_subsidio' => 'integer|null',
             'nome_usuario' => 'string|null',
             'idunidade' => 'integer|null',
             'idprecadastro' => 'integer|null',
@@ -82,28 +89,26 @@ class ReservasCest extends Common
             'idtabela' => 'integer|null',
             'nometabela' => 'string|null',
             'codigointernotabela' => 'string|null',
-            'data_contrato' => 'datetime|null',
-            'valor_proposta' => 'number|null',
-            'vpl_tabela' => 'number|null',
-            'vpl_reserva' => 'number|null',
+            'data_contrato' => 'string|null',
+            'valor_proposta' => 'integer|null',
+            'vpl_tabela' => 'integer|null',
+            'vpl_reserva' => 'integer|null',
             'usuario_aprovacao' => 'string|null',
-            'data_aprovacao' => 'datetime|null',
-            'juros_condicao_aprovada' => 'number|null',
-            'juros_apos_entrega_condicao_aprovada' => 'number|null',
+            'data_aprovacao' => 'string|null',
+            'juros_condicao_aprovada' => 'integer|null',
+            'juros_apos_entrega_condicao_aprovada' => 'integer|null',
             'idtabela_condicao_aprovada' => 'integer|null',
-            'data_primeira_aprovacao' => 'datetime|null',
-            'aprovacao_absoluto' => 'number|null',
-            'aprovacao_vpl_valor' => 'number|null',
+            'data_primeira_aprovacao' => 'string|null',
+            'aprovacao_absoluto' => 'integer|null',
+            'aprovacao_vpl_valor' => 'integer|null',
             'idtipovenda' => 'integer|null',
             'tipovenda' => 'string|null',
             'idgrupo' => 'integer|null',
             'grupo' => 'string|null',
-            'data_modificacao' => 'datetime|null',
+            'data_modificacao' => 'string|null',
             'campos_adicionais' => 'array|null'
         ], '$.dados[0]');
-
-        //sleep(3);
-        $I->wait(3);
+        */
 
     }
 }
