@@ -52,7 +52,7 @@ response:
     example: 1
     type: integer
     description: Página que deseja visualizar os registros
-  registros_por_pagina:
+  registros:
     example: 30
     type: integer
     description: Quantidade de registro por página, máximo 500 registros
@@ -77,14 +77,18 @@ response:
       example: 12414
       type: integer
       description: Identificador da reserva
-    idlead:
-      example: 168523,4322 (TEXT)
-      type: text
-      description: Identificador dos leads vinculados separados por ,
     aprovada:
       example: Sim
       type: string
       description: Aprovação da reserva
+    valor_contrato:
+      example: 150000
+      type: number
+      description: Valor do contrato da reserva  
+    contrato_interno:
+      example: "5848"
+      type: string
+      description: Identificador da tabela de preço para integrações
     data:
       example: 2021-01-01 00:00:00
       type: datetime
@@ -92,39 +96,7 @@ response:
     data_venda:
       example: 2021-01-01 00:00:00
       type: datetime
-      description: Data de venda da reserva
-    empreendimento:
-      example: Retiro Teixeira
-      type: string
-      description: Empreendimento da reserva
-    idempreendimento:
-      example: 589
-      type: integer
-      description: Código identificador do empreendimento
-    codigointerno_empreendimento:
-      example: "58934"
-      type: string
-      description: Código interno do empreendimento
-    regiao:
-      example: Sul
-      type: string
-      description: Região do empreendimento da reserva
-    planta:
-      example: Planta 01
-      type: string
-      description: Planta da unidade da venda
-    bloco:
-      example: Bloco E06
-      type: string
-      description: Bloco do empreendimento
-    unidade:
-      example: "3"
-      type: string
-      description: Unidade do empreendimento
-    area_privativa:
-      example: "10.02"
-      type: number
-      description: Tamanho da área privativa
+      description: Data de venda da reserva 
     cliente:
       example: Pessoa de teste
       type: string
@@ -180,15 +152,43 @@ response:
     imobiliaria:
       example: IMOBILIÁRIA QC
       type: string
-      description: Imobiliária da reserva
+      description: Imobiliária da reserva   
+    unidade:
+      example: "3"
+      type: string
+      description: Unidade do empreendimento
+    empreendimento:
+      example: Retiro Teixeira
+      type: string
+      description: Empreendimento da reserva
+    area_privativa:
+      example: "10.02"
+      type: number
+      description: Tamanho da área privativa
+    idempreendimento:
+      example: 589
+      type: integer
+      description: Código identificador do empreendimento  
+    codigointerno_empreendimento:
+      example: "58934"
+      type: string
+      description: Código interno do empreendimento
+    bloco:
+      example: Bloco E06
+      type: string
+      description: Bloco do empreendimento
+    regiao:
+      example: Sul
+      type: string
+      description: Região do empreendimento da reserva
+    planta:
+      example: Planta 01
+      type: string
+      description: Planta da unidade da venda     
     campanha:
       example: Campanha
       type: string
       description: Campanha da reserva
-    valor_contrato:
-      example: 150000
-      type: number
-      description: Valor do contrato da reserva
     idmidia:
       example: 2
       type: integer
@@ -201,6 +201,14 @@ response:
       example: integer
       type: string
       description: Identificador da tabela de preço
+    idtipovenda:
+      example: 234
+      type: integer
+      description: Identificador do tipo da venda     
+    tipovenda:
+      example: Tipo financiamento
+      type: string
+      description: Descrição do tipo da venda      
     nometabela:
       example: Tabela Dezembro
       type: string
@@ -208,12 +216,9 @@ response:
     codigointernotabela:
       example: "5848"
       type: string
-      description: Identificador da tabela de preço para integrações
-    idtipovenda:
-      example: 234
-      type: integer
-      description: Identificador do tipo da venda
-    tipovenda:
-      example: Tipo financiamento
-      type: string
-      description: Descrição do tipo da venda
+      description: Identificador da tabela de preço para integrações  
+    idlead:
+      example: 168523,4322 (TEXT)
+      type: text
+      description: Identificador dos leads vinculados separados por ,
+      
