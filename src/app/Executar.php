@@ -191,22 +191,17 @@ class Executar extends Command
 
             foreach ($objetosArray as $objeto => $dados) {
                 $io->text('');
-                $io->text('');
                 $objeto = $objetoObj->retornarObjeto($objeto);
                 $io->section($dados['nome']);
-                $io->text('Executando objeto: ' . $dados['nome'] . ' (' . $objeto['subschema'] . ')');
-                
+                $io->text('Executando objeto: ' . $dados['nome'] . '');
                 $this->eventosObj->registrarEvento($this->evento, 'executar', $dados['nome']);
-
                 $cvdw->processar($objeto, $io, $inputDataReferencia, $this->logObjeto);
                 //$this->limparTela();
             }
         } else {
             $io->error('Objeto não especificado.');
         }
-
         $this->voltarProMenu($io);
-
         return Command::SUCCESS;
     }
 

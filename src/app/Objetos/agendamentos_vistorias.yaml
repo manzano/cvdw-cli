@@ -69,7 +69,7 @@ response:
       example: 2023-01-15 15:26:15
       type: datetime
       description: Data de referência
-    idvistoria:
+    idvistorias:
       example: 193
       type: integer
       description: Número de identificação da vistoria

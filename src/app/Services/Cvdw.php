@@ -26,6 +26,12 @@ class Cvdw
     public $logObjeto = false;
     public array $objeto;
 
+    public int $processados;
+    public int $inseridos = 0;
+    public int $inseridos_erros = 0;
+    public int $alterados = 0;
+    public int $alterados_erros = 0;
+
     public function __construct(InputInterface $input, OutputInterface $output)
     {
         $this->input = $input;
@@ -35,43 +41,35 @@ class Cvdw
 
     public function processar(array $objeto, $io, $inputDataReferencia = false, $logObjeto = null): bool
     {
-
         $this->io = $io;
-        if(is_object($logObjeto)) {
+        if (is_object($logObjeto)) {
             $this->logObjeto = $logObjeto;
         }
-
         $this->database = new DatabaseSetup($this->input, $this->output);
         $http = new Http($this->input, $this->output, $io, $this->logObjeto);
-
+        $parametros = array(
+            'pagina' => 1,
+            'registros_por_pagina' => 500
+        );
         if ($inputDataReferencia) {
             $this->io->text('Data de referência: <fg=red>Ignorada</>');
-            $parametros = array(
-                'pagina' => 1,
-                'registros_por_pagina' => 500
-            );
         } else {
             $referencia_data = $this->buscaUltimaData($objeto['tabela']);
-            
-            $parametros = array(
-                'pagina' => 1,
-                'registros_por_pagina' => 500
-            );
-
             if ($referencia_data) {
                 $referencia_data = new DateTime($referencia_data); // Cria um objeto DateTime
-                $referencia_data->modify('-1 seconds');
+                $referencia_data->modify('-0 seconds');
                 $referencia_data_UI = $referencia_data->format('d/m/Y H:i:s');
                 $referencia_data = $referencia_data->format('Y-m-d H:i:s');
                 $parametros['a_partir_data_referencia'] = $referencia_data;
             } else {
                 $referencia_data_UI = 'Nenhuma data encontrada';
             }
-            
             $this->io->text('Data de referência: ' . $referencia_data_UI);
         }
+        $this->processados = 0;
+        $this->inseridos = $this->inseridos_erros = 0;
+        $this->alterados = $this->alterados_erros = 0;
         $resposta = $http->requestCVDW($objeto['path'], $parametros);
-
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
         if (!isset($resposta->total_de_registros)) {
             $this->io->error([
@@ -79,97 +77,79 @@ class Cvdw
                 'Parametros: ' . print_r($parametros, true)
             ]);
         } else {
-
+            $this->io->text('Registros encontrados: ' . $resposta->total_de_registros);
+            $this->io->text('Total de páginas: ' . $resposta->total_de_paginas);
+            $progressBar = new ProgressBar($this->output, $resposta->total_de_registros);
             $paginas = $resposta->total_de_paginas;
-
             if ($paginas > 0) {
-
-                $this->io->text('Total de registros encontrados: ' . $resposta->total_de_registros);
-                $this->io->text('Total de páginas: ' . $resposta->total_de_paginas);
-
-                $progressBar = new ProgressBar($this->output, $resposta->total_de_registros);
                 $progressBar->setFormat('normal'); // debug
                 $progressBar->setBarCharacter('<fg=green>=</>');
                 $progressBar->setProgressCharacter("\xF0\x9F\x9A\x80");
                 $progressBar->setFormat(" Dados processados %current% de %max% [%bar%] %percent:3s%% \n %message%");
-                $progressBar->setMessage('Dados processados na página: 0');
+                $progressBar->setMessage($this->getMensagem());
 
-                $dadosProcessados = 0;
+                $this->processados = 0;
                 for ($pagina = 1; $pagina <= $paginas; $pagina++) {
+                    
+                    if ($this->getLimiteErros()) {
+                        break;
+                    }
 
                     if ($pagina > 1) {
-
+                        $parametros['pagina'] = $pagina;
                         if ($inputDataReferencia) {
-                            $parametros = array(
-                                'pagina' => $pagina,
-                                'registros_por_pagina' => 500
-                            );
+                            unset($parametros['a_partir_data_referencia']);
                         } else {
-                            $parametros = array(
-                                'pagina' => $pagina,
-                                'registros_por_pagina' => 500,
-                                'a_partir_data_referencia' => "$referencia_data"
-                            );
+                            $parametros['a_partir_data_referencia'] = $referencia_data;
                         }
                         $resposta = $http->requestCVDW($objeto['path'], $parametros, $inputDataReferencia);
                     }
-
-                    $progressBar->setMessage('Dados processados na página: ' . $dadosProcessados);
+                    $progressBar->setMessage($this->getMensagem());
                     $progressBar->display();
-                    if(!isset($resposta->dados) && is_array($resposta->dados) && count($resposta->dados) > 0) {
+                    if (!isset($resposta->dados) && is_array($resposta->dados) && count($resposta->dados) > 0) {
                         $this->io->error([
                             'A requisição não retornou os dados esperados!'
                         ]);
                     } else {
-
-                            $dadosNoPadrao = $this->verificaPadrao($resposta->dados[0]);
-                            if(!$dadosNoPadrao) {
-                                $progressBar->finish();
-                                $messagem = 'Os dados de ' . $objeto['path'] . ' não estão no padrão esperado!';
-                                $this->io->error([
-                                    $messagem,
-                                ]);
-                                if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
-                                    \Sentry\addBreadcrumb(
-                                        category: 'CVDW',
-                                        metadata: ['acao' => 'processar']
-                                    );
-                                    \Sentry\captureMessage($messagem);
-                                }
-
+                        $dadosNoPadrao = $this->verificaPadrao($resposta->dados[0]);
+                        if (!$dadosNoPadrao) {
+                            $progressBar->finish();
+                            $mensagem = 'Os dados de ' . $objeto['path'] . ' não estão no padrão esperado!';
+                            $this->io->error([
+                                $mensagem,
+                            ]);
+                            $metadata = [
+                                'acao' => 'executar',
+                                'cv_url' => $_ENV['CV_URL'],
+                                'path' => $objeto['path'],
+                                'tabela' => $objeto['tabela'],
+                                'referencia' => null
+                            ];
+                            salvarEventoErro(null, 'CVDW', $metadata, $mensagem, $resposta);
+                            break;
+                        }
+                        foreach ($resposta->dados as $linha) {
+                            $this->processados++;
+                            $this->processaSql($objeto, $linha);
+                            $progressBar->setMessage($this->getMensagem());
+                            $progressBar->display();
+                            $progressBar->advance();
+                            if($this->getLimiteErros()){
                                 break;
                             }
-
-                            foreach ($resposta->dados as $linha) {
-                                //print_r($linha);
-                                $dadosProcessados++;
-
-                                if ($this->processaSql($objeto, $linha)) {
-                                    $progressBar->setMessage('Dados processados na página: ' . $dadosProcessados);
-                                    $progressBar->advance();
-                                    $progressBar->display();
-                                }
-                            }
-                    }
-
-                    // Precisa aguardar 3 segundos para não dar erro de limite de requisições
-                    // CV Bloqueia se for feito mais que 20 requisições por minuto
-                    for($i=3; $i>0; $i--) {
-                        if($i == 1) {
-                            $progressBar->setMessage('<fg=green>'.$i.' segundo para a próxima requisição...</>');
-                        } else {
-                            $progressBar->setMessage('<fg=green>'.$i.' segundos para a próxima requisição...</>');
+                            // Sleep em mms
+                            usleep(500);
                         }
-                        $progressBar->display();
-                        sleep(1);
                     }
-                    $progressBar->setMessage('Executando próxima requisiçao...');
+                    $this->aguardar($progressBar);
+                    $progressBar->setMessage($this->getMensagem(' Executando próxima requisição...'));
                     $progressBar->display();
                 }
                 $progressBar->finish();
             } else {
                 $this->io->text('<fg=green>Nenhuma informação nova foi encontrada!</fg=green>');
-                sleep(4);
+                $progressBar->setMessage($this->getMensagem());
+                $this->aguardar($progressBar);
             }
         }
 
@@ -178,10 +158,63 @@ class Cvdw
         return true;
     }
 
+    protected function getLimiteErros(): bool
+    {
+        $qtdErros =  $this->inseridos_erros + $this->alterados_erros;
+        if ($qtdErros >= 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    protected function getMensagem($info = false, $erro = false): string
+    {
+        // Se inseridos_erros for maior que 1, imprimir o (s)
+        $mensagem = "";
+        //$mensagem .= "Processados: " . $this->processados . "\n";
+        $mensagem .= " Inseridos: <fg=green>" . $this->inseridos . " sucesso" . (($this->inseridos > 1) ? 's' : '') . "</fg=green> / ";
+        $mensagem .= "<fg=red>" . $this->inseridos_erros . " erro" . (($this->inseridos_erros > 1) ? 's' : '') . "</fg=red> \n";
+        $mensagem .= " Alterados: <fg=green>" . $this->alterados . " sucesso" . (($this->alterados > 1) ? 's' : '') . "</fg=green> / ";
+        $mensagem .= "<fg=red>" . $this->alterados_erros . " erro" . (($this->alterados_erros > 1) ? 's' : '') . "</fg=red> \n";
+
+        if ($info) {
+            $mensagem .= "\n";
+            $mensagem .= "<fg=blue>" . $info . "</fg=blue> \n";
+        }
+
+        if ($erro) {
+            $mensagem .= "\n";
+            $mensagem .= "<fg=red>" . $erro . "</fg=red> \n";
+        }
+
+        return $mensagem;
+    }
+
+    protected function aguardar($progressBar, int $segundos = 3): void
+    {
+        // Precisa aguardar 3 segundos para não dar erro de limite de requisições
+        // CV Bloqueia se for feito mais que 20 requisições por minuto
+        for ($i = $segundos; $i > 0; $i--) {
+            if ($i == 1) {
+                $mensagem = ' <fg=blue>Aguardando ' . $i . ' segundo para a próxima requisição...</>';
+            } else {
+                $mensagem = ' <fg=blue>Aguardando ' . $i . ' segundos para a próxima requisição...</>';
+            }
+            //$this->io->text($mensagem);
+            $progressBar->setFormat("%message%");
+            $mensagem = $this->getMensagem($mensagem);
+            $progressBar->setMessage($mensagem);
+            $progressBar->display();
+            sleep(3);
+        }
+        $progressBar->setMessage($this->getMensagem($mensagem));
+    }
+
     protected function verificaPadrao(object $linha): bool
     {
         $dadosNoPadrao = true;
-        if(!isset($linha->referencia) || !isset($linha->referencia_data)) {
+        if (!isset($linha->referencia) || !isset($linha->referencia_data)) {
             $dadosNoPadrao = false;
         }
         return $dadosNoPadrao;
@@ -221,11 +254,22 @@ class Cvdw
         $tabela = $objeto['tabela'];
         $existe = $this->verificaSeExiste($tabela, $linha->referencia);
         if ($existe) {
-            $this->executaUpdate($objeto, $linha);
+            $retorno = $this->executaUpdate($objeto, $linha);
+            if ($retorno) {
+                $this->alterados++;
+            } else {
+                $this->alterados_erros++;
+            }
         } else {
-            $this->executaInsert($objeto, $linha);
+            $retorno = $this->executaInsert($objeto, $linha);
+            if ($retorno) {
+                $this->inseridos++;
+            } else {
+                $this->inseridos_erros++;
+            }
         }
-        return true;
+        $this->processados++;
+        return $retorno;
     }
 
     protected function executaUpdate(array $objeto, object $linha): bool
@@ -233,16 +277,10 @@ class Cvdw
         $linha = $this->trataDados($objeto, $linha);
         $queryBuilder = $this->conn->createQueryBuilder();
         $queryBuilder->update($objeto['tabela']);
-
         $indice = 0;
-        
         foreach ($objeto['response']['dados'] as $colunaInd => $valor) {
-
-            
             $nomeColuna = $this->database->tratarNomeColuna($colunaInd, $valor);
-
             if (isset($linha->$colunaInd) && !is_array($linha->$colunaInd)) {
-
                 $queryBuilder->set($nomeColuna, ':valor' . $indice);
                 $queryBuilder->setParameter('valor' . $indice, $linha->$colunaInd);
                 $indice++;
@@ -254,27 +292,32 @@ class Cvdw
 
         try {
             $queryBuilder->executeStatement();
-
             if (!is_null($this->logObjeto) && is_object($this->logObjeto)) {
                 $this->logObjeto->escreverLog("  - Atualizado: " . $linha->referencia);
             }
+            $retorno = true;
         } catch (Exception $e) {
-            $this->io->error([
+            $erroMsg = [
                 'Erro ao tentar executar o SQL! (Update)',
                 'Objeto: ' . print_r($linha, true),
                 'SQL: ' . $queryBuilder->getSQL(),
                 'Erro: ' . $e->getMessage()
-            ]);
-            if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
-                \Sentry\addBreadcrumb(
-                    category: $objeto['tabela'],
-                    metadata: ['acao' => 'update']
-                );
-                \Sentry\captureException($e);
-            }
-            exit;
+            ];
+            $this->io->error($erroMsg);
+            // Mapeando o erro
+            $metadata = [
+                'acao' => 'update',
+                'cv_url' => $_ENV['CV_URL'],
+                'path' => $objeto['path'],
+                'tabela' => $objeto['tabela'],
+                'referencia' => $linha->referencia
+            ];
+            salvarEventoErro($e, $objeto, $metadata, $erroMsg);
+
+            $retorno = false;
         }
-        return true;
+
+        return $retorno;
     }
 
     protected function executaInsert(array $objeto, object $linha): bool
@@ -284,41 +327,48 @@ class Cvdw
         $queryBuilder->insert($objeto['tabela']);
 
         $indice = 0;
-
         foreach ($objeto['response']['dados'] as $colunaInd => $valor) {
             $nomeColuna = $this->database->tratarNomeColuna($colunaInd, $valor);
-
             if (isset($linha->$colunaInd) && !is_array($linha->$colunaInd)) {
                 $queryBuilder->setValue($nomeColuna, '?');
                 $queryBuilder->setParameter($indice, $linha->$colunaInd);
                 $indice++;
             }
         }
-
         try {
             $queryBuilder->executeStatement();
-
             if ($this->logObjeto) {
                 $this->logObjeto->escreverLog("  - Inserido: " . $linha->referencia);
             }
+            $retorno = true;
         } catch (Exception $e) {
-            $this->io->error([
+            $erroMsg = [
                 'Erro ao tentar executar o SQL! (Insert)',
                 'Objeto: ' . print_r($linha, true),
                 'SQL: ' . $queryBuilder->getSQL(),
                 'Erro: ' . $e->getMessage()
-            ]);
-            if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
-                \Sentry\addBreadcrumb(
-                    category: $objeto['tabela'],
-                    metadata: ['acao' => 'insert']
-                );
-                \Sentry\captureException($e);
+            ];
+            $this->io->error($erroMsg);
+            if ($this->logObjeto) {
+                foreach ($erroMsg as $msg) {
+                    $this->logObjeto->escreverLog("  - [ERRO] " . $msg);
+                }
             }
-            exit;
+
+            // Mapeando o erro
+            $metadata = [
+                'acao' => 'update',
+                'cv_url' => $_ENV['CV_URL'],
+                'path' => $objeto['path'],
+                'tabela' => $objeto['tabela'],
+                'referencia' => $linha->referencia
+            ];
+            salvarEventoErro($e, $objeto, $metadata, $erroMsg);
+
+            $retorno = true;
         }
 
-        return true;
+        return $retorno;
     }
 
     protected function trataDados(array $objeto, object $linha): object
