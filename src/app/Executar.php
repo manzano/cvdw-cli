@@ -150,6 +150,7 @@ class Executar extends Command
 
     public function exibirObjetos($io)
     {
+        
         $objetos = new Objeto($this->input, $this->output);
         $objetosArray = $objetos->retornarObjetos();
         $io->section('Objetos disponíveis: ');
@@ -164,6 +165,9 @@ class Executar extends Command
 
     public function executarObjeto($io, $inputObjeto, $inputDataReferencia = false)
     {
+        if($this->output->isDebug()) {
+            $io->info('## Função: ' . __FUNCTION__);
+        }
 
         if ($this->input->getOption('salvarlog')) {
             $io->text(['Salvando o Log em: ' . $this->arquivoLog]);

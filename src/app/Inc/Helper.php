@@ -61,8 +61,8 @@ function getEnvDir(): string
 }
 
 function salvarEventoErro($e, $objeto, $metadata = array(), $mensagem = null, $info_adicionais = []){
-
-    //if ($_ENV['CVDW_AMBIENTE'] <> 'DEV') {
+    
+    if ($_ENV['CVDW_AMBIENTE'] <> 'DEV') {
         // Define o contexto com informações adicionais
         \Sentry\configureScope(function (\Sentry\State\Scope $scope) use ($info_adicionais) {
             $scope->setContext('informacoes_adicionais', $info_adicionais);
@@ -77,27 +77,6 @@ function salvarEventoErro($e, $objeto, $metadata = array(), $mensagem = null, $i
         if($e instanceof Exception){
             \Sentry\captureException($e);
         }
-    //}
-
-
-    if (isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
-        \Sentry\configureScope(function (\Sentry\State\Scope $scope) use ($e, $objeto, $metadata, $info_adicionais): void {
-            // Adicionando um breadcrumb para contexto
-            $scope->addBreadcrumb(new \Sentry\Breadcrumb(
-                \Sentry\Breadcrumb::LEVEL_ERROR,
-                'http.request',
-                $objeto['tabela'],
-                json_encode($metadata)
-            ));
-
-            if(is_array($info_adicionais) && count($info_adicionais) > 0){
-                $scope->setContext('informacoes_adicionais', $info_adicionais);
-            }
-
-        });
-
-        // Agora capture a exceção, que incluirá os detalhes adicionados acima
-        \Sentry\captureException($e);
-
     }
+    
 }

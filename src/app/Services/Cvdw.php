@@ -27,6 +27,7 @@ class Cvdw
     public array $objeto;
 
     public int $processados;
+    public int $erros;
     public int $inseridos = 0;
     public int $inseridos_erros = 0;
     public int $alterados = 0;
@@ -41,6 +42,9 @@ class Cvdw
 
     public function processar(array $objeto, $io, $inputDataReferencia = false, $logObjeto = null): bool
     {
+        if ($this->output->isDebug()) {
+            $io->info(" LOG: " . __FUNCTION__);
+        }
         $this->io = $io;
         if (is_object($logObjeto)) {
             $this->logObjeto = $logObjeto;
@@ -66,7 +70,7 @@ class Cvdw
             }
             $this->io->text('Data de referência: ' . $referencia_data_UI);
         }
-        $this->processados = 0;
+        $this->processados = $this->erros = 0;
         $this->inseridos = $this->inseridos_erros = 0;
         $this->alterados = $this->alterados_erros = 0;
         $resposta = $http->requestCVDW($objeto['path'], $parametros);
@@ -87,14 +91,11 @@ class Cvdw
                 $progressBar->setProgressCharacter("\xF0\x9F\x9A\x80");
                 $progressBar->setFormat(" Dados processados %current% de %max% [%bar%] %percent:3s%% \n %message%");
                 $progressBar->setMessage($this->getMensagem());
-
                 $this->processados = 0;
                 for ($pagina = 1; $pagina <= $paginas; $pagina++) {
-                    
                     if ($this->getLimiteErros()) {
                         break;
                     }
-
                     if ($pagina > 1) {
                         $parametros['pagina'] = $pagina;
                         if ($inputDataReferencia) {
@@ -152,15 +153,13 @@ class Cvdw
                 $this->aguardar($progressBar);
             }
         }
-
         $this->io->newLine();
-
         return true;
     }
 
     protected function getLimiteErros(): bool
     {
-        $qtdErros =  $this->inseridos_erros + $this->alterados_erros;
+        $qtdErros =  $this->erros;
         if ($qtdErros >= 3) {
             return true;
         } else {
@@ -170,6 +169,7 @@ class Cvdw
 
     protected function getMensagem($info = false, $erro = false): string
     {
+        
         // Se inseridos_erros for maior que 1, imprimir o (s)
         $mensagem = "";
         //$mensagem .= "Processados: " . $this->processados . "\n";
@@ -193,6 +193,7 @@ class Cvdw
 
     protected function aguardar($progressBar, int $segundos = 3): void
     {
+        
         // Precisa aguardar 3 segundos para não dar erro de limite de requisições
         // CV Bloqueia se for feito mais que 20 requisições por minuto
         for ($i = $segundos; $i > 0; $i--) {
@@ -213,6 +214,7 @@ class Cvdw
 
     protected function verificaPadrao(object $linha): bool
     {
+        
         $dadosNoPadrao = true;
         if (!isset($linha->referencia) || !isset($linha->referencia_data)) {
             $dadosNoPadrao = false;
@@ -222,51 +224,77 @@ class Cvdw
 
     protected function buscaUltimaData(string $tabela): ?string
     {
-        // Buscar com o Doctrine o último registro inserido pela data
-        $queryBuilder = $this->conn->createQueryBuilder();
-        $queryBuilder
-            ->select("MAX(referencia_data) as referencia_data")
-            ->from($tabela);
-        $stmt = $queryBuilder->executeQuery();
-        $dados = $stmt->fetchAssociative();
 
+        try {
+            // Buscar com o Doctrine o último registro inserido pela data
+            $queryBuilder = $this->conn->createQueryBuilder();
+            $queryBuilder
+                ->select("MAX(referencia_data) as referencia_data")
+                ->from($tabela);
+            $stmt = $queryBuilder->executeQuery();
+            $dados = $stmt->fetchAssociative();
+        } catch (\Doctrine\DBAL\Exception $e) {
+            // Trata o caso em que a tabela não existe ou outro erro de banco de dados ocorre
+            $this->io->error("Erro ao buscar a última data na tabela '$tabela': " . $e->getMessage());
+            return null;
+        } catch (\Exception $e) {
+            // Captura outras exceções genéricas
+            $this->io->error("Erro inesperado: " . $e->getMessage());
+            return null;
+        }
         return $dados['referencia_data'];
     }
 
-    protected function verificaSeExiste(string $tabela, int $referencia): bool
+    protected function verificaSeExiste(string $tabela, int $referencia): string
     {
-        $queryBuilder = $this->conn->createQueryBuilder();
-        $queryBuilder
-            ->select("COUNT(referencia) as total")
-            ->from($tabela)
-            ->where("referencia = :referencia")
-            ->setParameter('referencia', $referencia);
-        $stmt = $queryBuilder->executeQuery();
-        $row = $stmt->fetchAssociative();
-        if ($row['total'] > 0) {
-            return true;
+        try {
+            $queryBuilder = $this->conn->createQueryBuilder();
+            $queryBuilder
+                ->select("COUNT(referencia) as total")
+                ->from($tabela)
+                ->where("referencia = :referencia")
+                ->setParameter('referencia', $referencia);
+            $stmt = $queryBuilder->executeQuery();
+            $row = $stmt->fetchAssociative();
+            if($row['total'] > 0) {
+                return 'existe';
+            } else {
+                return 'nao_existe';
+            }
+        } catch (\Doctrine\DBAL\Exception $e) {
+            // Trata o caso em que a tabela não existe ou outro erro de banco de dados ocorre
+            $this->io->error("Erro ao verificar se o dado existe em '$tabela': " . $e->getMessage());
+            return false;
+        } catch (\Exception $e) {
+            // Captura outras exceções genéricas
+            $this->io->error("Erro inesperado: " . $e->getMessage());
+            return false;
         }
-        return false;
     }
 
     protected function processaSql(array $objeto, object $linha): bool
     {
         $tabela = $objeto['tabela'];
         $existe = $this->verificaSeExiste($tabela, $linha->referencia);
-        if ($existe) {
+        if ($existe == 'existe') {
             $retorno = $this->executaUpdate($objeto, $linha);
             if ($retorno) {
                 $this->alterados++;
             } else {
                 $this->alterados_erros++;
+                $this->erros++;
             }
-        } else {
+        } elseif($existe == 'nao_existe') {
             $retorno = $this->executaInsert($objeto, $linha);
             if ($retorno) {
                 $this->inseridos++;
             } else {
                 $this->inseridos_erros++;
+                $this->erros++;
             }
+        } else {
+            $this->erros++;
+            $retorno = false;
         }
         $this->processados++;
         return $retorno;
@@ -274,6 +302,7 @@ class Cvdw
 
     protected function executaUpdate(array $objeto, object $linha): bool
     {
+        
         $linha = $this->trataDados($objeto, $linha);
         $queryBuilder = $this->conn->createQueryBuilder();
         $queryBuilder->update($objeto['tabela']);
@@ -313,15 +342,14 @@ class Cvdw
                 'referencia' => $linha->referencia
             ];
             salvarEventoErro($e, $objeto, $metadata, $erroMsg);
-
             $retorno = false;
         }
-
         return $retorno;
     }
 
     protected function executaInsert(array $objeto, object $linha): bool
     {
+        
         $linha = $this->trataDados($objeto, $linha);
         $queryBuilder = $this->conn->createQueryBuilder();
         $queryBuilder->insert($objeto['tabela']);
@@ -373,6 +401,7 @@ class Cvdw
 
     protected function trataDados(array $objeto, object $linha): object
     {
+        
         $objetoObj = new Objeto($this->input, $this->output);
         foreach ($objeto['response']['dados'] as $coluna => $valor) {
             if (isset($linha->$coluna) && $objetoObj->identificarTipoDeDados($valor) !== "TABELA") {
