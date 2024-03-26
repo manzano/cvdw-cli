@@ -12,7 +12,7 @@ class ReservasWorkflowTempoCest extends Common
     public function getReservasWorkflowTempo(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/reservas/workflow/tempo', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

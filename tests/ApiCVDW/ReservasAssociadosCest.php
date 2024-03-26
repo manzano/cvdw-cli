@@ -12,7 +12,7 @@ class ReservasAssociadosCest extends Common
     public function getReservasAssociados(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/reservas/associados', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

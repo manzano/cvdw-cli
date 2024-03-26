@@ -12,7 +12,7 @@ class PessoasBancariosCest extends Common
     public function getPessoasBancarios(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/pessoas/bancarios', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

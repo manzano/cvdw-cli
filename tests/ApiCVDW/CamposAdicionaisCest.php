@@ -12,7 +12,7 @@ class CamposAdicionaisCest extends Common
     public function getCamposAdicionais(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/campos_adicionais', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

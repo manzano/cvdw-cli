@@ -12,7 +12,7 @@ class AtendimentosWorkflowTempoCest extends Common
     public function getAtendimentosWorkflowTempo(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/atendimentos/workflow/tempo', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

@@ -12,7 +12,7 @@ class ReservasComissoesCest extends Common
     public function getReservasComissoes(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/reservas/comissoes', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

@@ -12,7 +12,7 @@ class AtendimentosTimesCest extends Common
     public function getAtendimentosTimes(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/atendimentos/times', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

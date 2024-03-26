@@ -12,7 +12,7 @@ class RepassesHistoricoSituacoesCest extends Common
     public function getRepassesHistoricoSituacoes(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/repasses/historico/situacoes', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

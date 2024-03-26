@@ -12,7 +12,7 @@ class AgendamentosVistoriasCest extends Common
     public function getAgendamentosVistorias(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/agendamentos/vistorias', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);
@@ -37,7 +37,7 @@ class AgendamentosVistoriasCest extends Common
         /*
         $I->seeResponseMatchesJsonType([
             'referencia' => 'string',
-            'idvistoria' => 'integer|null',
+            'idvistorias' => 'integer|null',
             'idvistoria_pai' => 'integer|null',
             'idempreendimento' => 'integer|null',
             'empreendimento' => 'string|null',

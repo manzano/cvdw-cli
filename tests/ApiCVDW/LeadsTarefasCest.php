@@ -12,7 +12,7 @@ class LeadsTarefasCest extends Common
     public function getLeadsTarefas(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/leads/tarefas', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

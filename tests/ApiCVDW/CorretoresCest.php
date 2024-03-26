@@ -12,7 +12,7 @@ class CorretoresCest extends Common
     public function getCorretores(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/corretores', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

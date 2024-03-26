@@ -12,7 +12,7 @@ class ImobiliariasCest extends Common
     public function getImobiliarias(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/imobiliarias', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);
