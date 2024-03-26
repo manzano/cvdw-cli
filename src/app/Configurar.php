@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Input\InputOption;
 
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
@@ -40,12 +41,19 @@ class Configurar extends Command
     public bool $voltarProMenu = false;
     public \Doctrine\DBAL\Connection $conn;
     protected $eventosObj;
+    protected $env = null;
     protected $evento = 'Configurar';
 
     protected function configure()
     {
         $this->setName('configurar')
-            ->setDescription('Configurações do aplicativo');
+            ->setDescription('Configurações do aplicativo')
+        ->addOption(
+            'setEnv', // Nome da opção
+            'env', // Atalho, pode ser NULL se não quiser um atalho
+            InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+            'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -54,8 +62,12 @@ class Configurar extends Command
         $this->limparTela();
 
         $this->eventosObj = new Eventos();
-    
-        
+
+        if ($input->getOption('setEnv')) {
+            $this->env = $input->getOption('setEnv');
+            retornarEnvs($this->env);
+        }
+
         $io = new CvdwSymfonyStyle($input, $output);
 
         $this->input = $input;

@@ -1,8 +1,8 @@
 <?php
 
-function retornarEnvs(): void
+function retornarEnvs($env = null): void
 {
-    $envVars = getEnvDir();
+    $envVars = getEnvDir($env);
     if (!file_exists($envVars)) {
         file_put_contents($envVars, '');
         chmod($envVars, 0755);
@@ -14,9 +14,9 @@ function retornarEnvs(): void
 /**
  * @param string[] $newEnv Array de novas variáveis de ambiente.
  */
-function salvarEnv(array $newEnv = []): void
+function salvarEnv(array $newEnv = [], $env = null): void
 {
-    $envVars = getEnvDir();
+    $envVars = getEnvDir($env);
     retornarEnvs();
     $novoEnv = array_merge($_ENV, $newEnv);
     $envContent = '';
@@ -53,10 +53,14 @@ function getEnvEscope(): array
         ];
 }
 
-function getEnvDir(): string
+function getEnvDir($env = null): string
 {
     $envPath = __DIR__ . '/../..';
-    $envFile = $envPath . '/.env';
+    if(!is_null($env)){
+        $envFile = $envPath . '/'.$env.'.env';
+    } else {
+        $envFile = $envPath . '/.env';
+    }
     return $envFile;
 }
 

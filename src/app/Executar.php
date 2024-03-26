@@ -38,6 +38,7 @@ class Executar extends Command
     public array $variaveisAmbiente = [];
     public bool $voltarProMenu = false;
     protected $eventosObj;
+    protected $env = null;
     protected $evento = 'Executar';
 
     protected function configure()
@@ -56,6 +57,12 @@ class Executar extends Command
                 'log', // Atalho, pode ser NULL se não quiser um atalho
                 InputOption::VALUE_NONE, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 'Salvar Log da execução no diretorio de instalação.',
+            )
+            ->addOption(
+                'setEnv', // Nome da opção
+                'env', // Atalho, pode ser NULL se não quiser um atalho
+                InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+                'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
             );
     }
 
@@ -63,6 +70,11 @@ class Executar extends Command
     {
 
         $this->eventosObj = new Eventos();
+
+        if ($input->getOption('setEnv')) {
+            $this->env = $input->getOption('setEnv');
+            retornarEnvs($this->env);
+        }
 
         if ($input->getOption('salvarlog')) {
             $this->dirLog = __DIR__;
@@ -82,6 +94,7 @@ class Executar extends Command
         $inputObjeto = $input->getArgument('objeto');
         $inputDataReferencia = $input->getOption('ignorar-data-referencia');
         if ($inputObjeto) {
+            $io->text(['Ambiente: ' . $_ENV['CV_URL'], '']);
             $this->executarObjeto($io, $inputObjeto, $inputDataReferencia);
             return Command::SUCCESS;
         }
