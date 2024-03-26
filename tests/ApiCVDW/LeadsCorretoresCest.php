@@ -12,7 +12,7 @@ class LeadsCorretoresCest extends Common
     public function getLeadsCorretores(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/leads/corretores', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

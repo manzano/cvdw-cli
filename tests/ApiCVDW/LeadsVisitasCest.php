@@ -12,7 +12,7 @@ class LeadsVisitasCest extends Common
     public function getLeadsVisitas(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/leads/visitas', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

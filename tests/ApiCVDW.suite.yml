@@ -3,7 +3,7 @@ suite_namespace: Tests\ApiCVDW
 modules:
     enabled:
         - REST:
-            url: https://localhost.cvcrm.com.br/api/v1/cvdw
+            url: https://dev.cvcrm.com.br/api/v1/cvdw
             depends: PhpBrowser
         - \Helper\CvdwHelper
 step_decorators:

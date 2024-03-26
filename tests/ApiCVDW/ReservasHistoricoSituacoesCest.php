@@ -12,7 +12,7 @@ class ReservasHistoricoSituacoesCest extends Common
     public function getReservasHistoricoSituacoes(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/reservas/historico/situacoes', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

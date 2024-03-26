@@ -12,7 +12,7 @@ class UnidadesPrecosCest extends Common
     public function getUnidadesPrecos(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/unidades/precos', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

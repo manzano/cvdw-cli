@@ -12,7 +12,7 @@ class DistratosCest extends Common
     public function getDistratos(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/distratos', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

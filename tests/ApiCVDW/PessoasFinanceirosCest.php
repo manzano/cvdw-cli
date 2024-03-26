@@ -12,7 +12,7 @@ class PessoasFinanceirosCest extends Common
     public function getPessoasFinanceiros(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/pessoas/financeiros', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

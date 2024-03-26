@@ -12,7 +12,7 @@ class LeadsPerdasCest extends Common
     public function getLeadsPerdas(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/leads/perdas', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

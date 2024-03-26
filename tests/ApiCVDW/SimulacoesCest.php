@@ -12,7 +12,7 @@ class SimulacoesCest extends Common
     public function getSimulacoes(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/simulacoes', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

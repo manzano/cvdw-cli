@@ -12,7 +12,7 @@ class ReservasContratosCest extends Common
     public function getReservasContratos(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/reservas/contratos', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);

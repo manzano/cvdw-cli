@@ -12,7 +12,7 @@ class ReservasRegistrosFlagsCest extends Common
     public function getReservasRegistrosFlags(ApiTester $I)
     {
         
-        //sleep(3);
+        sleep(3);
         
         $I->sendGet('/reservas/registros/flags', ['pagina' => 1, 'registros' => 1]);
         $I->seeResponseCodeIs(HttpCode::OK);
