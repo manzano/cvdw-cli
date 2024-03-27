@@ -214,7 +214,7 @@ response:
       type: string
       description: Identificador da tabela de preço para integrações  
     idlead:
-      example: 16852
-      type: integer
+      example: "16852, 13876"
+      type: text
       description: Identificador dos leads vinculados separados por ,
       
