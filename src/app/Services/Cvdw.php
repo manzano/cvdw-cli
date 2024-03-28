@@ -173,7 +173,7 @@ class Cvdw
         // Se inseridos_erros for maior que 1, imprimir o (s)
         $mensagem = "";
         //$mensagem .= "Processados: " . $this->processados . "\n";
-        $mensagem .= " Inseridos: <fg=green>" . $this->inseridos . " sucesso" . (($this->inseridos > 1) ? 's' : '') . "</fg=green> / ";
+        $mensagem .= "Inseridos: <fg=green>" . $this->inseridos . " sucesso" . (($this->inseridos > 1) ? 's' : '') . "</fg=green> / ";
         $mensagem .= "<fg=red>" . $this->inseridos_erros . " erro" . (($this->inseridos_erros > 1) ? 's' : '') . "</fg=red> \n";
         $mensagem .= " Alterados: <fg=green>" . $this->alterados . " sucesso" . (($this->alterados > 1) ? 's' : '') . "</fg=green> / ";
         $mensagem .= "<fg=red>" . $this->alterados_erros . " erro" . (($this->alterados_erros > 1) ? 's' : '') . "</fg=red> \n";
@@ -203,7 +203,7 @@ class Cvdw
                 $mensagem = ' <fg=blue>Aguardando ' . $i . ' segundos para a próxima requisição...</>';
             }
             //$this->io->text($mensagem);
-            $progressBar->setFormat("%message%");
+            //$progressBar->setFormat("%message%");
             $mensagem = $this->getMensagem($mensagem);
             $progressBar->setMessage($mensagem);
             $progressBar->display();
