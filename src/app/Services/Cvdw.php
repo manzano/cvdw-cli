@@ -33,6 +33,7 @@ class Cvdw
     public int $alterados = 0;
     public int $alterados_erros = 0;
     public array $execucoes = [];
+    public int $qtd = 500;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
@@ -41,10 +42,17 @@ class Cvdw
         $this->conn = conectarDB($input, $output);
     }
 
-    public function processar(array $objeto, $io, $inputDataReferencia = false, $logObjeto = null): bool
+    public function processar(array $objeto, int $qtd, $io, $inputDataReferencia = false, $logObjeto = null): bool
     {
         if ($this->output->isDebug()) {
             $io->info(" LOG: " . __FUNCTION__);
+        }
+        if($qtd > 0) {
+            $this->qtd = $qtd;
+            if($qtd > 500) {
+                $this->io->warning('Quantidade de registros por página maior que 500!');
+                $this->qtd = 500;
+            }
         }
         $this->io = $io;
         if (is_object($logObjeto)) {
@@ -54,7 +62,7 @@ class Cvdw
         $http = new Http($this->input, $this->output, $io, $this->logObjeto);
         $parametros = array(
             'pagina' => 1,
-            'registros_por_pagina' => 500
+            'registros_por_pagina' => $this->qtd
         );
         if ($inputDataReferencia) {
             $this->io->text('Data de referência: <fg=red>Ignorada</>');

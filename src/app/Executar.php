@@ -42,6 +42,7 @@ class Executar extends Command
     protected $ambientesObj;
     protected $env = null;
     protected $evento = 'Executar';
+    protected $qtd = 500;
 
     protected function configure()
     {
@@ -65,6 +66,11 @@ class Executar extends Command
                 'env', // Atalho, pode ser NULL se não quiser um atalho
                 InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
+            )->addOption(
+                'setQtd', // Nome da opção
+                'qtd', // Atalho, pode ser NULL se não quiser um atalho
+                InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+                'Quantidade de dados retornada por cada requisicao.',
             );
     }
 
@@ -75,6 +81,10 @@ class Executar extends Command
 
         if ($input->getOption('setEnv')) {
             $this->env = $input->getOption('setEnv');
+        }
+
+        if ($input->getOption('setQtd')) {
+            $this->qtd = $input->getOption('setQtd');
         }
 
         $this->ambientesObj = new Ambientes($this->env);
@@ -218,7 +228,7 @@ class Executar extends Command
                 $io->section($dados['nome']);
                 $io->text('Executando objeto: ' . $dados['nome'] . '');
                 $this->eventosObj->registrarEvento($this->evento, 'executar', $dados['nome']);
-                $cvdw->processar($objeto, $io, $inputDataReferencia, $this->logObjeto);
+                $cvdw->processar($objeto, $this->qtd, $io, $inputDataReferencia, $this->logObjeto);
                 //$this->limparTela();
             }
         } else {
