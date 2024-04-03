@@ -5,32 +5,36 @@ namespace Manzano\CvdwCli\Services;
 class Ambientes
 {
     private $envVars;
+    public $env;
 
-    public function __construct()
+    public function __construct($env = null)
     {
+        $this->env = $env;
+        $this->envVars = $this->getEnvEscope();
+        $this->retornarEnvs($env);
         $this->envVars = $this->getEnvEscope();
     }
 
-    public function ambienteAtivo($env, $io)
+    public function ambienteAtivo($io)
     {
         $ambienteAtivo = strtoupper($_ENV['CV_URL'] ?? '');
         if ($ambienteAtivo == '') {
             $ambienteAtivo = 'Nenhum ambiente padrão configurado';
         } else {
-            if ($env == null) {
+            if ($this->env == null) {
                 $ambienteAtivo .= " (Arquivo: .env)";
             } else {
-                $ambienteAtivo .= " (Arquivo: $env.env)";
+                $ambienteAtivo .= " (Arquivo: {$this->env}.env)";
             }
         }
         $io->text('Ambiente ativo: ' . $ambienteAtivo);
     }
 
-    public function retornarEnvs($env = null): void
+    public function retornarEnvs(): void
     {
-        $envVars = $this->getEnvDir($env);
+        $envVars = $this->getEnvDir();
         if (!file_exists($envVars)) {
-            if ($env !== null) {
+            if ($this->env !== null) {
                 echo "Ambiente informado não foi encontrado.";
                 exit;
             } else {
@@ -42,9 +46,9 @@ class Ambientes
         $dotenv->load($envVars);
     }
 
-    public function salvarEnv(array $newEnv = [], $env = null): void
+    public function salvarEnv(array $newEnv = []): void
     {
-        $envVars = $this->getEnvDir($env);
+        $envVars = $this->getEnvDir();
         $this->retornarEnvs();
         $novoEnv = array_merge($_ENV, $newEnv);
         $envContent = '';
@@ -74,11 +78,11 @@ class Ambientes
         ];
     }
 
-    public function getEnvDir($env = null): string
+    public function getEnvDir(): string
     {
         $this->alterarCaminhoEnv();
         $envPath = __DIR__ . '/../../envs';
-        $envFile = $envPath . ($env ? '/' . $env . '.env' : '/.env');
+        $envFile = $envPath . ($this->env ? '/' . $this->env . '.env' : '/.env');
         return $envFile;
     }
 

@@ -72,12 +72,13 @@ class Executar extends Command
     {
 
         $this->eventosObj = new Eventos();
-        $this->ambientesObj = new Ambientes();
 
         if ($input->getOption('setEnv')) {
             $this->env = $input->getOption('setEnv');
-            $this->ambientesObj->retornarEnvs($this->env);
         }
+
+        $this->ambientesObj = new Ambientes($this->env);
+        $this->ambientesObj->retornarEnvs();
 
         if ($input->getOption('salvarlog')) {
             $this->dirLog = __DIR__;
@@ -103,7 +104,7 @@ class Executar extends Command
         }
 
         $io->title('Executando o CVDW-CLI');
-        $this->ambientesObj->ambienteAtivo($this->env, $io);
+        $this->ambientesObj->ambienteAtivo($io);
 
         $this->eventosObj->registrarEvento($this->evento, 'Início');
 

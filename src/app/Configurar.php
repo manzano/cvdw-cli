@@ -69,12 +69,13 @@ class Configurar extends Command
         $this->limparTela();
 
         $this->eventosObj = new Eventos();
-        $this->ambientesObj = new Ambientes();
+        
 
         if ($input->getOption('setEnv')) {
             $this->env = $input->getOption('setEnv');
-            $this->ambientesObj->retornarEnvs($this->env);
         }
+        $this->ambientesObj = new Ambientes($this->env);
+        $this->ambientesObj->retornarEnvs();
 
         $io = new CvdwSymfonyStyle($input, $output);
 
@@ -83,7 +84,7 @@ class Configurar extends Command
 
         $io->title('Configurando o CVDW-CLI');
 
-        $this->ambientesObj->ambienteAtivo($this->env, $io);
+        $this->ambientesObj->ambienteAtivo($io);
         
         $this->eventosObj->registrarEvento($this->evento, 'Início');
 
@@ -562,6 +563,7 @@ class Configurar extends Command
                 'CV_TOKEN' => $this->variaveisAmbiente['token'],
                 'CV_EMAIL' => $this->variaveisAmbiente['email']
             ];
+        
             $this->ambientesObj->salvarEnv($newEnv);
 
             $io->text('Salvo!');
