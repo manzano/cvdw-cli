@@ -17,6 +17,7 @@ use Doctrine\DBAL\DriverManager;
 use Manzano\CvdwCli\Services\DatabaseSetup;
 use Manzano\CvdwCli\Services\Http;
 use Manzano\CvdwCli\Services\Objeto;
+use Manzano\CvdwCli\Services\Ambientes;
 
 use Manzano\CvdwCli\Services\Monitor\Eventos;
 
@@ -41,6 +42,7 @@ class Configurar extends Command
     public bool $voltarProMenu = false;
     public \Doctrine\DBAL\Connection $conn;
     protected $eventosObj;
+    protected $ambientesObj;
     protected $env = null;
     protected $evento = 'Configurar';
 
@@ -49,6 +51,11 @@ class Configurar extends Command
         $this->setName('configurar')
             ->setDescription('Configurações do aplicativo')
         ->addOption(
+            'setEnv', // Nome da opção
+            'env', // Atalho, pode ser NULL se não quiser um atalho
+            InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+            'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
+        )->addOption(
             'setEnv', // Nome da opção
             'env', // Atalho, pode ser NULL se não quiser um atalho
             InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
@@ -62,10 +69,11 @@ class Configurar extends Command
         $this->limparTela();
 
         $this->eventosObj = new Eventos();
+        $this->ambientesObj = new Ambientes();
 
         if ($input->getOption('setEnv')) {
             $this->env = $input->getOption('setEnv');
-            retornarEnvs($this->env);
+            $this->ambientesObj->retornarEnvs($this->env);
         }
 
         $io = new CvdwSymfonyStyle($input, $output);
@@ -74,6 +82,9 @@ class Configurar extends Command
         $this->output = $output;
 
         $io->title('Configurando o CVDW-CLI');
+
+        $this->ambientesObj->ambienteAtivo($this->env, $io);
+        
         $this->eventosObj->registrarEvento($this->evento, 'Início');
 
         $this->variaveisAmbiente['configurar'] = $io->choice('O que deseja configurar agora?', [
@@ -83,6 +94,8 @@ class Configurar extends Command
             'Verificar/Atualizar meu ambiente',
             'Limpar as tabelas do CVDW (Truncate)',
             'Apagar as tabelas do CVDW (Drop)',
+            'Cadastrar novo ambiente a partir do padrão',
+            'Listar e remover seus ambientes',
             'Sair (CTRL+C)'
         ]);
 
@@ -113,12 +126,150 @@ class Configurar extends Command
             case 'Verificar/Atualizar meu ambiente':
                 $this->verificarInstalacao();
                 break;
+            case 'Cadastrar novo ambiente a partir do padrão':
+                $this->cadastarAmbiente();
+                break;
+            case 'Listar e remover seus ambientes':
+                $this->listarAmbientesRemover();
+                break;
             default:
                 //$this->execute();
                 break;
         }
 
         return Command::SUCCESS;
+    }
+
+    private function listarAmbientes(): array
+    {
+        $ambientes = array();
+        $envPath = __DIR__ . '/../envs';
+        $envPadrao = glob($envPath . '/.env');
+        $envs = glob($envPath . '/*.env');
+        $envs = array_merge($envs, $envPadrao);
+        foreach ($envs as $env) {
+            $nomeAux = explode('/', $env);
+            $nome = end($nomeAux);
+            // Ler a primeira linha do arquivo .env
+            $linhas = file($env);
+            foreach ($linhas as $linha) {
+                if (strpos($linha, 'CV_URL') !== false) {
+                    $arrayExplode = explode('=', $linha);
+                    $CV_URL = str_replace("\n", "", $arrayExplode[1]);
+                }
+                if (strpos($linha, 'CV_EMAIL') !== false) {
+                    $arrayExplode = explode('=', $linha);
+                    $CV_EMAIL = str_replace("\n", "", $arrayExplode[1]);
+                }
+            }
+            $arrayAux = array();
+            $arrayAux['referencia'] = $CV_URL;
+            $arrayAux['arquivo'] = $env;
+            $arrayAux['nome'] = $nome;
+            $arrayAux['email'] = $CV_EMAIL;
+            $ambientes[] = $arrayAux;
+        }
+        return $ambientes;
+    }
+
+    private function listarAmbientesRemover(): bool
+    {
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $this->verificarAmbientePadrao($io);
+        $envPath = __DIR__ . '/../envs';
+
+        $ambientesOpcoes = array();
+        $ambientes = $this->listarAmbientes();
+        foreach ($ambientes as $ambiente) {
+            $ambientesOpcoes[] = $ambiente['referencia']." - ". $ambiente['email']. " - ". $ambiente['nome'];
+        }
+        $ambientesOpcoes[] =  'Nenhum / Cancelar';
+        $inputAmbiente = $io->choice('Qual objeto deseja remover?', $ambientesOpcoes);
+        if($inputAmbiente === 'Nenhum / Cancelar'){
+            $this->voltarProMenu = true;
+            $this->voltarProMenu();
+            return true;
+        }
+        $indiceEscolhido = array_search($inputAmbiente, $ambientesOpcoes);
+        $ambiente = $ambientes[$indiceEscolhido];
+        $io->text([
+            '',
+            'Você selecionou o ambiente: ',
+            ' - Endereço: https://'. $ambiente['referencia'].'.cvcrm.com.br/',
+            ' - Email: '.$ambiente['email'],
+            ' - Arquivo: '. $ambiente['nome']
+        ]);
+        if ($io->confirm('Posso remover o ambiente?', false)) {
+            // Remover arquivo
+            $arquivoEnv = $envPath."/". $ambiente['nome'];
+            if(file_exists($arquivoEnv)){
+                unlink($arquivoEnv);
+                $io->success('Ambiente remnovido com sucesso');
+            } else {
+                $io->error('Arquivo não encontrado');
+            }
+        }
+        
+        $this->voltarProMenu = true;
+        $this->voltarProMenu();
+        return true;
+    }
+
+    private function cadastarAmbiente(){
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $this->verificarAmbientePadrao($io);
+        $io->text([
+            'Vamos lá!',
+            'Vou cadastrar um novo ambiente a partir do seu padrão...',
+            'Você precisa informar o nome para poder usar em seus comandos.',
+            'O ideal é somente usar letras minúsculas e sem espaços.',
+            'Depois é so usar: cvdw configurar --setEnv=nome_escolhido'
+        ]);
+
+        $referencia = $io->ask(
+            'Qual nome de referencia deseja usar?',
+            null,
+            function (string $referencia): string {
+                // copiar arquivo .env
+                return $referencia;
+            }
+        );
+
+        if($referencia <> ''){
+            $envPath = __DIR__ . '/../envs';
+            copy($envPath . "/.env", $envPath . "/$referencia.env");
+            $io->success('Ambiente clonado com sucesso.');
+            $io->text([
+                '',
+                'Agora é so usar: cvdw configurar --setEnv='. $referencia,
+                'Ou: cvdw executar --setEnv='. $referencia.' all',
+                ''
+            ]);
+        }
+
+        $this->voltarProMenu = true;
+        $this->voltarProMenu();
+
+        return true;
+    }
+
+    private function verificarAmbientePadrao($io): void{
+        if($_ENV['CV_URL'] == '' && $this->env == null){
+            $io->text('<fg=white;bg=red>[PROBLEMA]</> Você ainda não tem um ambiente padrão configurado!');
+            $io->text([
+                '',
+                'Para seguir, você precisa configurar o ambiente.',
+                ''
+            ]);
+            if ($io->confirm('Vamos configurar um ambiente agora?', true)) {
+                $this->limparTela();
+                $this->configurarCV();
+            } else {
+                $this->voltarProMenu = true;
+                $this->voltarProMenu();
+            }
+            
+        }
     }
 
     private function verificarInstalacao(): bool
@@ -411,11 +562,11 @@ class Configurar extends Command
                 'CV_TOKEN' => $this->variaveisAmbiente['token'],
                 'CV_EMAIL' => $this->variaveisAmbiente['email']
             ];
-            salvarEnv($newEnv);
+            $this->ambientesObj->salvarEnv($newEnv);
 
             $io->text('Salvo!');
 
-            retornarEnvs();
+            $this->ambientesObj->retornarEnvs();
             $this->voltarProMenu = true;
             $this->voltarProMenu();
 

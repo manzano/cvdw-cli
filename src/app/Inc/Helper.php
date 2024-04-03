@@ -1,19 +1,33 @@
 <?php
+/*
+function ambienteAtivo($env, $io){
+    $ambienteAtivo = strtoupper($_ENV['CV_URL']);
+    if ($ambienteAtivo == '') {
+        $ambienteAtivo = 'Nenhum ambiente padrão configurado';
+    } else {
+        if($env == null){
+            $ambienteAtivo .= " (Padrão)";
+        }
+    }
+    $io->text('Ambiente ativo: ' . $ambienteAtivo);
+}
 
 function retornarEnvs($env = null): void
 {
     $envVars = getEnvDir($env);
     if (!file_exists($envVars)) {
-        file_put_contents($envVars, '');
-        chmod($envVars, 0755);
+        if($env <> null){
+            echo "Ambiente informado não foi encontrado.";
+            exit;
+        } else {
+            file_put_contents($envVars, '');
+            chmod($envVars, 0755);
+        }
     }
     $dotenv = new \Symfony\Component\Dotenv\Dotenv();
     $dotenv->load($envVars);
 }
 
-/**
- * @param string[] $newEnv Array de novas variáveis de ambiente.
- */
 function salvarEnv(array $newEnv = [], $env = null): void
 {
     $envVars = getEnvDir($env);
@@ -32,11 +46,6 @@ function salvarEnv(array $newEnv = [], $env = null): void
     retornarEnvs();
 }
 
-/**
- * Retorna um array de strings representando o escopo das variáveis de ambiente.
- *
- * @return string[] Array de escopos de variáveis de ambiente.
- */
 function getEnvEscope(): array
 {
     return [
@@ -55,7 +64,8 @@ function getEnvEscope(): array
 
 function getEnvDir($env = null): string
 {
-    $envPath = __DIR__ . '/../..';
+    alterarCaminhoEnv();
+    $envPath = __DIR__ . '/../../envs';
     if(!is_null($env)){
         $envFile = $envPath . '/'.$env.'.env';
     } else {
@@ -63,6 +73,17 @@ function getEnvDir($env = null): string
     }
     return $envFile;
 }
+
+function alterarCaminhoEnv(){
+    $envPath = __DIR__ . '/../..';
+    $envFile = $envPath . '/.env';
+    if(file_exists($envFile)){
+        $envName = basename($envFile);
+        $newEnv = $envPath . '/envs/' . $envName;
+        rename($envFile, $newEnv);
+    }
+}
+*/
 
 function salvarEventoErro($e, $objeto, $metadata = array(), $mensagem = null, $info_adicionais = []){
     

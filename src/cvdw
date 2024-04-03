@@ -6,11 +6,13 @@ require __DIR__ . '/../vendor/autoload.php';
 use Manzano\CvdwCli\Configurar;
 use Manzano\CvdwCli\Opcoes;
 use Manzano\CvdwCli\Executar;
+use Manzano\CvdwCli\Services\Ambientes;
 
 use Symfony\Component\Console\Application;
 
-salvarEnv();
-retornarEnvs();
+$ambienteObj = new Ambientes();
+$ambienteObj->salvarEnv();
+$ambienteObj->retornarEnvs();
 
 if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
     \Sentry\init([

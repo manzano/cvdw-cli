@@ -32,6 +32,7 @@ class Cvdw
     public int $inseridos_erros = 0;
     public int $alterados = 0;
     public int $alterados_erros = 0;
+    public array $execucoes = [];
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
@@ -73,6 +74,8 @@ class Cvdw
         $this->processados = $this->erros = 0;
         $this->inseridos = $this->inseridos_erros = 0;
         $this->alterados = $this->alterados_erros = 0;
+
+        $this->execucoes[] = time();
         $resposta = $http->requestCVDW($objeto['path'], $parametros);
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
         if (!isset($resposta->total_de_registros)) {
@@ -103,6 +106,7 @@ class Cvdw
                         } else {
                             $parametros['a_partir_data_referencia'] = $referencia_data;
                         }
+                        $this->execucoes[] = time();
                         $resposta = $http->requestCVDW($objeto['path'], $parametros, $inputDataReferencia);
                     }
                     $progressBar->setMessage($this->getMensagem());
@@ -138,11 +142,10 @@ class Cvdw
                             if($this->getLimiteErros()){
                                 break;
                             }
-                            // Sleep em mms
-                            usleep(500);
                         }
                     }
-                    $this->aguardar($progressBar);
+                    $segundos = $this->gerenciarRateLimit();
+                    $this->aguardar($progressBar, $segundos);
                     $progressBar->setMessage($this->getMensagem(' Executando próxima requisição...'));
                     $progressBar->display();
                 }
@@ -150,11 +153,33 @@ class Cvdw
             } else {
                 $this->io->text('<fg=green>Nenhuma informação nova foi encontrada!</fg=green>');
                 $progressBar->setMessage($this->getMensagem());
-                $this->aguardar($progressBar);
+                $segundos = $this->gerenciarRateLimit();
+                $this->aguardar($progressBar, $segundos);
             }
         }
         $this->io->newLine();
         return true;
+    }
+
+    protected function gerenciarRateLimit(): int {
+
+print_r($this->execucoes);
+
+        $agora = time();
+        while (!empty($this->execucoes) && $agora - $this->execucoes[0] > 60) {
+            array_shift($this->execucoes);
+        }
+
+        $esperar = 0;
+        if (count($this->execucoes) >= 20) {
+            // Calcula o tempo a esperar: diferença para completar um minuto desde a primeira execução no array
+            $esperar = 60 - ($agora - $this->execucoes[0]);
+            // Após a espera, remove a execução mais antiga e permite a nova
+            array_shift($this->execucoes);
+        }
+
+        return $esperar;
+
     }
 
     protected function getLimiteErros(): bool
@@ -193,21 +218,19 @@ class Cvdw
 
     protected function aguardar($progressBar, int $segundos = 3): void
     {
-        
-        // Precisa aguardar 3 segundos para não dar erro de limite de requisições
-        // CV Bloqueia se for feito mais que 20 requisições por minuto
+
+        $mensagem = null;
         for ($i = $segundos; $i > 0; $i--) {
             if ($i == 1) {
                 $mensagem = ' <fg=blue>Aguardando ' . $i . ' segundo para a próxima requisição...</>';
             } else {
                 $mensagem = ' <fg=blue>Aguardando ' . $i . ' segundos para a próxima requisição...</>';
             }
-            //$this->io->text($mensagem);
-            //$progressBar->setFormat("%message%");
+            $mensagem .= "\n <fg=gray>Proteção contra o Rate Limit do servidor. (20req/min)</>";
             $mensagem = $this->getMensagem($mensagem);
             $progressBar->setMessage($mensagem);
             $progressBar->display();
-            sleep(3);
+            sleep(1);
         }
         $progressBar->setMessage($this->getMensagem($mensagem));
     }

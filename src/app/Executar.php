@@ -17,6 +17,7 @@ use Manzano\CvdwCli\Services\Objeto;
 use Manzano\CvdwCli\Services\Log;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Manzano\CvdwCli\Services\Monitor\Eventos;
+use Manzano\CvdwCli\Services\Ambientes;
 
 #[AsCommand(
     name: 'executar',
@@ -38,6 +39,7 @@ class Executar extends Command
     public array $variaveisAmbiente = [];
     public bool $voltarProMenu = false;
     protected $eventosObj;
+    protected $ambientesObj;
     protected $env = null;
     protected $evento = 'Executar';
 
@@ -70,10 +72,11 @@ class Executar extends Command
     {
 
         $this->eventosObj = new Eventos();
+        $this->ambientesObj = new Ambientes();
 
         if ($input->getOption('setEnv')) {
             $this->env = $input->getOption('setEnv');
-            retornarEnvs($this->env);
+            $this->ambientesObj->retornarEnvs($this->env);
         }
 
         if ($input->getOption('salvarlog')) {
@@ -98,6 +101,9 @@ class Executar extends Command
             $this->executarObjeto($io, $inputObjeto, $inputDataReferencia);
             return Command::SUCCESS;
         }
+
+        $io->title('Executando o CVDW-CLI');
+        $this->ambientesObj->ambienteAtivo($this->env, $io);
 
         $this->eventosObj->registrarEvento($this->evento, 'Início');
 
@@ -149,7 +155,7 @@ class Executar extends Command
 
     public function validarConfiguracao($io) : void
     {
-        $envVars = getEnvEscope();
+        $envVars = $this->ambientesObj->getEnvEscope();
         // Listar todas as variáveis de $envVars e verificar se todas tem valor
         foreach ($envVars as $envVar => $value) {
             if (!isset($_ENV[$envVar]) || $_ENV[$envVar] == '') {
@@ -207,7 +213,6 @@ class Executar extends Command
             $cvdw = new \Manzano\CvdwCli\Services\Cvdw($this->input, $this->output);
 
             foreach ($objetosArray as $objeto => $dados) {
-                $io->text('');
                 $objeto = $objetoObj->retornarObjeto($objeto);
                 $io->section($dados['nome']);
                 $io->text('Executando objeto: ' . $dados['nome'] . '');

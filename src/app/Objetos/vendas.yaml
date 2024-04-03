@@ -216,5 +216,5 @@ response:
     idlead:
       example: "16852, 13876"
       type: text
-      description: Identificador dos leads vinculados separados por ,
+      description: Identificador dos leads vinculados separados por vírgula
       
