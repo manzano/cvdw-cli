@@ -684,7 +684,7 @@ class Configurar extends Command
             '',
             'Deixa eu salvar as informações...'
         ]);
-        salvarEnv($newEnv);
+        $this->ambientesObj->salvarEnv($newEnv);
 
         $this->voltarProMenu = true;
         $this->voltarProMenu();
