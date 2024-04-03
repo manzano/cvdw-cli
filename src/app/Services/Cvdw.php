@@ -163,8 +163,6 @@ class Cvdw
 
     protected function gerenciarRateLimit(): int {
 
-print_r($this->execucoes);
-
         $agora = time();
         while (!empty($this->execucoes) && $agora - $this->execucoes[0] > 60) {
             array_shift($this->execucoes);
