@@ -119,7 +119,7 @@ class Cvdw
                     }
                     $progressBar->setMessage($this->getMensagem());
                     $progressBar->display();
-                    if (!isset($resposta->dados) && is_array($resposta->dados) && count($resposta->dados) > 0) {
+                    if (!isset($resposta->dados) || !is_array($resposta->dados)) {
                         $this->io->error([
                             'A requisição não retornou os dados esperados!'
                         ]);
