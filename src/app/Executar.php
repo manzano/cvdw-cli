@@ -43,6 +43,7 @@ class Executar extends Command
     protected $env = null;
     protected $evento = 'Executar';
     protected $qtd = 500;
+    protected $apartir = null;
 
     protected function configure()
     {
@@ -71,6 +72,12 @@ class Executar extends Command
                 'qtd', // Atalho, pode ser NULL se não quiser um atalho
                 InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 'Quantidade de dados retornada por cada requisicao.',
+            )->addOption(
+                'apartir', // Nome da opção
+                'a', // Atalho, pode ser NULL se não quiser um atalho
+                InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+                "Consultar a partir de uma data de referencia especifica.\n
+                No formato: Y-m-d\TH:i:s ou Y-m-d.",
             );
     }
 
@@ -85,6 +92,16 @@ class Executar extends Command
 
         if ($input->getOption('setQtd')) {
             $this->qtd = $input->getOption('setQtd');
+        }
+
+        if($input->getOption('apartir')) {
+            // Validar a data
+            $this->apartir = trim($input->getOption('apartir'));
+            if(!validarData($this->apartir)){
+                $output->writeln('<error>Data de referência informada ('.$this->apartir.') é inválida.</error>');
+                return Command::FAILURE;
+            }
+            
         }
 
         $this->ambientesObj = new Ambientes($this->env);
@@ -228,7 +245,8 @@ class Executar extends Command
                 $io->section($dados['nome']);
                 $io->text('Executando objeto: ' . $dados['nome'] . '');
                 $this->eventosObj->registrarEvento($this->evento, 'executar', $dados['nome']);
-                $cvdw->processar($objeto, $this->qtd, $io, $inputDataReferencia, $this->logObjeto);
+                
+                $cvdw->processar($objeto, $this->qtd, $io, $this->apartir, $inputDataReferencia, $this->logObjeto);
                 //$this->limparTela();
             }
         } else {

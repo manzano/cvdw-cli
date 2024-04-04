@@ -12,27 +12,29 @@ class LeadsCorretoresCest extends Common
     public function getLeadsCorretores(ApiTester $I)
     {
         
-        sleep(3);
-        
-        $I->sendGet('/leads/corretores', ['pagina' => 1, 'registros' => 1]);
-        $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseIsJson();
+        sleep(2);
 
-        $I->seeResponseMatchesJsonType([
+        $bodyContent = ['pagina' => 1, 'registros' => 1];
+        $responseContent = [
             'pagina' => 'integer',
             'registros' => 'integer',
             'total_de_registros' => 'integer',
             'total_de_paginas' => 'integer',
             'dados' => 'array'
-        ]);
+        ];
 
-        // Testar a estrutura de 'dados'
-        $dados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
-        Assert::assertNotEmpty($dados); // Assegura que 'dados' não está vazio
+        $I->sendGet('/leads/corretores', $bodyContent);
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $I->seeResponseMatchesJsonType($responseContent);
 
-        //$I->validarFormatoDaData('referencia_data', 'Y-m-d H:i:s', $dados[0]);
-
-        //print_r($dados[0]);
+        $primeiraLinhaDados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
+        codecept_debug("Referência do primeiro item: " . $primeiraLinhaDados[0]['referencia']);
+        if(is_array($primeiraLinhaDados[0])){
+            $referencia_data = $I->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
+            codecept_debug("Data do primeiro item: " . $referencia_data[0]);
+            $I->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
+        }
         // Estrutura de 'dados[0]'
         /*
         $I->seeResponseMatchesJsonType([

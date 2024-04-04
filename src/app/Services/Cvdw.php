@@ -42,11 +42,12 @@ class Cvdw
         $this->conn = conectarDB($input, $output);
     }
 
-    public function processar(array $objeto, int $qtd, $io, $inputDataReferencia = false, $logObjeto = null): bool
+    public function processar(array $objeto, int $qtd, $io, $apartir = null, $inputDataReferencia = false, $logObjeto = null): bool
     {
         if ($this->output->isDebug()) {
             $io->info(" LOG: " . __FUNCTION__);
         }
+        
         if($qtd > 0) {
             $this->qtd = $qtd;
             if($qtd > 500) {
@@ -67,17 +68,29 @@ class Cvdw
         if ($inputDataReferencia) {
             $this->io->text('Data de referência: <fg=red>Ignorada</>');
         } else {
-            $referencia_data = $this->buscaUltimaData($objeto['tabela']);
-            if ($referencia_data) {
-                $referencia_data = new DateTime($referencia_data); // Cria um objeto DateTime
+            
+            if($apartir) {
+                $apartir = str_replace('T', ' ', $apartir);
+                $referencia_data = new DateTime($apartir);
+                $parametros['a_partir_data_referencia'] = $apartir;
                 $referencia_data->modify('-0 seconds');
                 $referencia_data_UI = $referencia_data->format('d/m/Y H:i:s');
                 $referencia_data = $referencia_data->format('Y-m-d H:i:s');
                 $parametros['a_partir_data_referencia'] = $referencia_data;
+                $this->io->text('Data de referência: ' . $referencia_data_UI);
             } else {
-                $referencia_data_UI = 'Nenhuma data encontrada';
+                $referencia_data = $this->buscaUltimaData($objeto['tabela']);
+                if ($referencia_data) {
+                    $referencia_data = new DateTime($referencia_data); // Cria um objeto DateTime
+                    $referencia_data->modify('-0 seconds');
+                    $referencia_data_UI = $referencia_data->format('d/m/Y H:i:s');
+                    $referencia_data = $referencia_data->format('Y-m-d H:i:s');
+                    $parametros['a_partir_data_referencia'] = $referencia_data;
+                } else {
+                    $referencia_data_UI = 'Nenhuma data encontrada';
+                }
+                $this->io->text('Data de referência: ' . $referencia_data_UI);
             }
-            $this->io->text('Data de referência: ' . $referencia_data_UI);
         }
         $this->processados = $this->erros = 0;
         $this->inseridos = $this->inseridos_erros = 0;

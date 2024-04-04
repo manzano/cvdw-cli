@@ -5,6 +5,7 @@ namespace Tests\ApiCVDW;
 use Tests\Support\ApiTester;
 use Codeception\Configuration;
 use Codeception\Scenario;
+use Manzano\CvdwCli\Services\Ambientes;
 
 /**
  * Class Common
@@ -31,7 +32,8 @@ class Common
      */
     public function _before(ApiTester $I, Scenario $scenario)
     {
-        retornarEnvs();
+        $ambientesObj = new Ambientes();
+        $ambientesObj->retornarEnvs();
         $config = Configuration::suiteSettings("ApiCVDW", Configuration::config());
         $I->haveHttpHeader('Content-Type', 'application/json');
         $this->env['CVDW_AMBIENTE'] = $_ENV['CVDW_AMBIENTE'];

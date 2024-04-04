@@ -12,23 +12,25 @@ class {{NOME_CLASSE}}Cest extends Common
     public function get{{NOME_CLASSE}}(ApiTester $I)
     {
         
-        sleep(3);
-        
-        $I->sendGet('{{PATH}}', ['pagina' => 1, 'registros' => 1]);
+        sleep(2);
+
+        $bodyContent = ['pagina' => 1, 'registros' => 1];
+        $responseContent = [
+            {{RETORNO_GERAL}}
+        ];
+
+        $I->sendGet('{{PATH}}', $bodyContent);
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
+        $I->seeResponseMatchesJsonType($responseContent);
 
-        $I->seeResponseMatchesJsonType([
-            {{RETORNO_GERAL}}
-        ]);
-
-        // Testar a estrutura de 'dados'
-        $dados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
-        Assert::assertNotEmpty($dados); // Assegura que 'dados' não está vazio
-
-        //$I->validarFormatoDaData('referencia_data', 'Y-m-d H:i:s', $dados[0]);
-
-        //print_r($dados[0]);
+        $primeiraLinhaDados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
+        codecept_debug("Referência do primeiro item: " . $primeiraLinhaDados[0]['referencia']);
+        if(is_array($primeiraLinhaDados[0])){
+            $referencia_data = $I->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
+            codecept_debug("Data do primeiro item: " . $referencia_data[0]);
+            $I->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
+        }
         // Estrutura de 'dados[0]'
         /*
         $I->seeResponseMatchesJsonType([

@@ -6,10 +6,13 @@ namespace Helper;
 // aqui você pode definir métodos de asserção personalizados
 class CvdwHelper extends \Codeception\Module
 {
-    public function validarFormatoDaData($dateField, $expectedFormat, $response)
+    public function validarFormatoDaData($dateField, $expectedFormat)
     {
-        $dateString = $response[$dateField];
-        $date = \DateTime::createFromFormat($expectedFormat, $dateString);
-        $this->assertTrue($date && $date->format($expectedFormat) === $dateString, "A data está no formato esperado.");
+        $data = \DateTime::createFromFormat($expectedFormat, $dateField);
+        if ($data && $data->format($expectedFormat) === $dateField) {
+            $this->assertTrue(true, "A data está no formato esperado.");
+        } else {
+            $this->assertTrue(false, "A data não está no formato esperado.");
+        }
     }
 }
