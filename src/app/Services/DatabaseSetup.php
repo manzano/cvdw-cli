@@ -52,12 +52,14 @@ class DatabaseSetup
         $this->tabelaIO = new Table($this->output);
         $this->tabelaIO->setHeaders(['Tabela', 'Situação']);
 
-        $totalObjetos = count(OBJETOS);
+        $objetoObj = new Objeto($this->input, $this->output);
+        $objetos = $objetoObj->retornarObjetos();
+
+        $totalObjetos = count($objetos);
         $this->progressBar = new ProgressBar($this->output, $totalObjetos);
         $this->progressBar->start();
 
-        $objetoObj = new Objeto($this->input, $this->output);
-        foreach (OBJETOS as $key => $dados) {
+        foreach ($objetos as $key => $dados) {
 
             $objeto = $objetoObj->retornarObjeto($key);
             if (!$objeto) {
@@ -89,7 +91,8 @@ class DatabaseSetup
     {
         $tabelas = array();
         $objetoObj = new Objeto($this->input, $this->output);
-        foreach (OBJETOS as $key => $dados) {
+        $objetos = $objetoObj->retornarObjetos();
+        foreach ($objetos as $key => $dados) {
 
             $objeto = $objetoObj->retornarObjeto($key);
             if (!$objeto) {

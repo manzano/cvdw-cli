@@ -275,7 +275,7 @@ class Configurar extends Command
 
     private function verificarInstalacao(): bool
     {
-        $objetoObj = new Objeto($this->input, $this->output);
+        
         $io = new CvdwSymfonyStyle($this->input, $this->output);
         $http = new Http($this->input, $this->output, $io);
         $diferencasBanco = array();
@@ -324,7 +324,9 @@ class Configurar extends Command
             ]);
 
             $bancoProblemas = false;
-            foreach(OBJETOS as $key => $dados) {
+            $objetoObj = new Objeto($this->input, $this->output);
+            $objetos = $objetoObj->retornarObjetos();
+            foreach($objetos as $key => $dados) {
                 $existe = $databaseObj->verificarSeTabelaExiste($key);
                 $objeto = $objetoObj->retornarObjeto($key);
                 if ($existe) {

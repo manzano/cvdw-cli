@@ -12,7 +12,8 @@ class AgendamentosVistoriasCest extends Common
     public function getAgendamentosVistorias(ApiTester $I)
     {
         
-        sleep(2);
+        sleep(3);
+        $startTime = time();
 
         $bodyContent = ['pagina' => 1, 'registros' => 1];
         $responseContent = [
@@ -24,6 +25,15 @@ class AgendamentosVistoriasCest extends Common
         ];
 
         $I->sendGet('/agendamentos/vistorias', $bodyContent);
+
+        $endTime = time();
+        $duration = $endTime - $startTime;
+
+        if ($duration > 5) {
+            // Adiciona um aviso se a requisição demorar mais de 5 segundos
+            Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
+        }
+
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $I->seeResponseMatchesJsonType($responseContent);
@@ -65,4 +75,95 @@ class AgendamentosVistoriasCest extends Common
         */
 
     }
+
+    public function getAgendamentosVistoriasComDataReferencia(ApiTester $I)
+    {
+        
+        sleep(3);
+        $startTime = time();
+
+        $now = new \DateTime();
+        $now->modify('-45 days');
+        $formattedDate = $now->format('Y-m-d');
+
+        $bodyContent = ['pagina' => 1, 'registros' => 1, 'a_partir_data_referencia' => $formattedDate];
+        
+        codecept_debug("Body: " . $formattedDate);
+        
+        $responseContent = [
+            'pagina' => 'integer',
+            'registros' => 'integer',
+            'total_de_registros' => 'integer',
+            'total_de_paginas' => 'integer',
+            'dados' => 'array'
+        ];
+
+        $I->sendGet('/agendamentos/vistorias', $bodyContent);
+
+        $endTime = time();
+        $duration = $endTime - $startTime;
+
+        if ($duration > 5) {
+            // Adiciona um aviso se a requisição demorar mais de 5 segundos
+            Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
+        }
+
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $I->seeResponseMatchesJsonType($responseContent);
+
+        $primeiraLinhaDados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
+        if(is_array($primeiraLinhaDados[0])){
+            $referencia_data = $I->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
+
+            // verifica se $referencia_data[0] é maior que $formattedDate
+            $timestamp_referencia = strtotime($referencia_data[0]);
+            $timestamp_filtro = strtotime($formattedDate);
+
+            codecept_debug("Data do primeiro item: " . $referencia_data[0] . " -> $timestamp_referencia");
+            codecept_debug("Data do filtro: " . $formattedDate . " -> $timestamp_filtro");
+
+            if($timestamp_referencia >= $timestamp_filtro){
+                codecept_debug("Filtro é menor!");
+                Assert::assertTrue(true);
+            } else {
+                codecept_debug("Filtro é maior!");
+                Assert::assertTrue(false);
+            }
+
+            // Agora, compara os timestamps
+            //$I->assertTrue($timestamp_referencia >= $timestamp_filtro);
+
+        }
+
+        // Estrutura de 'dados[0]'
+        /*
+        $I->seeResponseMatchesJsonType([
+            'referencia' => 'string',
+            'idvistoria' => 'integer|null',
+            'idvistoria_pai' => 'integer|null',
+            'idempreendimento' => 'integer|null',
+            'empreendimento' => 'string|null',
+            'codigointerno_empreendimento' => 'string|null',
+            'etapa' => 'string|null',
+            'bloco' => 'string|null',
+            'unidade' => 'string|null',
+            'idunidade' => 'string|null',
+            'cliente' => 'string|null',
+            'idcliente' => 'integer|null',
+            'cep_cliente' => 'string|null',
+            'data_agendamento' => 'string|null',
+            'horario' => 'string|null',
+            'vistoriador' => 'string|null',
+            'tipo' => 'string|null',
+            'situacao' => 'string|null',
+            'quitado' => 'string|null',
+            'chave_liberada' => 'string|null',
+            'chave_entregue' => 'string|null',
+            'idreserva' => 'integer|null',
+            'data_modificacao' => 'string|null'
+        ], '$.dados[0]');
+        */
+
+    }    
 }

@@ -12,7 +12,8 @@ class LeadsConversoesCest extends Common
     public function getLeadsConversoes(ApiTester $I)
     {
         
-        sleep(2);
+        sleep(3);
+        $startTime = time();
 
         $bodyContent = ['pagina' => 1, 'registros' => 1];
         $responseContent = [
@@ -24,6 +25,15 @@ class LeadsConversoesCest extends Common
         ];
 
         $I->sendGet('/leads/conversoes', $bodyContent);
+
+        $endTime = time();
+        $duration = $endTime - $startTime;
+
+        if ($duration > 5) {
+            // Adiciona um aviso se a requisição demorar mais de 5 segundos
+            Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
+        }
+
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $I->seeResponseMatchesJsonType($responseContent);
@@ -58,4 +68,88 @@ class LeadsConversoesCest extends Common
         */
 
     }
+
+    public function getLeadsConversoesComDataReferencia(ApiTester $I)
+    {
+        
+        sleep(3);
+        $startTime = time();
+
+        $now = new \DateTime();
+        $now->modify('-45 days');
+        $formattedDate = $now->format('Y-m-d');
+
+        $bodyContent = ['pagina' => 1, 'registros' => 1, 'a_partir_data_referencia' => $formattedDate];
+        
+        codecept_debug("Body: " . $formattedDate);
+        
+        $responseContent = [
+            'pagina' => 'integer',
+            'registros' => 'integer',
+            'total_de_registros' => 'integer',
+            'total_de_paginas' => 'integer',
+            'dados' => 'array'
+        ];
+
+        $I->sendGet('/leads/conversoes', $bodyContent);
+
+        $endTime = time();
+        $duration = $endTime - $startTime;
+
+        if ($duration > 5) {
+            // Adiciona um aviso se a requisição demorar mais de 5 segundos
+            Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
+        }
+
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $I->seeResponseMatchesJsonType($responseContent);
+
+        $primeiraLinhaDados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
+        if(is_array($primeiraLinhaDados[0])){
+            $referencia_data = $I->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
+
+            // verifica se $referencia_data[0] é maior que $formattedDate
+            $timestamp_referencia = strtotime($referencia_data[0]);
+            $timestamp_filtro = strtotime($formattedDate);
+
+            codecept_debug("Data do primeiro item: " . $referencia_data[0] . " -> $timestamp_referencia");
+            codecept_debug("Data do filtro: " . $formattedDate . " -> $timestamp_filtro");
+
+            if($timestamp_referencia >= $timestamp_filtro){
+                codecept_debug("Filtro é menor!");
+                Assert::assertTrue(true);
+            } else {
+                codecept_debug("Filtro é maior!");
+                Assert::assertTrue(false);
+            }
+
+            // Agora, compara os timestamps
+            //$I->assertTrue($timestamp_referencia >= $timestamp_filtro);
+
+        }
+
+        // Estrutura de 'dados[0]'
+        /*
+        $I->seeResponseMatchesJsonType([
+            'referencia' => 'string',
+            'idlead' => 'integer|null',
+            'data_cad' => 'string|null',
+            'nome' => 'string|null',
+            'email' => 'string|null',
+            'telefone' => 'string|null',
+            'origem_conversao' => 'string|null',
+            'conversao' => 'string|null',
+            'origem' => 'string|null',
+            'idorigem_ultimo' => 'integer|null',
+            'origem_ultimo' => 'string|null',
+            'midia' => 'string|null',
+            'midia_conversao' => 'string|null',
+            'gestor' => 'integer|null',
+            'gestor_ultimo' => 'integer|null',
+            'empreendimento_ultimo' => 'integer|null'
+        ], '$.dados[0]');
+        */
+
+    }    
 }

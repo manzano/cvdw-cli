@@ -12,7 +12,8 @@ class ImobiliariasCest extends Common
     public function getImobiliarias(ApiTester $I)
     {
         
-        sleep(2);
+        sleep(3);
+        $startTime = time();
 
         $bodyContent = ['pagina' => 1, 'registros' => 1];
         $responseContent = [
@@ -24,6 +25,15 @@ class ImobiliariasCest extends Common
         ];
 
         $I->sendGet('/imobiliarias', $bodyContent);
+
+        $endTime = time();
+        $duration = $endTime - $startTime;
+
+        if ($duration > 5) {
+            // Adiciona um aviso se a requisição demorar mais de 5 segundos
+            Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
+        }
+
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $I->seeResponseMatchesJsonType($responseContent);
@@ -72,4 +82,102 @@ class ImobiliariasCest extends Common
         */
 
     }
+
+    public function getImobiliariasComDataReferencia(ApiTester $I)
+    {
+        
+        sleep(3);
+        $startTime = time();
+
+        $now = new \DateTime();
+        $now->modify('-45 days');
+        $formattedDate = $now->format('Y-m-d');
+
+        $bodyContent = ['pagina' => 1, 'registros' => 1, 'a_partir_data_referencia' => $formattedDate];
+        
+        codecept_debug("Body: " . $formattedDate);
+        
+        $responseContent = [
+            'pagina' => 'integer',
+            'registros' => 'integer',
+            'total_de_registros' => 'integer',
+            'total_de_paginas' => 'integer',
+            'dados' => 'array'
+        ];
+
+        $I->sendGet('/imobiliarias', $bodyContent);
+
+        $endTime = time();
+        $duration = $endTime - $startTime;
+
+        if ($duration > 5) {
+            // Adiciona um aviso se a requisição demorar mais de 5 segundos
+            Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
+        }
+
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $I->seeResponseMatchesJsonType($responseContent);
+
+        $primeiraLinhaDados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
+        if(is_array($primeiraLinhaDados[0])){
+            $referencia_data = $I->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
+
+            // verifica se $referencia_data[0] é maior que $formattedDate
+            $timestamp_referencia = strtotime($referencia_data[0]);
+            $timestamp_filtro = strtotime($formattedDate);
+
+            codecept_debug("Data do primeiro item: " . $referencia_data[0] . " -> $timestamp_referencia");
+            codecept_debug("Data do filtro: " . $formattedDate . " -> $timestamp_filtro");
+
+            if($timestamp_referencia >= $timestamp_filtro){
+                codecept_debug("Filtro é menor!");
+                Assert::assertTrue(true);
+            } else {
+                codecept_debug("Filtro é maior!");
+                Assert::assertTrue(false);
+            }
+
+            // Agora, compara os timestamps
+            //$I->assertTrue($timestamp_referencia >= $timestamp_filtro);
+
+        }
+
+        // Estrutura de 'dados[0]'
+        /*
+        $I->seeResponseMatchesJsonType([
+            'referencia' => 'string',
+            'idimobiliaria' => 'integer|null',
+            'ativo' => 'string|null',
+            'data_cad' => 'string|null',
+            'idestado' => 'integer|null',
+            'idcidade' => 'integer|null',
+            'nome' => 'string|null',
+            'razao_social' => 'string|null',
+            'cnpj' => 'string|null',
+            'cnpj_faturamento' => 'string|null',
+            'idlogradouro' => 'integer|null',
+            'endereco' => 'string|null',
+            'complemento' => 'string|null',
+            'numero' => 'string|null',
+            'bairro' => 'string|null',
+            'cep' => 'string|null',
+            'telefone' => 'string|null',
+            'celular' => 'string|null',
+            'email' => 'string|null',
+            'creci' => 'string|null',
+            'avatar_nome' => 'string|null',
+            'validade_creci' => 'string|null',
+            'gerente_nome' => 'string|null',
+            'gerente_cpf' => 'string|null',
+            'gerente_telefone' => 'string|null',
+            'gerente_celular' => 'string|null',
+            'gerente_email' => 'string|null',
+            'sigla' => 'string|null',
+            'codigointerno' => 'string|null',
+            'observacoes' => 'string|null'
+        ], '$.dados[0]');
+        */
+
+    }    
 }

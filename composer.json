@@ -32,7 +32,6 @@
       
     },
     "files": [
-      "src/app/Inc/Objetos.php",
       "src/app/Inc/Helper.php",
       "src/app/Inc/Conexao.php"
     ]
