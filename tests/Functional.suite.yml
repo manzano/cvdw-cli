@@ -1,0 +1,8 @@
+actor: FunctionalTester
+suite_namespace: Tests\FunctionalCVDW
+modules:
+    enabled:
+        - Symfony:
+            app_path: 'src/app'
+        - \Helper\CvdwHelper
+bootstrap: 'src/app/cvdw'

@@ -24,7 +24,8 @@
     "codeception/codeception": "^5.1",
     "codeception/module-rest": "^3.3",
     "codeception/module-phpbrowser": "^3.0",
-    "codeception/module-asserts": "*"
+    "codeception/module-asserts": "*",
+    "codeception/module-symfony": "^3.3"
   },
   "autoload": {
     "psr-4": {

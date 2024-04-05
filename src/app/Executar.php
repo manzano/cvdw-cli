@@ -108,12 +108,9 @@ class Executar extends Command
         $this->ambientesObj->retornarEnvs();
 
         if ($input->getOption('salvarlog')) {
-            $this->dirLog = __DIR__;
-            // Remover /src/app de $dir
-            $this->dirLog = str_replace('/src/app', '', $this->dirLog);
-            $this->dirLog .= '/logs';
-            $this->arquivoLog = $this->dirLog . '/log_' . date('Y-m-d_H-i-s') . '.log';
+            $this->arquivoLog = 'log_' . date('Y-m-d_H-i-s') . '.log';
             $this->logObjeto = new Log($this->arquivoLog);
+            $this->logObjeto->criarArquivoLog();
         }
         $io = new CvdwSymfonyStyle($input, $output, $this->logObjeto);
         $this->limparTela();
@@ -131,7 +128,8 @@ class Executar extends Command
         }
 
         $io->title('Executando o CVDW-CLI');
-        $this->ambientesObj->ambienteAtivo($io);
+        $ambienteAtivo = $this->ambientesObj->ambienteAtivo();
+        $io->text('Ambiente ativo: ' . $ambienteAtivo);
 
         $this->eventosObj->registrarEvento($this->evento, 'Início');
 

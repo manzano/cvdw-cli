@@ -12,7 +12,11 @@ use Symfony\Component\Console\Application;
 
 $ambienteObj = new Ambientes();
 $ambienteObj->salvarEnv();
-$ambienteObj->retornarEnvs();
+if(!$ambienteObj->retornarEnvs()){
+    echo "Ambiente informado não foi encontrado.";
+    exit;
+}
+
 
 if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
     \Sentry\init([

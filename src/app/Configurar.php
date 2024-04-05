@@ -84,7 +84,8 @@ class Configurar extends Command
 
         $io->title('Configurando o CVDW-CLI');
 
-        $this->ambientesObj->ambienteAtivo($io);
+        $ambienteAtivo = $this->ambientesObj->ambienteAtivo();
+        $io->text('Ambiente ativo: ' . $ambienteAtivo);
         
         $this->eventosObj->registrarEvento($this->evento, 'Início');
 

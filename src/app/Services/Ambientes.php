@@ -15,11 +15,16 @@ class Ambientes
         $this->envVars = $this->getEnvEscope();
     }
 
-    public function ambienteAtivo($io)
+    public function ambienteAtivo(): string
     {
+        $this->retornarEnvs($this->env);
         $ambienteAtivo = strtoupper($_ENV['CV_URL'] ?? '');
         if ($ambienteAtivo == '') {
-            $ambienteAtivo = 'Nenhum ambiente padrão configurado';
+            if($this->env !== null){
+                $ambienteAtivo = 'Ambiente '. $this->env.' não configurado';
+            } else {
+                $ambienteAtivo = 'Nenhum ambiente configurado';
+            }
         } else {
             if ($this->env == null) {
                 $ambienteAtivo .= " (Arquivo: .env)";
@@ -27,23 +32,20 @@ class Ambientes
                 $ambienteAtivo .= " (Arquivo: {$this->env}.env)";
             }
         }
-        $io->text('Ambiente ativo: ' . $ambienteAtivo);
+        return $ambienteAtivo;
     }
 
-    public function retornarEnvs(): void
+    public function retornarEnvs(): bool
     {
         $envVars = $this->getEnvDir();
         if (!file_exists($envVars)) {
-            if ($this->env !== null) {
-                echo "Ambiente informado não foi encontrado.";
-                exit;
-            } else {
-                file_put_contents($envVars, '');
-                chmod($envVars, 0755);
-            }
+            file_put_contents($envVars, '');
+            chmod($envVars, 0755);
+            $this->salvarEnv();
         }
         $dotenv = new \Symfony\Component\Dotenv\Dotenv();
         $dotenv->load($envVars);
+        return true;
     }
 
     public function salvarEnv(array $newEnv = []): void

@@ -26,7 +26,6 @@ class Objeto
 
     public function retornarObjetos(string $objeto = null): array
     {
-
         if ($objeto) {
             if (isset($this->objetos[$objeto])) {
                 return ["$objeto" => $this->objetos[$objeto]];
@@ -53,9 +52,12 @@ class Objeto
     public function retornarObjetoTabelas($objeto): array
     {
         $objeto = $this->retornarObjeto($objeto);
+        if(empty($objeto)){
+            return [];
+        }
         $componentes = $objeto['response']['dados'];
         $tabelas = [];
-        foreach ($componentes['body']['response']['dados'] as $componente => $dados) {
+        foreach ($componentes as $componente => $dados) {
             if ($this->identificarTipoDeDados($dados) == "TABELA") {
                 $tabelas[$componente] = $dados;
             }
@@ -73,7 +75,7 @@ class Objeto
         return "COMPONENTE";
     }
 
-    private function retornarConstantesObjetos(): array
+    public function retornarConstantesObjetos(): array
     {
         return [
 

@@ -1,0 +1,6 @@
+actor: UnitTester
+suite_namespace: Tests\UnitCVDW
+modules:
+    enabled:
+        - Asserts
+        - \Helper\CvdwHelper

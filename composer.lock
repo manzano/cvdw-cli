@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "921432fc1abcdcf273ff269f27cf1f83",
+    "content-hash": "95acf7f899fb8205629102ce0d883d52",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -4499,6 +4499,90 @@
                 "source": "https://github.com/Codeception/module-rest/tree/3.3.2"
             },
             "time": "2023-02-09T18:11:19+00:00"
+        },
+        {
+            "name": "codeception/module-symfony",
+            "version": "3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Codeception/module-symfony.git",
+                "reference": "3bbf45cffb6c0bed16b088e48ba902c66a342a32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Codeception/module-symfony/zipball/3bbf45cffb6c0bed16b088e48ba902c66a342a32",
+                "reference": "3bbf45cffb6c0bed16b088e48ba902c66a342a32",
+                "shasum": ""
+            },
+            "require": {
+                "codeception/codeception": "^5.0.8",
+                "codeception/lib-innerbrowser": "^3.1.1 | ^4.0",
+                "ext-json": "*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "codeception/module-asserts": "^3.0",
+                "codeception/module-doctrine": "^3.1",
+                "doctrine/orm": "^2.10",
+                "symfony/browser-kit": "^5.4 | ^6.4 | ^7.0",
+                "symfony/cache": "^5.4 | ^6.4 | ^7.0",
+                "symfony/config": "^5.4 | ^6.4 | ^7.0",
+                "symfony/dependency-injection": "^5.4 | ^6.4 | ^7.0",
+                "symfony/dom-crawler": "^5.4 | ^6.4 | ^7.0",
+                "symfony/error-handler": "^5.4 | ^6.4 | ^7.0",
+                "symfony/filesystem": "^5.4 | ^6.4 | ^7.0",
+                "symfony/form": "^5.4 | ^6.4 | ^7.0",
+                "symfony/framework-bundle": "^5.4 | ^6.4 | ^7.0",
+                "symfony/http-foundation": "^5.4 | ^6.4 | ^7.0",
+                "symfony/http-kernel": "^5.4 | ^6.4 | ^7.0",
+                "symfony/mailer": "^5.4 | ^6.4 | ^7.0",
+                "symfony/mime": "^5.4 | ^6.4 | ^7.0",
+                "symfony/options-resolver": "^5.4 | ^6.4 | ^7.0",
+                "symfony/property-access": "^5.4 | ^6.4 | ^7.0",
+                "symfony/property-info": "^5.4 | ^6.4 | ^7.0",
+                "symfony/routing": "^5.4 | ^6.4 | ^7.0",
+                "symfony/security-bundle": "^5.4 | ^6.4 | ^7.0",
+                "symfony/security-core": "^5.4 | ^6.4 | ^7.0",
+                "symfony/security-csrf": "^5.4 | ^6.4 | ^7.0",
+                "symfony/security-http": "^5.4 | ^6.4 | ^7.0",
+                "symfony/twig-bundle": "^5.4 | ^6.4 | ^7.0",
+                "symfony/var-exporter": "^5.4 | ^6.4 | ^7.0",
+                "vlucas/phpdotenv": "^4.2 | ^5.4"
+            },
+            "suggest": {
+                "codeception/module-asserts": "Include traditional PHPUnit assertions in your tests",
+                "symfony/web-profiler-bundle": "Tool that gives information about the execution of requests"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Bodnarchuk"
+                },
+                {
+                    "name": "Gustavo Nieves",
+                    "homepage": "https://medium.com/@ganieves"
+                }
+            ],
+            "description": "Codeception module for Symfony framework",
+            "homepage": "https://codeception.com/",
+            "keywords": [
+                "codeception",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/Codeception/module-symfony/issues",
+                "source": "https://github.com/Codeception/module-symfony/tree/3.3.2"
+            },
+            "time": "2024-03-18T13:33:41+00:00"
         },
         {
             "name": "codeception/stub",
