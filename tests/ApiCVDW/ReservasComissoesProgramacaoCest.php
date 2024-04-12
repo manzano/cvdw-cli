@@ -132,30 +132,5 @@ class ReservasComissoesProgramacaoCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idprogramacao' => 'integer|null',
-            'idreserva' => 'integer|null',
-            'idreservascondicoes' => 'integer|null',
-            'idcondicoes_parcelas' => 'integer|null',
-            'idregra' => 'integer|null',
-            'contrato' => 'string|null',
-            'parcela' => 'integer|null',
-            'para' => 'string|null',
-            'quem' => 'integer|null',
-            'valor' => 'integer|null',
-            'data_previsao' => 'string|null',
-            'data_previsao_pagadoria' => 'string|null',
-            'forma_pagamento' => 'string|null',
-            'idgestaocontrato_lancamento' => 'integer|null',
-            'idreserva_comissao_parcela_lancamento' => 'integer|null',
-            'idlancamento' => 'integer|null',
-            'idprogramacao_lancamento' => 'integer|null',
-            'data_cad' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

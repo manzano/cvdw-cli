@@ -122,20 +122,5 @@ class ReservasCamposAdicionaisCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idcampo' => 'integer|null',
-            'idreserva' => 'integer|null',
-            'data_cad' => 'string|null',
-            'nome' => 'string|null',
-            'nome_referencia' => 'string|null',
-            'valor' => 'text|null',
-            'tipo' => 'string|null',
-            'funcionalidade' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

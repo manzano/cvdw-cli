@@ -128,26 +128,5 @@ class LeadsInteracoesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idinteracao' => 'integer|null',
-            'idlead' => 'integer|null',
-            'data_cad' => 'string|null',
-            'idcorretor' => 'integer|null',
-            'corretor' => 'string|null',
-            'idimobiliaria' => 'integer|null',
-            'imobiliaria' => 'string|null',
-            'tipo' => 'string|null',
-            'situacao' => 'string|null',
-            'descricao' => 'text|null',
-            'enviar_corretor' => 'string|null',
-            'enviar_imobiliaria' => 'string|null',
-            'enviar_cliente' => 'string|null',
-            'gestor_interacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

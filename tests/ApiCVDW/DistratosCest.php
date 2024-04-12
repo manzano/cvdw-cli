@@ -138,36 +138,5 @@ class DistratosCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idreserva' => 'integer|null',
-            'aprovada' => 'string|null',
-            'data' => 'string|null',
-            'situacao_data' => 'string|null',
-            'situacao_atual' => 'string|null',
-            'idsituacao' => 'integer|null',
-            'idempreendimento' => 'integer|null',
-            'codigointerno_empreendimento' => 'string|null',
-            'empreendimento' => 'string|null',
-            'bloco' => 'string|null',
-            'unidade' => 'string|null',
-            'regiao' => 'string|null',
-            'venda' => 'string|null',
-            'idcliente' => 'integer|null',
-            'documento' => 'string|null',
-            'cliente' => 'string|null',
-            'cep_cliente' => 'string|null',
-            'idcorretor' => 'integer|null',
-            'corretor' => 'string|null',
-            'idimobiliaria' => 'integer|null',
-            'imobiliaria' => 'string|null',
-            'motivo_distrato' => 'string|null',
-            'valor_contrato' => 'integer|null',
-            'data_sincronizacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

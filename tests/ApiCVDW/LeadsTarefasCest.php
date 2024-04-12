@@ -125,23 +125,5 @@ class LeadsTarefasCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idtarefa' => 'integer|null',
-            'idinteracao' => 'integer|null',
-            'idlead' => 'integer|null',
-            'data_cad' => 'string|null',
-            'data' => 'string|null',
-            'idresponsavel' => 'integer|null',
-            'responsavel' => 'string|null',
-            'tipo_responsavel' => 'string|null',
-            'situacao' => 'string|null',
-            'tipo_interacao' => 'string|null',
-            'funcionalidade' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

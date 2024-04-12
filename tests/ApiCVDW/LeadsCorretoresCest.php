@@ -121,19 +121,5 @@ class LeadsCorretoresCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idlead' => 'integer|null',
-            'idcorretor' => 'integer|null',
-            'corretor' => 'string|null',
-            'idimobiliaria' => 'integer|null',
-            'imobiliaria' => 'string|null',
-            'data_entrada' => 'string|null',
-            'data_sincronizacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

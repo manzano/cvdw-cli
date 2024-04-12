@@ -126,24 +126,5 @@ class AssistenciasItensCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idassistencia_item' => 'integer|null',
-            'idassistencia' => 'integer|null',
-            'item' => 'string|null',
-            'data_cad' => 'string|null',
-            'descricao' => 'text|null',
-            'idsituacao' => 'integer|null',
-            'situacao' => 'string|null',
-            'data_conclusao' => 'string|null',
-            'data_previsao' => 'string|null',
-            'horas_servico' => 'integer|null',
-            'ativo' => 'string|null',
-            'data_sincronizacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

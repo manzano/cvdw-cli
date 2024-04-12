@@ -126,24 +126,5 @@ class ReservasCondicoesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idreservascondicoes' => 'integer|null',
-            'idreserva' => 'integer|null',
-            'serie' => 'string|null',
-            'parcela_quantidade' => 'integer|null',
-            'valor' => 'integer|null',
-            'valor_com_juros' => 'integer|null',
-            'valor_com_comissao_fora_do_contrato' => 'integer|null',
-            'valor_sem_comissao' => 'integer|null',
-            'vencimento' => 'string|null',
-            'portador' => 'string|null',
-            'indexador' => 'string|null',
-            'data_reservas_condicoes' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

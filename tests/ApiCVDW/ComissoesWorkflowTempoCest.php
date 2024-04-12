@@ -121,19 +121,5 @@ class ComissoesWorkflowTempoCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idcomissao' => 'integer|null',
-            'idsituacao' => 'integer|null',
-            'situacao' => 'string|null',
-            'sigla' => 'string|null',
-            'idtempo' => 'integer|null',
-            'tempo' => 'integer|null',
-            'data_cad' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

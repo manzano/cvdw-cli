@@ -120,18 +120,5 @@ class ReservasCoordenadorCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idreserva_coordenador_produto' => 'integer|null',
-            'idreserva' => 'integer|null',
-            'data_cad' => 'string|null',
-            'data_modificacao' => 'string|null',
-            'idusuario' => 'integer|null',
-            'usuario' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

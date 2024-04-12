@@ -121,19 +121,5 @@ class AssistenciasWorkflowTempoCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idtempo' => 'integer|null',
-            'idassistencia' => 'integer|null',
-            'idsituacao' => 'integer|null',
-            'situacao' => 'string|null',
-            'sigla' => 'string|null',
-            'tempo' => 'integer|null',
-            'data_cad' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

@@ -125,23 +125,5 @@ class RepassesHistoricoSituacoesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idhistorico' => 'integer|null',
-            'idrepasse' => 'integer|null',
-            'idusuario' => 'integer|null',
-            'idcorrespondente' => 'integer|null',
-            'usuario' => 'string|null',
-            'correspondente' => 'string|null',
-            'data_cad' => 'string|null',
-            'de' => 'integer|null',
-            'para' => 'integer|null',
-            'de_nome' => 'string|null',
-            'para_nome' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

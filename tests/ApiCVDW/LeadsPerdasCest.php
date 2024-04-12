@@ -122,20 +122,5 @@ class LeadsPerdasCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idlead_reativacao' => 'integer|null',
-            'idlead' => 'integer|null',
-            'nome' => 'string|null',
-            'data_perda' => 'string|null',
-            'email' => 'string|null',
-            'telefone' => 'string|null',
-            'idusuario' => 'integer|null',
-            'painel_usuario' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

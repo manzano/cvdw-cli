@@ -124,22 +124,5 @@ class AtendimentosInteracoesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idinteracao' => 'integer|null',
-            'idatendimento' => 'integer|null',
-            'idusuario' => 'integer|null',
-            'usuario' => 'string|null',
-            'data_cad' => 'string|null',
-            'ativo' => 'string|null',
-            'descricao' => 'text|null',
-            'idcanal' => 'integer|null',
-            'canal' => 'string|null',
-            'data_modificacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

@@ -120,18 +120,5 @@ class RepassesWorkflowTempoCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idtempo' => 'integer|null',
-            'idrepasse' => 'integer|null',
-            'idsituacao' => 'integer|null',
-            'nome' => 'string|null',
-            'sigla' => 'string|null',
-            'tempo' => 'integer|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

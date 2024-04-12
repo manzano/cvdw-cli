@@ -117,15 +117,5 @@ class PessoasBensEmpresaCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idpessoa' => 'integer|null',
-            'idpessoa_int' => 'string|null',
-            'bens_empresa' => 'array|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

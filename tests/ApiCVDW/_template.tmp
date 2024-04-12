@@ -106,12 +106,5 @@ class {{NOME_CLASSE}}Cest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            {{RETORNO_DADOS}}
-        ], '$.dados[0]');
-        */
-
     }    
 }

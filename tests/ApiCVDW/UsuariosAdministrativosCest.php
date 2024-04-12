@@ -119,17 +119,5 @@ class UsuariosAdministrativosCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idusuario' => 'integer|null',
-            'ativo' => 'string|null',
-            'tipo_login' => 'string|null',
-            'usuario' => 'string|null',
-            'motivo_bloqueiologin' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

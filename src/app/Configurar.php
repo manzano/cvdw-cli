@@ -45,6 +45,8 @@ class Configurar extends Command
     protected $ambientesObj;
     protected $env = null;
     protected $evento = 'Configurar';
+    public $envPath = __DIR__ . '/../envs';
+    const VAMOS_LA = 'Vamos Lá!';
 
     protected function configure()
     {
@@ -104,7 +106,6 @@ class Configurar extends Command
         if ($this->variaveisAmbiente['configurar'] === 'Sair (CTRL+C)') {
             $io->text(['Até mais!', '']);
             return Command::SUCCESS;
-            exit;
         }
         $io->text(['Você escolheu: ' . $this->variaveisAmbiente['configurar'], '']);
         $this->eventosObj->registrarEvento($this->evento, $this->variaveisAmbiente['configurar']);
@@ -135,7 +136,7 @@ class Configurar extends Command
                 $this->listarAmbientesRemover();
                 break;
             default:
-                //$this->execute();
+                return Command::INVALID;
                 break;
         }
 
@@ -145,9 +146,8 @@ class Configurar extends Command
     private function listarAmbientes(): array
     {
         $ambientes = array();
-        $envPath = __DIR__ . '/../envs';
-        $envPadrao = glob($envPath . '/.env');
-        $envs = glob($envPath . '/*.env');
+        $envPadrao = glob($this->envPath . '/.env');
+        $envs = glob($this->envPath . '/*.env');
         $envs = array_merge($envs, $envPadrao);
         foreach ($envs as $env) {
             $nomeAux = explode('/', $env);
@@ -157,18 +157,18 @@ class Configurar extends Command
             foreach ($linhas as $linha) {
                 if (strpos($linha, 'CV_URL') !== false) {
                     $arrayExplode = explode('=', $linha);
-                    $CV_URL = str_replace("\n", "", $arrayExplode[1]);
+                    $cv_url = str_replace("\n", "", $arrayExplode[1]);
                 }
                 if (strpos($linha, 'CV_EMAIL') !== false) {
                     $arrayExplode = explode('=', $linha);
-                    $CV_EMAIL = str_replace("\n", "", $arrayExplode[1]);
+                    $cv_email = str_replace("\n", "", $arrayExplode[1]);
                 }
             }
             $arrayAux = array();
-            $arrayAux['referencia'] = $CV_URL;
+            $arrayAux['referencia'] = $cv_url;
             $arrayAux['arquivo'] = $env;
             $arrayAux['nome'] = $nome;
-            $arrayAux['email'] = $CV_EMAIL;
+            $arrayAux['email'] = $cv_email;
             $ambientes[] = $arrayAux;
         }
         return $ambientes;
@@ -178,7 +178,6 @@ class Configurar extends Command
     {
         $io = new CvdwSymfonyStyle($this->input, $this->output);
         $this->verificarAmbientePadrao($io);
-        $envPath = __DIR__ . '/../envs';
 
         $ambientesOpcoes = array();
         $ambientes = $this->listarAmbientes();
@@ -203,7 +202,7 @@ class Configurar extends Command
         ]);
         if ($io->confirm('Posso remover o ambiente?', false)) {
             // Remover arquivo
-            $arquivoEnv = $envPath."/". $ambiente['nome'];
+            $arquivoEnv = $this->envPath."/". $ambiente['nome'];
             if(file_exists($arquivoEnv)){
                 unlink($arquivoEnv);
                 $io->success('Ambiente remnovido com sucesso');
@@ -221,7 +220,7 @@ class Configurar extends Command
         $io = new CvdwSymfonyStyle($this->input, $this->output);
         $this->verificarAmbientePadrao($io);
         $io->text([
-            'Vamos lá!',
+            $this::VAMOS_LA,
             'Vou cadastrar um novo ambiente a partir do seu padrão...',
             'Você precisa informar o nome para poder usar em seus comandos.',
             'O ideal é somente usar letras minúsculas e sem espaços.',
@@ -238,8 +237,7 @@ class Configurar extends Command
         );
 
         if($referencia <> ''){
-            $envPath = __DIR__ . '/../envs';
-            copy($envPath . "/.env", $envPath . "/$referencia.env");
+            copy($this->envPath . "/.env", $this->envPath . "/$referencia.env");
             $io->success('Ambiente clonado com sucesso.');
             $io->text([
                 '',
@@ -282,7 +280,7 @@ class Configurar extends Command
         $diferencasBanco = array();
 
         $io->text([
-            'Vamos lá!',
+            $this::VAMOS_LA,
             'Validando a instalação...',
             ''
         ]);
@@ -419,7 +417,7 @@ class Configurar extends Command
         $objetoObj = new Objeto($this->input, $this->output);
         $io->text([
             '',
-            'Vamos lá!',
+            $this::VAMOS_LA,
             'Corrigindo as diferenças...',
             ''
         ]);
@@ -482,7 +480,7 @@ class Configurar extends Command
 
         $io = new CvdwSymfonyStyle($this->input, $this->output);
         $io->text([
-            'Vamos lá!',
+            $this::VAMOS_LA,
             'Primeiro vamos configurar as variáveis do CV...'
         ]);
         $io->note([

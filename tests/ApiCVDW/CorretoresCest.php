@@ -130,28 +130,5 @@ class CorretoresCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idcorretor' => 'integer|null',
-            'documento' => 'string|null',
-            'nome' => 'string|null',
-            'sexo' => 'string|null',
-            'ativo_login' => 'string|null',
-            'data_cad' => 'string|null',
-            'estado_civil' => 'string|null',
-            'data_nasc' => 'string|null',
-            'telefone' => 'string|null',
-            'celular' => 'string|null',
-            'rg' => 'string|null',
-            'rg_orgao_expedidor' => 'string|null',
-            'numero_pis' => 'string|null',
-            'naturalidade' => 'string|null',
-            'pais' => 'string|null',
-            'possui_filhos' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

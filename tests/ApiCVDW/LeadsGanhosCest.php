@@ -121,19 +121,5 @@ class LeadsGanhosCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idlead' => 'integer|null',
-            'data_ganho' => 'string|null',
-            'nome' => 'string|null',
-            'email' => 'string|null',
-            'telefone' => 'string|null',
-            'painel_usuario' => 'string|null',
-            'idusuario' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

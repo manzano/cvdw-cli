@@ -123,21 +123,5 @@ class ReservasHistoricoSituacoesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idhistorico' => 'integer|null',
-            'idreserva' => 'integer|null',
-            'de' => 'integer|null',
-            'para' => 'integer|null',
-            'de_nome' => 'string|null',
-            'para_nome' => 'string|null',
-            'data_cad' => 'string|null',
-            'usuario' => 'string|null',
-            'idusuario' => 'integer|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

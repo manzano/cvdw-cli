@@ -135,33 +135,5 @@ class ComissoesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'numero' => 'integer|null',
-            'situacao' => 'string|null',
-            'idsituacao' => 'integer|null',
-            'idreserva' => 'string|null',
-            'corretor' => 'string|null',
-            'imobiliaria' => 'string|null',
-            'empreendimento' => 'string|null',
-            'bloco' => 'string|null',
-            'etapa' => 'string|null',
-            'unidade' => 'string|null',
-            'regiao' => 'string|null',
-            'cliente' => 'string|null',
-            'cep_cliente' => 'string|null',
-            'valor_contrato' => 'string|null',
-            'porcentagem_comissao' => 'integer|null',
-            'valor_comissao' => 'integer|null',
-            'valor_comissao_apagar' => 'integer|null',
-            'valor_pagamento' => 'integer|null',
-            'nota_fiscal' => 'string|null',
-            'data_pagamento' => 'string|null',
-            'data_cad' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

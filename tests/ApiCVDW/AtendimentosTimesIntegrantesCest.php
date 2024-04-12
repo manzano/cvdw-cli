@@ -122,20 +122,5 @@ class AtendimentosTimesIntegrantesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idintegrante' => 'integer|null',
-            'idtime' => 'integer|null',
-            'time' => 'string|null',
-            'idusuario' => 'string|null',
-            'usuario' => 'string|null',
-            'ativo' => 'string|null',
-            'data_cad' => 'string|null',
-            'data_modificacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

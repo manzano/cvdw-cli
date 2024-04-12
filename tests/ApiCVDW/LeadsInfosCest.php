@@ -120,18 +120,5 @@ class LeadsInfosCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idlead' => 'integer|null',
-            'data_ultima_alteracao' => 'string|null',
-            'tags' => 'text|null',
-            'origens' => 'string|null',
-            'conversoes' => 'string|null',
-            'responsavel' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

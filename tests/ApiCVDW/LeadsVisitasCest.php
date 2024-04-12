@@ -130,28 +130,5 @@ class LeadsVisitasCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idtarefa' => 'integer|null',
-            'idinteracao' => 'integer|null',
-            'idlead' => 'integer|null',
-            'data_cad' => 'string|null',
-            'data' => 'string|null',
-            'idresponsavel' => 'integer|null',
-            'responsavel' => 'string|null',
-            'tipo_responsavel' => 'string|null',
-            'situacao' => 'string|null',
-            'tipo_interacao' => 'string|null',
-            'idtipo_visita' => 'string|null',
-            'nome_tipo_visita' => 'string|null',
-            'funcionalidade' => 'string|null',
-            'data_conclusao' => 'string|null',
-            'pdv' => 'string|null',
-            'visita_virtual' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

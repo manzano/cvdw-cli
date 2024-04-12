@@ -124,22 +124,5 @@ class AtendimentosTimesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idtime' => 'integer|null',
-            'idgestor' => 'integer|null',
-            'gestor' => 'string|null',
-            'nome' => 'string|null',
-            'descricao' => 'string|null',
-            'tempo_redistribuicao' => 'integer|null',
-            'direcionar_para' => 'string|null',
-            'ativo_painel' => 'string|null',
-            'data_cad' => 'string|null',
-            'data_modificacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

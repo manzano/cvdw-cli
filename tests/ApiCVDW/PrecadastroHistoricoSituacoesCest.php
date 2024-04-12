@@ -121,19 +121,5 @@ class PrecadastroHistoricoSituacoesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idhistorico' => 'integer|null',
-            'idprecadastro' => 'integer|null',
-            'data_cad' => 'string|null',
-            'de' => 'integer|null',
-            'para' => 'integer|null',
-            'de_nome' => 'string|null',
-            'para_nome' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

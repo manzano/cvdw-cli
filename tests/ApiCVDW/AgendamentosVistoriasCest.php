@@ -136,34 +136,5 @@ class AgendamentosVistoriasCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idvistoria' => 'integer|null',
-            'idvistoria_pai' => 'integer|null',
-            'idempreendimento' => 'integer|null',
-            'empreendimento' => 'string|null',
-            'codigointerno_empreendimento' => 'string|null',
-            'etapa' => 'string|null',
-            'bloco' => 'string|null',
-            'unidade' => 'string|null',
-            'idunidade' => 'string|null',
-            'cliente' => 'string|null',
-            'idcliente' => 'integer|null',
-            'cep_cliente' => 'string|null',
-            'data_agendamento' => 'string|null',
-            'horario' => 'string|null',
-            'vistoriador' => 'string|null',
-            'tipo' => 'string|null',
-            'situacao' => 'string|null',
-            'quitado' => 'string|null',
-            'chave_liberada' => 'string|null',
-            'chave_entregue' => 'string|null',
-            'idreserva' => 'integer|null',
-            'data_modificacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

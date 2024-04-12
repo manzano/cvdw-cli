@@ -122,20 +122,5 @@ class CamposAdicionaisCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idcampovalor' => 'integer|null',
-            'idcampo' => 'string|null',
-            'campo_nome' => 'string|null',
-            'idfuncionalidade' => 'string|null',
-            'funcionalidade' => 'string|null',
-            'valor' => 'string|null',
-            'data_cad' => 'string|null',
-            'data_sincronizacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

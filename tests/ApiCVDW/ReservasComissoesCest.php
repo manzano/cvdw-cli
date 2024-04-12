@@ -148,46 +148,5 @@ class ReservasComissoesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'id' => 'integer|null',
-            'data_cad' => 'string|null',
-            'ativo' => 'string|null',
-            'diferenca' => 'string|null',
-            'tipo' => 'string|null',
-            'valor' => 'integer|null',
-            'porcentagem' => 'integer|null',
-            'descricao' => 'string|null',
-            'idreserva' => 'integer|null',
-            'idimobiliaria' => 'integer|null',
-            'idcorretor' => 'integer|null',
-            'comissao_tipo' => 'string|null',
-            'comissao_pagamento_tipo' => 'string|null',
-            'codigointerno' => 'string|null',
-            'tipo_valor' => 'string|null',
-            'forma_pagamento' => 'string|null',
-            'pago_pela_condicao_reserva' => 'string|null',
-            'contrato' => 'string|null',
-            'para' => 'string|null',
-            'quem' => 'integer|null',
-            'ordem' => 'integer|null',
-            'enviar_pagadoria' => 'string|null',
-            'editado' => 'string|null',
-            'para_pagamento' => 'string|null',
-            'idusuario_nivel' => 'integer|null',
-            'idusuario_categoria' => 'integer|null',
-            'idcorretor_nivel' => 'integer|null',
-            'idcorretor_categoria' => 'integer|null',
-            'fifty' => 'string|null',
-            'fifty_idreferencia' => 'integer|null',
-            'id_sub_regra_comissao' => 'integer|null',
-            'idlancamento' => 'integer|null',
-            'idreserva_comissao_lancamento' => 'integer|null',
-            'valor_porcentagem_premiacao' => 'integer|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

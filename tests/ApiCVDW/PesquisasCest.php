@@ -118,16 +118,5 @@ class PesquisasCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idpesquisa' => 'integer|null',
-            'pesquisa' => 'string|null',
-            'dataInicio' => 'string|null',
-            'dataFim' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

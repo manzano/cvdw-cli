@@ -143,41 +143,5 @@ class ImobiliariasCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idimobiliaria' => 'integer|null',
-            'ativo' => 'string|null',
-            'data_cad' => 'string|null',
-            'idestado' => 'integer|null',
-            'idcidade' => 'integer|null',
-            'nome' => 'string|null',
-            'razao_social' => 'string|null',
-            'cnpj' => 'string|null',
-            'cnpj_faturamento' => 'string|null',
-            'idlogradouro' => 'integer|null',
-            'endereco' => 'string|null',
-            'complemento' => 'string|null',
-            'numero' => 'string|null',
-            'bairro' => 'string|null',
-            'cep' => 'string|null',
-            'telefone' => 'string|null',
-            'celular' => 'string|null',
-            'email' => 'string|null',
-            'creci' => 'string|null',
-            'avatar_nome' => 'string|null',
-            'validade_creci' => 'string|null',
-            'gerente_nome' => 'string|null',
-            'gerente_cpf' => 'string|null',
-            'gerente_telefone' => 'string|null',
-            'gerente_celular' => 'string|null',
-            'gerente_email' => 'string|null',
-            'sigla' => 'string|null',
-            'codigointerno' => 'string|null',
-            'observacoes' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

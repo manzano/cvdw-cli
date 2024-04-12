@@ -122,20 +122,5 @@ class PessoasPatrimoniaisCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idpessoa' => 'integer|null',
-            'idpessoa_int' => 'string|null',
-            'possui_bem' => 'string|null',
-            'quantidade_imoveis_possui' => 'integer|null',
-            'quais_bens' => 'string|null',
-            'situacao_do_bem' => 'string|null',
-            'valor_do_bem' => 'string|null',
-            'novos_bens' => 'array|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

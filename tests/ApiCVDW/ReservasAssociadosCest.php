@@ -122,20 +122,5 @@ class ReservasAssociadosCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idassociado' => 'integer|null',
-            'idreserva' => 'integer|null',
-            'idpessoa' => 'integer|null',
-            'data_cad' => 'string|null',
-            'nome' => 'string|null',
-            'documento' => 'string|null',
-            'renda_familiar' => 'integer|null',
-            'tipo_associacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

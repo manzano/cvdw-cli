@@ -123,21 +123,5 @@ class LeadsHistoricoSituacoesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idlead' => 'integer|null',
-            'data_cad' => 'string|null',
-            'de' => 'integer|null',
-            'para' => 'integer|null',
-            'de_nome' => 'string|null',
-            'para_nome' => 'string|null',
-            'telefone' => 'string|null',
-            'painel_usuario' => 'string|null',
-            'idusuario' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

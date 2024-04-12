@@ -122,20 +122,5 @@ class LeadsWorkflowTempoCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idmomento_lead' => 'integer|null',
-            'idlead' => 'integer|null',
-            'idusuario' => 'integer|null',
-            'nome_usuario' => 'string|null',
-            'painel_usuario' => 'string|null',
-            'momentos_lead' => 'string|null',
-            'data_cad' => 'string|null',
-            'data_sincronizacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

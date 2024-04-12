@@ -132,30 +132,5 @@ class AtendimentosRespostasCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idresposta' => 'integer|null',
-            'idatendimento' => 'integer|null',
-            'idusuario' => 'integer|null',
-            'usuario' => 'string|null',
-            'idpessoa' => 'integer|null',
-            'pessoa' => 'string|null',
-            'idusuario_imobiliaria' => 'integer|null',
-            'usuario_imobiliaria' => 'string|null',
-            'idcorretor' => 'integer|null',
-            'corretor' => 'string|null',
-            'idresposta_automatica' => 'integer|null',
-            'ativo' => 'string|null',
-            'data_cad' => 'string|null',
-            'resposta' => 'text|null',
-            'publica' => 'string|null',
-            'tempo_resposta' => 'integer|null',
-            'origem' => 'string|null',
-            'data_modificacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

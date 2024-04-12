@@ -125,23 +125,5 @@ class UnidadesPrecosCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idunidade' => 'integer|null',
-            'unidade' => 'string|null',
-            'empreendimento' => 'string|null',
-            'idempreendimento' => 'integer|null',
-            'etapa' => 'string|null',
-            'idetapa' => 'integer|null',
-            'bloco' => 'string|null',
-            'idbloco' => 'integer|null',
-            'valor' => 'string|null',
-            'idtabela' => 'integer|null',
-            'valor_avaliacao' => 'string|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

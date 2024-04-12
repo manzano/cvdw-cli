@@ -151,49 +151,5 @@ class VendasCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idreserva' => 'integer|null',
-            'aprovada' => 'string|null',
-            'valor_contrato' => 'integer|null',
-            'contrato_interno' => 'string|null',
-            'data' => 'string|null',
-            'data_venda' => 'string|null',
-            'cliente' => 'string|null',
-            'idcliente' => 'integer|null',
-            'documento_cliente' => 'string|null',
-            'email' => 'string|null',
-            'cidade' => 'string|null',
-            'cep_cliente' => 'string|null',
-            'renda' => 'integer|null',
-            'sexo' => 'string|null',
-            'idade' => 'integer|null',
-            'estado_civil' => 'string|null',
-            'idcorretor' => 'integer|null',
-            'corretor' => 'string|null',
-            'idimobiliaria' => 'integer|null',
-            'imobiliaria' => 'string|null',
-            'unidade' => 'string|null',
-            'empreendimento' => 'string|null',
-            'area_privativa' => 'integer|null',
-            'idempreendimento' => 'integer|null',
-            'codigointerno_empreendimento' => 'string|null',
-            'bloco' => 'string|null',
-            'regiao' => 'string|null',
-            'planta' => 'string|null',
-            'campanha' => 'string|null',
-            'idmidia' => 'integer|null',
-            'midia' => 'string|null',
-            'idtabela' => 'integer|null',
-            'idtipovenda' => 'integer|null',
-            'tipovenda' => 'string|null',
-            'nometabela' => 'string|null',
-            'codigointernotabela' => 'string|null',
-            'idlead' => 'text|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }

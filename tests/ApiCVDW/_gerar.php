@@ -1,12 +1,6 @@
 <?php
-    /*
-        - Ler o diretorio ../../src/app/Objetos, somente arquivos .yaml
-        - Ler o .yaml e gerar um arquivo .php com o mesmo nome com a primeira letra maiuscula cocatenado com Cest.php na pasta _temp
-          Ex.: AssistenciasCest.php
-        - O conteudo do arquivo .php deve ser o mesmo do arquivo _template.php
-    */
 
-    include '../../vendor/autoload.php';
+    include_once '../../vendor/autoload.php';
 
     $dir = '../../src/app/Objetos';
     $files = scandir($dir);
@@ -40,8 +34,6 @@
 
             $content = str_replace('{{NOME_CLASSE}}', $name, $content);
             $content = str_replace('{{PATH}}', $yaml['path'], $content);
-
-            //print_r($yaml['response']);
 
             $retornoGeral = [];
             foreach ($yaml['response'] as $key => $value) {

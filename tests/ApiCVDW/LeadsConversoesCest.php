@@ -129,27 +129,5 @@ class LeadsConversoesCest extends Common
 
         }
 
-        // Estrutura de 'dados[0]'
-        /*
-        $I->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idlead' => 'integer|null',
-            'data_cad' => 'string|null',
-            'nome' => 'string|null',
-            'email' => 'string|null',
-            'telefone' => 'string|null',
-            'origem_conversao' => 'string|null',
-            'conversao' => 'string|null',
-            'origem' => 'string|null',
-            'idorigem_ultimo' => 'integer|null',
-            'origem_ultimo' => 'string|null',
-            'midia' => 'string|null',
-            'midia_conversao' => 'string|null',
-            'gestor' => 'integer|null',
-            'gestor_ultimo' => 'integer|null',
-            'empreendimento_ultimo' => 'integer|null'
-        ], '$.dados[0]');
-        */
-
     }    
 }
