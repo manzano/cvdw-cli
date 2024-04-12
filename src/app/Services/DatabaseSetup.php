@@ -131,7 +131,7 @@ class DatabaseSetup
                     continue;
                 }
 
-                $colunaTratada = $this->tratarColuna($coluna, $especificacao);
+                $colunaTratada = $this->tratarEspecificacao($especificacao);
                 $especificacao = $colunaTratada[0];
                 $opcoes = $colunaTratada[1];
 
@@ -166,7 +166,7 @@ class DatabaseSetup
                         $this->progressBar->setMessage('Criando a tabela ' . $tabela);
                         $this->progressBar->advance();
                     }
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     echo $query . "\n\n";
                     echo $e->getMessage();
                 }
@@ -182,15 +182,13 @@ class DatabaseSetup
 
         // Gera um hash único de 6 caracteres
         // Usando mt_rand para maior variedade e convertendo para base 36 para encurtar
-        $hashUnico = substr(base_convert(mt_rand(0, 1679615), 10, 36), 0, 6);
+        $hashUnico = substr(base_convert(random_int(0, 99), 10, 36), 0, 6);
 
         // Combina o nome truncado com o hash único
-        $nomeIndice = $nomeTruncado . '_' . $hashUnico;
-
-        return $nomeIndice;
+        return $nomeTruncado . '_' . $hashUnico;
     }
 
-    public function tratarColuna(string $coluna, array $especificacao): array
+    public function tratarEspecificacao(array $especificacao): array
     {
 
         $opcoes = array();
@@ -234,7 +232,7 @@ class DatabaseSetup
         // Se a coluna tiver mais que 60 caracteres
         if (strlen($nomeColuna) > 60) {
             // Criar um hash do nome da coluna
-            $hash = md5($nomeColuna);
+            $hash = hash("sha512", $nomeColuna);
             // Corta o hash para 10 caracteres
             $hash = substr($hash, 0, 10);
             // Corta o nome da coluna para 40 caracteres
@@ -305,7 +303,7 @@ class DatabaseSetup
                 $logs[] = "A coluna {$especificacao['nomeTratado']} não existe na tabela";
             } else {
                 
-                $especificacaoAux = $this->tratarColuna($coluna, $especificacao);
+                $especificacaoAux = $this->tratarEspecificacao($especificacao);
                 $especificacao = $especificacaoAux[0];
                 $especificacao['opcoes'] = $especificacaoAux[1];
                 
@@ -333,7 +331,7 @@ class DatabaseSetup
     {
         $diferencas = array();
         // Verificar se a coluna tem o mesmo tipo
-        if ($colunaTabela['type'] != $colunaObjeto['especificacao']['type']) 
+        if ($colunaTabela['type'] != $colunaObjeto['especificacao']['type'])
         {
             $diferencas[$colunaObjeto['nomeTratado']]['de'] = $colunaTabela['type'];
             $diferencas[$colunaObjeto['nomeTratado']]['para'] = $colunaObjeto['especificacao']['type'];
@@ -353,7 +351,7 @@ class DatabaseSetup
 
     public function inserirColuna(string $tabela, string $coluna, array $especificacao):bool
     {
-        $especificacao = $this->tratarColuna($coluna, $especificacao);
+        $especificacao = $this->tratarEspecificacao($especificacao);
         $schemaManager = $this->conn->createSchemaManager();
         $newColumnType = Type::getType($especificacao[0]['type']); // ou use o tipo de dado desejado, e.g., 'integer'
         $newColumnOptions = $especificacao[1];

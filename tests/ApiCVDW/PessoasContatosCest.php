@@ -9,7 +9,7 @@ use PHPUnit\Framework\Assert;
 
 class PessoasContatosCest extends Common
 {
-    public function getPessoasContatos(ApiTester $I)
+    public function getPessoasContatos(ApiTester $i)
     {
         
         sleep(3);
@@ -24,7 +24,7 @@ class PessoasContatosCest extends Common
             'dados' => 'array'
         ];
 
-        $I->sendGet('/pessoas/contatos', $bodyContent);
+        $i->sendGet('/pessoas/contatos', $bodyContent);
 
         $endTime = time();
         $duration = $endTime - $startTime;
@@ -34,20 +34,20 @@ class PessoasContatosCest extends Common
             Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
         }
 
-        $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseIsJson();
-        $I->seeResponseMatchesJsonType($responseContent);
+        $i->seeResponseCodeIs(HttpCode::OK);
+        $i->seeResponseIsJson();
+        $i->seeResponseMatchesJsonType($responseContent);
 
-        $primeiraLinhaDados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
+        $primeiraLinhaDados = $i->grabDataFromResponseByJsonPath('$.dados[0]');
         codecept_debug("Referência do primeiro item: " . $primeiraLinhaDados[0]['referencia']);
         if(is_array($primeiraLinhaDados[0])){
-            $referencia_data = $I->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
+            $referencia_data = $i->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
-            $I->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
+            $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
         // Estrutura de 'dados[0]'
         /*
-        $I->seeResponseMatchesJsonType([
+        $i->seeResponseMatchesJsonType([
             'referencia' => 'string',
             'idpessoa_int' => 'string|null',
             'idpessoa' => 'integer|null',
@@ -79,7 +79,7 @@ class PessoasContatosCest extends Common
 
     }
 
-    public function getPessoasContatosComDataReferencia(ApiTester $I)
+    public function getPessoasContatosComDataReferencia(ApiTester $i)
     {
         
         sleep(3);
@@ -101,7 +101,7 @@ class PessoasContatosCest extends Common
             'dados' => 'array'
         ];
 
-        $I->sendGet('/pessoas/contatos', $bodyContent);
+        $i->sendGet('/pessoas/contatos', $bodyContent);
 
         $endTime = time();
         $duration = $endTime - $startTime;
@@ -111,13 +111,13 @@ class PessoasContatosCest extends Common
             Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
         }
 
-        $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseIsJson();
-        $I->seeResponseMatchesJsonType($responseContent);
+        $i->seeResponseCodeIs(HttpCode::OK);
+        $i->seeResponseIsJson();
+        $i->seeResponseMatchesJsonType($responseContent);
 
-        $primeiraLinhaDados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
+        $primeiraLinhaDados = $i->grabDataFromResponseByJsonPath('$.dados[0]');
         if(is_array($primeiraLinhaDados[0])){
-            $referencia_data = $I->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
+            $referencia_data = $i->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
 
             // verifica se $referencia_data[0] é maior que $formattedDate
             $timestamp_referencia = strtotime($referencia_data[0]);
@@ -135,7 +135,7 @@ class PessoasContatosCest extends Common
             }
 
             // Agora, compara os timestamps
-            //$I->assertTrue($timestamp_referencia >= $timestamp_filtro);
+            //$i->assertTrue($timestamp_referencia >= $timestamp_filtro);
 
         }
 

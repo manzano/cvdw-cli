@@ -18,6 +18,7 @@ class AmbientesCvdwTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
+        $this->removeArquivosTEST();
     }
 
     public function testAmbientePadrao()
@@ -38,7 +39,7 @@ class AmbientesCvdwTest extends \Codeception\Test\Unit
 
     public function testAmbienteNovo()
     {
-        $this->chaveAmbiente = "TEST_".md5(uniqid(rand(), true));
+        $this->chaveAmbiente = "TEST_".hash("sha512", uniqid(random_int(0, 99)));
         codecept_debug('Chave: ' . $this->chaveAmbiente);
 
         $this->ambienteObj = new Ambientes($this->chaveAmbiente);

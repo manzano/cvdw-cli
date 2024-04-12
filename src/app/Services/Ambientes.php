@@ -40,7 +40,7 @@ class Ambientes
         $envVars = $this->getEnvDir();
         if (!file_exists($envVars)) {
             file_put_contents($envVars, '');
-            chmod($envVars, 0755);
+            //chmod($envVars, 0755);
             $this->salvarEnv();
         }
         $dotenv = new \Symfony\Component\Dotenv\Dotenv();

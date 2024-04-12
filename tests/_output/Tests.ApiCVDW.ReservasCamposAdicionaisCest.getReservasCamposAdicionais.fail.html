@@ -1,0 +1,132 @@
+Ocorreu um erro ao tentar executar essa ação. Tente novamente e caso o erro persista entre em contato com o administrador do sistema.
+<html>
+<head>
+<title>OPS!</title>
+</head>
+<body>
+<table style="background-color: #DDDDDD; border: 1px solid #DDDDDD;" align="center" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+    	<td colspan="4" style="background-color: #DDDDDD;" valign="middle" align="center" bgcolor="#DDDDDD" height="45">&nbsp;</td>
+	</tr>
+    <tr>
+    	<td style="background-color: #FFFFFF; padding: 0pt 0pt 2px;" align="center">
+        	<table cellpadding="8" cellspacing="1">
+            	<tr>
+                	<td><img src="localhost.cvcrm.com.br/assets/img/logo_empresa.png" border="0" /></td>
+                    <td>
+                    	<span style="color:#3477B6;font-family:Calibri,Verdana,Geneva,sans-serif;text-transform:uppercase;font-size:30px;font-weight:bold">OPS!</span>
+                      	<br>
+                      	<span style="color:#BFBFBF;font-family:Calibri,Verdana,Geneva,sans-serif;text-transform:uppercase;font-size:12px;">O CONSTRUTOR DE VENDAS [ALFAMA WEB] TRABALHOU DE FORMA INESPERADA!</span>
+                    </td>
+                </tr>
+           </table>
+        </td>
+	</tr>
+    <tr>
+    	<td colspan="4" align="center" bgcolor="#FFFFFF">
+        	<table align="center" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0">
+            	<tr>
+                	<td colspan="2" height="30">
+                    	<table border="0" align="left" cellpadding="8" cellspacing="0" bgcolor="#FFFFFF">
+                        	<tr>
+                                <td style="color:#BFBFBF;font-family:Calibri,Verdana,Geneva,sans-serif;font-size:12px;">Segue abaixo as informa&ccedil;&otilde;es do erro.</td>
+                            </tr>
+                       	</table>
+                    </td>
+                </tr>
+                <tr valign="top" align="left">
+                	<td>
+                    	<table border="0" align="center" cellpadding="8" cellspacing="0">
+                        	<tr>
+                            	<td align="left" bgcolor="#FFFFFF">
+                                	<table cellpadding="8" cellspacing="1" bgcolor="#CCCCCC">
+                                  		<tr>
+                                    		<td colspan="2" bgcolor="#E4E4E4" align="center">INFOMAÇÕES</td>
+                                  		</tr>
+                                        <tr>
+                                            <td bgcolor="#F4F4F4">VARIÁVEL</td>
+                                            <td bgcolor="#F4F4F4">VALOR</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>DATA</strong></td>
+                                            <td bgcolor="#FFFFFF">14/03/2024 14:44:55</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>ERRO MYSQL</strong></td>
+                                            <td bgcolor="#FFFFFF">An exception occurred while executing a query: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'cav.data_modificacao' in 'field list'</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>HTTP_REFERER</strong></td>
+                                            <td bgcolor="#FFFFFF"></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>SCRIPT_NAME</strong></td>
+                                            <td bgcolor="#FFFFFF">/api/index.php</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>REQUEST_URI</strong></td>
+                                            <td bgcolor="#FFFFFF">/api/v1/cvdw/reservas/campos-adicionais?pagina=1&registros=500</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>SQL</strong></td>
+                                            <td bgcolor="#FFFFFF">SELECT COUNT(*) as total FROM (SELECT 
+                    cav.idcampo_valores as 'referencia',
+                    IF(cav.data_modificacao > cav.data_cad, cav.data_modificacao, cav.data_cad) as 'referencia_data',
+                    ca.ativo,
+                    cav.idfuncionalidade as idreserva,
+                    
+                ca.idcampo,
+                cav.data_cad,
+                ca.nome,
+                ca.nome_referencia,
+                cav.valor,
+                ca.tipo,
+                ca.funcionalidade
+            
+                 FROM campos_adicionais_valores cav INNER JOIN campos_adicionais ca ON ca.idcampo = cav.idcampo INNER JOIN campos_adicionais_funcionalidades caf ON ca.idcampo = caf.idcampo INNER JOIN reservas re ON re.idreserva = cav.idfuncionalidade WHERE ca.funcionalidade LIKE "%reserva%" UNION SELECT 
+                    cav.idreservacontratocampoadicional as 'referencia',
+                    IF(cav.data_modificacao > cav.data_cad, cav.data_modificacao, cav.data_cad) as 'referencia_data',
+                    ca.ativo,
+                    cav.idreserva as idreserva,
+                    
+                ca.idcampo,
+                cav.data_cad,
+                ca.nome,
+                ca.nome_referencia,
+                cav.valor,
+                ca.tipo,
+                ca.funcionalidade
+            
+                 FROM reservas_contrato_campos_adicionais cav INNER JOIN campos_adicionais ca ON ca.nome_referencia = cav.nome_referencia INNER JOIN reservas re ON re.idreserva = cav.idreserva WHERE ca.funcionalidade LIKE "%reserva%") c</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>SCRIPT_FILENAME</strong></td>
+                                            <td bgcolor="#FFFFFF">/Users/manzano/Servidor/CV-Aplicacao/app/api/index.php</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>SESSION</strong></td>
+                                            <td bgcolor="#FFFFFF"> verificarIntegracoes ==> sienge => Array <br> verificarIntegracoes ==> bexs => Array <br> verificarIntegracoes ==> uau => Array <br> verificarIntegracoes ==> mega => Array <br> verificarIntegracoes ==> informakon => Array <br> verificarIntegracoes ==> docusign => Array <br> verificarIntegracoes ==> clicksign => Array <br></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>POST</strong></td>
+                                            <td bgcolor="#FFFFFF"></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>GET</strong></td>
+                                            <td bgcolor="#FFFFFF"> pagina => 1  <br> registros => 500  <br></td>
+                                        </tr>
+                                	</table>
+                             	</td>
+                           	</tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="background-color: #DDDDDD;" valign="middle" align="center" bgcolor="#DDDDDD" height="45">&nbsp;</td>
+    </tr>
+</table>
+</body>
+</html>

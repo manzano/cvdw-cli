@@ -21,7 +21,7 @@ class LogCvdwTest extends \Codeception\Test\Unit
     {
         $this->logObj = new Log($this->arquivoLog);
         // Gera uma chave aleatória para testar a escrita no log
-        $this->chaveLog = md5(uniqid(rand(), true));
+        $this->chaveLog = hash("sha512", uniqid(random_int(0, 99)));
     }
 
     public function testLog()

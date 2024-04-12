@@ -1,0 +1,143 @@
+Ocorreu um erro ao tentar executar essa ação. Tente novamente e caso o erro persista entre em contato com o administrador do sistema.
+<html>
+<head>
+<title>OPS!</title>
+</head>
+<body>
+<table style="background-color: #DDDDDD; border: 1px solid #DDDDDD;" align="center" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+    	<td colspan="4" style="background-color: #DDDDDD;" valign="middle" align="center" bgcolor="#DDDDDD" height="45">&nbsp;</td>
+	</tr>
+    <tr>
+    	<td style="background-color: #FFFFFF; padding: 0pt 0pt 2px;" align="center">
+        	<table cellpadding="8" cellspacing="1">
+            	<tr>
+                	<td><img src="localhost.cvcrm.com.br/assets/img/logo_empresa.png" border="0" /></td>
+                    <td>
+                    	<span style="color:#3477B6;font-family:Calibri,Verdana,Geneva,sans-serif;text-transform:uppercase;font-size:30px;font-weight:bold">OPS!</span>
+                      	<br>
+                      	<span style="color:#BFBFBF;font-family:Calibri,Verdana,Geneva,sans-serif;text-transform:uppercase;font-size:12px;">O CONSTRUTOR DE VENDAS [ALFAMA WEB] TRABALHOU DE FORMA INESPERADA!</span>
+                    </td>
+                </tr>
+           </table>
+        </td>
+	</tr>
+    <tr>
+    	<td colspan="4" align="center" bgcolor="#FFFFFF">
+        	<table align="center" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0">
+            	<tr>
+                	<td colspan="2" height="30">
+                    	<table border="0" align="left" cellpadding="8" cellspacing="0" bgcolor="#FFFFFF">
+                        	<tr>
+                                <td style="color:#BFBFBF;font-family:Calibri,Verdana,Geneva,sans-serif;font-size:12px;">Segue abaixo as informa&ccedil;&otilde;es do erro.</td>
+                            </tr>
+                       	</table>
+                    </td>
+                </tr>
+                <tr valign="top" align="left">
+                	<td>
+                    	<table border="0" align="center" cellpadding="8" cellspacing="0">
+                        	<tr>
+                            	<td align="left" bgcolor="#FFFFFF">
+                                	<table cellpadding="8" cellspacing="1" bgcolor="#CCCCCC">
+                                  		<tr>
+                                    		<td colspan="2" bgcolor="#E4E4E4" align="center">INFOMAÇÕES</td>
+                                  		</tr>
+                                        <tr>
+                                            <td bgcolor="#F4F4F4">VARIÁVEL</td>
+                                            <td bgcolor="#F4F4F4">VALOR</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>DATA</strong></td>
+                                            <td bgcolor="#FFFFFF">15/03/2024 18:11:23</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>ERRO MYSQL</strong></td>
+                                            <td bgcolor="#FFFFFF">An exception occurred while executing a query: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'av.data_modificacao' in 'field list'</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>HTTP_REFERER</strong></td>
+                                            <td bgcolor="#FFFFFF"></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>SCRIPT_NAME</strong></td>
+                                            <td bgcolor="#FFFFFF">/api/index.php</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>REQUEST_URI</strong></td>
+                                            <td bgcolor="#FFFFFF">/api/v1/cvdw/agendamentos/vistorias?pagina=1&registros=1</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>SQL</strong></td>
+                                            <td bgcolor="#FFFFFF">SELECT av.idvistoria as referencia,
+            IF(av.data_modificacao > av.data_cad, av.data_modificacao, av.data_cad) as referencia_data,
+            av.ativo,
+            av.idvistoria,
+            av.idvistoria_pai,
+            e.idempreendimento AS idempreendimento,
+            e.nome AS empreendimento,
+            e.codigointerno AS codigointerno_empreendimento,
+            et.nome AS etapa,
+            b.nome AS bloco,
+            u.nome AS unidade,
+            u.idunidade,
+            p.nome AS cliente,
+            p.idpessoa AS idcliente,
+            p.cep AS cep_cliente,
+            av.data_agendamento,
+            avh.hora as horario,
+            usu.nome AS vistoriador,
+            (
+                CASE
+                    WHEN av.idvistoria_pai IS NOT NULL THEN 'Revistoria'
+                    WHEN a.tipo = 'VIST' THEN 'Vistoria'
+                END
+            ) AS tipo,
+            av.situacao,
+            av.quitado AS quitado,
+            av.chave_liberada AS chave_liberada,
+            av.chave_entregue AS chave_entregue,
+            (
+                SELECT
+                    idreserva
+                FROM
+                    reservas
+                WHERE
+                    idunidade = u.idunidade
+                    AND ativo = 'S'
+                ORDER BY
+                    data_cad DESC
+                LIMIT 1
+            ) AS idreserva FROM agendamentos_vistorias av INNER JOIN agendamentos a ON av.idagendamento = a.idagendamento AND a.ativo = :sim INNER JOIN empreendimentos_unidades u ON u.idunidade = av.idunidade AND u.ativo = :sim LEFT JOIN pessoas p ON p.idpessoa = av.idpessoa AND p.ativo = :sim LEFT JOIN agendamentos_vistoriadores avist ON avist.idagendamento = av.idagendamento AND avist.idusuario = av.idusuario LEFT JOIN empreendimentos_blocos b ON u.idbloco = b.idbloco AND b.ativo = :sim LEFT JOIN empreendimentos_etapas et ON b.idetapa = et.idetapa AND et.ativo = :sim LEFT JOIN empreendimentos e ON et.idempreendimento = e.idempreendimento AND e.ativo = :sim LEFT JOIN usuarios_adm usu ON usu.idusuario = avist.idusuario LEFT JOIN agendamentos_vistoriadores_horarios avh ON avh.idvistoriador = avist.idvistoriador AND avh.idhorario = av.idhorario WHERE (av.ativo = :sim) AND ((SELECT MAX(pp.data_cad) FROM agendamentos_vistorias pp WHERE pp.idunidade = u.idunidade) OR (av.data_cad IS NULL)) GROUP BY av.idvistoria ORDER BY referencia_data ASC LIMIT 30</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>SCRIPT_FILENAME</strong></td>
+                                            <td bgcolor="#FFFFFF">/Users/manzano/Servidor/CV-Aplicacao/app/api/index.php</td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>SESSION</strong></td>
+                                            <td bgcolor="#FFFFFF"> verificarIntegracoes ==> sienge => Array <br> verificarIntegracoes ==> bexs => Array <br> verificarIntegracoes ==> uau => Array <br> verificarIntegracoes ==> mega => Array <br> verificarIntegracoes ==> informakon => Array <br> verificarIntegracoes ==> docusign => Array <br> verificarIntegracoes ==> clicksign => Array <br></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>POST</strong></td>
+                                            <td bgcolor="#FFFFFF"></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#FFFFFF"><strong>GET</strong></td>
+                                            <td bgcolor="#FFFFFF"> pagina => 1  <br> registros => 1  <br></td>
+                                        </tr>
+                                	</table>
+                             	</td>
+                           	</tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="background-color: #DDDDDD;" valign="middle" align="center" bgcolor="#DDDDDD" height="45">&nbsp;</td>
+    </tr>
+</table>
+</body>
+</html>

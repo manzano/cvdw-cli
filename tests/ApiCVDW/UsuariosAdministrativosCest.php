@@ -9,7 +9,7 @@ use PHPUnit\Framework\Assert;
 
 class UsuariosAdministrativosCest extends Common
 {
-    public function getUsuariosAdministrativos(ApiTester $I)
+    public function getUsuariosAdministrativos(ApiTester $i)
     {
         
         sleep(3);
@@ -24,7 +24,7 @@ class UsuariosAdministrativosCest extends Common
             'dados' => 'array'
         ];
 
-        $I->sendGet('/usuarios_administrativos', $bodyContent);
+        $i->sendGet('/usuarios_administrativos', $bodyContent);
 
         $endTime = time();
         $duration = $endTime - $startTime;
@@ -34,20 +34,20 @@ class UsuariosAdministrativosCest extends Common
             Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
         }
 
-        $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseIsJson();
-        $I->seeResponseMatchesJsonType($responseContent);
+        $i->seeResponseCodeIs(HttpCode::OK);
+        $i->seeResponseIsJson();
+        $i->seeResponseMatchesJsonType($responseContent);
 
-        $primeiraLinhaDados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
+        $primeiraLinhaDados = $i->grabDataFromResponseByJsonPath('$.dados[0]');
         codecept_debug("Referência do primeiro item: " . $primeiraLinhaDados[0]['referencia']);
         if(is_array($primeiraLinhaDados[0])){
-            $referencia_data = $I->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
+            $referencia_data = $i->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
-            $I->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
+            $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
         // Estrutura de 'dados[0]'
         /*
-        $I->seeResponseMatchesJsonType([
+        $i->seeResponseMatchesJsonType([
             'referencia' => 'string',
             'idusuario' => 'integer|null',
             'ativo' => 'string|null',
@@ -59,7 +59,7 @@ class UsuariosAdministrativosCest extends Common
 
     }
 
-    public function getUsuariosAdministrativosComDataReferencia(ApiTester $I)
+    public function getUsuariosAdministrativosComDataReferencia(ApiTester $i)
     {
         
         sleep(3);
@@ -81,7 +81,7 @@ class UsuariosAdministrativosCest extends Common
             'dados' => 'array'
         ];
 
-        $I->sendGet('/usuarios_administrativos', $bodyContent);
+        $i->sendGet('/usuarios_administrativos', $bodyContent);
 
         $endTime = time();
         $duration = $endTime - $startTime;
@@ -91,13 +91,13 @@ class UsuariosAdministrativosCest extends Common
             Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
         }
 
-        $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseIsJson();
-        $I->seeResponseMatchesJsonType($responseContent);
+        $i->seeResponseCodeIs(HttpCode::OK);
+        $i->seeResponseIsJson();
+        $i->seeResponseMatchesJsonType($responseContent);
 
-        $primeiraLinhaDados = $I->grabDataFromResponseByJsonPath('$.dados[0]');
+        $primeiraLinhaDados = $i->grabDataFromResponseByJsonPath('$.dados[0]');
         if(is_array($primeiraLinhaDados[0])){
-            $referencia_data = $I->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
+            $referencia_data = $i->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
 
             // verifica se $referencia_data[0] é maior que $formattedDate
             $timestamp_referencia = strtotime($referencia_data[0]);
@@ -115,7 +115,7 @@ class UsuariosAdministrativosCest extends Common
             }
 
             // Agora, compara os timestamps
-            //$I->assertTrue($timestamp_referencia >= $timestamp_filtro);
+            //$i->assertTrue($timestamp_referencia >= $timestamp_filtro);
 
         }
 
