@@ -28,8 +28,13 @@ jobs:
           ${{ runner.os }}-php-
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
+    - name: Criando o .env file
+      run: |
+        echo "API_KEY=${{ secrets.ENV }}" >> src/envs/.env
+    - name: Check .env contents
+      run: cat src/envs/.env
     - name: Run test suite
-      run: php vendor/bin/codecept run --coverage --coverage-xml Unit
+      run: php vendor/bin/codecept run Unit --coverage --coverage-xml
       # run: composer run-script test
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1
