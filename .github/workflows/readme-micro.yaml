@@ -15,7 +15,7 @@ jobs:
 
       # Run GitHub Action to sync all OpenAPI files in the repo
       - name: GitHub Action
-        uses: readmeio/readme-micro@v4
+        uses: readmeio/readme-micro@v2.6.0
         
         with:
           readme-micro: "'**/cvdw.yaml' --key=${{ secrets.README_MICRO_SECRET }}"
