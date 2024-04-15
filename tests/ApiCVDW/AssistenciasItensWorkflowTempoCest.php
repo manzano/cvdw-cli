@@ -45,19 +45,6 @@ class AssistenciasItensWorkflowTempoCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idtempo' => 'integer|null',
-            'idassistencia_item' => 'integer|null',
-            'idsituacao' => 'integer|null',
-            'situacao' => 'string|null',
-            'sigla' => 'string|null',
-            'tempo' => 'integer|null',
-            'data_cad' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

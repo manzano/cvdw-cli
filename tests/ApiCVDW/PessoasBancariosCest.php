@@ -45,24 +45,6 @@ class PessoasBancariosCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idpessoa' => 'string|null',
-            'idpessoa_int' => 'string|null',
-            'banco' => 'string|null',
-            'banco_nome' => 'string|null',
-            'banco_agencia' => 'string|null',
-            'banco_conta' => 'string|null',
-            'banco_nome_titular' => 'string|null',
-            'banco_tipo_doc' => 'string|null',
-            'banco_cpf_titular' => 'string|null',
-            'banco_cnpj_titular' => 'string|null',
-            'banco_chave_pix' => 'string|null',
-            'banco_observacoes' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

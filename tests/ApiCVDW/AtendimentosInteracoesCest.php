@@ -45,22 +45,6 @@ class AtendimentosInteracoesCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idinteracao' => 'integer|null',
-            'idatendimento' => 'integer|null',
-            'idusuario' => 'integer|null',
-            'usuario' => 'string|null',
-            'data_cad' => 'string|null',
-            'ativo' => 'string|null',
-            'descricao' => 'text|null',
-            'idcanal' => 'integer|null',
-            'canal' => 'string|null',
-            'data_modificacao' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

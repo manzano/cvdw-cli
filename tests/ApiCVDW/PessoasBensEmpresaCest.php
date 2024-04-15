@@ -45,15 +45,6 @@ class PessoasBensEmpresaCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idpessoa' => 'integer|null',
-            'idpessoa_int' => 'string|null',
-            'bens_empresa' => 'array|null'
-        ], '$.dados[0]');
-        */
 
     }
 

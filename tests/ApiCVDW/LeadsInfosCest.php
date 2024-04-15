@@ -45,18 +45,6 @@ class LeadsInfosCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idlead' => 'integer|null',
-            'data_ultima_alteracao' => 'string|null',
-            'tags' => 'text|null',
-            'origens' => 'string|null',
-            'conversoes' => 'string|null',
-            'responsavel' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

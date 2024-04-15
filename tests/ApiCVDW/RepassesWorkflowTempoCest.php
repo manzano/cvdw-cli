@@ -45,18 +45,6 @@ class RepassesWorkflowTempoCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idtempo' => 'integer|null',
-            'idrepasse' => 'integer|null',
-            'idsituacao' => 'integer|null',
-            'nome' => 'string|null',
-            'sigla' => 'string|null',
-            'tempo' => 'integer|null'
-        ], '$.dados[0]');
-        */
 
     }
 

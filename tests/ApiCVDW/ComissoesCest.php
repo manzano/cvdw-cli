@@ -45,33 +45,6 @@ class ComissoesCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'numero' => 'integer|null',
-            'situacao' => 'string|null',
-            'idsituacao' => 'integer|null',
-            'idreserva' => 'string|null',
-            'corretor' => 'string|null',
-            'imobiliaria' => 'string|null',
-            'empreendimento' => 'string|null',
-            'bloco' => 'string|null',
-            'etapa' => 'string|null',
-            'unidade' => 'string|null',
-            'regiao' => 'string|null',
-            'cliente' => 'string|null',
-            'cep_cliente' => 'string|null',
-            'valor_contrato' => 'string|null',
-            'porcentagem_comissao' => 'integer|null',
-            'valor_comissao' => 'integer|null',
-            'valor_comissao_apagar' => 'integer|null',
-            'valor_pagamento' => 'integer|null',
-            'nota_fiscal' => 'string|null',
-            'data_pagamento' => 'string|null',
-            'data_cad' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

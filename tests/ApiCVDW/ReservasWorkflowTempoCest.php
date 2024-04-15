@@ -45,20 +45,6 @@ class ReservasWorkflowTempoCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idcampo' => 'integer|null',
-            'idreserva' => 'integer|null',
-            'data_cad' => 'string|null',
-            'nome' => 'string|null',
-            'nome_referencia' => 'string|null',
-            'valor' => 'string|null',
-            'tipo' => 'string|null',
-            'funcionalidade' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

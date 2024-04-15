@@ -45,26 +45,6 @@ class LeadsInteracoesCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idinteracao' => 'integer|null',
-            'idlead' => 'integer|null',
-            'data_cad' => 'string|null',
-            'idcorretor' => 'integer|null',
-            'corretor' => 'string|null',
-            'idimobiliaria' => 'integer|null',
-            'imobiliaria' => 'string|null',
-            'tipo' => 'string|null',
-            'situacao' => 'string|null',
-            'descricao' => 'text|null',
-            'enviar_corretor' => 'string|null',
-            'enviar_imobiliaria' => 'string|null',
-            'enviar_cliente' => 'string|null',
-            'gestor_interacao' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

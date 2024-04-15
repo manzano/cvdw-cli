@@ -45,22 +45,6 @@ class DemandasCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'iddemanda' => 'integer|null',
-            'demanda' => 'string|null',
-            'data_cad' => 'string|null',
-            'data_encerramento' => 'string|null',
-            'data_conclusao' => 'string|null',
-            'agencia' => 'string|null',
-            'data_situacao_finalizada' => 'string|null',
-            'situacao_demanda' => 'string|null',
-            'empreendimento' => 'string|null',
-            'data_ult_situacao' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

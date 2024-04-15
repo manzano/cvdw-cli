@@ -45,23 +45,6 @@ class UnidadesPrecosCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idunidade' => 'integer|null',
-            'unidade' => 'string|null',
-            'empreendimento' => 'string|null',
-            'idempreendimento' => 'integer|null',
-            'etapa' => 'string|null',
-            'idetapa' => 'integer|null',
-            'bloco' => 'string|null',
-            'idbloco' => 'integer|null',
-            'valor' => 'string|null',
-            'idtabela' => 'integer|null',
-            'valor_avaliacao' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

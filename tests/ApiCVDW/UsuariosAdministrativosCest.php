@@ -45,17 +45,6 @@ class UsuariosAdministrativosCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idusuario' => 'integer|null',
-            'ativo' => 'string|null',
-            'tipo_login' => 'string|null',
-            'usuario' => 'string|null',
-            'motivo_bloqueiologin' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

@@ -45,20 +45,6 @@ class ReservasAssociadosCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idassociado' => 'integer|null',
-            'idreserva' => 'integer|null',
-            'idpessoa' => 'integer|null',
-            'data_cad' => 'string|null',
-            'nome' => 'string|null',
-            'documento' => 'string|null',
-            'renda_familiar' => 'integer|null',
-            'tipo_associacao' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

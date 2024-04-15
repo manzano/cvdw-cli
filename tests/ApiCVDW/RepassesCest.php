@@ -45,53 +45,6 @@ class RepassesCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idrepasse' => 'integer|null',
-            'idsituacao' => 'integer|null',
-            'situacao' => 'string|null',
-            'reserva' => 'integer|null',
-            'idempreendimento' => 'integer|null',
-            'codigointerno_empreendimento' => 'string|null',
-            'empreendimento' => 'string|null',
-            'etapa' => 'string|null',
-            'bloco' => 'string|null',
-            'unidade' => 'string|null',
-            'regiao' => 'string|null',
-            'idcliente' => 'integer|null',
-            'documento_cliente' => 'string|null',
-            'cliente' => 'string|null',
-            'cep_cliente' => 'string|null',
-            'parcela' => 'string|null',
-            'idcontrato' => 'string|null',
-            'contrato' => 'string|null',
-            'valor_previsto' => 'integer|null',
-            'parcela_conclusao' => 'integer|null',
-            'saldo_devedor' => 'integer|null',
-            'valor_divida' => 'integer|null',
-            'valor_subsidio' => 'integer|null',
-            'valor_fgts' => 'integer|null',
-            'valor_financiado' => 'integer|null',
-            'numero_contrato' => 'string|null',
-            'data_registro' => 'string|null',
-            'correspondente' => 'string|null',
-            'banco' => 'string|null',
-            'agencia' => 'string|null',
-            'data_alteracao_status' => 'string|null',
-            'data_venda' => 'string|null',
-            'data_contrato_contabilizado' => 'string|null',
-            'data_assinatura_de_contrato' => 'string|null',
-            'idlead' => 'string|null',
-            'data_recurso_liberado' => 'string|null',
-            'data_sincronizacao' => 'string|null',
-            'data_cadastro' => 'string|null',
-            'idunidade' => 'string|null',
-            'data_modificacao' => 'string|null',
-            'campos_adicionais' => 'array|null'
-        ], '$.dados[0]');
-        */
 
     }
 

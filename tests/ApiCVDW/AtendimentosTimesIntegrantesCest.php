@@ -45,20 +45,6 @@ class AtendimentosTimesIntegrantesCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idintegrante' => 'integer|null',
-            'idtime' => 'integer|null',
-            'time' => 'string|null',
-            'idusuario' => 'string|null',
-            'usuario' => 'string|null',
-            'ativo' => 'string|null',
-            'data_cad' => 'string|null',
-            'data_modificacao' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

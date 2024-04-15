@@ -84,3 +84,10 @@
     }
 
     echo 'Arquivos gerados com sucesso!';
+
+// Estrutura de 'dados[0]'
+/*
+    $i->seeResponseMatchesJsonType([
+        {{RETORNO_DADOS}}
+    ], '$.dados[0]');
+*/

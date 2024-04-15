@@ -45,19 +45,6 @@ class LeadsGanhosCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idlead' => 'integer|null',
-            'data_ganho' => 'string|null',
-            'nome' => 'string|null',
-            'email' => 'string|null',
-            'telefone' => 'string|null',
-            'painel_usuario' => 'string|null',
-            'idusuario' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

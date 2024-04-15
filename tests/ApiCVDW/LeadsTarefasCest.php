@@ -45,23 +45,6 @@ class LeadsTarefasCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idtarefa' => 'integer|null',
-            'idinteracao' => 'integer|null',
-            'idlead' => 'integer|null',
-            'data_cad' => 'string|null',
-            'data' => 'string|null',
-            'idresponsavel' => 'integer|null',
-            'responsavel' => 'string|null',
-            'tipo_responsavel' => 'string|null',
-            'situacao' => 'string|null',
-            'tipo_interacao' => 'string|null',
-            'funcionalidade' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

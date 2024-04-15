@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout this repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
 
       # Run GitHub Action to sync all OpenAPI files in the repo
       - name: GitHub Action
-        uses: readmeio/readme-micro@v2
+        uses: readmeio/readme-micro@v4
         
         with:
           readme-micro: "'**/cvdw.yaml' --key=${{ secrets.README_MICRO_SECRET }}"

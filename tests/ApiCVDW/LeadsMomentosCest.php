@@ -45,20 +45,6 @@ class LeadsMomentosCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idmomento_lead' => 'integer|null',
-            'idlead' => 'integer|null',
-            'idusuario' => 'integer|null',
-            'nome_usuario' => 'string|null',
-            'painel_usuario' => 'string|null',
-            'momentos_lead' => 'string|null',
-            'data_cad' => 'string|null',
-            'data_sincronizacao' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 

@@ -45,30 +45,6 @@ class ReservasComissoesProgramacaoCest extends Common
             codecept_debug("Data do primeiro item: " . $referencia_data[0]);
             $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
         }
-        // Estrutura de 'dados[0]'
-        /*
-        $i->seeResponseMatchesJsonType([
-            'referencia' => 'string',
-            'idprogramacao' => 'integer|null',
-            'idreserva' => 'integer|null',
-            'idreservascondicoes' => 'integer|null',
-            'idcondicoes_parcelas' => 'integer|null',
-            'idregra' => 'integer|null',
-            'contrato' => 'string|null',
-            'parcela' => 'integer|null',
-            'para' => 'string|null',
-            'quem' => 'integer|null',
-            'valor' => 'integer|null',
-            'data_previsao' => 'string|null',
-            'data_previsao_pagadoria' => 'string|null',
-            'forma_pagamento' => 'string|null',
-            'idgestaocontrato_lancamento' => 'integer|null',
-            'idreserva_comissao_parcela_lancamento' => 'integer|null',
-            'idlancamento' => 'integer|null',
-            'idprogramacao_lancamento' => 'integer|null',
-            'data_cad' => 'string|null'
-        ], '$.dados[0]');
-        */
 
     }
 
