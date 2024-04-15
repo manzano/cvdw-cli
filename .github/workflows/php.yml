@@ -30,7 +30,7 @@ jobs:
       run: composer install --prefer-dist --no-progress
     - name: Criando o .env file
       run: |
-        echo "API_KEY=${{ secrets.ENV }}" >> src/envs/.env
+        echo "${{ secrets.ENV }}" >> src/envs/.env
     - name: Check .env contents
       run: cat src/envs/.env
     - name: Run test suite
