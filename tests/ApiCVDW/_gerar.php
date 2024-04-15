@@ -17,6 +17,12 @@
     }
 
     foreach ($files as $file) {
+
+        // Se $file for cvdw.yaml pulamos
+        if ($file == 'cvdw.yaml') {
+            continue;
+        }
+
         $path = $dir . '/' . $file;
         $info = pathinfo($path);
         if ($info['extension'] == 'yaml') {
