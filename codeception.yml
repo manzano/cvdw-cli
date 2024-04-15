@@ -5,6 +5,10 @@ paths:
     output: tests/_output
     data: tests/Support/Data
     support: tests/Support
+coverage:
+    enabled: true
+    include:
+        - src/*
 settings:
     shuffle: false
     lint: true

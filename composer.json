@@ -30,7 +30,6 @@
   "autoload": {
     "psr-4": {
       "Manzano\\CvdwCli\\": "src/app/"
-      
     },
     "files": [
       "src/app/Inc/Helper.php",
@@ -46,10 +45,8 @@
   },
   "scripts": {
     "test": [
-      "@clearCache",
-      "phpunit"
-    ],
-    "clearCache": "rm -rf .phpunit.cache"
+      "php vendor/bin/codecept run --coverage --coverage-xml Unit"
+    ]
   },
   "bin": [
     "app"

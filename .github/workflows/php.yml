@@ -29,7 +29,8 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
     - name: Run test suite
-      run: composer run-script test
+      run: php vendor/bin/codecept run --coverage --coverage-xml Unit
+      # run: composer run-script test
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1
       with:
