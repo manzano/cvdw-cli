@@ -98,7 +98,7 @@ class DatabaseSetup
             if (!$objeto) {
                 $this->io->error("O objeto {$objeto} não existe.");
             }
-            
+
             $tabelas[$key] = $objeto['nome'];
             // Verificar se há subtabelas no objeto
             foreach ($objeto["response"]["dados"] as $coluna => $valor) {
@@ -121,37 +121,10 @@ class DatabaseSetup
             $this->progressBar->setMessage('A tabela ' . $tabela . ' já existe');
             $this->progressBar->advance();
         } else {
-            $objetoObj = new Objeto($this->input, $this->output);
+            
             $schema = new Schema();
-            $tabelaObj = $schema->createTable("{$tabela}");
-            foreach ($colunas as $coluna => $especificacao) {
 
-                $tipoDeDados = $objetoObj->identificarTipoDeDados($especificacao);
-                if ($tipoDeDados == "TABELA") {
-                    continue;
-                }
-
-                $colunaTratada = $this->tratarEspecificacao($especificacao);
-                $especificacao = $colunaTratada[0];
-                $opcoes = $colunaTratada[1];
-
-                $nomeColuna = $this->tratarNomeColuna($coluna, $especificacao);
-
-                $tabelaObj->addColumn("{$nomeColuna}", $especificacao["type"], $opcoes);
-                if (
-                    "referencia" == $coluna ||
-                    (strpos($coluna, "id") !== false &&
-                        substr($coluna, 0, 2) == "id" &&
-                        $especificacao["type"] == "integer")
-                ) {
-                    $nomeIndice = $this->criarNomeIndice($nomeColuna);
-                    $tabelaObj->addIndex(array("{$nomeColuna}"), "{$nomeIndice}_idx");
-                }
-                if (strpos($coluna, "data") !== false) {
-                    $nomeIndice = $this->criarNomeIndice($nomeColuna);
-                    $tabelaObj->addIndex(array("{$nomeColuna}"), "{$nomeIndice}_idx");
-                }
-            }
+            $this->criarTabelaSchema($schema, $tabela, $colunas);
 
             $platform = $this->conn->getDatabasePlatform();
             $queries = $schema->toSql($platform);
@@ -172,19 +145,42 @@ class DatabaseSetup
                 }
             }
         }
-        
     }
 
-    private function criarNomeIndice(string $nomeCompleto) : string
+    private function criarTabelaSchema($schema, $tabela, $colunas)
     {
-        // Trunca o nome para 30 caracteres
+        $objetoObj = new Objeto($this->input, $this->output);
+        $tabelaObj = $schema->createTable("{$tabela}");
+        foreach ($colunas as $coluna => $especificacao) {
+            $tipoDeDados = $objetoObj->identificarTipoDeDados($especificacao);
+            if ($tipoDeDados == "TABELA") {
+                continue;
+            }
+            $colunaTratada = $this->tratarEspecificacao($especificacao);
+            $especificacao = $colunaTratada[0];
+            $opcoes = $colunaTratada[1];
+            $nomeColuna = $this->tratarNomeColuna($coluna, $especificacao);
+            $tabelaObj->addColumn("{$nomeColuna}", $especificacao["type"], $opcoes);
+            if (
+                "referencia" == $coluna ||
+                (strpos($coluna, "id") !== false &&
+                    substr($coluna, 0, 2) == "id" &&
+                    $especificacao["type"] == "integer")
+            ) {
+                $nomeIndice = $this->criarNomeIndice($nomeColuna);
+                $tabelaObj->addIndex(array("{$nomeColuna}"), "{$nomeIndice}_idx");
+            }
+            if (strpos($coluna, "data") !== false) {
+                $nomeIndice = $this->criarNomeIndice($nomeColuna);
+                $tabelaObj->addIndex(array("{$nomeColuna}"), "{$nomeIndice}_idx");
+            }
+        }
+    }
+
+    private function criarNomeIndice(string $nomeCompleto): string
+    {
         $nomeTruncado = substr($nomeCompleto, 0, 30);
-
-        // Gera um hash único de 6 caracteres
-        // Usando mt_rand para maior variedade e convertendo para base 36 para encurtar
         $hashUnico = substr(base_convert(random_int(0, 99), 10, 36), 0, 6);
-
-        // Combina o nome truncado com o hash único
         return $nomeTruncado . '_' . $hashUnico;
     }
 
@@ -218,14 +214,16 @@ class DatabaseSetup
         $nomeColuna = strtolower($nomeColuna);
         $nomeColuna = str_replace(' ', '_', $nomeColuna);
         $nomeColuna = str_replace('-', '_', $nomeColuna);
-        $caracteresNaoPermitidos = array('(', ')', '/', '?', '!', ';', ':', '.', ',', '\'', '"', '`', '´', '=', '+', '*', '&', '%', '$', '#', '@', '§', 'ª', 'º', '°', '¨', '~', '^', '>');
+        $caracteresNaoPermitidos = array('(', ')', '/', '?', '!', ';', ':', '.', ',', '\'', '"', '`',
+                                         '´', '=', '+', '*', '&', '%', '$', '#', '@', '§',
+                                         'ª', 'º', '°', '¨', '~', '^', '>');
         $nomeColuna = str_replace($caracteresNaoPermitidos, '', $nomeColuna);
         $nomeColuna = trim($nomeColuna);
 
-        if(isset($configuracao['prefixo'])){
+        if (isset($configuracao['prefixo'])) {
             $nomeColuna = $configuracao['prefixo'] . $nomeColuna;
         }
-        if(isset($configuracao['sufixo'])){
+        if (isset($configuracao['sufixo'])) {
             $nomeColuna = $nomeColuna . $configuracao['sufixo'];
         }
 
@@ -278,14 +276,14 @@ class DatabaseSetup
         $diferencas = array();
         $subtabelas = array();
 
-        foreach($colunasObjeto as $coluna => $especificacao){
+        foreach ($colunasObjeto as $coluna => $especificacao) {
 
             $especificacao['nomeTratado'] = $this->tratarNomeColuna($coluna, $especificacao);
             $colunasObjetoTratado[$especificacao['nomeTratado']] = strtolower($coluna);
             $colunaBanco = strtolower($especificacao['nomeTratado']);
 
             $tipoDeDados = $objetoObj->identificarTipoDeDados($especificacao);
-            if($tipoDeDados == "TABELA"){
+            if ($tipoDeDados == "TABELA") {
                 // Adicionar referência para a sub-tabela
                 $subtabela['nome'] = $tabela['nome'] . "_sub_" . $coluna;
                 $subtabela['objeto']['nome'] = $coluna;
@@ -295,30 +293,30 @@ class DatabaseSetup
                 $subtabelas[] = $subtabela;
                 continue;
             }
-            
+
             // Verificar se a coluna nao existe na tabela
-            
-            if(!array_key_exists($colunaBanco, $colunasTabela)){
+
+            if (!array_key_exists($colunaBanco, $colunasTabela)) {
                 $diferencas['add'][] = $especificacao;
                 $logs[] = "A coluna {$especificacao['nomeTratado']} não existe na tabela";
             } else {
-                
+
                 $especificacaoAux = $this->tratarEspecificacao($especificacao);
                 $especificacao = $especificacaoAux[0];
                 $especificacao['opcoes'] = $especificacaoAux[1];
-                
+
                 // Verificar se a coluna tem o mesmo tipo
                 $tipoBanco = $colunasTabela[$colunaBanco]->getType()->getName();
                 $tipoObjeto = $especificacao['type'];
-                if($tipoBanco != $tipoObjeto){
+                if ($tipoBanco != $tipoObjeto) {
                     $logs[] = "A coluna {$especificacao['nomeTratado']} tem tipo diferente ($tipoObjeto > $tipoBanco)";
                     $diferencas['change'][] = $especificacao;
                 }
             }
         }
-        foreach($colunasTabela as $coluna => $especificacao){
+        foreach ($colunasTabela as $coluna => $especificacao) {
             // Verificar se a coluna nao existe no objeto
-            if(!array_key_exists($coluna, $colunasObjetoTratado) ){
+            if (!array_key_exists($coluna, $colunasObjetoTratado)) {
                 $diferencas['remove'][] = $especificacao;
                 $logs[] = "A coluna {$coluna} não existe no objeto";
             }
@@ -331,8 +329,7 @@ class DatabaseSetup
     {
         $diferencas = array();
         // Verificar se a coluna tem o mesmo tipo
-        if ($colunaTabela['type'] != $colunaObjeto['especificacao']['type'])
-        {
+        if ($colunaTabela['type'] != $colunaObjeto['especificacao']['type']) {
             $diferencas[$colunaObjeto['nomeTratado']]['de'] = $colunaTabela['type'];
             $diferencas[$colunaObjeto['nomeTratado']]['para'] = $colunaObjeto['especificacao']['type'];
         }
@@ -349,7 +346,7 @@ class DatabaseSetup
         return $this->conn->executeQuery("DROP TABLE {$tabela}");
     }
 
-    public function inserirColuna(string $tabela, string $coluna, array $especificacao):bool
+    public function inserirColuna(string $tabela, string $coluna, array $especificacao): bool
     {
         $especificacao = $this->tratarEspecificacao($especificacao);
         $schemaManager = $this->conn->createSchemaManager();
@@ -370,9 +367,7 @@ class DatabaseSetup
     public function removerColuna(string $tabela, string $coluna): bool
     {
         $schemaManager = $this->conn->createSchemaManager();
-        // Prepare a coluna a ser removida (o tipo não é estritamente necessário aqui, mas é requerido pela assinatura do método)
         $columnToRemove = new Column($coluna, Type::getType('string'));
-        // Crie um objeto TableDiff para a tabela existente
         $tableDiff = new TableDiff($tabela, [], [], [$columnToRemove]);
         // Aplique as mudanças
         try {
@@ -398,6 +393,50 @@ class DatabaseSetup
         } catch (\Doctrine\DBAL\Exception $e) {
             echo "Erro ao tentar alterar a coluna: " . $e->getMessage();
             return false;
+        }
+    }
+
+    public function executarInserirColuna($tabela, $adicionar, $io): void
+    {
+        foreach ($adicionar as $estrutura) {
+            $adicionado = $this->inserirColuna($tabela, $estrutura['nomeTratado'], $estrutura);
+            if ($adicionado) {
+                $io->text('<bg=green>[OK]</>
+                                    Adicionando a coluna ' . $estrutura['nomeTratado']);
+            } else {
+                $io->text('<fg=white;bg=red>[PROBLEMA]</>
+                                    Não foi possível adicionar a coluna ' . $estrutura['nomeTratado']);
+            }
+        }
+    }
+
+    public function executarRemoverColuna($tabela, $remover, $io)
+    {
+        foreach ($remover as $estrutura) {
+            $coluna = $estrutura->getName();
+            $removido = $this->removerColuna($tabela, $coluna);
+            if ($removido) {
+                $io->text('<bg=green>[OK]</>
+                                     Removendo a coluna ' . $estrutura->getName());
+            } else {
+                $io->text('<fg=white;bg=red>[PROBLEMA]</>
+                                     Não foi possível remover a coluna ' . $estrutura->getName());
+            }
+        }
+    }
+
+    public function executarModificarColuna($tabela, $alterar, $io)
+    {
+        foreach ($alterar as $estrutura) {
+            $estrutura['opcoes']['type'] = $estrutura['type'];
+            $alterado = $this->alterarColuna($tabela, $estrutura['nomeTratado'], $estrutura['opcoes']);
+            if ($alterado) {
+                $io->text('<bg=green>[OK]</>
+                                  Alterando a coluna ' . $estrutura['nomeTratado']);
+            } else {
+                $io->text('<fg=white;bg=red>[PROBLEMA]</>
+                                  Não foi possível alterar a coluna ' . $estrutura['nomeTratado']);
+            }
         }
     }
 }

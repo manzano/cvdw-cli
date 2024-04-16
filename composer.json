@@ -33,7 +33,8 @@
     },
     "files": [
       "src/app/Inc/Helper.php",
-      "src/app/Inc/Conexao.php"
+      "src/app/Inc/Conexao.php",
+      "src/app/Inc/Exception.php"
     ]
   },
   "autoload-dev": {

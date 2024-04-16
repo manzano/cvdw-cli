@@ -18,6 +18,7 @@ use Manzano\CvdwCli\Services\Log;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Manzano\CvdwCli\Services\Monitor\Eventos;
 use Manzano\CvdwCli\Services\Ambientes;
+use Manzano\CvdwCli\CvdwException;
 
 #[AsCommand(
     name: 'executar',
@@ -44,6 +45,8 @@ class Executar extends Command
     protected $evento = 'Executar';
     protected $qtd = 500;
     protected $apartir = null;
+    
+    const OPCAO_SAIR = 'Sair (CTRL+C)';
 
     protected function configure()
     {
@@ -95,13 +98,10 @@ class Executar extends Command
         }
 
         if($input->getOption('apartir')) {
-            // Validar a data
             $this->apartir = trim($input->getOption('apartir'));
             if(!validarData($this->apartir)){
-                $output->writeln('<error>Data de referência informada ('.$this->apartir.') é inválida.</error>');
-                return Command::FAILURE;
+                throw new CvdwException('Data de referência informada ('.$this->apartir.') é inválida.');
             }
-            
         }
 
         $this->ambientesObj = new Ambientes($this->env);
@@ -137,10 +137,10 @@ class Executar extends Command
             'Listar todos os objetos disponíveis no CVDW-CLI',
             'Executar todos os objetos',
             'Executar um objeto especifico',
-            'Sair (CTRL+C)'
+            $this::OPCAO_SAIR
         ]);
 
-        if ($this->variaveisAmbiente['executar'] === 'Sair (CTRL+C)') {
+        if ($this->variaveisAmbiente['executar'] === $this::OPCAO_SAIR) {
             $io->text(['Até mais!', '']);
             return Command::SUCCESS;
         }
@@ -245,7 +245,6 @@ class Executar extends Command
                 $this->eventosObj->registrarEvento($this->evento, 'executar', $dados['nome']);
                 
                 $cvdw->processar($objeto, $this->qtd, $io, $this->apartir, $inputDataReferencia, $this->logObjeto);
-                //$this->limparTela();
             }
         } else {
             $io->error('Objeto não especificado.');
@@ -263,7 +262,7 @@ class Executar extends Command
         foreach ($objetosArray as $objeto => $dados) {
             $objetosOpcoes[] = $dados['nome'];
         }
-        $objetosOpcoes[] =  'Sair (CTRL+C)';
+        $objetosOpcoes[] =  $this::OPCAO_SAIR;
         $inputObjeto = $io->choice('Qual objeto deseja executar?', $objetosOpcoes);
 
         foreach ($objetosArray as $objeto => $dados) {
@@ -272,7 +271,7 @@ class Executar extends Command
             }
         }
 
-        if($inputObjeto == 'Sair (CTRL+C)') {
+        if($inputObjeto == $this::OPCAO_SAIR) {
             exit;
         }
 

@@ -47,6 +47,7 @@ class Configurar extends Command
     protected $evento = 'Configurar';
     public $envPath = __DIR__ . '/../envs';
     const VAMOS_LA = 'Vamos Lá!';
+    const QUER_TENTAR_NOVAMENTE = 'Quer tentar novamente?';
 
     protected function configure()
     {
@@ -69,10 +70,8 @@ class Configurar extends Command
     {
 
         $this->limparTela();
-
         $this->eventosObj = new Eventos();
         
-
         if ($input->getOption('setEnv')) {
             $this->env = $input->getOption('setEnv');
         }
@@ -216,7 +215,8 @@ class Configurar extends Command
         return true;
     }
 
-    private function cadastarAmbiente(){
+    private function cadastarAmbiente()
+    {
         $io = new CvdwSymfonyStyle($this->input, $this->output);
         $this->verificarAmbientePadrao($io);
         $io->text([
@@ -253,7 +253,8 @@ class Configurar extends Command
         return true;
     }
 
-    private function verificarAmbientePadrao($io): void{
+    private function verificarAmbientePadrao($io): void
+    {
         if($_ENV['CV_URL'] == '' && $this->env == null){
             $io->text('<fg=white;bg=red>[PROBLEMA]</> Você ainda não tem um ambiente padrão configurado!');
             $io->text([
@@ -279,28 +280,16 @@ class Configurar extends Command
         $http = new Http($this->input, $this->output, $io);
         $diferencasBanco = array();
 
-        $io->text([
-            $this::VAMOS_LA,
-            'Validando a instalação...',
-            ''
-        ]);
+        $io->text([$this::VAMOS_LA, 'Validando a instalação...', '' ]);
+        $validarObjetos = true;
 
-        // Validando conexão com a api do CVDW
-        $response = $http->pingAmbienteAutenticadoCVDW(
-            $_ENV['CV_URL'],
-            "/imobiliarias",
-            $_ENV['CV_EMAIL'],
-            $_ENV['CV_TOKEN']
-        );
-        if (isset($response['registros'])) {
+        if ($this->validarAmbiente($http)) {
             $io->text('<bg=green>[OK]</> Conexão com o CVDW está funcionando!');
         } else {
             $io->text('<fg=white;bg=red>[PROBLEMA]</> Não consegui acessar o ambiente do CVDW!');
             $validarObjetos = false;
         }
 
-        // Validar conexao com o banco de dados
-        $validarObjetos = true;
         $this->conn = conectarDB($this->input, $this->output, false);
         if($this->conn->isConnected()) {
             $io->text('<bg=green>[OK]</> Conexão com o banco de dados está funcionando!');
@@ -310,27 +299,19 @@ class Configurar extends Command
             $validarObjetos = false;
         }
         
-
-        // Validando objetos
         if(!$validarObjetos) {
             $io->note('Como o Banco ou Api não está acessível, não posso validar os objetos.');
         } else {
 
-            $io->text([
-                '',
-                'Agora vamos validar os objetos...',
-                ''
-            ]);
-
+            $io->text(['', 'Agora vamos validar os objetos...', '']);
             $bancoProblemas = false;
             $objetoObj = new Objeto($this->input, $this->output);
             $objetos = $objetoObj->retornarObjetos();
             foreach($objetos as $key => $dados) {
                 $existe = $databaseObj->verificarSeTabelaExiste($key);
-                $objeto = $objetoObj->retornarObjeto($key);
                 if ($existe) {
+                    $objeto = $objetoObj->retornarObjeto($key);
                     $estrutura = $databaseObj->retornarEstruturaTabela($key);
-                    
                     $logDiferencas = $databaseObj->compararTabelaObjeto($estrutura, $objeto);
                     $diferencas = $logDiferencas[1];
                     $logs = $logDiferencas[0];
@@ -345,7 +326,6 @@ class Configurar extends Command
                     } else {
                         $io->text('<bg=green>[OK]</> A tabela ' . $key . ' está atualizada!');
                     }
-
                 } else {
                     $bancoProblemas = true;
                     $io->text('<fg=white;bg=red>[PROBLEMA]</> A tabela ' . $key . ' não foi encontrada!');
@@ -365,16 +345,19 @@ class Configurar extends Command
                             if (count($diferencas) > 0) {
                                 $diferencasBanco[$subespecificacao['nome']] = $diferencas;
                                 $bancoProblemas = true;
-                                $io->text('<fg=white;bg=red>[PROBLEMA]</> -> Encontrei algo na sub-tabela ' . $estrutura['nome'] . '!');
+                                $io->text('<fg=white;bg=red>[PROBLEMA]</>
+                                            -> Encontrei algo na sub-tabela ' . $estrutura['nome'] . '!');
                                 foreach ($logs as $log) {
                                     $io->text('-- ' . $log);
                                 }
                             } else {
-                                $io->text('<bg=green>[OK]</> -> A sub-tabela ' . $estrutura['nome'] . ' está atualizada!');
+                                $io->text('<bg=green>[OK]</>
+                                            -> A sub-tabela ' . $estrutura['nome'] . ' está atualizada!');
                             }
                         } else {
                             $bancoProblemas = true;
-                            $io->text(' <fg=white;bg=red>[PROBLEMA]</> -> A sub-tabela ' . $estrutura['nome'] . ' não foi encontrada!');
+                            $io->text('<fg=white;bg=red>[PROBLEMA]</>
+                                            -> A sub-tabela ' . $estrutura['nome'] . ' não foi encontrada!');
                         
                         }
                     }
@@ -411,50 +394,31 @@ class Configurar extends Command
         return true;
     }
 
-    private function executarCorrecoes($diferencasBanco) {
+    private function validarAmbiente($http): bool
+    {
+        $response = $http->pingAmbienteAutenticadoCVDW(
+            $_ENV['CV_URL'],
+            "/imobiliarias",
+            $_ENV['CV_EMAIL'],
+            $_ENV['CV_TOKEN']
+        );
+        return isset($response['registros']);
+    }
+    private function executarCorrecoes($diferencasBanco)
+    {
         $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $io->text(['', $this::VAMOS_LA, 'Corrigindo as diferenças...', '']);
         $databaseObj = new DatabaseSetup($this->input, $this->output);
-        $objetoObj = new Objeto($this->input, $this->output);
-        $io->text([
-            '',
-            $this::VAMOS_LA,
-            'Corrigindo as diferenças...',
-            ''
-        ]);
-        foreach($diferencasBanco as $tabela => $diferencas) {
+        foreach ($diferencasBanco as $tabela => $diferencas) {
             $io->text('Corrigindo a tabela ' . $tabela);
-            $objeto = $objetoObj->retornarObjeto($tabela);
-            if(isset($diferencas['add'])){
-                foreach($diferencas['add'] as $campo => $estrutura) {
-                    $adicionado = $databaseObj->inserirColuna($tabela, $estrutura['nomeTratado'], $estrutura);
-                    if($adicionado){
-                        $io->text('<bg=green>[OK]</> Adicionando a coluna ' . $estrutura['nomeTratado']);
-                    } else {
-                        $io->text('<fg=white;bg=red>[PROBLEMA]</> Não foi possível adicionar a coluna ' . $estrutura['nomeTratado']);
-                    }
-                }
+            if (isset($diferencas['add'])) {
+                $databaseObj->executarInserirColuna($tabela, $diferencas['add'], $io);
             }
-            if(isset($diferencas['remove'])){
-                foreach($diferencas['remove'] as $campo => $estrutura) {
-                    $coluna = $estrutura->getName();
-                    $removido = $databaseObj->removerColuna($tabela, $coluna);
-                    if($removido){
-                        $io->text('<bg=green>[OK]</> Removendo a coluna ' . $estrutura->getName());
-                    } else {
-                        $io->text('<fg=white;bg=red>[PROBLEMA]</> Não foi possível remover a coluna ' . $estrutura->getName());
-                    }
-                }
+            if (isset($diferencas['remove'])) {
+                $databaseObj->executarRemoverColuna($tabela, $diferencas['remove'], $io);
             }
-            if(isset($diferencas['change'])){
-                foreach($diferencas['change'] as $coluna => $estrutura) {
-                    $estrutura['opcoes']['type'] = $estrutura['type'];
-                    $alterado = $databaseObj->alterarColuna($tabela, $estrutura['nomeTratado'], $estrutura['opcoes']);
-                    if($alterado){
-                        $io->text('<bg=green>[OK]</> Alterando a coluna ' . $estrutura['nomeTratado']);
-                    } else {
-                        $io->text('<fg=white;bg=red>[PROBLEMA]</> Não foi possível alterar a coluna ' . $estrutura['nomeTratado']);
-                    }
-                }
+            if (isset($diferencas['change'])) {
+                $databaseObj->executarModificarColuna($tabela, $diferencas['change'], $io);
             }
             $io->text('');
         }
@@ -472,7 +436,6 @@ class Configurar extends Command
                 ''
             ]);
         }
-
     }
 
     private function configurarCV(): int
@@ -518,7 +481,7 @@ class Configurar extends Command
             function (string $email_cv): string {
                 // validar se o e-mail é válido
                 if (!filter_var($email_cv, FILTER_VALIDATE_EMAIL)) {
-                    throw new \RuntimeException('E-mail inválido, vamos tentar de novo?');
+                    throw new CvdwException('E-mail inválido, vamos tentar de novo?');
                 }
                 $this->variaveisAmbiente['email'] = $email_cv;
                 putenv('CV_EMAIL=' . $email_cv);
@@ -576,7 +539,7 @@ class Configurar extends Command
             return 0;
         } else {
             $io->error('Não consegui acessar o ambiente.');
-            if ($io->confirm('Quer tentar novamente?', true)) {
+            if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
                 return $this->configurarCV($io);
             }
             return 0;
@@ -592,7 +555,9 @@ class Configurar extends Command
             'Agora vamos pegar as informações de conexão do banco de dados...'
         ]);
 
-        $this->variaveisAmbiente['banco'] = $io->choice('Que banco de dados você quer conectar?', ['pdo_mysql', 'pdo_pgsql', 'pdo_sqlsrv'], $_ENV['DB_CONNECTION']);
+        $this->variaveisAmbiente['banco'] = $io->choice('Que banco de dados você quer conectar?',
+                                                        ['pdo_mysql', 'pdo_pgsql', 'pdo_sqlsrv'],
+                                                        $_ENV['DB_CONNECTION']);
         $io->text('Você escolheu: ' . $this->variaveisAmbiente['banco']);
 
         $io->ask(
@@ -671,14 +636,14 @@ class Configurar extends Command
                 $io->success('Conexão bem-sucedida!');
             } else {
                 $io->error('Não foi possível conectar ao banco de dados.');
-                if ($io->confirm('Quer tentar novamente?', true)) {
+                if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
                     return $this->configurarBanco($io);
                 }
             }
         } catch (\Exception $e) {
             $io->error('Não foi possível conectar ao banco de dados.');
             $io->error('Encontrei esse erro: ' . $e->getMessage());
-            if ($io->confirm('Quer tentar novamente?', true)) {
+            if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
                 return $this->configurarBanco($io);
             }
         }
@@ -763,7 +728,7 @@ class Configurar extends Command
                             'Não encontrei a tabela "' . $tabela . '".',
                             ''
                         ]);
-                        if ($io->confirm('Quer tentar novamente?', true)) {
+                        if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
                             $this->limparTabelas($io);
                         }
                     }
@@ -781,18 +746,18 @@ class Configurar extends Command
                 $tabelaExiste = $database->verificarSeTabelaExiste($tabela);
                 if (!$tabelaExiste) {
                     $table->addRow([$tabela, '<error>Não encontrada!</error>']);
-                    $progressBar->setMessage('A tabela ' . $tabela . ' não existe');
+                    $progressBar->setMessage("A tabela {$tabela} não existe");
                     $progressBar->advance();
                     continue;
                 }
                 $truncate  = $database->limparTabela($tabela);
                 if ($truncate) {
                     $table->addRow([$tabela, '<info>Limpa!</info>']);
-                    $progressBar->setMessage('A tabela ' . $tabela . ' foi limpa');
+                    $progressBar->setMessage("A tabela {$tabela} foi limpa");
                     $progressBar->advance();
                 } else {
                     $table->addRow([$tabela, '<error>Ocorreu algum erro!</error>']);
-                    $progressBar->setMessage('A tabela ' . $tabela . ' não pode ser limpa');
+                    $progressBar->setMessage("A tabela {$tabela} não pode ser limpa");
                     $progressBar->advance();
                 }
             }
@@ -813,14 +778,8 @@ class Configurar extends Command
 
     private function apagarTabelas(): bool
     {
-
         $io = new CvdwSymfonyStyle($this->input, $this->output);
-        
-        $io->warning([
-            '',
-            'Essa opção apaga todas as tabelas ok?'
-        ]);
-
+        $io->warning(['','Essa opção apaga todas as tabelas ok?']);
         if ($io->confirm('Quer continuar?', false)) {
             $tabela = $io->ask(
                 'Qual tabela você quer apagar? (Use all para todas)',
@@ -832,25 +791,15 @@ class Configurar extends Command
             $database = new DatabaseSetup($this->input, $this->output);
             $tabelasApagar = array();
             if ($tabela === 'all') {
-                $io->text([
-                    'Ok! Vou apagar todas as tabelas.',
-                    ''
-                ]);
+                $io->text([ 'Ok! Vou apagar todas as tabelas.', '' ]);
                 $tabelasApagar = $database->listarTabelasArray();
             } else {
-
                 if ($database->verificarSeTabelaExiste($tabela)) {
                     $tabelasApagar[$tabela] = "";
-                    $io->text([
-                        'Encontrei a tabela "' . $tabela . '".',
-                        ''
-                    ]);
+                    $io->text([ 'Encontrei a tabela "' . $tabela . '".', '' ]);
                 } else {
-                    $io->text([
-                        'Não encontrei a tabela "' . $tabela . '".',
-                        ''
-                    ]);
-                    if ($io->confirm('Quer tentar novamente?', true)) {
+                    $io->text([ 'Não encontrei a tabela "' . $tabela . '".', '' ]);
+                    if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
                         return $this->apagarTabelas($io);
                     }
                 }
@@ -863,34 +812,12 @@ class Configurar extends Command
             $progressBar = new ProgressBar($this->output, $totalObjetos);
             $progressBar->start();
 
-            foreach ($tabelasApagar as $tabela => $valor) {
-
-                $tabelaExiste = $database->verificarSeTabelaExiste($tabela);
-                if (!$tabelaExiste) {
-                    $table->addRow([$tabela, '<error>Não encontrada!</error>']);
-                    $progressBar->setMessage('A tabela ' . $tabela . ' não existe');
-                    $progressBar->advance();
-                    continue;
-                }
-                $truncate  = $database->apagarTabela($tabela);
-                if ($truncate) {
-                    $table->addRow([$tabela, '<info>Apagada!</info>']);
-                    $progressBar->setMessage('A tabela ' . $tabela . ' foi limpa');
-                    $progressBar->advance();
-                } else {
-                    $table->addRow([$tabela, '<error>Ocorreu algum erro!</error>']);
-                    $progressBar->setMessage('A tabela ' . $tabela . ' foi limpa');
-                    $progressBar->advance();
-                }
-            }
-
+            $this->executarApagarTabelas($tabelasApagar, $table, $progressBar);
+        
             $progressBar->finish();
             $table->render();
 
-            $io->text([
-                '',
-                'Pronto!'
-            ]);
+            $io->text([ '', 'Pronto!' ]);
         }
 
         $this->voltarProMenu = true;
@@ -898,7 +825,41 @@ class Configurar extends Command
 
         return true;
 
-    } 
+    }
+
+    private function executarApagarTabelas($tabelasApagar, $table, $progressBar): void
+    {
+        $database = new DatabaseSetup($this->input, $this->output);
+        foreach ($tabelasApagar as $tabela => $valor) {
+            $tabelaExiste = $database->verificarSeTabelaExiste($tabela);
+            if (!$tabelaExiste) {
+                $this->retornarTabelaNaoEncontrada($table, $tabela, $progressBar);
+                continue;
+            }
+            $this->apagarTabela($table, $tabela, $progressBar);
+        }
+    }
+
+    private function retornarTabelaNaoEncontrada($table, $tabela, $progressBar): void
+    {
+        $table->addRow([$tabela, '<error>Não encontrada!</error>']);
+        $progressBar->setMessage("A tabela {$tabela} não existe");
+        $progressBar->advance();
+    }
+
+    private function apagarTabela($table, $tabela, $progressBar): void
+    {
+        $database = new DatabaseSetup($this->input, $this->output);
+        $truncate  = $database->apagarTabela($tabela);
+        if ($truncate) {
+            $table->addRow([$tabela, '<info>Apagada!</info>']);
+            $progressBar->setMessage("A tabela {$tabela} foi limpa");
+        } else {
+            $table->addRow([$tabela, '<error>Ocorreu algum erro!</error>']);
+            $progressBar->setMessage("A tabela {$tabela} não foi limpa");
+        }
+        $progressBar->advance();
+    }
 
     protected function voltarProMenu()
     {
