@@ -37,7 +37,7 @@ class Objeto
         }
     }
 
-    public function retornarObjeto(string $objeto, string $formato = 'json'): array
+    public function retornarObjeto(string $objeto): array
     {
         // Verifica se o objeto existe em OBJETOS
         if (!array_key_exists($objeto, $this->objetos)) {
@@ -52,7 +52,7 @@ class Objeto
     public function retornarObjetoTabelas($objeto): array
     {
         $objeto = $this->retornarObjeto($objeto);
-        if(empty($objeto)){
+        if (empty($objeto)) {
             return [];
         }
         $componentes = $objeto['response']['dados'];
@@ -77,386 +77,359 @@ class Objeto
 
     public function retornarConstantesObjetos(): array
     {
+        return array_merge(
+            $this->retornarObjetosReservas(),
+            $this->retornarObjetosPessoas(),
+            $this->retornarObjetosAtendimentos(),
+            $this->retornarObjetosRepasses(),
+            $this->retornarObjetosPrecadastros(),
+            $this->retornarObjetosCadastros(),
+            $this->retornarObjetosLeads(),
+            $this->retornarObjetosAssistencia(),
+            $this->retornarObjetosComissoes(),
+            $this->retornarObjetosSimulacoes(),
+            $this->retornarObjetosAgendamentos(),
+            $this->retornarObjetosProcessos(),
+            $this->retornarObjetosPesquisas(),
+            $this->retornarObjetosDemandas()
+
+        );
+    }
+
+    private function retornarObjetosReservas()
+    {
         return [
-
-            "agendamentos_vistorias" => [
-                "nome" => "Agendamentos (/agendamentos/vistorias)",
-                "arquivo" => "agendamentos_vistorias.yaml"
-
-            ],
-
-            "assistencias" => [
-                "nome" => "Assistências (/assistencias)",
-                "arquivo" => "assistencias.yaml"
-
-            ],
-
-            "assistencias_workflow_tempo" => [
-                "nome" => "Assistências (/assistencias/workflow/tempo)",
-                "arquivo" => "assistencias_workflow_tempo.yaml"
-
-            ],
-
-            "assistencias_itens" => [
-                "nome" => "Assistências (/assistencias/itens)",
-                "arquivo" => "assistencias_itens.yaml"
-
-            ],
-
-            "assistencias_itens_workflow_tempo" => [
-                "nome" => "Assistências (/assistencias/itens/workflow/tempo)",
-                "arquivo" => "assistencias_itens_workflow_tempo.yaml"
-
-            ],
-
-            "assistencias_visitas_workflow_tempo" => [
-                "nome" => "Assistências (/assistencias/visitas/workflow/tempo)",
-                "arquivo" => "assistencias_visitas_workflow_tempo.yaml"
-
-            ],
-
-            "atendimentos" => [
-                "nome" => "Atendimentos (/atendimentos)",
-                "arquivo" => "atendimentos.yaml"
-
-            ],
-
-            "atendimentos_workflow_tempo" => [
-                "nome" => "Atendimentos (/atendimentos/workflow/tempo)",
-                "arquivo" => "atendimentos_workflow_tempo.yaml"
-
-            ],
-
-            "atendimentos_interacoes" => [
-                "nome" => "Atendimentos (/atendimentos/interacoes)",
-                "arquivo" => "atendimentos_interacoes.yaml"
-
-            ],
-
-            "atendimentos_respostas" => [
-                "nome" => "Atendimentos (/atendimentos/respostas)",
-                "arquivo" => "atendimentos_respostas.yaml"
-
-            ],
-
-            "atendimentos_times" => [
-                "nome" => "Atendimentos (/atendimentos/times)",
-                "arquivo" => "atendimentos_times.yaml"
-
-            ],
-
-            "atendimentos_times_integrantes" => [
-                "nome" => "Atendimentos (/atendimentos/times/integrantes)",
-                "arquivo" => "atendimentos_times_integrantes.yaml"
-
-            ],
-
-            "comissoes" => [
-                "nome" => "Comissões (/comissoes)",
-                "arquivo" => "comissoes.yaml"
-
-            ],
-
-            "comissoes_workflow_tempo" => [
-                "nome" => "Comissões (/comissoes/workflow/tempo)",
-                "arquivo" => "comissoes_workflow_tempo.yaml"
-
-            ],
-
-            "leads_corretores" => [
-                "nome" => "Leads (/leads/corretores)",
-                "arquivo" => "leads_corretores.yaml"
-
-            ],
-
-            "leads" => [
-                "nome" => "Leads (/leads)",
-                "arquivo" => "leads.yaml"
-
-            ],
-
-            "leads_conversoes" => [
-                "nome" => "Leads (/leads/conversoes)",
-                "arquivo" => "leads_conversoes.yaml"
-
-            ],
-
-            "leads_ganhos" => [
-                "nome" => "Leads (/leads/ganhos)",
-                "arquivo" => "leads_ganhos.yaml"
-
-            ],
-
-            "leads_historico_situacoes" => [
-                "nome" => "Leads (/leads/historico/situacoes)",
-                "arquivo" => "leads_historico_situacoes.yaml"
-
-            ],
-
-            "leads_infos" => [
-                "nome" => "Leads (/leads/infos)",
-                "arquivo" => "leads_infos.yaml"
-
-            ],
-
-            "leads_interacoes" => [
-                "nome" => "Leads (/leads/interacoes)",
-                "arquivo" => "leads_interacoes.yaml"
-
-            ],
-
-            "leads_momentos" => [
-                "nome" => "Leads (/leads/momentos)",
-                "arquivo" => "leads_momentos.yaml"
-
-            ],
-
-            "leads_perdas" => [
-                "nome" => "Leads (/leads/perdas)",
-                "arquivo" => "leads_perdas.yaml"
-
-            ],
-
-            "leads_tarefas" => [
-                "nome" => "Leads (/leads/tarefas)",
-                "arquivo" => "leads_tarefas.yaml"
-
-            ],
-
-            "leads_visitas" => [
-                "nome" => "Leads (/leads/visitas)",
-                "arquivo" => "leads_visitas.yaml"
-
-            ],
-
-            "leads_workflow_tempo" => [
-                "nome" => "Leads (/leads/workflow/tempo)",
-                "arquivo" => "leads_workflow_tempo.yaml"
-
-            ],
-
-            "usuarios_administrativos" => [
-                "nome" => "Usuários Administrativos (/usuarios_administrativos)",
-                "arquivo" => "usuarios_administrativos.yaml"
-
-            ],
-
-            "demandas" => [
-                "nome" => "Demandas (/demandas)",
-                "arquivo" => "demandas.yaml"
-
-            ],
-
-            "processos" => [
-                "nome" => "Processos (/processos)",
-                "arquivo" => "processos.yaml"
-
-            ],
-
-            "precadastros" => [
-                "nome" => "Pre-cadastro (/precadastros)",
-                "arquivo" => "precadastros.yaml"
-
-            ],
-
-            "imobiliarias" => [
-                "nome" => "Imobiliarias (/imobiliarias)",
-                "arquivo" => "imobiliarias.yaml"
-
-            ],
-
-            "corretores" => [
-                "nome" => "Corretores (/corretores)",
-                "arquivo" => "corretores.yaml"
-
-            ],
-
-            "precadastro_workflow_tempo" => [
-                "nome" => "Pre-cadastro (/precadastro/workflow/tempo)",
-                "arquivo" => "precadastro_workflow_tempo.yaml"
-
-            ],
-
-            "precadastro_historico_situacoes" => [
-                "nome" => "Pre-cadastro (/precadastro/historico/situacoes)",
-                "arquivo" => "precadastro_historico_situacoes.yaml"
-
-            ],
-
-            "repasses" => [
-                "nome" => "Repasses (/repasses)",
-                "arquivo" => "repasses.yaml"
-
-            ],
-
-            "repasses_workflow_tempo" => [
-                "nome" => "Repasses (/repasses/workflow/tempo)",
-                "arquivo" => "repasses_workflow_tempo.yaml"
-
-            ],
-
-            "repasses_historico_situacoes" => [
-                "nome" => "Repasses (/repasses/historico/situacoes)",
-                "arquivo" => "repasses_historico_situacoes.yaml"
-
-            ],
-
             "reservas" => [
                 "nome" => "Reservas (/reservas)",
                 "arquivo" => "reservas.yaml"
-
             ],
-
             "reservas_comissoes" => [
                 "nome" => "Reservas (/reservas/comissoes)",
                 "arquivo" => "reservas_comissoes.yaml"
-
             ],
-
             "reservas_comissoes_programacao" => [
                 "nome" => "Reservas (/reservas/comissoes/programacao)",
                 "arquivo" => "reservas_comissoes_programacao.yaml"
-
             ],
-
             "reservas_coordenador" => [
                 "nome" => "Reservas (/reservas/coordenador)",
                 "arquivo" => "reservas_coordenador.yaml"
-
             ],
-
             "reservas_historico_situacoes" => [
                 "nome" => "Reservas (/reservas/historico/situacoes)",
                 "arquivo" => "reservas_historico_situacoes.yaml"
-
             ],
-
             "reservas_historico" => [
                 "nome" => "Reservas (/reservas/historico)",
                 "arquivo" => "reservas_historico.yaml"
-
             ],
-
             "reservas_condicoes" => [
                 "nome" => "Reservas (/reservas/condicoes)",
                 "arquivo" => "reservas_condicoes.yaml"
-
             ],
-
             "reservas_associados" => [
                 "nome" => "Reservas (/reservas/associados)",
                 "arquivo" => "reservas_associados.yaml"
-
             ],
-
             "reservas_contratos" => [
                 "nome" => "Reservas (/reservas/contratos)",
                 "arquivo" => "reservas_contratos.yaml"
-
             ],
-
             "reservas_workflow_tempo" => [
                 "nome" => "Reservas (/reservas/workflow/tempo)",
                 "arquivo" => "reservas_workflow_tempo.yaml"
-
             ],
-
             "reservas_campos_adicionais" => [
                 "nome" => "Reservas (/reservas/campos-adicionais)",
                 "arquivo" => "reservas_campos_adicionais.yaml"
-
             ],
-
-            "vendas" => [
-                "nome" => "Vendas (/vendas)",
-                "arquivo" => "vendas.yaml"
-
-            ],
-
-            "distratos" => [
-                "nome" => "Distratos (/distratos)",
-                "arquivo" => "distratos.yaml"
-
-            ],
-
-            "simulacoes" => [
-                "nome" => "Simulações (/simulacoes)",
-                "arquivo" => "simulacoes.yaml"
-
-            ],
-
             "reservas_sienge" => [
                 "nome" => "Reservas (/reservas/sienge)",
                 "arquivo" => "reservas_sienge.yaml"
-
             ],
-
-            "unidades_precos" => [
-                "nome" => "Unidades (/unidades-precos)",
-                "arquivo" => "unidades_precos.yaml"
-
-            ],
-
-            "campos_adicionais" => [
-                "nome" => "Campos Adicionais (/campos_adicionais)",
-                "arquivo" => "campos_adicionais.yaml"
-
-            ],
-
-            "pessoas" => [
-                "nome" => "Pessoas (/pessoas)",
-                "arquivo" => "pessoas.yaml"
-
-            ],
-
-            "pessoas_contatos" => [
-                "nome" => "Pessoas (/pessoas/contatos)",
-                "arquivo" => "pessoas_contatos.yaml"
-
-            ],
-
-            "pessoas_profissional" => [
-                "nome" => "Pessoas (/pessoas/profissional)",
-                "arquivo" => "pessoas_profissional.yaml"
-
-            ],
-
-            "pessoas_patrimoniais" => [
-                "nome" => "Pessoas (/pessoas/patrimoniais)",
-                "arquivo" => "pessoas_patrimoniais.yaml"
-
-            ],
-
-            "pessoas_bancarios" => [
-                "nome" => "Pessoas (/pessoas/bancarios)",
-                "arquivo" => "pessoas_bancarios.yaml"
-
-            ],
-
-            "pessoas_bens_empresa" => [
-                "nome" => "Pessoas (/pessoas/bens-empresa)",
-                "arquivo" => "pessoas_bens_empresa.yaml"
-
-            ],
-
-            "pessoas_financeiros" => [
-                "nome" => "Pessoas (/pessoas/financeiros)",
-                "arquivo" => "pessoas_financeiros.yaml"
-
-            ],
-
-            "pesquisas" => [
-                "nome" => "Pesquisas (/pesquisas)",
-                "arquivo" => "pesquisas.yaml"
-
-            ],
-
             "reservas_registros_flags" => [
                 "nome" => "Reservas (/reservas/registros/flags)",
                 "arquivo" => "reservas_registros_flags.yaml"
-
+            ],
+            "vendas" => [
+                "nome" => "Vendas (/vendas)",
+                "arquivo" => "vendas.yaml"
+            ],
+            "distratos" => [
+                "nome" => "Distratos (/distratos)",
+                "arquivo" => "distratos.yaml"
             ],
         ];
-
     }
+
+    private function retornarObjetosPessoas()
+    {
+        return [
+            "pessoas" => [
+                "nome" => "Pessoas (/pessoas)",
+                "arquivo" => "pessoas.yaml"
+            ],
+            "pessoas_contatos" => [
+                "nome" => "Pessoas (/pessoas/contatos)",
+                "arquivo" => "pessoas_contatos.yaml"
+            ],
+            "pessoas_profissional" => [
+                "nome" => "Pessoas (/pessoas/profissional)",
+                "arquivo" => "pessoas_profissional.yaml"
+            ],
+            "pessoas_patrimoniais" => [
+                "nome" => "Pessoas (/pessoas/patrimoniais)",
+                "arquivo" => "pessoas_patrimoniais.yaml"
+            ],
+            "pessoas_bancarios" => [
+                "nome" => "Pessoas (/pessoas/bancarios)",
+                "arquivo" => "pessoas_bancarios.yaml"
+            ],
+            "pessoas_bens_empresa" => [
+                "nome" => "Pessoas (/pessoas/bens-empresa)",
+                "arquivo" => "pessoas_bens_empresa.yaml"
+            ],
+            "pessoas_financeiros" => [
+                "nome" => "Pessoas (/pessoas/financeiros)",
+                "arquivo" => "pessoas_financeiros.yaml"
+            ]
+        ];
+    }
+
+    private function retornarObjetosAtendimentos()
+    {
+        return [
+            "atendimentos" => [
+                "nome" => "Atendimentos (/atendimentos)",
+                "arquivo" => "atendimentos.yaml"
+            ],
+            "atendimentos_workflow_tempo" => [
+                "nome" => "Atendimentos (/atendimentos/workflow/tempo)",
+                "arquivo" => "atendimentos_workflow_tempo.yaml"
+            ],
+            "atendimentos_interacoes" => [
+                "nome" => "Atendimentos (/atendimentos/interacoes)",
+                "arquivo" => "atendimentos_interacoes.yaml"
+            ],
+            "atendimentos_respostas" => [
+                "nome" => "Atendimentos (/atendimentos/respostas)",
+                "arquivo" => "atendimentos_respostas.yaml"
+            ],
+            "atendimentos_times" => [
+                "nome" => "Atendimentos (/atendimentos/times)",
+                "arquivo" => "atendimentos_times.yaml"
+            ],
+            "atendimentos_times_integrantes" => [
+                "nome" => "Atendimentos (/atendimentos/times/integrantes)",
+                "arquivo" => "atendimentos_times_integrantes.yaml"
+            ],
+        ];
+    }
+
+    private function retornarObjetosRepasses()
+    {
+        return [
+            "repasses" => [
+                "nome" => "Repasses (/repasses)",
+                "arquivo" => "repasses.yaml"
+            ],
+            "repasses_workflow_tempo" => [
+                "nome" => "Repasses (/repasses/workflow/tempo)",
+                "arquivo" => "repasses_workflow_tempo.yaml"
+            ],
+            "repasses_historico_situacoes" => [
+                "nome" => "Repasses (/repasses/historico/situacoes)",
+                "arquivo" => "repasses_historico_situacoes.yaml"
+            ]
+        ];
+    }
+
+    private function retornarObjetosPrecadastros()
+    {
+        return [
+            "precadastros" => [
+                "nome" => "Pre-cadastro (/precadastros)",
+                "arquivo" => "precadastros.yaml"
+            ],
+            "precadastro_workflow_tempo" => [
+                "nome" => "Pre-cadastro (/precadastro/workflow/tempo)",
+                "arquivo" => "precadastro_workflow_tempo.yaml"
+            ],
+            "precadastro_historico_situacoes" => [
+                "nome" => "Pre-cadastro (/precadastro/historico/situacoes)",
+                "arquivo" => "precadastro_historico_situacoes.yaml"
+            ]
+        ];
+    }
+
+    private function retornarObjetosCadastros()
+    {
+        return [
+            "usuarios_administrativos" => [
+                "nome" => "Usuários Administrativos (/usuarios_administrativos)",
+                "arquivo" => "usuarios_administrativos.yaml"
+            ],
+            "imobiliarias" => [
+                "nome" => "Imobiliarias (/imobiliarias)",
+                "arquivo" => "imobiliarias.yaml"
+            ],
+            "corretores" => [
+                "nome" => "Corretores (/corretores)",
+                "arquivo" => "corretores.yaml"
+            ],
+            "unidades_precos" => [
+                "nome" => "Unidades (/unidades-precos)",
+                "arquivo" => "unidades_precos.yaml"
+            ],
+            "campos_adicionais" => [
+                "nome" => "Campos Adicionais (/campos_adicionais)",
+                "arquivo" => "campos_adicionais.yaml"
+            ]
+        ];
+    }
+
+    private function retornarObjetosLeads()
+    {
+        return [
+            "leads_corretores" => [
+                "nome" => "Leads (/leads/corretores)",
+                "arquivo" => "leads_corretores.yaml"
+            ],
+            "leads" => [
+                "nome" => "Leads (/leads)",
+                "arquivo" => "leads.yaml"
+            ],
+            "leads_conversoes" => [
+                "nome" => "Leads (/leads/conversoes)",
+                "arquivo" => "leads_conversoes.yaml"
+            ],
+            "leads_ganhos" => [
+                "nome" => "Leads (/leads/ganhos)",
+                "arquivo" => "leads_ganhos.yaml"
+            ],
+            "leads_historico_situacoes" => [
+                "nome" => "Leads (/leads/historico/situacoes)",
+                "arquivo" => "leads_historico_situacoes.yaml"
+            ],
+            "leads_infos" => [
+                "nome" => "Leads (/leads/infos)",
+                "arquivo" => "leads_infos.yaml"
+            ],
+            "leads_interacoes" => [
+                "nome" => "Leads (/leads/interacoes)",
+                "arquivo" => "leads_interacoes.yaml"
+            ],
+            "leads_momentos" => [
+                "nome" => "Leads (/leads/momentos)",
+                "arquivo" => "leads_momentos.yaml"
+            ],
+            "leads_perdas" => [
+                "nome" => "Leads (/leads/perdas)",
+                "arquivo" => "leads_perdas.yaml"
+            ],
+            "leads_tarefas" => [
+                "nome" => "Leads (/leads/tarefas)",
+                "arquivo" => "leads_tarefas.yaml"
+            ],
+            "leads_visitas" => [
+                "nome" => "Leads (/leads/visitas)",
+                "arquivo" => "leads_visitas.yaml"
+            ],
+            "leads_workflow_tempo" => [
+                "nome" => "Leads (/leads/workflow/tempo)",
+                "arquivo" => "leads_workflow_tempo.yaml"
+            ]
+        ];
+    }
+
+    private function retornarObjetosAssistencia()
+    {
+        return [
+            "assistencias" => [
+                "nome" => "Assistências (/assistencias)",
+                "arquivo" => "assistencias.yaml"
+            ],
+            "assistencias_workflow_tempo" => [
+                "nome" => "Assistências (/assistencias/workflow/tempo)",
+                "arquivo" => "assistencias_workflow_tempo.yaml"
+            ],
+            "assistencias_itens" => [
+                "nome" => "Assistências (/assistencias/itens)",
+                "arquivo" => "assistencias_itens.yaml"
+            ],
+            "assistencias_itens_workflow_tempo" => [
+                "nome" => "Assistências (/assistencias/itens/workflow/tempo)",
+                "arquivo" => "assistencias_itens_workflow_tempo.yaml"
+            ],
+            "assistencias_visitas_workflow_tempo" => [
+                "nome" => "Assistências (/assistencias/visitas/workflow/tempo)",
+                "arquivo" => "assistencias_visitas_workflow_tempo.yaml"
+            ]
+        ];
+    }
+
+    private function retornarObjetosComissoes()
+    {
+        return [
+            "comissoes" => [
+                "nome" => "Comissões (/comissoes)",
+                "arquivo" => "comissoes.yaml"
+            ],
+            "comissoes_workflow_tempo" => [
+                "nome" => "Comissões (/comissoes/workflow/tempo)",
+                "arquivo" => "comissoes_workflow_tempo.yaml"
+            ]
+        ];
+    }
+
+    private function retornarObjetosSimulacoes()
+    {
+        return [
+            "simulacoes" => [
+                "nome" => "Simulações (/simulacoes)",
+                "arquivo" => "simulacoes.yaml"
+            ]
+        ];
+    }
+
+    private function retornarObjetosAgendamentos()
+    {
+        return [
+            "agendamentos_vistorias" => [
+                "nome" => "Agendamentos (/agendamentos/vistorias)",
+                "arquivo" => "agendamentos_vistorias.yaml"
+            ]
+        ];
+    }
+
+    private function retornarObjetosProcessos()
+    {
+        return [
+            "processos" => [
+                "nome" => "Processos (/processos)",
+                "arquivo" => "processos.yaml"
+            ],
+        ];
+    }
+
+    private function retornarObjetosPesquisas()
+    {
+        return [
+            "pesquisas" => [
+                "nome" => "Pesquisas (/pesquisas)",
+                "arquivo" => "pesquisas.yaml"
+            ]
+        ];
+    }
+
+    private function retornarObjetosDemandas()
+    {
+        return [
+            "demandas" => [
+                "nome" => "Demandas (/demandas)",
+                "arquivo" => "demandas.yaml"
+            ],
+        ];
+    }
+
 }
