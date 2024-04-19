@@ -192,7 +192,7 @@ class Cvdw
         $esperar = 0;
         if (count($this->execucoes) >= 20) {
             // Calcula o tempo a esperar: diferença para completar um minuto desde a primeira execução no array
-            $esperar = 60 - ($agora - $this->execucoes[0]);
+            $esperar = 68 - ($agora - $this->execucoes[0]);
             // Após a espera, remove a execução mais antiga e permite a nova
             array_shift($this->execucoes);
         }
