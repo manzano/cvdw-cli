@@ -54,13 +54,13 @@ class Configurar extends Command
         $this->setName('configurar')
             ->setDescription('Configurações do aplicativo')
         ->addOption(
-            'setEnv', // Nome da opção
-            'env', // Atalho, pode ser NULL se não quiser um atalho
+            'setEnv',
+            'env',
             InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
             'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
         )->addOption(
-            'setEnv', // Nome da opção
-            'env', // Atalho, pode ser NULL se não quiser um atalho
+            'setEnv',
+            'env',
             InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
             'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
         );
@@ -351,13 +351,11 @@ class Configurar extends Command
                                     $io->text('-- ' . $log);
                                 }
                             } else {
-                                $io->text('<bg=green>[OK]</>
-                                            -> A sub-tabela ' . $estrutura['nome'] . ' está atualizada!');
+                                $io->text('<bg=green>[OK]</> -> A sub-tabela ' . $estrutura['nome'] . ' está atualizada!');
                             }
                         } else {
                             $bancoProblemas = true;
-                            $io->text('<fg=white;bg=red>[PROBLEMA]</>
-                                            -> A sub-tabela ' . $estrutura['nome'] . ' não foi encontrada!');
+                            $io->text('<fg=white;bg=red>[PROBLEMA]</> -> A sub-tabela ' . $estrutura['nome'] . ' não foi encontrada!');
                         
                         }
                     }

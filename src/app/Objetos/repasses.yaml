@@ -1,22 +1,21 @@
 path: /repasses
 tabela: repasses
 metodo: get
-descricao: Esta api retorna os dados dos repasses a partir dos filtros
-  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
-nome: Repasses (repasses)
+descricao: "Esta api retorna os dados dos repasses a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+nome: "Repasses (repasses)"
 parametros:
   header:
     - name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: "E-mail de autenticação do usuário administrativo"
       example: email@email.com
       schema:
         type: string
     - name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: "Token criado no usuário administrativo do e-mail"
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,222 +26,219 @@ schema: RetornarRepasses
 subschema: Repasses
 body:
   pagina:
+    type: integer
     example: 1
+    description: "Página que deseja visualizar os registros"
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: "Quantidade de registro por página, máximo 500 registros"
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: "Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente"
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: "2022-05-18 10:15:26"
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: "Retornará os dados criadas criados ou alterados a partir da data informada"
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: "Página que deseja visualizar os registros"
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: "Quantidade de registro por página, máximo 500 registros"
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: "Total de registros encontrados"
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: "Total de páginas encontradas"
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador do repasse
+      description: "Identificador do repasse"
+      example: "193 ou 193_30"
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: "Data de referência"
+      example: "2024-03-31 09:15:54"
+    ativo:
+      type: string
+      description: "Informa se está ativo ou não"
+      example: S
     idrepasse:
+      type: integer
+      description: "Identificador do repasse"
       example: 168523
-      type: integer
-      description: Identificador do repasse
     idsituacao:
+      type: integer
+      description: "Identificador da situação do repasse"
       example: 4
-      type: integer
-      description: Identificador da situação do repasse
     situacao:
+      type: string
+      description: "Nome da situação do repasse"
       example: Cartório
-      type: string
-      description: Nome da situação do repasse
     reserva:
+      type: integer
+      description: "Identificador da reserva"
       example: 13360
-      type: integer
-      description: Identificador da reserva
     idempreendimento:
+      type: integer
+      description: "Identificador do empreendimento do repasse"
       example: 3
-      type: integer
-      description: Identificador do empreendimento do repasse
     codigointerno_empreendimento:
+      type: string
+      description: "Código interno do empreendimento do repasse"
       example: "3654641"
-      type: string
-      description: Código interno do empreendimento do repasse
     empreendimento:
+      type: string
+      description: "Nome do empreendimento do repasse"
       example: Varandas
-      type: string
-      description: Nome do empreendimento do repasse
     etapa:
+      type: string
+      description: "Nome da etapa do empreendimento do repasse"
       example: Unica
-      type: string
-      description: Nome da etapa do empreendimento do repasse
     bloco:
+      type: string
+      description: "Nome do bloco da etapa do empreendimento do repasse"
       example: Sol
-      type: string
-      description: Nome do bloco da etapa do empreendimento do repasse
     unidade:
+      type: string
+      description: "Nome da unidade do empreendimento do repasse"
       example: 102-B
-      type: string
-      description: Nome da unidade do empreendimento do repasse
     regiao:
+      type: string
+      description: "Nome da região do empreendimento"
       example: Nordeste
-      type: string
-      description: Nome da região do empreendimento
     idcliente:
-      example: 193
       type: integer
-      description: Identificador do cliente do repasse
+      description: "Identificador do cliente do repasse"
+      example: 193
     documento_cliente:
+      type: string
+      description: "CPF/CNPJ do cliente do repasse"
       example: "12345678910"
-      type: string
-      description: CPF/CNPJ do cliente do repasse
     cliente:
+      type: string
+      description: "Nome do cliente do repasse"
       example: João
-      type: string
-      description: Nome do cliente do repasse
     cep_cliente:
+      type: string
+      description: "CEP do endereço do cliente"
       example: "49010020"
-      type: string
-      description: CEP do endereço do cliente
     parcela:
+      type: string
+      description: "Informa se a parcela está baixada (Sim; Não)"
       example: Não
-      type: string
-      description: Informa se a parcela está baixada (Sim; Não)
     idcontrato:
-      example: "154457"
       type: string
-      description: Número do contrato do repasse
+      description: "Número do contrato do repasse"
+      example: "154457"
     contrato:
+      type: string
+      description: "Situação do contrato do repasse (Adimplente; Inadimplente)"
       example: Adimplente
-      type: string
-      description: Situação do contrato do repasse (Adimplente; Inadimplente)
     valor_previsto:
-      example: 340000
       type: number
-      description: Valor previsto do repasse
+      description: "Valor previsto do repasse"
+      example: 340000.0
     parcela_conclusao:
-      example: 12000
       type: number
-      description: Parcela de conclusão do repasse
+      description: "Parcela de conclusão do repasse"
+      example: 12000.0
     saldo_devedor:
-      example: 98000
       type: number
-      description: Restante a ser pago do contrato com a construtora
+      description: "Restante a ser pago do contrato com a construtora"
+      example: 98000.0
     valor_divida:
-      example: 460200
       type: number
-      description: Valor da dívida financiada com o banco
+      description: "Valor da dívida financiada com o banco"
+      example: 460200.0
     valor_subsidio:
-      example: 0
       type: number
-      description: Valor liberado pelo governo federal
+      description: "Valor liberado pelo governo federal"
+      example: 0.0
     valor_fgts:
-      example: 76000
       type: number
-      description: Valor do fundo de garantia
+      description: "Valor do fundo de garantia"
+      example: 76000.0
     valor_financiado:
-      example: 536200
       type: number
-      description: Somatório dos valores de dívida, subsídio e FGTS
+      description: "Somatório dos valores de dívida, subsídio e FGTS"
+      example: 536200.0
     numero_contrato:
+      type: string
+      description: "Número do contrato do repasse"
       example: "154457"
-      type: string
-      description: Número do contrato do repasse
     data_registro:
-      example: 2022-05-18
       type: datetime
-      description: Data de registro do contrato
+      description: "Data de registro do contrato"
+      example: "2022-05-18"
     correspondente:
-      example: Correspondente bancário da empresa x
       type: string
-      description: Correspondente do repasse
+      description: "Correspondente do repasse"
+      example: "Correspondente bancário da empresa x"
     banco:
-      example: Banco do Brasil
       type: string
-      description: Banco do repasse
+      description: "Banco do repasse"
+      example: "Banco do Brasil"
     agencia:
+      type: string
+      description: "Agência do banco"
       example: "0102"
-      type: string
-      description: Agência do banco
     data_alteracao_status:
-      example: 2022-06-10 12:11:23
       type: datetime
-      description: Data da última alteração de status do repasse
+      description: "Data da última alteração de status do repasse"
+      example: "2024-03-31 09:15:54"
     data_venda:
-      example: 2022-03-01 09:18:58
       type: datetime
-      description: Data da venda da reserva do repasse
+      description: "Data da venda da reserva do repasse"
+      example: "2024-03-31 09:15:54"
     data_contrato_contabilizado:
-      example: 2022-03-01
       type: datetime
-      description: Data do contrato do repasse
+      description: "Data do contrato do repasse"
+      example: "2022-03-01"
     data_assinatura_de_contrato:
-      example: 2022-03-03
       type: datetime
-      description: Data da assinatura do contrato do repasse
+      description: "Data da assinatura do contrato do repasse"
+      example: "2022-03-03"
     idlead:
-      example: 166902,164524
       type: string
-      description: Identificador dos leads vinculados separados por vírgula
+      description: "Identificador dos leads vinculados separados por vírgula"
+      example: "166902,164524"
     data_recurso_liberado:
-      example: 2022-04-01
       type: datetime
-      description: Data de liberação do recurso do repasse
+      description: "Data de liberação do recurso do repasse"
+      example: "2022-04-01"
     data_sincronizacao:
-      example: 2022-04-01 08:16:45
       type: datetime
-      description: Data da sincronização
+      description: "Data da sincronização"
+      example: "2024-03-31 09:15:54"
     data_cadastro:
-      example: 2022-04-01 08:16:45
       type: datetime
-      description: Data de cadastro do repasse
+      description: "Data de cadastro do repasse"
+      example: "2024-03-31 09:15:54"
     idunidade:
-      example: 28
       type: string
-      description: Identificador da unidade da unidade
+      description: "Identificador da unidade da unidade"
+      example: 28
     data_modificacao:
-      example: 2022-04-01 08:16:45
       type: datetime
-      description: Data da última modificação
+      description: "Data da última modificação"
+      example: "2024-03-31 09:15:54"
     campos_adicionais:
       idcampo_adicional:
         example: 12414
         type: integer
-        description: Identificador do campo adicional
+        description: "Identificador do campo adicional"
       nome:
-        example: CONTRATO - USO
         type: string
-        description: Data de cadastro
       valor:
-        example: valor informado pelo usuário
         type: string
-        description: Dado que foi inserido pelo usuário na reserva
       nome_referencia:
-        example: USO_CONTRATO
         type: string
-        description: campo nome referência do campo adicional

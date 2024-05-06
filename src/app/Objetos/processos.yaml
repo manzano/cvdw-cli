@@ -1,21 +1,23 @@
 path: /processos
 tabela: processos
 metodo: get
-descricao: Esta api retorna os dados dos demandas
-nome: Processos (processos)
+descricao: 'Esta api retorna os dados dos demandas'
+nome: 'Processos (processos)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -26,153 +28,156 @@ schema: RetornarProcessos
 subschema: schemaProcessos
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Id do Processo
+      description: 'Id do Processo'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
+      example: S
     idprocesso:
+      type: integer
+      description: 'Id do Processo'
       example: 14
-      type: integer
-      description: Id do Processo
     tipo_processo:
-      example: Tipo do processo
       type: string
-      description: Tipo do Processo
+      description: 'Tipo do Processo'
+      example: 'Tipo do processo'
     idempreendimento_avulso:
-      example: 12
       type: integer
-      description: id do empreendimento Avulso
+      description: 'id do empreendimento Avulso'
+      example: 12
     nome_empreendimento_avulso:
-      example: empreendimento teste
       type: string
-      description: Nome do Empreendimento Avulso
+      description: 'Nome do Empreendimento Avulso'
+      example: 'empreendimento teste'
     numero:
-      example: "123456"
       type: string
-      description: Numero do Processo
+      description: 'Numero do Processo'
+      example: '123456'
     valor_causa:
-      example: "14.55"
       type: string
-      description: Valor da causa
+      description: 'Valor da causa'
+      example: '14.55'
     valor_pago:
-      example: "14.55"
       type: string
-      description: Valor Pago
+      description: 'Valor Pago'
+      example: '14.55'
     forma_pagamento:
+      type: string
+      description: 'Forma de Pagamento'
       example: dinheiro
-      type: string
-      description: Forma de Pagamento
     data_atualizacao_processos:
-      example: 2022-05-18
       type: datetime
-      description: Data da atualização do processo
+      description: 'Data da atualização do processo'
+      example: '2022-05-18'
     data_cad:
-      example: 2022-05-18
       type: datetime
-      description: Data de Cadastro
+      description: 'Data de Cadastro'
+      example: '2022-05-18'
     data_pagamento:
-      example: 2022-05-18
       type: datetime
-      description: Data de Pagamento
+      description: 'Data de Pagamento'
+      example: '2022-05-18'
     data_citacao:
-      example: 2022-05-18
       type: datetime
-      description: Data de Citação
+      description: 'Data de Citação'
+      example: '2022-05-18'
     idempreendimento:
+      type: integer
+      description: 'Id do empreendimento'
       example: 12
-      type: integer
-      description: Id do empreendimento
     codigointerno_empreendimento:
-      example: "12356"
       type: string
-      description: codigo interno empreendimento
+      description: 'codigo interno empreendimento'
+      example: '12356'
     empreendimento:
-      example: Nome do empreendimento
       type: string
-      description: Nome do empreendimento
+      description: 'Nome do empreendimento'
+      example: 'Nome do empreendimento'
     idcliente:
+      type: integer
+      description: 'Id do Cliente'
       example: 145
-      type: integer
-      description: Id do Cliente
     documento_cliente:
-      example: "04461372197"
       type: string
-      description: Número do documento do cliente
+      description: 'Número do documento do cliente'
+      example: '04461372197'
     cliente:
-      example: jose cliente
       type: string
-      description: Nome do cliente
+      description: 'Nome do cliente'
+      example: 'jose cliente'
     cep_cliente:
-      example: "49500235"
       type: string
-      description: CEP do Cliente
+      description: 'CEP do Cliente'
+      example: '49500235'
     idsituacao:
+      type: integer
+      description: 'Id da Situacao'
       example: 123
-      type: integer
-      description: Id da Situacao
     situacao:
-      example: Nome da situação
       type: string
-      description: Nome da Situação
+      description: 'Nome da Situação'
+      example: 'Nome da situação'
     unidade:
-      example: Nome da unidade
       type: string
-      description: Nome da Unidade
+      description: 'Nome da Unidade'
+      example: 'Nome da unidade'
     etapa:
-      example: etapa 1
       type: string
-      description: Nome da Etapa
+      description: 'Nome da Etapa'
+      example: 'etapa 1'
     bloco:
-      example: bloco 1
       type: string
-      description: Nome do Bloco
+      description: 'Nome do Bloco'
+      example: 'bloco 1'
     idcausa:
-      example: 1
       type: integer
-      description: Id da Causa
+      description: 'Id da Causa'
+      example: 1
     causa:
-      example: Nome da Causa
       type: string
-      description: Nome da Causa
+      description: 'Nome da Causa'
+      example: 'Nome da Causa'
     data_ult_hist:
-      example: 2022-05-18
       type: datetime
-      description: Data da Ultima Situação
+      description: 'Data da Ultima Situação'
+      example: '2022-05-18'

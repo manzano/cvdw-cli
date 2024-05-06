@@ -1,23 +1,23 @@
 path: /reservas/contratos
 tabela: reservas_contratos
 metodo: get
-descricao: Esta api retorna os dados dos contratos das reservas a partir dos
-  filtros solicitados, caso deseje saber o que cada campo representa basta ir no
-  schema.
-nome: Reservas (reservas_contratos)
+descricao: 'Esta api retorna os dados dos contratos das reservas a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Reservas (reservas_contratos)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -28,217 +28,220 @@ schema: RetornarReservasContratos
 subschema: ReservasContratos
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador do contrato na reserva
+      description: 'Identificador do contrato na reserva'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
     idreservacontrato:
-      example: 12414
       type: integer
-      description: Identificador do contrato na reserva
+      description: 'Identificador do contrato na reserva'
+      example: 12414
     idreserva:
+      type: integer
+      description: 'Identificador da reserva'
       example: 12414
-      type: integer
-      description: Identificador da reserva
     ativo:
-      example: Sim
       type: string
-      description: Informa se o contrato está ativo
+      description: 'Informa se está ativo ou não'
+      example: S
     data_cad:
-      example: 2022-04-13 14:24:27
       type: datetime
-      description: Data de geração do contrato
+      description: 'Data de geração do contrato'
+      example: '2024-03-31 09:15:54'
     idcontrato:
-      example: 1
       type: integer
-      description: Identificador do contrato
+      description: 'Identificador do contrato'
+      example: 1
     idgrupo:
-      example: 1
       type: integer
-      description: Identificador do grupo
+      description: 'Identificador do grupo'
+      example: 1
     idtipo:
-      example: 1
       type: integer
-      description: Identificador do tipo de contrato
+      description: 'Identificador do tipo de contrato'
+      example: 1
     idusuariovalida:
-      example: 1
       type: integer
-      description: Identificador do usuário administrativo que validou o contrato
+      description: 'Identificador do usuário administrativo que validou o contrato'
+      example: 1
     idusuario_imobiliaria_valida:
-      example: 1
       type: integer
-      description: Identificador do usuário da imobiliária que validou o contrato
+      description: 'Identificador do usuário da imobiliária que validou o contrato'
+      example: 1
     idcorretor_valida:
-      example: 1
       type: integer
-      description: Identificador do corretor que validou o contrato
+      description: 'Identificador do corretor que validou o contrato'
+      example: 1
     idusuarioassina:
-      example: 1
       type: integer
-      description: Identificador do usuário administrativo que assinou o contrato
+      description: 'Identificador do usuário administrativo que assinou o contrato'
+      example: 1
     idusuario_imobiliaria_assina:
-      example: 1
       type: integer
-      description: Identificador do usuário da imobiliária que assinou o contrato
+      description: 'Identificador do usuário da imobiliária que assinou o contrato'
+      example: 1
     idcorretor_assina:
-      example: 1
       type: integer
-      description: Identificador do corretor que assinou o contrato
+      description: 'Identificador do corretor que assinou o contrato'
+      example: 1
     idusuariocancela:
-      example: 1
       type: integer
-      description: Identificador do usuário administrativo que cancelou o contrato
+      description: 'Identificador do usuário administrativo que cancelou o contrato'
+      example: 1
     idusuario_imobiliaria_cancela:
-      example: 1
       type: integer
-      description: Identificador do usuário da imobiliária que cancelou o contrato
+      description: 'Identificador do usuário da imobiliária que cancelou o contrato'
+      example: 1
     idcorretor_cancela:
-      example: 1
       type: integer
-      description: Identificador do corretor que cancelou o contrato
+      description: 'Identificador do corretor que cancelou o contrato'
+      example: 1
     assinado:
-      example: 2022-04-13 14:24:27
       type: string
-      description: Data e hora que o contrato foi assinado
+      description: 'Data e hora que o contrato foi assinado'
+      example: '2024-03-31 09:15:54'
     validado:
-      example: 2022-04-13 14:24:27
       type: string
-      description: Data e hora que o contrato foi validado
+      description: 'Data e hora que o contrato foi validado'
+      example: '2024-03-31 09:15:54'
     cancelado:
-      example: 2022-04-13 14:24:27
       type: string
-      description: Data e hora que o contrato foi cancelado
+      description: 'Data e hora que o contrato foi cancelado'
+      example: '2024-03-31 09:15:54'
     visualizacao:
+      type: integer
+      description: '1 - Permissao do contrato | 2 - Exibir | 3 - Nao exibir'
       example: 2
-      type: integer
-      description: 1 - Permissao do contrato | 2 - Exibir | 3 - Nao exibir
     idusuario:
-      example: 1
       type: integer
-      description: Identificador do usuário administrativo que gerou o contrato
+      description: 'Identificador do usuário administrativo que gerou o contrato'
+      example: 1
     idusuario_imobiliaria:
-      example: 1
       type: integer
-      description: Identificador do usuário da imobiliária que gerou o contrato
+      description: 'Identificador do usuário da imobiliária que gerou o contrato'
+      example: 1
     idcorretor:
+      type: integer
+      description: 'Identificador do corretor que gerou o contrato'
       example: 1
-      type: integer
-      description: Identificador do corretor que gerou o contrato
     data_entrega:
-      example: 2022-04-13 14:24:27
       type: datetime
-      description: Data de previsão da entrega
+      description: 'Data de previsão da entrega'
+      example: '2024-03-31 09:15:54'
     justificativa:
+      type: string
+      description: 'Justificativa do cancelamento do contrato'
       example: Reprovado
-      type: string
-      description: Justificativa do cancelamento do contrato
     nao_assinado:
-      example: 2022-04-13 14:24:27
       type: string
-      description: Data e hora que o contrato não foi assinado
+      description: 'Data e hora que o contrato não foi assinado'
+      example: '2024-03-31 09:15:54'
     nao_validado:
-      example: 2022-04-13 14:24:27
       type: string
-      description: Data e hora que o contrato não foi validado
+      description: 'Data e hora que o contrato não foi validado'
+      example: '2024-03-31 09:15:54'
     arquivo:
-      example: 20221212112201_63973909933f4.pdf
       type: string
-      description: Nome do arquivo do contrato
+      description: 'Nome do arquivo do contrato'
+      example: 20221212112201_63973909933f4.pdf
     arquivo_tipo:
+      type: string
+      description: 'Tipo do arquivo do contrato'
       example: application/pdf
-      type: string
-      description: Tipo do arquivo do contrato
     arquivo_tamanho:
+      type: integer
+      description: 'Tamanho do arquivo do contrato'
       example: 11670
-      type: integer
-      description: Tamanho do arquivo do contrato
     arquivo_servidor:
-      example: 20221212112201_63973909933f4.pdf
       type: string
-      description: Nome do arquivo interno do contrato
+      description: 'Nome do arquivo interno do contrato'
+      example: 20221212112201_63973909933f4.pdf
     idusuario_correspondente:
-      example: 12
       type: integer
-      description: Identificador do correspodente que gerou o contrato
+      description: 'Identificador do correspodente que gerou o contrato'
+      example: 12
     idusuario_correspondente_valida:
+      type: integer
+      description: 'Identificador do correspondente que validou o contrato'
       example: 12
-      type: integer
-      description: Identificador do correspondente que validou o contrato
     idusuario_correspondente_assina:
-      example: null
       type: integer
-      description: Identificador do correspondente que assinou o contrato
+      description: 'Identificador do correspondente que assinou o contrato'
+      example: null
     idusuario_correspondente_cancela:
-      example: null
       type: integer
-      description: Identificador do correspondente que cancelou o contrato
+      description: 'Identificador do correspondente que cancelou o contrato'
+      example: null
     idlancamento:
-      example: null
       type: integer
-      description: Identificador do lançamento
+      description: 'Identificador do lançamento'
+      example: null
     idreserva_contrato_lancamento:
-      example: null
       type: integer
-      description: Identificado do reserva contrato no lançamento
+      description: 'Identificado do reserva contrato no lançamento'
+      example: null
     imagem_comprimida:
+      type: string
+      description: 'Informa se o as imagens do contrato foram comprimidas'
       example: Não
-      type: string
-      description: Informa se o as imagens do contrato foram comprimidas
     arquivo_servidor_word:
+      type: string
+      description: 'Nome do arquivo interno do contrato tipo word'
       example: 20221212112201_63973909933f4.pdf
-      type: string
-      description: Nome do arquivo interno do contrato tipo word
     tipo_assinatura_digital:
+      type: string
+      description: 'Tipo da assinatura eletrônica do contrato'
       example: Rubrica
-      type: string
-      description: Tipo da assinatura eletrônica do contrato
     iniciado_geracao_word:
-      example: Sim
       type: string
-      description: Informa que o foi iniciou a gerar o contrato do word
+      description: 'Informa que o foi iniciou a gerar o contrato do word'
+      example: Sim
     data_iniciado_geracao_word:
-      example: 2022-12-12 11:20:31
       type: datetime
-      description: Data e hora que iniciou a gerar o contrato do word
+      description: 'Data e hora que iniciou a gerar o contrato do word'
+      example: '2024-03-31 09:15:54'
+    _post:
+      type: string
+      description: 'Informações do post da geração do contrato do word'
+      example: 'null'
     data_sincronizacao:
-      example: 2022-12-12 11:20:31
       type: datetime
-      description: Data de sincronização
+      description: 'Data de sincronização'
+      example: '2024-03-31 09:15:54'

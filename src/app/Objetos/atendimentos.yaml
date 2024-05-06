@@ -1,22 +1,23 @@
 path: /atendimentos
 tabela: atendimentos
 metodo: get
-descricao: Esta api retorna os dados dos atendimentos a partir dos filtros
-  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
-nome: Atendimentos (atendimentos)
+descricao: 'Esta api retorna os dados dos atendimentos a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Atendimentos (atendimentos)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,269 +28,256 @@ schema: RetornarAtendimentos
 subschema: Atendimento
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador do atendimento
+      description: 'Identificador do atendimento'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
-    idatendimento:
-      example: 1070
-      type: integer
-      description: Identificador do atendimento
-    protocolo:
-      example: "2205181070"
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
       type: string
-      description: Número do protocolo do atendimento (não é o ID)
-    data_cad:
-      example: 2022-05-18 10:45:28
-      type: datetime
-      description: Data de abertura do atendimento
-    prioridade:
-      example: Normal
-      type: string
-      description: Prioridade do atendimento
-    tempo_finalizado:
-      example: 18637
-      type: integer
-      description: Tempo utilizado para ser finalizado
-    telefone_atendimento:
-      example: (79) 9999-9999
-      type: string
-      description: Contato do atendimento
-    nome_cliente:
-      example: João das Neves
-      type: string
-      description: Nome do cliente
-    email_cliente:
-      example: joao@gmail.com
-      type: string
-      description: E-mail do cliente
-    tempo_resposta:
-      example: 30
-      type: integer
-      description: Tempo de resposta
-    encerrado_primeiro_contato:
-      example: N
-      type: string
-      description: Foi encerrado no primeiro contato?
-    humor_cliente:
-      example: I
-      type: string
-      description: Informa a satisfação do cliente
-    idcanal:
-      example: 1
-      type: integer
-      description: Identificador do canal de atendimento
-    idatendimento_vinculo:
-      example: 1254, 1548
-      type: string
-      description: Identificadores dos atendimentos vinculados ao atendimento
-    previsao_conclusao:
-      example: null
-      type: string
-      description: Previsão de conclusão
-    idlead:
-      example: 999
-      type: integer
-      description: Identificador do lead
-    ativo_painel:
+      description: 'Informa se está ativo ou não'
       example: S
+    idatendimento:
+      type: integer
+      description: 'Identificador do atendimento'
+      example: 1070
+    protocolo:
       type: string
-      description: Informa se está ativo
+      description: 'Número do protocolo do atendimento (não é o ID)'
+      example: '2205181070'
+    data_cad:
+      type: datetime
+      description: 'Data de abertura do atendimento'
+      example: '2024-03-31 09:15:54'
+    prioridade:
+      type: string
+      description: 'Prioridade do atendimento'
+      example: Normal
+    tempo_finalizado:
+      type: integer
+      description: 'Tempo utilizado para ser finalizado'
+      example: 18637
+    telefone_atendimento:
+      type: string
+      description: 'Contato do atendimento'
+      example: '(79) 9999-9999'
+    nome_cliente:
+      type: string
+      description: 'Nome do cliente'
+      example: 'João das Neves'
+    email_cliente:
+      type: string
+      description: 'E-mail do cliente'
+      example: joao@gmail.com
+    tempo_resposta:
+      type: integer
+      description: 'Tempo de resposta'
+      example: 30
+    encerrado_primeiro_contato:
+      type: string
+      description: 'Foi encerrado no primeiro contato?'
+      example: 'N'
+    humor_cliente:
+      type: string
+      description: 'Informa a satisfação do cliente'
+      example: I
+    idcanal:
+      type: integer
+      description: 'Identificador do canal de atendimento'
+      example: 1
+    idatendimento_vinculo:
+      type: string
+      description: 'Identificadores dos atendimentos vinculados ao atendimento'
+      example: '1254, 1548'
+    previsao_conclusao:
+      type: string
+      description: 'Previsão de conclusão'
+      example: null
+    idlead:
+      type: integer
+      description: 'Identificador do lead'
+      example: 999
+    ativo_painel:
+      type: string
+      description: 'Informa se está ativo'
+      example: S
     avaliacao:
-      example: 4
       type: integer
       description: Avaliação
+      example: 4
     canal:
+      type: string
+      description: 'Canal de atendimento'
       example: Portal
-      type: string
-      description: Canal de atendimento
     idempreendimento:
-      example: 3
       type: integer
-      description: Código identificador do empreendimento
+      description: 'Código identificador do empreendimento'
+      example: 3
     codigointerno_empreendimento:
-      example: "1"
       type: string
-      description: Código interno do empreendimento
+      description: 'Código interno do empreendimento'
+      example: '1'
     empreendimento:
+      type: string
+      description: 'Nome do empreendimento'
       example: Varandas
-      type: string
-      description: Nome do empreendimento
     etapa:
+      type: string
+      description: 'Etapa do empreendimento '
       example: Unica
-      type: string
-      description: "Etapa do empreendimento "
     bloco:
+      type: string
+      description: 'Bloco da etapa do empreendimento'
       example: Sol
-      type: string
-      description: Bloco da etapa do empreendimento
     unidade:
+      type: text
+      description: 'Unidade do empreendimento do atendimento'
       example: 102-B
-      type: text
-      description: Unidade do empreendimento do atendimento
     idcliente:
+      type: integer
+      description: 'Código identificador do cliente'
       example: 193
-      type: integer
-      description: Código identificador do cliente
     documento_cliente:
-      example: "12345678910"
       type: string
-      description: Número do documento (CPF/CNPJ) do cliente
+      description: 'Número do documento (CPF/CNPJ) do cliente'
+      example: '12345678910'
     cliente:
+      type: string
+      description: 'Nome do cliente'
       example: João
-      type: string
-      description: Nome do cliente
     cep_cliente:
-      example: "49010020"
       type: string
-      description: CEP de endereço do cliente
+      description: 'CEP de endereço do cliente'
+      example: '49010020'
     regiao:
+      type: string
+      description: 'Região do empreendimento'
       example: Nordeste
-      type: string
-      description: Região do empreendimento
     situacao:
-      example: Em Atendimento
       type: string
-      description: Nome da situação atual do atendimento
+      description: 'Nome da situação atual do atendimento'
+      example: 'Em Atendimento'
     idprotocolo:
+      type: integer
+      description: 'Código identificador do protocolo'
       example: 12
-      type: integer
-      description: Código identificador do protocolo
     assunto:
+      type: string
+      description: 'Assunto do atendimento'
       example: Financeiro
-      type: string
-      description: Assunto do atendimento
     subassunto:
-      example: Gerar boleto
       type: string
-      description: Subassunto do atendimento
+      description: 'Subassunto do atendimento'
+      example: 'Gerar boleto'
     usuario:
-      example: Maria joaquina
       type: string
-      description: Proprietário da unidade
-    data_situacao:
-      example: 2022-05-18 10:02:10
-      type: datetime
-      description: Data em que passou para a situação atual
+      description: 'Proprietário da unidade'
+      example: 'Maria joaquina'
     idclassificacao:
-      example: 1
       type: integer
-      description: Código identificador da classificação
+      description: 'Código identificador da classificação'
+      example: 1
     classificacao:
+      type: string
+      description: 'Classificação do atendimento'
       example: Desclassificado
-      type: string
-      description: Classificação do atendimento
     idtipo:
+      type: integer
+      description: 'Código identificador do tipo'
       example: 1
-      type: integer
-      description: Código identificador do tipo
     tipo:
-      example: Aberto pelo gestor
       type: string
-      description: Tipo do atendimento aberto
+      description: 'Tipo do atendimento aberto'
+      example: 'Aberto pelo gestor'
     imobiliaria:
-      example: Imobiliaria das flores
       type: string
-      description: Nome da imobiliária vinculada ao atendimento
+      description: 'Nome da imobiliária vinculada ao atendimento'
+      example: 'Imobiliaria das flores'
     corretor:
-      example: João corretor
       type: string
-      description: Nome do corretor vinculado ao atendimento
+      description: 'Nome do corretor vinculado ao atendimento'
+      example: 'João corretor'
     idsituacao:
-      example: 2
       type: integer
-      description: Código identificador da situação atual
+      description: 'Código identificador da situação atual'
+      example: 2
     idresponsavel:
+      type: integer
+      description: 'Identificador do responsável pelo atendimento'
       example: 34
-      type: integer
-      description: Identificador do responsável pelo atendimento
     responsavel:
+      type: string
+      description: 'Responsável pelo atendimento'
       example: Henrique
-      type: string
-      description: Responsável pelo atendimento
     idunidade:
-      example: 4, 5, 29
       type: string
-      description: Identificadores das unidade(s) do atendimento
+      description: 'Identificadores das unidade(s) do atendimento'
+      example: '4, 5, 29'
     idcorretor:
+      type: integer
+      description: 'Identificador do corretor'
       example: 98
-      type: integer
-      description: Identificador do corretor
     idimobiliaria:
-      example: 2
       type: string
-      description: Identificador da imobiliária
+      description: 'Identificador da imobiliária'
+      example: 2
     sigla_empreendimento:
+      type: string
+      description: 'Sigla do empreendimento'
       example: VAR
-      type: string
-      description: Sigla do empreendimento
     codigointerno_cliente:
-      example: "8929"
       type: string
-      description: Código interno do cliente
+      description: 'Código interno do cliente'
+      example: '8929'
     tags:
-      example: pessoal
       type: text
-      description: Tags associadas ao atendimento
-    quantidade_mensagens:
-      example: 3
-      type: integer
-      description: Quantidade das mensagens no atendimento
-    quantidade_interacoes:
-      example: 2
-      type: integer
-      description: Quantidade das interações no atendimento
-    sinalizador_juridico:
-      example: Devedor
-      type: string
-      description: Sinalizador jurídico do cliente
+      description: 'Tags associadas ao atendimento'
+      example: pessoal
     times:
+      type: string
+      description: 'Time responsável pelo atendimento'
       example: Palmeiras
-      type: string
-      description: Time responsável pelo atendimento
     origem:
-      example: GE
       type: string
-      description: Origem do atendimento
+      description: 'Origem do atendimento'
+      example: GE
     data_modificacao:
-      example: 2022-10-10
       type: datetime
-      description: Data de modificação do registro
+      description: 'Data de modificação do registro'
+      example: '2022-10-10'

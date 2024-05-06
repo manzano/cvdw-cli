@@ -1,23 +1,23 @@
 path: /reservas/comissoes/programacao
 tabela: reservas_comissoes_programacao
 metodo: get
-descricao: Esta api retorna os dados da programação da comissão na reserva a
-  partir dos filtros solicitados, caso deseje saber o que cada campo representa
-  basta ir no schema.
-nome: Reservas (reservas_comissoes_programacao)
+descricao: 'Esta api retorna os dados da programação da comissão na reserva a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Reservas (reservas_comissoes_programacao)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -28,120 +28,120 @@ schema: RetornarReservasComissoesProgramacao
 subschema: ReservasComissoesProgramacao
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador
+      description: 'Identificador'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-12-29 16:12:52
       type: datetime
-      description: Data de Referência
-    idprogramacao:
-      example: 12414
-      type: integer
-      description: Identificador da programação
-    idreserva:
-      example: 12
-      type: integer
-      description: Identificador da reserva
-    idreservascondicoes:
-      example: 12
-      type: integer
-      description: Identificador das condições da reserva
-    idcondicoes_parcelas:
-      example: 12
-      type: integer
-      description: Identificador da parcela da condição da reserva
-    idregra:
-      example: 12
-      type: integer
-      description: Identificador da regra de comissão
-    contrato:
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
       example: S
+    idprogramacao:
+      type: integer
+      description: 'Identificador da programação'
+      example: 12414
+    idreserva:
+      type: integer
+      description: 'Identificador da reserva'
+      example: 12
+    idreservascondicoes:
+      type: integer
+      description: 'Identificador das condições da reserva'
+      example: 12
+    idcondicoes_parcelas:
+      type: integer
+      description: 'Identificador da parcela da condição da reserva'
+      example: 12
+    idregra:
+      type: integer
+      description: 'Identificador da regra de comissão'
+      example: 12
+    contrato:
       type: string
-      description: Informa se está dentro ou fora do contrato S (Sim) e N (Não)
+      description: 'Informa se está dentro ou fora do contrato S (Sim) e N (Não)'
+      example: S
     parcela:
+      type: integer
+      description: 'Informa o número da parcela'
       example: 1
-      type: integer
-      description: Informa o número da parcela
     para:
+      type: string
+      description: 'Informa para: IC (imobiliária), IR (imobiliária da reserva), CO (imobiliária coordenação), CC (corretor), CR (corretor da reserva), CP (coordenador do produto), UI (usuário da imobiliária), UA (usuário administratico)'
       example: IC
-      type: string
-      description: "Informa para: IC (imobiliária), IR (imobiliária da reserva), CO
-        (imobiliária coordenação), CC (corretor), CR (corretor da reserva), CP
-        (coordenador do produto), UI (usuário da imobiliária), UA (usuário
-        administratico)"
     quem:
+      type: integer
+      description: 'Informa o identificador da pessoa quem da regra'
       example: 10
-      type: integer
-      description: Informa o identificador da pessoa quem da regra
     valor:
-      example: 1000
       type: number
-      description: Informa o valor programado
+      description: 'Informa o valor programado'
+      example: 1000.0
     data_previsao:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Informa a data de previsão
+      description: 'Informa a data de previsão'
+      example: '2021-01-01'
     data_previsao_pagadoria:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Informa a data de previsão para pagadoria
+      description: 'Informa a data de previsão para pagadoria'
+      example: '2021-01-01'
     forma_pagamento:
-      example: B
       type: string
-      description: Informa a sigla da forma de pagamento
+      description: 'Informa a sigla da forma de pagamento'
+      example: B
     idgestaocontrato_lancamento:
-      example: 12
       type: integer
-      description: Identificador da gestão de contrato lançamento
+      description: 'Identificador da gestão de contrato lançamento'
+      example: 12
     idreserva_comissao_parcela_lancamento:
-      example: 12
       type: integer
-      description: Identificador da comissão parcela lançamento
+      description: 'Identificador da comissão parcela lançamento'
+      example: 12
     idlancamento:
-      example: 12
       type: integer
-      description: Identificador do lançamento
+      description: 'Identificador do lançamento'
+      example: 12
     idprogramacao_lancamento:
-      example: 12
       type: integer
-      description: Identificador da programação no lançamento
+      description: 'Identificador da programação no lançamento'
+      example: 12
     data_cad:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Data de cadastro
+      description: 'Data de cadastro'
+      example: '2024-03-31 09:15:54'

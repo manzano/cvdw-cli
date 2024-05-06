@@ -1,23 +1,23 @@
 path: /assistencias/itens
 tabela: assistencias_itens
 metodo: get
-descricao: Esta api retorna os dados dos itens das assistências a partir dos
-  filtros solicitados, caso deseje saber o que cada campo representa basta ir no
-  schema.
-nome: Assistências (assistencias_itens)
+descricao: 'Esta api retorna os dados dos itens das assistências a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Assistências (assistencias_itens)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -28,93 +28,92 @@ schema: RetornarItensAssistencias
 subschema: ItensAssistencias
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador do item da assistência
+      description: 'Identificador do item da assistência'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
     idassistencia_item:
+      type: integer
+      description: 'Identificador do item da assistência'
       example: 104
-      type: integer
-      description: Identificador do item da assistência
     idassistencia:
+      type: integer
+      description: 'Identificador da assistência'
       example: 345
-      type: integer
-      description: Identificador da assistência
     item:
+      type: string
+      description: 'Nome do item'
       example: Parede
-      type: string
-      description: Nome do item
     data_cad:
-      example: 2022-10-10
       type: datetime
-      description: Data de cadastro
+      description: 'Data de cadastro'
+      example: '2022-10-10'
     descricao:
-      example: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis neque.
       type: text
-      description: Descrição do registro
+      description: 'Descrição do registro'
+      example: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis neque. (TEXT)'
     idsituacao:
+      type: integer
+      description: 'Identificador da situação atual'
       example: 6
-      type: integer
-      description: Identificador da situação atual
     situacao:
+      type: string
+      description: 'Situação atual'
       example: Cancelado
-      type: string
-      description: Situação atual
     data_conclusao:
-      example: 2022-10-15
       type: datetime
-      description: Data de conclusão
+      description: 'Data de conclusão'
+      example: '2022-10-15'
     data_previsao:
-      example: 2022-10-14
       type: datetime
-      description: Data de previsão da conclusão
+      description: 'Data de previsão da conclusão'
+      example: '2022-10-14'
     horas_servico:
-      example: 7
       type: integer
-      description: Quantidade de horas investidas no serviço
+      description: 'Quantidade de horas investidas no serviço'
+      example: 7
     ativo:
-      example: Sim
       type: string
-      description: Informa se o item está ativo (Sim; Não)
+      description: 'Informa se está ativo ou não'
+      example: S
     data_sincronizacao:
-      example: 2022-10-15
       type: datetime
-      description: Data de sincronização com a base de dados
+      description: 'Data de sincronização com a base de dados'
+      example: '2022-10-15'

@@ -1,21 +1,23 @@
 path: /atendimentos/workflow/tempo
 tabela: atendimentos_workflow_tempo
 metodo: get
-descricao: Esta api retorna o tempo que o atendimento passou em cada situação.
-nome: Atendimentos (atendimentos_workflow_tempo)
+descricao: 'Esta api retorna o tempo que o atendimento passou em cada situação.'
+nome: 'Atendimentos (atendimentos_workflow_tempo)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -26,73 +28,70 @@ schema: RetornarAtendimentoWorkflowTempo
 subschema: AtendimentoWorkflowTempo
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
-    example: 1
     type: integer
-    description: Página que deseja visualizar os registros
   registros:
-    example: 30
     type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+  ativo:
+    type: string
   total_de_registros:
-    example: 1054
     type: integer
-    description: Total de registros encontrados
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador
+      description: 'Identificador'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
+      example: S
     idtempo:
+      type: integer
+      description: 'Código identificador do tempo de workflow'
       example: 5166
-      type: integer
-      description: Código identificador do tempo de workflow
     idassistencia:
+      type: integer
+      description: 'Código identificador do atendimento'
       example: 1
-      type: integer
-      description: Código identificador do atendimento
     idsituacao:
-      example: 2
       type: integer
-      description: Código identificador da situação
+      description: 'Código identificador da situação'
+      example: 2
     situacao:
+      type: string
+      description: 'Nome da situação'
       example: Ativa
-      type: string
-      description: Nome da situação
     sigla:
-      example: AT
       type: string
-      description: Sigla do workflow
+      description: 'Sigla do workflow'
+      example: AT
     tempo:
-      example: 2
       type: integer
-      description: Tempo que a assistência ficou na situação (Em minutos)
+      description: 'Tempo que a assistência ficou na situação (Em minutos)'
+      example: 2
     data_cad:
-      example: 2022-01-14 18:05:35
       type: datetime
-      description: Data de cadastro desse tempo de workflow
+      description: 'Data de cadastro desse tempo de workflow'
+      example: '2024-03-31 09:15:54'

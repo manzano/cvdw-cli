@@ -42,7 +42,7 @@ class Cvdw
         $this->conn = conectarDB($input, $output);
     }
 
-    public function processar(array $objeto, int $qtd, $io, $apartir = null, $inputDataReferencia = false, $logObjeto = null): bool
+    public function processar(array $objeto, int $qtd, $io, $apartir = null, $inputDataReferencia = false, $logObjeto = null, $maxpag = null): bool
     {
         if ($this->output->isDebug()) {
             $io->info(" LOG: " . __FUNCTION__);
@@ -118,6 +118,9 @@ class Cvdw
                 $this->processados = 0;
                 for ($pagina = 1; $pagina <= $paginas; $pagina++) {
                     if ($this->getLimiteErros()) {
+                        break;
+                    }
+                    if($maxpag && $pagina >= ($maxpag+1)){
                         break;
                     }
                     if ($pagina > 1) {

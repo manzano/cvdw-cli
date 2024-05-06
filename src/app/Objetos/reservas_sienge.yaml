@@ -1,22 +1,23 @@
 path: /reservas/sienge
 tabela: reservas_sienge
 metodo: get
-descricao: Esta api retorna os dados das reservas do Sienge a partir dos filtros
-  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
-nome: Reservas (reservas_sienge)
+descricao: 'Esta api retorna os dados das reservas do Sienge a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Reservas (reservas_sienge)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,177 +28,176 @@ schema: RetornarSiengeReservas
 subschema: SiengeReservas
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador da reserva do sienge no CV
+      description: 'Identificador da reserva do sienge no CV'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
     idsienge_reserva:
-      example: 12414
       type: integer
-      description: Identificador da reserva do sienge no CV
+      description: 'Identificador da reserva do sienge no CV'
+      example: 12414
     idreserva:
+      type: integer
+      description: 'Identificador da reserva'
       example: 12414
-      type: integer
-      description: Identificador da reserva
     previsao_entrega:
-      example: 2021-01-01 00:00:00
       type: string
-      description: Data do prazo de entrega
+      description: 'Data do prazo de entrega'
+      example: '2024-03-31 09:15:54'
     nome_contrato:
+      type: string
+      description: 'Nome do contrato'
       example: CV1000
-      type: string
-      description: Nome do contrato
     tipo_contrato:
+      type: string
+      description: 'Tipo do contrato'
       example: Contrato
-      type: string
-      description: Tipo do contrato
     data_contrato:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Data do contrato
+      description: 'Data do contrato'
+      example: '2024-03-31 09:15:54'
     tipo_correcao:
+      type: string
+      description: 'Tipo de correção'
       example: Mensal
-      type: string
-      description: Tipo de correção
     tipo_correcao_anual:
+      type: string
+      description: 'Tipo de correção anual'
       example: Fixa
-      type: string
-      description: Tipo de correção anual
     mes_reajuste:
+      type: string
+      description: 'Mês de reajuste'
       example: Novembro
-      type: string
-      description: Mês de reajuste
     corrigir_parcela_a_partir:
-      example: 2021-01-01 00:00:00
       type: string
-      description: Corrigir parcela a partir de
+      description: 'Corrigir parcela a partir de'
+      example: '2024-03-31 09:15:54'
     gerar_residuo:
-      example: Sim
       type: string
-      description: Informa geração de resíduo
+      description: 'Informa geração de resíduo'
+      example: Sim
     diluir_valor_residuo:
+      type: string
+      description: 'Informa diluição do valor do resíduo'
       example: Sim
-      type: string
-      description: Informa diluição do valor do resíduo
     corrigir_parcela_a_cada:
-      example: 2
       type: integer
-      description: Corrigir parcela a cada quantidade de meses
+      description: 'Corrigir parcela a cada quantidade de meses'
+      example: 2
     tipo_juros:
+      type: string
+      description: 'Tipo de juros'
       example: Price
-      type: string
-      description: Tipo de juros
     percentual_juros:
-      example: 1.21
       type: number
-      description: Percentual de juros
+      description: 'Percentual de juros'
+      example: 1.21
     plano_financeiro:
-      example: Receita de Incorporação de Imóveis
       type: string
-      description: Plano financeiro
+      description: 'Plano financeiro'
+      example: 'Receita de Incorporação de Imóveis'
     indexador:
-      example: INCC-DI
       type: string
       description: Indexador
+      example: INCC-DI
     codigo_corretor:
+      type: integer
+      description: 'Código do corretor'
       example: 2
-      type: integer
-      description: Código do corretor
     data_base:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Data base
+      description: 'Data base'
+      example: '2024-03-31 09:15:54'
     qtd_meses_carencia:
-      example: 1
       type: integer
-      description: Quantidade de meses de carência
+      description: 'Quantidade de meses de carência'
+      example: 1
     data_base_juros:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Data base de juros
+      description: 'Data base de juros'
+      example: '2024-03-31 09:15:54'
     data_cad:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Data de cadastro
+      description: 'Data de cadastro'
+      example: '2024-03-31 09:15:54'
     enviado:
-      example: Sim
       type: string
-      description: Informa se reserva foi enviada para o Sienge
+      description: 'Informa se reserva foi enviada para o Sienge'
+      example: Sim
     data_envio:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Data de envio
+      description: 'Data de envio'
+      example: '2024-03-31 09:15:54'
     ativo:
-      example: Sim
       type: string
-      description: Informa se está ativo
+      description: 'Informa se está ativo ou não'
+      example: S
     coincidir_vencimentos:
-      example: Sim
       type: string
-      description: Informa se vai coincidir vencimentos
+      description: 'Informa se vai coincidir vencimentos'
+      example: Sim
     enviar_valor_com_comissao:
+      type: string
+      description: 'Informa se vai enviar valor com comissão'
       example: Não
-      type: string
-      description: Informa se vai enviar valor com comissão
     percentual_multa_acrescimo_mora:
+      type: number
+      description: 'Percentual de multa para acréscimo de mora'
       example: 7.89
-      type: number
-      description: Percentual de multa para acréscimo de mora
     calculo_acrescimo_mora_diario:
-      example: Sim
       type: string
-      description: Informa se vai calcular acréscimo de mora diário
+      description: 'Informa se vai calcular acréscimo de mora diário'
+      example: Sim
     valor_mora_diario:
+      type: number
+      description: 'Valor de mora diário em reais'
       example: 100.49
-      type: number
-      description: Valor de mora diário em reais
     data_contabil:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Data contábil
+      description: 'Data contábil'
+      example: '2024-03-31 09:15:54'
     juros_mora_mensal:
-      example: 0.7412
       type: number
-      description: Percentual de juros de mora mensal
+      description: 'Percentual de juros de mora mensal'
+      example: 0.7412
     data_modificacao:
-      example: 2022-08-02 13:06:58
       type: datetime
-      description: Data da última modificação
+      description: 'Data da última modificação'
+      example: '2024-03-31 09:15:54'

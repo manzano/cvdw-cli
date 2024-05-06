@@ -1,22 +1,23 @@
 path: /pessoas/financeiros
 tabela: pessoas_financeiros
 metodo: get
-descricao: Esta api retorna os valores dos dados financeiros das pessoas (PJ) a
-  partir dos filtros solicitados.
-nome: Pessoas (pessoas_financeiros)
+descricao: 'Esta api retorna os valores dos dados financeiros das pessoas (PJ) a partir dos filtros solicitados.'
+nome: 'Pessoas (pessoas_financeiros)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,161 +28,164 @@ schema: RetornarPessoasFinanceiros
 subschema: PessoasFinanceirosRetorno
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador
+      description: 'Identificador'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-12-29 16:12:52
       type: datetime
-      description: Data de Referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
+      example: S
     idpessoa:
-      example: 269
       type: integer
-      description: Identificador da pessoa
+      description: 'Identificador da pessoa'
+      example: 269
     idpessoa_int:
-      example: "726"
       type: string
-      description: Identificador da pessoa (Código Interno)
+      description: 'Identificador da pessoa (Código Interno)'
+      example: '726'
     dados_financeiro_pj:
-      example: Dados do banco
       type: string
-      description: Dados Financeiros
+      description: 'Dados Financeiros'
+      example: 'Dados do banco'
     valor_faturamento_mensal_pj:
-      example: "1231.23"
       type: string
-      description: Faturamento Mensal R$
+      description: 'Faturamento Mensal R$'
+      example: '1231.23'
     valor_lucro_liquido_mensal_pj:
-      example: "1231.23"
       type: string
-      description: Lucro Líquido Mensal R$
+      description: 'Lucro Líquido Mensal R$'
+      example: '1231.23'
     valor_contas_receber_pj:
-      example: "1231.23"
       type: string
-      description: Contas à Receber R$
+      description: 'Contas à Receber R$'
+      example: '1231.23'
     valor_estoque_pj:
-      example: "1232.13"
       type: string
-      description: Estoque R$
+      description: 'Estoque R$'
+      example: '1232.13'
     valor_instalacoes_pj:
-      example: "1232130.00"
       type: string
-      description: Instalações R$
+      description: 'Instalações R$'
+      example: '1232130.00'
     valor_moveis_pj:
-      example: "1230.00"
       type: string
-      description: Móveis R$
+      description: 'Móveis R$'
+      example: '1230.00'
     valor_emprestimos_pj:
-      example: "21.21"
       type: string
-      description: Empréstimos R$
+      description: 'Empréstimos R$'
+      example: '21.21'
     valor_inicial_pj:
-      example: "12.12"
       type: string
-      description: Capital Inicial
+      description: 'Capital Inicial'
+      example: '12.12'
     valor_capital_registrado_atual_pj:
-      example: "12.12"
       type: string
-      description: Capital Registrado Atual
+      description: 'Capital Registrado Atual'
+      example: '12.12'
     valor_capital_integralizado_pj:
-      example: "22.21"
       type: string
-      description: Capital Integralizado
+      description: 'Capital Integralizado'
+      example: '22.21'
     reservas_pj:
-      example: Reservas feitas
       type: string
       description: Reservas
+      example: 'Reservas feitas'
     valor_total_vendas_ultimo_exercicio_pj:
-      example: "123.12"
       type: string
-      description: Total de Vendas no Último Exercício R$
+      description: 'Total de Vendas no Último Exercício R$'
+      example: '123.12'
     porcentagem_a_vista_vendas_ultimo_exercicio_pj:
-      example: "0.21"
       type: string
-      description: "% À Vista"
+      description: '% À Vista'
+      example: '0.21'
     medio_prazo_dias_vendas_ultimo_exercicio_pj:
-      example: 12
       type: string
-      description: À Médio Prazo (Dias)
+      description: 'À Médio Prazo (Dias)'
+      example: 12
     valor_media_mensal_vendas_pj:
-      example: "0.12"
       type: string
-      description: Média Mensal de Vendas R$
+      description: 'Média Mensal de Vendas R$'
+      example: '0.12'
     porcentagem_a_vista_media_mensal_vendas_pj:
-      example: "0.12"
       type: string
-      description: "% À Vista"
+      description: '% À Vista'
+      example: '0.12'
     preco_medio_dias_media_mensal_vendas_pj:
-      example: 12
       type: string
-      description: "% Ao Preço Médio (Dias)"
+      description: '% Ao Preço Médio (Dias)'
+      example: 12
     valor_media_mensal_compras_pj:
-      example: "0.12"
       type: string
-      description: Média Mensal de Compras R$
+      description: 'Média Mensal de Compras R$'
+      example: '0.12'
     porcentagem_a_vista_media_mensal_compras_pj:
-      example: "0.12"
       type: string
-      description: "% À Vista"
+      description: '% À Vista'
+      example: '0.12'
     preco_medio_dias_media_mensal_compras_pj:
+      type: string
+      description: '% Ao Preço Médio (Dias)'
       example: 12
-      type: string
-      description: "% Ao Preço Médio (Dias)"
     principais_clientes_pj:
-      example: Empresa X
       type: string
-      description: Principais Clientes
+      description: 'Principais Clientes'
+      example: 'Empresa X'
     concorrentes_diretos_pj:
-      example: Empresa Y
       type: string
-      description: Concorrentes Diretos na Praça
+      description: 'Concorrentes Diretos na Praça'
+      example: 'Empresa Y'
     despesas_fixas_mensais_pj:
-      example: Água, luz, energia
       type: string
-      description: Despesas Fixas Mensais
+      description: 'Despesas Fixas Mensais'
+      example: 'Água, luz, energia'
     predio_proprio_pj:
+      type: string
+      description: 'Prédio Próprio'
       example: Sim
-      type: string
-      description: Prédio Próprio
     valor_aluguel_mes_pj:
-      example: "2323.23"
       type: string
-      description: Aluguel/Mês R$
+      description: 'Aluguel/Mês R$'
+      example: '2323.23'
     data_vigencia_aluguel_pj:
-      example: 2024-01-19
       type: datetime
       description: Vigência
+      example: '2024-01-19'

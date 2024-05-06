@@ -1,22 +1,23 @@
 path: /pessoas/contatos
 tabela: pessoas_contatos
 metodo: get
-descricao: Esta api retorna os valores dos dados de contatos das pessoas a
-  partir dos filtros solicitados.
-nome: Pessoas (pessoas_contatos)
+descricao: 'Esta api retorna os valores dos dados de contatos das pessoas a partir dos filtros solicitados.'
+nome: 'Pessoas (pessoas_contatos)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,145 +28,148 @@ schema: RetornarPessoasContatos
 subschema: PessoasContatosRetorno
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador da pessoa
+      description: 'Identificador da pessoa'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-12-29 16:12:52
       type: datetime
-      description: Data de Referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
+      example: S
     idpessoa_int:
-      example: "726"
       type: string
-      description: Identificador da pessoa (Código Interno)
+      description: 'Identificador da pessoa (Código Interno)'
+      example: '726'
     idpessoa:
-      example: 269
       type: integer
-      description: Identificador da pessoa
+      description: 'Identificador da pessoa'
+      example: 269
     email:
-      example: email@email.com
       type: string
-      description: E-mail de contato
+      description: 'E-mail de contato'
+      example: email@email.com
     telefone:
-      example: (25) 99988-7766
       type: string
-      description: Telefone de contato
+      description: 'Telefone de contato'
+      example: '(25) 99988-7766'
     celular:
-      example: (79) 99988-7766
       type: string
-      description: Celular de contato
+      description: 'Celular de contato'
+      example: '(79) 99988-7766'
     referencia_nome:
-      example: Contato Referência
       type: string
-      description: Nome do contato de referência
+      description: 'Nome do contato de referência'
+      example: 'Contato Referência'
     referencia_telefone:
+      type: string
+      description: 'Telefone do contato de referência'
       example: +557999988-7766
-      type: string
-      description: Telefone do contato de referência
     referencia_parentesco:
+      type: string
+      description: 'Parêntesco do contato de referência'
       example: Amigo
-      type: string
-      description: Parêntesco do contato de referência
     cep_contato_relacionamento:
-      example: "49015120"
       type: string
-      description: CEP do dados opcionais para contato e relacionamento
+      description: 'CEP do dados opcionais para contato e relacionamento'
+      example: '49015120'
     endereco_contato_relacionamento:
-      example: Rua Itabaiana
       type: string
-      description: Endereço do dados opcionais para contato e relacionamento
+      description: 'Endereço do dados opcionais para contato e relacionamento'
+      example: 'Rua Itabaiana'
     bairro_contato_relacionamento:
-      example: São José
       type: string
-      description: Bairro do dados opcionais para contato e relacionamento
+      description: 'Bairro do dados opcionais para contato e relacionamento'
+      example: 'São José'
     numero_contato_relacionamento:
-      example: "150"
       type: string
-      description: Número do dados opcionais para contato e relacionamento
+      description: 'Número do dados opcionais para contato e relacionamento'
+      example: '150'
     complemento_contato_relacionamento:
-      example: ap 9191
       type: string
-      description: Complemento do dados opcionais para contato e relacionamento
+      description: 'Complemento do dados opcionais para contato e relacionamento'
+      example: 'ap 9191'
     estado_contato_relacionamento:
+      type: string
+      description: 'Estado do dados opcionais para contato e relacionamento'
       example: SE
-      type: string
-      description: Estado do dados opcionais para contato e relacionamento
     cidade_contato_relacionamento:
+      type: string
+      description: 'Cidade do dados opcionais para contato e relacionamento'
       example: Aracaju
-      type: string
-      description: Cidade do dados opcionais para contato e relacionamento
     pais_contato_relacionamento:
+      type: string
+      description: 'País do dados opcionais para contato e relacionamento'
       example: Brasil
-      type: string
-      description: País do dados opcionais para contato e relacionamento
     telefone_contato_relacionamento:
-      example: "+557984848484"
       type: string
-      description: Telefone do dados opcionais para contato e relacionamento
+      description: 'Telefone do dados opcionais para contato e relacionamento'
+      example: '+557984848484'
     celular_contato_relacionamento:
-      example: "+55978949448484"
       type: string
-      description: Celular do dados opcionais para contato e relacionamento
+      description: 'Celular do dados opcionais para contato e relacionamento'
+      example: '+55978949448484'
     email_contato_relacionamento:
-      example: email@email.com
       type: string
-      description: Email do dados opcionais para contato e relacionamento
+      description: 'Email do dados opcionais para contato e relacionamento'
+      example: email@email.com
     nome_representante_pj:
-      example: Manoel Gomes
       type: string
-      description: Nome do representante PJ
+      description: 'Nome do representante PJ'
+      example: 'Manoel Gomes'
     documento_representante_pj:
+      type: string
+      description: 'Documento do representante PJ'
       example: 111.111.111-11
-      type: string
-      description: Documento do representante PJ
     cargo_pj:
+      type: string
+      description: 'Cargo do representante PJ'
       example: Analista
-      type: string
-      description: Cargo do representante PJ
     email_relacionamento_pj:
+      type: string
+      description: 'E-mail do representante PJ'
       example: email@email.com
-      type: string
-      description: E-mail do representante PJ
     telefone_relacionamento_pj:
-      example: "+5579498489489"
       type: string
-      description: Telefone do representante PJ
+      description: 'Telefone do representante PJ'
+      example: '+5579498489489'
     genero_representante:
-      example: Masculino
       type: string
-      description: Gênero do representante PJ
+      description: 'Gênero do representante PJ'
+      example: Masculino

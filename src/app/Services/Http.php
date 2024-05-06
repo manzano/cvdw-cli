@@ -105,7 +105,6 @@ class Http
                 'Retorno: '. $response
             ]);
             return $this->io;
-            exit;
         }
 
         if (isset($responseJson->total_de_registros) && $responseJson->total_de_registros !== null) {

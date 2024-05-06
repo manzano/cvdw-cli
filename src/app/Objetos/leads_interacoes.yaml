@@ -1,21 +1,23 @@
 path: /leads/interacoes
 tabela: leads_interacoes
 metodo: get
-descricao: Esta api retorna a listagem de interações dos leads.
-nome: Leads (leads_interacoes)
+descricao: 'Esta api retorna a listagem de interações dos leads.'
+nome: 'Leads (leads_interacoes)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -26,101 +28,104 @@ schema: RetornarLeadsInteracoes
 subschema: LeadsInteracoes
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador da interação
+      description: 'Identificador da interação'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
-    idinteracao:
-      example: 258
-      type: integer
-      description: Identificador da interação
-    idlead:
-      example: 168523
-      type: integer
-      description: Identificador do lead
-    data_cad:
-      example: 2022-03-06 10:00:00
-      type: datetime
-      description: Data de cadastro
-    idcorretor:
-      example: 274
-      type: integer
-      description: Identificador do corretor vinculado
-    corretor:
-      example: CORRETOR QC
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
       type: string
-      description: Corretor da reserva
-    idimobiliaria:
-      example: 274
-      type: integer
-      description: Identificador da imobiliária vinculada
-    imobiliaria:
-      example: IMOBILIÁRIA QC
-      type: string
-      description: Imobiliária da reserva
-    tipo:
-      example: L
-      type: string
-      description: Tipo da interação
-    situacao:
-      example: A
-      type: string
-      description: Situação da interação
-    descricao:
-      example: Ligação para o Lead as 12:00h
-      type: text
-      description: Descrição da interação
-    enviar_corretor:
+      description: 'Informa se está ativo ou não'
       example: S
+    idinteracao:
+      type: integer
+      description: 'Identificador da interação'
+      example: 258
+    idlead:
+      type: integer
+      description: 'Identificador do lead'
+      example: 168523
+    data_cad:
+      type: datetime
+      description: 'Data de cadastro'
+      example: '2024-03-31 09:15:54'
+    idcorretor:
+      type: integer
+      description: 'Identificador do corretor vinculado'
+      example: 274
+    corretor:
       type: string
-      description: Enviado e-mail sobre interação para corretor responsável"
+      description: 'Corretor da reserva'
+      example: 'CORRETOR QC'
+    idimobiliaria:
+      type: integer
+      description: 'Identificador da imobiliária vinculada'
+      example: 274
+    imobiliaria:
+      type: string
+      description: 'Imobiliária da reserva'
+      example: 'IMOBILIÁRIA QC'
+    tipo:
+      type: string
+      description: 'Tipo da interação'
+      example: L
+    situacao:
+      type: string
+      description: 'Situação da interação'
+      example: A
+    descricao:
+      type: text
+      description: 'Descrição da interação'
+      example: 'Ligação para o Lead as 12:00h (TEXT)'
+    enviar_corretor:
+      type: string
+      description: 'Enviado e-mail sobre interação para corretor responsável"'
+      example: S
     enviar_imobiliaria:
-      example: N
       type: string
-      description: Enviado e-mail sobre interação para imobiliaria responsável"
+      description: 'Enviado e-mail sobre interação para imobiliaria responsável"'
+      example: 'N'
     enviar_cliente:
-      example: N
       type: string
-      description: Enviado e-mail sobre interação para cliente"
+      description: 'Enviado e-mail sobre interação para cliente"'
+      example: 'N'
     gestor_interacao:
-      example: Kelly Lima
       type: string
-      description: Gestor responsável"
+      description: 'Gestor responsável"'
+      example: 'Kelly Lima'

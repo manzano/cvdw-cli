@@ -1,8 +1,8 @@
-path: /leads/infos
-tabela: leads_infos
+path: /pesquisas/respostas
+tabela: pesquisas_respostas
 metodo: get
-descricao: 'Esta api retorna alguns dados dos leads.'
-nome: 'Leads (leads_infos)'
+descricao: 'Lista de respostas das perguntas das pesquisas ativas'
+nome: 'Respostas das Perguntas das Pesquisas (pesquisas_perguntas)'
 parametros:
   header:
     -
@@ -24,8 +24,8 @@ parametros:
   query: []
   path: []
   cookie: []
-schema: RetornarLeadsInfos
-subschema: LeadsInfos
+schema: RetornarPesquisasAtivas
+subschema: PesquisasAtivas
 body:
   pagina:
     type: integer
@@ -61,39 +61,23 @@ response:
     example: 36
     description: 'Total de páginas encontradas'
   dados:
-    referencia:
-      type: string
-      description: 'Identificador do lead'
-      example: '193 ou 193_30'
-    referencia_data:
-      type: datetime
-      description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
-    ativo:
-      type: string
-      description: 'Informa se está ativo ou não'
-      example: S
-    idlead:
+    idpesquisa:
       type: integer
-      description: 'Identificador do lead'
-      example: 168523
-    data_ultima_alteracao:
-      type: datetime
-      description: 'Data da última alteração'
-      example: '2024-03-31 09:15:54'
-    tags:
-      type: text
-      description: '(TEXT) Tags cadastradas no lead'
-      example: '(TEXT) teste, tag teste, tag 123'
-    origens:
+      description: 'Código identificador da pesquisa'
+      example: 5166
+    idpergunta:
+      type: integer
+      description: 'Id da pergunta'
+      example: 2
+    pergunta:
       type: string
-      description: 'Origens pela qual o lead ja foi cadastrado'
-      example: 'CH; GE'
-    conversoes:
+      description: 'Nome dado a pergunta'
+      example: 'Como você se sente'
+    idresposta:
+      type: integer
+      description: 'Id da resposta'
+      example: 2
+    resposta:
       type: string
-      description: 'Conversão do lead'
-      example: GE
-    responsavel:
-      type: string
-      description: 'Responsável pelo lead'
-      example: Márcia
+      description: 'Resposta da pergunta'
+      example: Feliz

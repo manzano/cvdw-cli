@@ -25,8 +25,8 @@ class Opcoes extends Command
         $this->setDescription('Lista os comandos disponíveis.')
             ->setHelp('Este comando lista os comandos disponíveis no aplicativo CVDW-CLI.')
             ->addOption(
-                'dir', // Nome da opção
-                'diretorio', // Atalho, pode ser NULL se não quiser um atalho
+                'dir',
+                'diretorio',
                 InputOption::VALUE_NONE, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 'Imprime o diretorio onde o CVDW-CLI está instalado.', 
         );

@@ -1,22 +1,23 @@
 path: /agendamentos/vistorias
 tabela: agendamentos_vistorias
 metodo: get
-descricao: Esta api retorna os dados das vistorias a partir dos filtros
-  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
-nome: Agendamentos (agendamentos_vistorias)
+descricao: 'Esta api retorna os dados das vistorias a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Agendamentos (agendamentos_vistorias)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,133 +28,136 @@ schema: RetornarVistorias
 subschema: Vistorias
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Número de identificação da vistoria
+      description: 'Número de identificação da vistoria'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
+      example: S
     idvistoria:
+      type: integer
+      description: 'Número de identificação da vistoria'
       example: 193
-      type: integer
-      description: Número de identificação da vistoria
     idvistoria_pai:
+      type: integer
+      description: 'Número de identificação da vistoria origem'
       example: 174
-      type: integer
-      description: Número de identificação da vistoria origem
     idempreendimento:
-      example: 3
       type: integer
-      description: Código identificador do empreendimento
+      description: 'Código identificador do empreendimento'
+      example: 3
     empreendimento:
+      type: string
+      description: 'Nome do empreendimento'
       example: Varandas
-      type: string
-      description: Nome do empreendimento
     codigointerno_empreendimento:
-      example: "1"
       type: string
-      description: Código interno do empreendimento
+      description: 'Código interno do empreendimento'
+      example: '1'
     etapa:
+      type: string
+      description: 'Etapa do empreendimento'
       example: Unica
-      type: string
-      description: Etapa do empreendimento
     bloco:
-      example: Sol
       type: string
-      description: Bloco do empreendimento
+      description: 'Bloco do empreendimento'
+      example: Sol
     unidade:
-      example: 102-B
       type: string
       description: "\tUnidade do empreendimento"
+      example: 102-B
     idunidade:
+      type: string
+      description: 'Código identificador da unidade'
       example: 28
-      type: string
-      description: Código identificador da unidade
     cliente:
-      example: João da silva
       type: string
-      description: Nome do cliente da vistoria
+      description: 'Nome do cliente da vistoria'
+      example: 'João da silva'
     idcliente:
+      type: integer
+      description: 'Código identificador do cliente'
       example: 347
-      type: integer
-      description: Código identificador do cliente
     cep_cliente:
-      example: "49010020"
       type: string
-      description: CEP do endereço do cliente
+      description: 'CEP do endereço do cliente'
+      example: '49010020'
     data_agendamento:
-      example: 2022-05-18 10:45:28
       type: datetime
-      description: Data de cadastro do agendamento da vistoria
+      description: 'Data de cadastro do agendamento da vistoria'
+      example: '2024-03-31 09:15:54'
     horario:
-      example: 10:00
       type: string
-      description: Horário do agendamento da vistoria
+      description: 'Horário do agendamento da vistoria'
+      example: '10:00'
     vistoriador:
-      example: Joaquim Nascimento
       type: string
-      description: Nome do vistoriador do agendamento
+      description: 'Nome do vistoriador do agendamento'
+      example: 'Joaquim Nascimento'
     tipo:
+      type: string
+      description: 'Tipo do agendamento'
       example: Revistoria
-      type: string
-      description: Tipo do agendamento
     situacao:
-      example: Aguardando liberação
       type: string
-      description: Situação do agendamento
+      description: 'Situação do agendamento'
+      example: 'Aguardando liberação'
     quitado:
-      example: Sim
       type: string
-      description: Pagamento total da unidade (Sim; Não)
+      description: 'Pagamento total da unidade (Sim; Não)'
+      example: Sim
     chave_liberada:
+      type: string
+      description: 'Chave da unidade liberada para entrega (Sim; Não)'
       example: Sim
-      type: string
-      description: Chave da unidade liberada para entrega (Sim; Não)
     chave_entregue:
-      example: Não
       type: string
-      description: Chave da unidade entregue para o cliente (Sim; Não)
+      description: 'Chave da unidade entregue para o cliente (Sim; Não)'
+      example: Não
     idreserva:
-      example: 13014
       type: integer
-      description: Código identificador da reserva da unidade
+      description: 'Código identificador da reserva da unidade'
+      example: 13014
     data_modificacao:
-      example: 2022-08-02 13:06:58
       type: datetime
-      description: Data da última modificação
+      description: 'Data da última modificação'
+      example: '2024-03-31 09:15:54'
