@@ -159,7 +159,10 @@ class Cvdw
                                 'tabela' => $objeto['tabela'],
                                 'referencia' => null
                             ];
-                            salvarEventoErro(null, 'CVDW', $metadata, $mensagem, $resposta);
+                            $info_adicionais = [
+                                'resposta' => $resposta
+                            ];
+                            salvarEventoErro(null, 'CVDW', $metadata, $mensagem, $info_adicionais);
                             break;
                         }
                         foreach ($resposta->dados as $linha) {
