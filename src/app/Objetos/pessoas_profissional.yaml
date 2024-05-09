@@ -1,22 +1,23 @@
 path: /pessoas/profissional
 tabela: pessoas_profissional
 metodo: get
-descricao: Esta api retorna os valores dos dados profissionais e outras rendas
-  das pessoas a partir dos filtros solicitados.
-nome: Pessoas (pessoas_profissional)
+descricao: 'Esta api retorna os valores dos dados profissionais e outras rendas das pessoas a partir dos filtros solicitados.'
+nome: 'Pessoas (pessoas_profissional)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,238 +28,240 @@ schema: RetornarPessoasProfissional
 subschema: PessoasProfissionalRetorno
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador
+      description: 'Identificador'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-12-29 16:12:52
       type: datetime
-      description: Data de Referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
+      example: S
     idpessoa:
+      type: string
+      description: 'Identificador da pessoa'
       example: 269
-      type: string
-      description: Identificador da pessoa
     idpessoa_int:
-      example: "726"
       type: string
-      description: Identificador da pessoa (Código Interno)
+      description: 'Identificador da pessoa (Código Interno)'
+      example: '726'
     trabalho_nome_empresa:
-      example: CV - CRM
       type: string
-      description: Nome da empresa em que trabalha
+      description: 'Nome da empresa em que trabalha'
+      example: 'CV - CRM'
     trabalho_cnpj:
-      example: "24603290000126"
       type: string
-      description: CNPJ da empresa em que trabalha
+      description: 'CNPJ da empresa em que trabalha'
+      example: '24603290000126'
     trabalho_pais:
-      example: Brasil
       type: string
-      description: País da empresa em que trabalha
+      description: 'País da empresa em que trabalha'
+      example: Brasil
     trabalho_site:
-      example: http://cvcrm.com.br
       type: string
-      description: Site da empresa em que trabalha
+      description: 'Site da empresa em que trabalha'
+      example: 'http://cvcrm.com.br'
     profissao_select:
+      type: string
+      description: 'Profissão na empresa em que trabalha'
       example: Advogado(a)
-      type: string
-      description: Profissão na empresa em que trabalha
     profissao:
+      type: string
+      description: 'Profissão da empresa em que trabalha'
       example: Analista
-      type: string
-      description: Profissão da empresa em que trabalha
     trabalho_cargo:
+      type: string
+      description: 'Cargo na empresa em que trabalha'
       example: sdfsdf
-      type: string
-      description: Cargo na empresa em que trabalha
     remuneracao_bruta:
-      example: "150.00"
       type: string
-      description: Remuneração bruta na empresa em que trabalha
+      description: 'Remuneração bruta na empresa em que trabalha'
+      example: '150.00'
     remuneracao_liquida:
-      example: "1555.55"
       type: string
-      description: Remuneração liquída na empresa em que trabalha
+      description: 'Remuneração liquída na empresa em que trabalha'
+      example: '1555.55'
     trabalho_participacao_proprietario:
-      example: "5.00"
       type: string
-      description: Porcentagem de participação, caso proprietário, na empresa em que
-        trabalha
+      description: 'Porcentagem de participação, caso proprietário, na empresa em que trabalha'
+      example: '5.00'
     trabalho_telefone:
-      example: "+55798498498489"
       type: string
-      description: Telefone comercial na empresa em que trabalha
+      description: 'Telefone comercial na empresa em que trabalha'
+      example: '+55798498498489'
     trabalho_celular:
-      example: "+5579498489489"
       type: string
-      description: Celular comercial na empresa em que trabalha
+      description: 'Celular comercial na empresa em que trabalha'
+      example: '+5579498489489'
     trabalho_fax:
-      example: "+5579498489489"
       type: string
-      description: Fax comercial da empresa em que trabalha
+      description: 'Fax comercial da empresa em que trabalha'
+      example: '+5579498489489'
     trabalho_email:
+      type: string
+      description: 'Email na empresa em que trabalha'
       example: email@email.com
-      type: string
-      description: Email na empresa em que trabalha
     trabalho_cep:
-      example: "49015110"
       type: string
-      description: CEP da empresa em que trabalha
+      description: 'CEP da empresa em que trabalha'
+      example: '49015110'
     logradouro_trabalho:
+      type: string
+      description: 'Logradouro da empresa em que trabalha'
       example: Rua
-      type: string
-      description: Logradouro da empresa em que trabalha
     trabalho_endereco:
-      example: Rua Itabaiana
       type: string
-      description: Endereço da empresa em que trabalha
+      description: 'Endereço da empresa em que trabalha'
+      example: 'Rua Itabaiana'
     trabalho_bairro:
-      example: São José
       type: string
-      description: Bairro da empresa em que trabalha
+      description: 'Bairro da empresa em que trabalha'
+      example: 'São José'
     trabalho_numero:
-      example: "1233"
       type: string
-      description: Número da empresa em que trabalha
+      description: 'Número da empresa em que trabalha'
+      example: '1233'
     complemento_trabalho:
-      example: "12123"
       type: string
-      description: Complemento do endereço da empresa em que trabalha
+      description: 'Complemento do endereço da empresa em que trabalha'
+      example: '12123'
     trabalho_estado:
-      example: SE
       type: string
-      description: Estado da empresa em que trabalha
+      description: 'Estado da empresa em que trabalha'
+      example: SE
     trabalho_cidade:
-      example: Aracaju
       type: string
-      description: Cidade da empresa em que trabalha
+      description: 'Cidade da empresa em que trabalha'
+      example: Aracaju
     trabalho_endereco_pais:
-      example: Brasil
       type: string
-      description: País da empresa em que trabalha
+      description: 'País da empresa em que trabalha'
+      example: Brasil
     trabalho_anterior_nome_empresa:
+      type: string
+      description: 'Nome da empresa que trabalhava anteriormente'
       example: Alfama
-      type: string
-      description: Nome da empresa que trabalhava anteriormente
     trabalho_anterior_cnpj:
-      example: "45949383000187"
       type: string
-      description: CNPJ da empresa que trabalhava anteriormente
+      description: 'CNPJ da empresa que trabalhava anteriormente'
+      example: '45949383000187'
     trabalho_anterior_data_admissao:
-      example: 2023-12-14
       type: datetime
-      description: Data de Admissão da empresa que trabalhava anteriormente
+      description: 'Data de Admissão da empresa que trabalhava anteriormente'
+      example: '2023-12-14'
     trabalho_anterior_data_desligamento:
-      example: 2023-12-05
       type: datetime
-      description: Data de Desli da empresa que trabalhava anteriormente
+      description: 'Data de Desli da empresa que trabalhava anteriormente'
+      example: '2023-12-05'
     possui_outras_rendas:
-      example: S
       type: string
-      description: Informa se possui outra rendas
+      description: 'Informa se possui outra rendas'
+      example: S
     valor_mensal_bruto:
-      example: "1223.33"
       type: string
-      description: Valor bruto mensal
+      description: 'Valor bruto mensal'
+      example: '1223.33'
     valor_mensal_liquido:
-      example: "121212.12"
       type: string
-      description: Valor líquido mensal
+      description: 'Valor líquido mensal'
+      example: '121212.12'
     renda_proveniente_de:
+      type: string
+      description: 'Informa de onde provém a renda'
       example: Trabalho
-      type: string
-      description: Informa de onde provém a renda
     renda_comprovada_atraves_de:
+      type: string
+      description: 'Informa qual a forma de comprovação da renda'
       example: dsfsdf
-      type: string
-      description: Informa qual a forma de comprovação da renda
     possui_aplicacao_financeira:
-      example: S
       type: string
-      description: Informa se possui aplicação financeira
+      description: 'Informa se possui aplicação financeira'
+      example: S
     valor_total_aplicacao:
-      example: "232.32"
       type: string
-      description: Valor total da aplicação
+      description: 'Valor total da aplicação'
+      example: '232.32'
     rendimento_mensal_aplicacao:
-      example: "223.23"
       type: string
-      description: Rendimento mensal da aplicação
+      description: 'Rendimento mensal da aplicação'
+      example: '223.23'
     banco_aplicacao:
+      type: string
+      description: 'Banco onde está a aplicação'
       example: Banco
-      type: string
-      description: Banco onde está a aplicação
     pretende_utilizar_fgts:
-      example: S
       type: string
-      description: Informa se pretende utilizar o FGTS
+      description: 'Informa se pretende utilizar o FGTS'
+      example: S
     valor_fgts:
-      example: "22323.23"
       type: string
-      description: Valor do FGTS
+      description: 'Valor do FGTS'
+      example: '22323.23'
     possui_imovel:
-      example: S
       type: string
-      description: Informa se possui imóvel em seu nome
+      description: 'Informa se possui imóvel em seu nome'
+      example: S
     possui_onus_imovel:
+      type: string
+      description: 'Informa se possui ônus'
       example: S
-      type: string
-      description: Informa se possui ônus
     cep_imovel_proprietario:
-      example: "49015110"
       type: string
-      description: CEP do imóvel que possui
+      description: 'CEP do imóvel que possui'
+      example: '49015110'
     endereco_imovel_proprietario:
-      example: Rua Itabaiana
       type: string
-      description: Endereço do imóvel que possui
+      description: 'Endereço do imóvel que possui'
+      example: 'Rua Itabaiana'
     bairro_imovel_proprietario:
-      example: São José
       type: string
-      description: Bairro do imóvel que possui
+      description: 'Bairro do imóvel que possui'
+      example: 'São José'
     estado_imovel_proprietario:
+      type: string
+      description: 'Estado do imóvel que possui'
       example: SE
-      type: string
-      description: Estado do imóvel que possui
     cidade_imovel_proprietario:
+      type: string
+      description: 'Cidade do imóvel que possui'
       example: Aracaju
-      type: string
-      description: Cidade do imóvel que possui
     endereco_pais_imovel_proprietario:
-      example: Brasil
       type: string
-      description: País do imóvel que possui
+      description: 'País do imóvel que possui'
+      example: Brasil

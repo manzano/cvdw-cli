@@ -1,22 +1,23 @@
 path: /vendas
 tabela: vendas
 metodo: get
-descricao: Esta api retorna os dados das reservas vendidas a partir dos filtros
-  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
-nome: Vendas (vendas)
+descricao: 'Esta api retorna os dados das reservas vendidas a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Vendas (vendas)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,194 +28,192 @@ schema: RetornarVendas
 subschema: Vendas
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador da reserva
+      description: 'Identificador da reserva'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
+      example: S
     idreserva:
+      type: integer
+      description: 'Identificador da reserva'
       example: 12414
-      type: integer
-      description: Identificador da reserva
     aprovada:
+      type: string
+      description: 'Aprovação da reserva'
       example: Sim
-      type: string
-      description: Aprovação da reserva
     valor_contrato:
+      type: number
+      description: 'Valor do contrato da reserva'
       example: 150000
-      type: number
-      description: Valor do contrato da reserva  
-    contrato_interno:
-      example: "5848"
-      type: string
-      description: Identificador da tabela de preço para integrações
     data:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Data de cadastro da reserva
+      description: 'Data de cadastro da reserva'
+      example: '2024-03-31 09:15:54'
     data_venda:
-      example: 2021-01-01 00:00:00
       type: datetime
-      description: Data de venda da reserva 
+      description: 'Data de venda da reserva'
+      example: '2024-03-31 09:15:54'
     cliente:
-      example: Pessoa de teste
       type: string
-      description: Nome do cliente da reserva
+      description: 'Nome do cliente da reserva'
+      example: 'Pessoa de teste'
     idcliente:
+      type: integer
+      description: 'Código identificador do cliente'
       example: 30491
-      type: integer
-      description: Código identificador do cliente
     documento_cliente:
-      example: "04461372197"
       type: string
-      description: Número do documento (CPF/CNPJ) do cliente
+      description: 'Número do documento (CPF/CNPJ) do cliente'
+      example: '04461372197'
     email:
+      type: string
+      description: 'E-mail do cliente da reserva'
       example: karline@email.com
-      type: string
-      description: E-mail do cliente da reserva
     cidade:
+      type: string
+      description: 'Cidade de origem do cliente'
       example: Estância
-      type: string
-      description: Cidade de origem do cliente
     cep_cliente:
-      example: "49052260"
       type: string
-      description: CEP do cliente
+      description: 'CEP do cliente'
+      example: '49052260'
     renda:
+      type: number
+      description: 'Renda do cliente da reserva'
       example: 10000
-      type: number
-      description: Renda do cliente da reserva
     sexo:
+      type: string
+      description: 'Sexo do cliente da reserva'
       example: Feminino
-      type: string
-      description: Sexo do cliente da reserva
     idade:
+      type: integer
+      description: 'Idade do cliente da reserva'
       example: 23
-      type: integer
-      description: Idade do cliente da reserva
     estado_civil:
+      type: string
+      description: 'Estado civil do cliente da reserva'
       example: Casado(a)
-      type: string
-      description: Estado civil do cliente da reserva
     idcorretor:
-      example: 274
       type: integer
-      description: Identificador do corretor vinculado
+      description: 'Identificador do corretor vinculado'
+      example: 274
     corretor:
-      example: CORRETOR QC
       type: string
-      description: Corretor da reserva
+      description: 'Corretor da reserva'
+      example: 'CORRETOR QC'
     idimobiliaria:
+      type: integer
+      description: 'Identificador da imobiliária vinculada'
       example: 274
-      type: integer
-      description: Identificador da imobiliária vinculada
     imobiliaria:
-      example: IMOBILIÁRIA QC
       type: string
-      description: Imobiliária da reserva   
+      description: 'Imobiliária da reserva'
+      example: 'IMOBILIÁRIA QC'
     unidade:
-      example: "3"
       type: string
-      description: Unidade do empreendimento
+      description: 'Unidade do empreendimento'
+      example: '3'
     empreendimento:
-      example: Retiro Teixeira
       type: string
-      description: Empreendimento da reserva
+      description: 'Empreendimento da reserva'
+      example: 'Retiro Teixeira'
     area_privativa:
-      example: "10.02"
       type: number
-      description: Tamanho da área privativa
+      description: 'Tamanho da área privativa'
+      example: '10.02'
     idempreendimento:
+      type: integer
+      description: 'Código identificador do empreendimento'
       example: 589
-      type: integer
-      description: Código identificador do empreendimento  
     codigointerno_empreendimento:
-      example: "58934"
       type: string
-      description: Código interno do empreendimento
+      description: 'Código interno do empreendimento'
+      example: '58934'
     bloco:
-      example: Bloco E06
       type: string
-      description: Bloco do empreendimento
+      description: 'Bloco do empreendimento'
+      example: 'Bloco E06'
     regiao:
+      type: string
+      description: 'Região do empreendimento da reserva'
       example: Sul
-      type: string
-      description: Região do empreendimento da reserva
     planta:
-      example: Planta 01
       type: string
-      description: Planta da unidade da venda     
+      description: 'Planta da unidade da venda'
+      example: 'Planta 01'
     campanha:
+      type: string
+      description: 'Campanha da reserva'
       example: Campanha
-      type: string
-      description: Campanha da reserva
     idmidia:
+      type: integer
+      description: 'Identificador da mídia'
       example: 2
-      type: integer
-      description: Identificador da mídia
     midia:
+      type: string
+      description: 'Nome da mídia'
       example: Midia
-      type: string
-      description: Nome da mídia
     idtabela:
-      example: 3
       type: integer
-      description: Identificador da tabela de preço
+      description: 'Identificador da tabela de preço'
+      example: integer
     idtipovenda:
-      example: 234
       type: integer
-      description: Identificador do tipo da venda     
+      description: 'Identificador do tipo da venda'
+      example: 234
     tipovenda:
-      example: Tipo financiamento
       type: string
-      description: Descrição do tipo da venda      
+      description: 'Descrição do tipo da venda'
+      example: 'Tipo financiamento'
     nometabela:
-      example: Tabela Dezembro
       type: string
-      description: Nome da tabela de preço
+      description: 'Nome da tabela de preço'
+      example: 'Tabela Dezembro'
     codigointernotabela:
-      example: "5848"
       type: string
-      description: Identificador da tabela de preço para integrações  
+      description: 'Identificador da tabela de preço para integrações'
+      example: '5848'
     idlead:
-      example: "16852, 13876"
       type: text
-      description: Identificador dos leads vinculados separados por vírgula
-      
+      description: 'Identificador dos leads vinculados separados por ,'
+      example: '168523,4322 (TEXT)'

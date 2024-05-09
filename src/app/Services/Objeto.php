@@ -277,6 +277,10 @@ class Objeto
                 "nome" => "Corretores (/corretores)",
                 "arquivo" => "corretores.yaml"
             ],
+            "corretores_profissional" => [
+                "nome" => "Corretores (/corretores)",
+                "arquivo" => "corretores_profissional.yaml"
+            ],
             "unidades_precos" => [
                 "nome" => "Unidades (/unidades-precos)",
                 "arquivo" => "unidades_precos.yaml"
@@ -418,6 +422,15 @@ class Objeto
             "pesquisas" => [
                 "nome" => "Pesquisas (/pesquisas)",
                 "arquivo" => "pesquisas.yaml"
+            ],
+            "pesquisas_perguntas" => [
+                "nome" => "Pesquisas (/pesquisas/perguntas)",
+                "arquivo" => "pesquisas_perguntas.yaml"
+            ]
+            ,
+            "pesquisas_respostas" => [
+                "nome" => "Pesquisas (/pesquisas/respostas)",
+                "arquivo" => "pesquisas_respostas.yaml"
             ]
         ];
     }

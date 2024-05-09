@@ -1,22 +1,23 @@
 path: /leads
 tabela: leads
 metodo: get
-descricao: Esta api retorna os dados dos leads a partir dos filtros solicitados,
-  caso deseje saber o que cada campo representa basta ir no schema.
-nome: Leads (leads)
+descricao: 'Esta api retorna os dados dos leads a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Leads (leads)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,313 +28,316 @@ schema: RetornarLeads
 subschema: Leads
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador do lead
+      description: 'Identificador do lead'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
+      example: S
     idlead:
+      type: integer
+      description: 'Identificador do lead'
       example: 168523
-      type: integer
-      description: Identificador do lead
     idsituacao:
-      example: 4
       type: integer
-      description: Identificador da situação do lead
+      description: 'Identificador da situação do lead'
+      example: 4
     situacao:
+      type: string
+      description: 'Situação do lead'
       example: Descartado
-      type: string
-      description: Situação do lead
     data_cad:
-      example: 2022-03-06 10:00:00
       type: datetime
-      description: Data de cadastro
+      description: 'Data de cadastro'
+      example: '2024-03-31 09:15:54'
     nome:
-      example: Saulo Nunes
       type: string
-      description: Nome do lead
+      description: 'Nome do lead'
+      example: 'Saulo Nunes'
     email:
+      type: string
+      description: 'E-mail do lead'
       example: importacao_nandes2.3@hotmail.com
-      type: string
-      description: E-mail do lead
     telefone:
-      example: "31984658621"
       type: string
-      description: Telefone do lead
+      description: 'Telefone do lead'
+      example: '31984658621'
     documento_cliente:
-      example: "09809809812"
       type: string
-      description: Documento do lead
+      description: 'Documento do lead'
+      example: '09809809812'
     cep_cliente:
-      example: "49010020"
       type: string
-      description: CEP do lead
+      description: 'CEP do lead'
+      example: '49010020'
     idponto_venda:
-      example: 2
       type: integer
-      description: Identificador do PDV do lead
+      description: 'Identificador do PDV do lead'
+      example: 2
     ponto_venda:
-      example: Ponto das vendas
       type: string
-      description: PDV do lead
+      description: 'PDV do lead'
+      example: 'Ponto das vendas'
     conversao_original:
-      example: Facebook
       type: string
-      description: Conversão original do lead
+      description: 'Conversão original do lead'
+      example: Facebook
     conversao_ultimo:
-      example: Facebook
       type: string
-      description: Última conversão do lead
+      description: 'Última conversão do lead'
+      example: Facebook
     conversao:
+      type: string
+      description: 'Conversão do lead'
       example: Facebook
-      type: string
-      description: Conversão do lead
     idempreendimento:
-      example: "3"
       type: string
-      description: Identificador(es) do(s) empreendimento(s) do lead
+      description: 'Identificador(es) do(s) empreendimento(s) do lead'
+      example: '3'
     codigointerno_empreendimento:
-      example: "3"
       type: string
-      description: Código(s) interno(s) do(s) empreendimento(s) do lead
+      description: 'Código(s) interno(s) do(s) empreendimento(s) do lead'
+      example: '3'
     empreendimento:
-      example: Varandas
       type: text
-      description: Empreendimento(s) do lead
+      description: 'Empreendimento(s) do lead'
+      example: 'Varandas (TEXT)'
     idempreendimento_primeiro:
-      example: 3
       type: integer
-      description: Identificador do primeiro empreendimento do lead
+      description: 'Identificador do primeiro empreendimento do lead'
+      example: 3
     empreendimento_primeiro:
-      example: Varandas
       type: string
-      description: Primeiro empreendimento do lead
+      description: 'Primeiro empreendimento do lead'
+      example: Varandas
     idempreendimento_ultimo:
-      example: 3
       type: integer
-      description: Identificador do último empreendimento do lead
+      description: 'Identificador do último empreendimento do lead'
+      example: 3
     empreendimento_ultimo:
+      type: string
+      description: 'Último empreendimento do lead'
       example: Varandas
-      type: string
-      description: Último empreendimento do lead
     idmotivo:
-      example: 1
       type: integer
-      description: Identificador do motivo de escolha do lead
+      description: 'Identificador do motivo de escolha do lead'
+      example: 1
     motivo:
+      type: string
+      description: 'Motivo de escolha do lead'
       example: Rico
-      type: string
-      description: Motivo de escolha do lead
     reserva:
-      example: 1
       type: integer
-      description: Quantidade de reservas associadas ao lead
+      description: 'Quantidade de reservas associadas ao lead'
+      example: 1
     idgestor:
-      example: 1
       type: integer
-      description: Identificador do gestor do lead
+      description: 'Identificador do gestor do lead'
+      example: 1
     gestor:
-      example: Henrique
       type: string
-      description: Gestor do lead
+      description: 'Gestor do lead'
+      example: Henrique
     idcorretor:
-      example: 2
       type: integer
-      description: Identificador do corretor do lead
+      description: 'Identificador do corretor do lead'
+      example: 2
     corretor:
-      example: Corretor dos Corretores
       type: string
-      description: Corretor do lead
+      description: 'Corretor do lead'
+      example: 'Corretor dos Corretores'
     idimobiliaria:
-      example: 1
       type: integer
-      description: Identificador da imobiliária do lead
+      description: 'Identificador da imobiliária do lead'
+      example: 1
     imobiliaria:
+      type: string
+      description: 'Imobiliária do lead'
       example: Qualidade
-      type: string
-      description: Imobiliária do lead
     caracteristicas:
+      type: string
+      description: 'Características do(s) empreendimento(s) do lead'
       example: Grande
-      type: string
-      description: Características do(s) empreendimento(s) do lead
     feedback:
-      example: Interessado
       type: string
-      description: Feedback do lead
+      description: 'Feedback do lead'
+      example: Interessado
     idorigem:
-      example: 8
       type: integer
-      description: Identificador da origem do lead
+      description: 'Identificador da origem do lead'
+      example: 8
     origem:
-      example: FB
       type: string
-      description: Origem do lead
+      description: 'Origem do lead'
+      example: FB
     idorigem_ultimo:
+      type: integer
+      description: 'Identificador da última origem do lead'
       example: 8
-      type: integer
-      description: Identificador da última origem do lead
     origem_ultimo:
+      type: string
+      description: 'Última origem do lead'
       example: FB
-      type: string
-      description: Última origem do lead
     midia_original:
-      example: Facebook Ads
       type: string
-      description: Mídia original do lead
+      description: 'Mídia original do lead'
+      example: 'Facebook Ads'
     midia_ultimo:
-      example: Facebook Ads
       type: string
-      description: Última mídia do lead
+      description: 'Última mídia do lead'
+      example: 'Facebook Ads'
     renda_familiar:
-      example: 1000
       type: number
-      description: Renda familiar do lead
+      description: 'Renda familiar do lead'
+      example: 1000.0
     motivo_cancelamento:
-      example: Desistiu de tudo
       type: string
-      description: Motivo de cancelamento do lead
+      description: 'Motivo de cancelamento do lead'
+      example: 'Desistiu de tudo'
     data_cancelamento:
-      example: 2022-06-21
       type: datetime
-      description: Data de cancelamento do lead
+      description: 'Data de cancelamento do lead'
+      example: '2022-06-21'
     data_sincronizacao:
-      example: 2022-03-06 10:00:00
       type: datetime
-      description: Data de sincronização
+      description: 'Data de sincronização'
+      example: '2024-03-31 09:15:54'
     data_ultima_interacao:
-      example: 2022-03-06 10:00:00
       type: datetime
-      description: Data da última interação do lead
+      description: 'Data da última interação do lead'
+      example: '2024-03-31 09:15:54'
     cidade:
+      type: string
+      description: 'Cidade do lead'
       example: Aracaju
-      type: string
-      description: Cidade do lead
     estado:
+      type: string
+      description: 'Estado do lead'
       example: SE
-      type: string
-      description: Estado do lead
     regiao:
+      type: string
+      description: 'Região do lead'
       example: Nordeste
-      type: string
-      description: Região do lead
     ultima_data_conversao:
-      example: 2022-03-06
       type: datetime
-      description: Data da última conversão do lead
+      description: 'Data da última conversão do lead'
+      example: '2022-03-06'
     data_reativacao:
-      example: 2022-03-06
       type: datetime
-      description: Data da reativação do lead
+      description: 'Data da reativação do lead'
+      example: '2022-03-06'
     idsituacao_anterior:
+      type: integer
+      description: 'Identificador da situação anterior do lead'
       example: 1
-      type: integer
-      description: Identificador da situação anterior do lead
     nome_situacao_anterior_lead:
-      example: Sem contato
       type: string
-      description: Situação anterior do lead
+      description: 'Situação anterior do lead'
+      example: 'Sem contato'
     tags:
-      example: Interessado
       type: text
-      description: Tag(s) do lead
+      description: 'Tag(s) do lead'
+      example: Interessado
     descricao_motivo_cancelamento:
-      example: Não quis mais
       type: text
-      description: Descrição do motivo de cancelamento do lead
+      description: 'Descrição do motivo de cancelamento do lead'
+      example: 'Não quis mais'
     possibilidade_venda:
+      type: integer
+      description: 'Possibilidade de venda do lead'
       example: 4
-      type: integer
-      description: Possibilidade de venda do lead
     inserido_bolsao:
-      example: S
       type: string
-      description: Inserção do lead no bolsão
+      description: 'Inserção do lead no bolsão'
+      example: S
     data_primeira_interacao_gestor:
-      example: 2022-03-06
       type: datetime
-      description: Data da primeira interação do gestor
+      description: 'Data da primeira interação do gestor'
+      example: '2022-03-06'
     data_primeira_interacao_corretor:
-      example: 2022-03-06
       type: datetime
-      description: Data da primeira interação do corretor
+      description: 'Data da primeira interação do corretor'
+      example: '2022-03-06'
     score:
+      type: integer
+      description: 'Score do lead'
       example: 100
-      type: integer
-      description: Score do lead
     idgestor_ultimo:
+      type: integer
+      description: 'Identificador do último gestor do lead'
       example: 13
-      type: integer
-      description: Identificador do último gestor do lead
     gestor_ultimo:
+      type: string
+      description: 'Último gestor do lead'
       example: Henrique
-      type: string
-      description: Último gestor do lead
     idcorretor_ultimo:
+      type: integer
+      description: 'Identificador do último corretor do lead'
       example: 3
-      type: integer
-      description: Identificador do último corretor do lead
     corretor_ultimo:
-      example: Corretor Top
       type: string
-      description: Último corretor do lead
+      description: 'Último corretor do lead'
+      example: 'Corretor Top'
     idcorretor_penultimo:
-      example: 2
       type: integer
-      description: Identificador do penúltimo corretor do lead
+      description: 'Identificador do penúltimo corretor do lead'
+      example: 2
     corretor_penultimo:
-      example: Corretor Quase Top
       type: string
-      description: Penúltimo corretor do lead
+      description: 'Penúltimo corretor do lead'
+      example: 'Corretor Quase Top'
     nome_momento_lead:
+      type: string
+      description: 'Momento do lead'
       example: Interessado
-      type: string
-      description: Momento do lead
     novo:
+      type: string
+      description: 'Lead novo'
       example: S
-      type: string
-      description: Lead novo
     retorno:
-      example: N
       type: string
-      description: Lead retornado
+      description: 'Lead retornado'
+      example: 'N'
     data_ultima_alteracao:
-      example: 2022-06-21 08:25:48
       type: datetime
-      description: Data da última alteração do lead
+      description: 'Data da última alteração do lead'
+      example: '2024-03-31 09:15:54'

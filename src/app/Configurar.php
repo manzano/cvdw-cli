@@ -54,13 +54,13 @@ class Configurar extends Command
         $this->setName('configurar')
             ->setDescription('Configurações do aplicativo')
         ->addOption(
-            'setEnv', // Nome da opção
-            'env', // Atalho, pode ser NULL se não quiser um atalho
+            'set-env',
+            'env',
             InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
             'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
         )->addOption(
-            'setEnv', // Nome da opção
-            'env', // Atalho, pode ser NULL se não quiser um atalho
+            'set-env',
+            'env',
             InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
             'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
         );
@@ -72,8 +72,8 @@ class Configurar extends Command
         $this->limparTela();
         $this->eventosObj = new Eventos();
         
-        if ($input->getOption('setEnv')) {
-            $this->env = $input->getOption('setEnv');
+        if ($input->getOption('set-env')) {
+            $this->env = $input->getOption('set-env');
         }
         $this->ambientesObj = new Ambientes($this->env);
         $this->ambientesObj->retornarEnvs();
@@ -224,7 +224,7 @@ class Configurar extends Command
             'Vou cadastrar um novo ambiente a partir do seu padrão...',
             'Você precisa informar o nome para poder usar em seus comandos.',
             'O ideal é somente usar letras minúsculas e sem espaços.',
-            'Depois é so usar: cvdw configurar --setEnv=nome_escolhido'
+            'Depois é so usar: cvdw configurar --set-env=nome_escolhido'
         ]);
 
         $referencia = $io->ask(
@@ -241,8 +241,8 @@ class Configurar extends Command
             $io->success('Ambiente clonado com sucesso.');
             $io->text([
                 '',
-                'Agora é so usar: cvdw configurar --setEnv='. $referencia,
-                'Ou: cvdw executar --setEnv='. $referencia.' all',
+                'Agora é so usar: cvdw configurar --set-env='. $referencia,
+                'Ou: cvdw executar --set-env='. $referencia.' all',
                 ''
             ]);
         }
@@ -351,13 +351,11 @@ class Configurar extends Command
                                     $io->text('-- ' . $log);
                                 }
                             } else {
-                                $io->text('<bg=green>[OK]</>
-                                            -> A sub-tabela ' . $estrutura['nome'] . ' está atualizada!');
+                                $io->text('<bg=green>[OK]</> -> A sub-tabela ' . $estrutura['nome'] . ' está atualizada!');
                             }
                         } else {
                             $bancoProblemas = true;
-                            $io->text('<fg=white;bg=red>[PROBLEMA]</>
-                                            -> A sub-tabela ' . $estrutura['nome'] . ' não foi encontrada!');
+                            $io->text('<fg=white;bg=red>[PROBLEMA]</> -> A sub-tabela ' . $estrutura['nome'] . ' não foi encontrada!');
                         
                         }
                     }

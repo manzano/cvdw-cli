@@ -1,21 +1,23 @@
 path: /demandas
 tabela: demandas
 metodo: get
-descricao: Esta api retorna os dados  das demandas
-nome: Demandas (demandas)
+descricao: 'Esta api retorna os dados  das demandas'
+nome: 'Demandas (demandas)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -26,85 +28,88 @@ schema: RetornarDemandas
 subschema: schemaDemandas
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador da demanda
+      description: 'Identificador da demanda'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
+      example: S
     iddemanda:
-      example: 1
       type: integer
-      description: Identificador da demanda
+      description: 'Identificador da demanda'
+      example: 1
     demanda:
-      example: demanda 1
       type: string
-      description: nome da demanda
+      description: 'nome da demanda'
+      example: 'demanda 1'
     data_cad:
-      example: 2022-05-18
       type: datetime
-      description: Data do Cadastro
+      description: 'Data do Cadastro'
+      example: '2022-05-18'
     data_encerramento:
-      example: 2022-05-18
       type: datetime
-      description: Data do Encerramento
+      description: 'Data do Encerramento'
+      example: '2022-05-18'
     data_conclusao:
-      example: 2022-05-18
       type: datetime
-      description: Data da Conclusão
+      description: 'Data da Conclusão'
+      example: '2022-05-18'
     agencia:
-      example: agencia teste"
       type: string
-      description: Nome da Agência
+      description: 'Nome da Agência'
+      example: 'agencia teste"'
     data_situacao_finalizada:
-      example: 2022-05-18
       type: datetime
-      description: Data da Finalização da Situação
+      description: 'Data da Finalização da Situação'
+      example: '2022-05-18'
     situacao_demanda:
-      example: situacao teste
       type: string
-      description: Situacao da demanda
+      description: 'Situacao da demanda'
+      example: 'situacao teste'
     empreendimento:
-      example: empreendimento teste
       type: string
-      description: Nome do Empreendimento
+      description: 'Nome do Empreendimento'
+      example: 'empreendimento teste'
     data_ult_situacao:
-      example: 2022-05-18
       type: datetime
-      description: Data da Ultima Situação
+      description: 'Data da Ultima Situação'
+      example: '2022-05-18'

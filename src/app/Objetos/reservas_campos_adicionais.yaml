@@ -42,7 +42,7 @@ body:
     description: Retornará as vistorias a partir deste id, lembrando que está
       ordenado em ordem decrescente
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: "2024-03-31 09:15:44"
     type: string
     description: Retornará as vistorias criadas a partir da data informada
 response:
@@ -66,21 +66,21 @@ response:
     referencia:
       example: 193 ou 193_30
       type: string
-      description: Identificador do campo
+      description: "Identificador do campo"
     referencia_data:
-      example: 2023-01-15 15:26:15
+      example: "2024-03-31 09:15:44"
       type: datetime
       description: Data de referência
     idcampo:
       example: 132023
       type: integer
-      description: Identificador do campo
+      description: "Identificador do campo"
     idreserva:
       example: 12414
       type: integer
-      description: Identificador da reserva
+      description: "Identificador"
     data_cad:
-      example: 2022-02-23 13:20:05
+      example: "2024-03-31 09:15:44"
       type: datetime
       description: Data de cadastro do valor do campo
     nome:

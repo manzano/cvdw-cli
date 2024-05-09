@@ -32,17 +32,20 @@ class Cvdw
     public int $inseridos_erros = 0;
     public int $alterados = 0;
     public int $alterados_erros = 0;
-    public array $execucoes = [];
+    
     public int $qtd = 500;
 
-    public function __construct(InputInterface $input, OutputInterface $output)
+    public $executarObj;
+
+    public function __construct(InputInterface $input, OutputInterface $output, $executarObj)
     {
         $this->input = $input;
         $this->output = $output;
         $this->conn = conectarDB($input, $output);
+        $this->executarObj = $executarObj;
     }
 
-    public function processar(array $objeto, int $qtd, $io, $apartir = null, $inputDataReferencia = false, $logObjeto = null): bool
+    public function processar(array $objeto, int $qtd, $io, $apartir = null, $inputDataReferencia = false, $logObjeto = null, $maxpag = null): bool
     {
         if ($this->output->isDebug()) {
             $io->info(" LOG: " . __FUNCTION__);
@@ -60,7 +63,7 @@ class Cvdw
             $this->logObjeto = $logObjeto;
         }
         $this->database = new DatabaseSetup($this->input, $this->output);
-        $http = new Http($this->input, $this->output, $io, $this->logObjeto);
+        $http = new Http($this->input, $this->output, $io, $this->executarObj, $this->logObjeto );
         $parametros = array(
             'pagina' => 1,
             'registros_por_pagina' => $this->qtd
@@ -96,8 +99,7 @@ class Cvdw
         $this->inseridos = $this->inseridos_erros = 0;
         $this->alterados = $this->alterados_erros = 0;
 
-        $this->execucoes[] = time();
-        $resposta = $http->requestCVDW($objeto['path'], $parametros);
+        $resposta = $http->requestCVDW($objeto['path'], false, $this, $parametros);
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
         if (!isset($resposta->total_de_registros)) {
             $this->io->error([
@@ -106,7 +108,11 @@ class Cvdw
             ]);
         } else {
             $this->io->text('Registros encontrados: ' . $resposta->total_de_registros);
-            $this->io->text('Total de páginas: ' . $resposta->total_de_paginas);
+            $totaldepaginas = 'Total de páginas: ' . $resposta->total_de_paginas; 
+            if(isset($maxpag)) {
+                $totaldepaginas .= '  <fg=red>(Será executado '.$maxpag.' página(s))</>';
+            }
+            $this->io->text($totaldepaginas);
             $progressBar = new ProgressBar($this->output, $resposta->total_de_registros);
             $paginas = $resposta->total_de_paginas;
             if ($paginas > 0) {
@@ -120,6 +126,9 @@ class Cvdw
                     if ($this->getLimiteErros()) {
                         break;
                     }
+                    if($maxpag && $pagina >= ($maxpag+1)){
+                        break;
+                    }
                     if ($pagina > 1) {
                         $parametros['pagina'] = $pagina;
                         if ($inputDataReferencia) {
@@ -127,8 +136,7 @@ class Cvdw
                         } else {
                             $parametros['a_partir_data_referencia'] = $referencia_data;
                         }
-                        $this->execucoes[] = time();
-                        $resposta = $http->requestCVDW($objeto['path'], $parametros, $inputDataReferencia);
+                        $resposta = $http->requestCVDW($objeto['path'], $progressBar, $this, $parametros, $inputDataReferencia);
                     }
                     $progressBar->setMessage($this->getMensagem());
                     $progressBar->display();
@@ -151,7 +159,10 @@ class Cvdw
                                 'tabela' => $objeto['tabela'],
                                 'referencia' => null
                             ];
-                            salvarEventoErro(null, 'CVDW', $metadata, $mensagem, $resposta);
+                            $info_adicionais = [
+                                'resposta' => $resposta
+                            ];
+                            salvarEventoErro(null, 'CVDW', $metadata, $mensagem, $info_adicionais);
                             break;
                         }
                         foreach ($resposta->dados as $linha) {
@@ -165,8 +176,6 @@ class Cvdw
                             }
                         }
                     }
-                    $segundos = $this->gerenciarRateLimit();
-                    $this->aguardar($progressBar, $segundos);
                     $progressBar->setMessage($this->getMensagem(' Executando próxima requisição...'));
                     $progressBar->display();
                 }
@@ -174,31 +183,10 @@ class Cvdw
             } else {
                 $this->io->text('<fg=green>Nenhuma informação nova foi encontrada!</fg=green>');
                 $progressBar->setMessage($this->getMensagem());
-                $segundos = $this->gerenciarRateLimit();
-                $this->aguardar($progressBar, $segundos);
             }
         }
         $this->io->newLine();
         return true;
-    }
-
-    protected function gerenciarRateLimit(): int {
-
-        $agora = time();
-        while (!empty($this->execucoes) && $agora - $this->execucoes[0] > 60) {
-            array_shift($this->execucoes);
-        }
-
-        $esperar = 0;
-        if (count($this->execucoes) >= 20) {
-            // Calcula o tempo a esperar: diferença para completar um minuto desde a primeira execução no array
-            $esperar = 68 - ($agora - $this->execucoes[0]);
-            // Após a espera, remove a execução mais antiga e permite a nova
-            array_shift($this->execucoes);
-        }
-
-        return $esperar;
-
     }
 
     protected function getLimiteErros(): bool
@@ -211,7 +199,7 @@ class Cvdw
         }
     }
 
-    protected function getMensagem($info = false, $erro = false): string
+    public function getMensagem($info = false, $erro = false): string
     {
         
         // Se inseridos_erros for maior que 1, imprimir o (s)
@@ -235,24 +223,7 @@ class Cvdw
         return $mensagem;
     }
 
-    protected function aguardar($progressBar, int $segundos = 3): void
-    {
 
-        $mensagem = null;
-        for ($i = $segundos; $i > 0; $i--) {
-            if ($i == 1) {
-                $mensagem = ' <fg=blue>Aguardando ' . $i . ' segundo para a próxima requisição...</>';
-            } else {
-                $mensagem = ' <fg=blue>Aguardando ' . $i . ' segundos para a próxima requisição...</>';
-            }
-            $mensagem .= "\n <fg=gray>Proteção contra o Rate Limit do servidor. (20req/min)</>";
-            $mensagem = $this->getMensagem($mensagem);
-            $progressBar->setMessage($mensagem);
-            $progressBar->display();
-            sleep(1);
-        }
-        $progressBar->setMessage($this->getMensagem($mensagem));
-    }
 
     protected function verificaPadrao(object $linha): bool
     {
@@ -406,6 +377,7 @@ class Cvdw
             }
         }
         try {
+
             $queryBuilder->executeStatement();
             if ($this->logObjeto) {
                 $this->logObjeto->escreverLog("  - Inserido: " . $linha->referencia);

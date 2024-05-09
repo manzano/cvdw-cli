@@ -1,22 +1,23 @@
 path: /pessoas
 tabela: pessoas
 metodo: get
-descricao: Esta api retorna os valores das pessoas a partir dos filtros
-  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
-nome: Pessoas (pessoas)
+descricao: 'Esta api retorna os valores das pessoas a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Pessoas (pessoas)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,402 +28,404 @@ schema: RetornarPessoas
 subschema: PessoasRetorno
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador
+      description: 'Identificador'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-12-29 16:12:52
       type: datetime
-      description: Data de Referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
+      example: S
     idpessoa:
-      example: 1
       type: integer
-      description: Identificador da pessoa
+      description: 'Identificador da pessoa'
+      example: 1
     idpessoa_int:
-      example: 1
       type: string
-      description: Identificador da pessoa (Código Interno)
+      description: 'Identificador da pessoa (Código Interno)'
+      example: 1
     idpessoa_legado:
+      type: string
+      description: 'Identificador da pessoa (legado)'
       example: 1
-      type: string
-      description: Identificador da pessoa (legado)
     data_cad:
-      example: 2017-12-18 15:20:45
       type: datetime
-      description: Data de cadastro
+      description: 'Data de cadastro'
+      example: '2024-03-31 09:15:54'
     ativo_painel:
-      example: Sim
       type: string
-      description: Informa se a pessoa está ativa
+      description: 'Informa se a pessoa está ativa'
+      example: Sim
     ativo_login:
-      example: Sim
       type: string
-      description: Informa se a pessoa te login ativo
+      description: 'Informa se a pessoa te login ativo'
+      example: Sim
     situacao:
+      type: string
+      description: 'Informa a situação da Pessoa (Cliente; Não cliente; Prospect)'
       example: Cliente
-      type: string
-      description: Informa a situação da Pessoa (Cliente; Não cliente; Prospect)
     validado:
+      type: string
+      description: 'Informa se a pessoa está validada'
       example: Sim
-      type: string
-      description: Informa se a pessoa está validada
     documento_tipo:
-      example: CPF
       type: string
-      description: Tipo do documento
+      description: 'Tipo do documento'
+      example: CPF
     documento:
-      example: 111.111.111-11
       type: string
       description: Documento
+      example: 111.111.111-11
     pessoa_estrangeira:
-      example: Não
       type: string
-      description: Informa se pessoa estrangeira
+      description: 'Informa se pessoa estrangeira'
+      example: Não
     nome:
-      example: Associado Silva Santos
       type: string
       description: Nome
+      example: 'Associado Silva Santos'
     reconhecimento_firma:
+      type: string
+      description: 'Reconhecimento de firma'
       example: null
-      type: string
-      description: Reconhecimento de firma
     sexo:
+      type: string
+      description: 'Sexo da pessoa (Feminino; Masculino; Não desejo informar)'
       example: Masculino
-      type: string
-      description: Sexo da pessoa (Feminino; Masculino; Não desejo informar)
     data_nasc:
-      example: 1985-05-12
       type: datetime
-      description: Data de nascimento
+      description: 'Data de nascimento'
+      example: '1985-05-12'
     estado_civil:
-      example: Casado(a) - Participação final nos aquestos
       type: string
-      description: Estado civil
+      description: 'Estado civil'
+      example: 'Casado(a) - Participação final nos aquestos'
     data_casamento:
-      example: 2023-03-01
       type: datetime
-      description: Data de casamento
+      description: 'Data de casamento'
+      example: '2023-03-01'
     pacto_antenupcial_livro:
-      example: Informação do Pacto antenupcial
       type: string
-      description: Informação do Pacto antenupcial, Livro
+      description: 'Informação do Pacto antenupcial, Livro'
+      example: 'Informação do Pacto antenupcial'
     folha:
-      example: "12"
       type: string
       description: Folha
+      example: '12'
     cartorio:
-      example: Cartório
       type: string
       description: Cartório
+      example: Cartório
     pais:
-      example: Brasil
       type: string
       description: País
+      example: Brasil
     naturalidade:
-      example: Aracaju
       type: string
       description: Naturalidade
+      example: Aracaju
     possui_dependentes:
-      example: Sim
       type: string
-      description: Informa se possui dependentes
+      description: 'Informa se possui dependentes'
+      example: Sim
     quantidade_dependentes:
-      example: 1
       type: integer
-      description: Quantidade de dependentes
+      description: 'Quantidade de dependentes'
+      example: 1
     possui_procuracao:
-      example: Sim
       type: string
-      description: Informa se possui procuração
+      description: 'Informa se possui procuração'
+      example: Sim
     possui_pacto_antenupcial:
+      type: string
+      description: 'Informa se possui pacto antenupcial'
       example: Não
-      type: string
-      description: Informa se possui pacto antenupcial
     menor_nao_emancipado:
-      example: Sim
       type: string
-      description: Informa se é menor e não emancipado
+      description: 'Informa se é menor e não emancipado'
+      example: Sim
     grau_instrucao:
-      example: Ensino médio incompleto
       type: string
-      description: Grau de instrução
+      description: 'Grau de instrução'
+      example: 'Ensino médio incompleto'
     renda_familiar:
-      example: "5000.00"
       type: string
-      description: Renda familiar
+      description: 'Renda familiar'
+      example: '5000.00'
     marketing_pos_venda:
+      type: string
+      description: 'Marketing Pós-venda'
       example: Sim
-      type: string
-      description: Marketing Pós-venda
     rg:
-      example: 25465-1
       type: string
-      description: Número do RG
+      description: 'Número do RG'
+      example: 25465-1
     rg_orgao_emissor:
+      type: string
+      description: 'Orgão emissor do RG'
       example: ssp-SE
-      type: string
-      description: Orgão emissor do RG
     rg_data_emissao:
-      example: 1984-12-12
       type: datetime
-      description: Data de emissão do RG
+      description: 'Data de emissão do RG'
+      example: '1984-12-12'
     rne:
+      type: string
+      description: 'Número do RNE'
       example: 25465-1
-      type: string
-      description: Número do RNE
     rne_orgao_emissor:
-      example: PF
       type: string
-      description: Orgão emissor do RNE
+      description: 'Orgão emissor do RNE'
+      example: PF
     rne_data_emissao:
-      example: 2012-05-25
       type: datetime
-      description: Data de emissão do RNE
+      description: 'Data de emissão do RNE'
+      example: '2012-05-25'
     passaporte:
+      type: string
+      description: 'Número do passaporte'
       example: CS265436
-      type: string
-      description: Número do passaporte
     passaporte_orgao_emissor:
-      example: PF
       type: string
-      description: Orgão emissor do passaporte
+      description: 'Orgão emissor do passaporte'
+      example: PF
     passaporte_data_emissao:
-      example: 2023-05-25
       type: datetime
-      description: Data de emissão do passaporte
+      description: 'Data de emissão do passaporte'
+      example: '2023-05-25'
     cnh:
-      example: "03662589788"
       type: string
-      description: Número da CNH
+      description: 'Número da CNH'
+      example: '03662589788'
     cnh_orgao_emissor:
+      type: string
+      description: 'Orgão emissor da CNH'
       example: Detran
-      type: string
-      description: Orgão emissor da CNH
     data_primeira_habilitacao_cnh:
-      example: 2018-05-25
       type: datetime
-      description: Data da primeira habilitação da CNH
+      description: 'Data da primeira habilitação da CNH'
+      example: '2018-05-25'
     data_fim_validade_cnh:
-      example: 2024-05-25
       type: datetime
-      description: Data de validade da CNH
+      description: 'Data de validade da CNH'
+      example: '2024-05-35'
     cnh_data_emissao:
-      example: 2022-02-28
       type: datetime
-      description: Data de emissão da CNH
+      description: 'Data de emissão da CNH'
+      example: '2022-02-28'
     rnm:
+      type: string
+      description: 'Número do RNM'
       example: A123456-7
-      type: string
-      description: Número do RNM
     rnm_orgao_emissor:
+      type: string
+      description: 'Orgão emissor do RNM'
       example: PF
-      type: string
-      description: Orgão emissor do RNM
     rnm_data_emissao:
-      example: 2022-02-28
       type: datetime
-      description: Data de emissão do RNM
+      description: 'Data de emissão do RNM'
+      example: '2022-02-28'
     filiacao_mae:
-      example: Nome da mãe
       type: string
-      description: Filiação Mãe/2
+      description: 'Filiação Mãe/2'
+      example: 'Nome da mãe'
     filiacao_pai:
-      example: Nome do pai
       type: string
-      description: Filiação Pai/1
+      description: 'Filiação Pai/1'
+      example: 'Nome do pai'
     razao_social:
-      example: Empresa Nome LTDA
       type: string
-      description: Razão Social
+      description: 'Razão Social'
+      example: 'Empresa Nome LTDA'
     segmento_razao:
-      example: Cosméticos
       type: string
       description: Segmento/Ramo
+      example: Cosméticos
     razao_social_anterior:
-      example: Empresa Nome Família LTDA
       type: string
-      description: Razão social anterior
+      description: 'Razão social anterior'
+      example: 'Empresa Nome Família LTDA'
     sucessao:
-      example: Sim
       type: string
       description: Sucessão
+      example: Sim
     forma_constituicao:
+      type: string
+      description: 'Forma de constituição'
       example: LTDA
-      type: string
-      description: Forma de constituição
     data_constituicao:
-      example: 2023-11-13
       type: datetime
-      description: Data de constituição
+      description: 'Data de constituição'
+      example: '2023-11-13'
     numero_junta_comercial:
-      example: "178"
       type: string
-      description: Número da junta comercial
+      description: 'Número da junta comercial'
+      example: '178'
     classificacao:
+      type: string
+      description: 'Classificação da pessoa'
       example: Pessoa
-      type: string
-      description: Classificação da pessoa
     insc_estadual:
+      type: string
+      description: 'Inscrição estadual'
       example: 34853689-5
-      type: string
-      description: Inscrição estadual
     insc_municipal:
-      example: 985.308.573.887
       type: string
-      description: Inscrição municipal
+      description: 'Inscrição municipal'
+      example: 985.308.573.887
     cep:
-      example: "49030210"
       type: string
       description: CEP
+      example: '49030210'
     logradouro:
-      example: Avenida
       type: string
       description: Logradou
+      example: Avenida
     endereco:
-      example: Pastora Maria
       type: string
       description: Endereço
+      example: 'Pastora Maria'
     bairro:
-      example: Farolândia
       type: string
       description: Bairro
+      example: Farolândia
     numero:
-      example: "3232"
       type: string
       description: Número
+      example: '3232'
     complemento:
-      example: Apartamento 708
       type: string
       description: Complemento
+      example: 'Apartamento 708'
     estado:
-      example: SE
       type: string
       description: Estado
+      example: SE
     cidade:
-      example: Aracaju
       type: string
       description: Cidade
+      example: Aracaju
     endereco_pais:
-      example: Brasil
       type: string
       description: País
+      example: Brasil
     tipo_residencia:
-      example: Própria com financiamento
       type: string
-      description: Tipo da resdência
+      description: 'Tipo da resdência'
+      example: 'Própria com financiamento'
     reside_com:
-      example: Com os pais
       type: string
-      description: Com quem Reside
+      description: 'Com quem Reside'
+      example: 'Com os pais'
     valor_aluguel:
-      example: "1750.00"
       type: string
-      description: Valor de aluguel
+      description: 'Valor de aluguel'
+      example: '1750.00'
     tempo_residencia:
-      example: 1
       type: integer
-      description: Tempo de residência (mês)
+      description: 'Tempo de residência (mês)'
+      example: 1
     tipo_correspondencia:
+      type: string
+      description: 'Tipo de correspondência'
       example: Residencial
-      type: string
-      description: Tipo de correspondência
     politicamente_exposta:
-      example: Não
       type: string
-      description: Pessoa politicamente exposta
+      description: 'Pessoa politicamente exposta'
+      example: Não
     ppe_cargo:
-      example: null
       type: string
       description: Cargo/Função
+      example: null
     ppe_exercicio:
-      example: 2001-2004
       type: string
-      description: Período de exercício
+      description: 'Período de exercício'
+      example: '2024-03-31 09:15:44'
     suspeito:
-      example: Não
       type: string
-      description: Pessoa contemplada na lista de indivíduos suspeitos/envolvidos em
-        lavagem de dinheiro e financiamento ao terrorismo
+      description: 'Pessoa contemplada na lista de indivíduos suspeitos/envolvidos em lavagem de dinheiro e financiamento ao terrorismo'
+      example: Não
     residente_municipio_fronteira:
-      example: Não
       type: string
-      description: Pessoa residente em município de faixa de fronteira
+      description: 'Pessoa residente em município de faixa de fronteira'
+      example: Não
     relacionamento_ppe:
+      type: string
+      description: 'Relacionamento com um PPE'
       example: Não
-      type: string
-      description: Relacionamento com um PPE
     relacionamento_ppe_nome:
-      example: João Gomes
       type: string
-      description: Nome do relacionamento
+      description: 'Nome do relacionamento'
+      example: 'João Gomes'
     relacionamento_ppe_parentesco:
+      type: string
+      description: 'Parentesco do relacionamento'
       example: Irmão
-      type: string
-      description: Parentesco do relacionamento
     relacionamento_ppe_cargo:
+      type: string
+      description: 'Cargo/Função do relacionamento'
       example: Analista
-      type: string
-      description: Cargo/Função do relacionamento
     relacionamento_ppe_exercicio:
-      example: 2001-
       type: string
-      description: Período de exercício do relacionamento
+      description: 'Período de exercício do relacionamento'
+      example: '2024-03-31 09:15:44'
     relacionamento_ppe_identificacao:
+      type: string
+      description: 'Número de identificação do relacionamento'
       example: 12544-85
-      type: string
-      description: Número de identificação do relacionamento
     relacionamento_ppe_orgao_emissor:
+      type: string
+      description: 'Orgão emissor do relacionamento'
       example: SSP
-      type: string
-      description: Orgão emissor do relacionamento
     relacionamento_ppe_data_nasc:
-      example: 2011-05-28
       type: datetime
-      description: Data de nascimento do relacionamento
+      description: 'Data de nascimento do relacionamento'
+      example: '2011-05-28'
     relacionamento_ppe_cpf:
+      type: string
+      description: 'CPF do relacionamento'
       example: 111.111.111-11
-      type: string
-      description: CPF do relacionamento
     numero_pis:
-      example: "21212"
       type: string
-      description: Número do PIS
+      description: 'Número do PIS'
+      example: '21212'
     observacoes:
-      example: Observações
       type: text
       description: Observações
+      example: Observações

@@ -17,9 +17,10 @@ class Http
     public $logObjeto;
     protected $eventosObj;
     protected $evento = 'Requisição';
+    public $executarObj;
 
     public function __construct(InputInterface $input, OutputInterface $output,
-                                    CvdwSymfonyStyle $io, $logObjeto = false)
+                                    CvdwSymfonyStyle $io, $executarObj, $logObjeto = false)
     {
         if(is_object($logObjeto)) {
             $this->logObjeto = $logObjeto;
@@ -27,13 +28,25 @@ class Http
         $this->io = $io;
         $this->input = $input;
         $this->output = $output;
+        $this->executarObj = $executarObj;
 
         $this->eventosObj = new Eventos();
 
     }
 
-    public function requestCVDW(string $path, array $parametros = [], bool $novaTentativa = true) : object
+    public function requestCVDW(string $path, $progressBar, $cvdw, array $parametros = [], bool $novaTentativa = true) : object
     {
+
+        $this->executarObj->salvarExecucao();
+        $segundos = $this->gerenciarRateLimit();
+
+        if ($segundos > 0 && !$progressBar) {
+            $this->aguardarSemProgresso($segundos);
+        }
+
+        if($progressBar) {
+            $this->aguardar($cvdw, $progressBar, $segundos);
+        }
 
         $this->eventosObj->registrarEvento($this->evento, $path);
         
@@ -94,7 +107,7 @@ class Http
                 'Vamos tentar novamente em '.$segundos.' segundos...',
             ]);
             sleep($segundos);
-            $this->requestCVDW($path, $parametros, false);
+            $this->requestCVDW($path, $progressBar, $cvdw, $parametros, false);
         }
          
         if(isset($responseJson->Response) && $responseJson->Response == "Too many requests"){
@@ -105,7 +118,6 @@ class Http
                 'Retorno: '. $response
             ]);
             return $this->io;
-            exit;
         }
 
         if (isset($responseJson->total_de_registros) && $responseJson->total_de_registros !== null) {
@@ -120,6 +132,80 @@ class Http
         }
     }
 
+    protected function gerenciarRateLimit(): int {
+
+        $espacodetempo = 60;
+        $agora = time();
+        $execucoes = $this->executarObj->retornarExecucoes();
+        if(!empty($execucoes)) {
+            foreach($execucoes as $ind => $time) {
+                $tempo_atras = $agora - $execucoes[$ind];
+                if($tempo_atras > $espacodetempo) {
+                    $this->executarObj->removerExecucao($ind);
+                }
+            }
+        } else {
+            return 0;
+        }
+
+        $delay = 3;
+        $esperar = 0;
+        reset($execucoes);
+        $primeiro = current($execucoes);
+        end($execucoes);
+        $ultimo = current($execucoes);
+        $diferenca = $ultimo - $primeiro;
+        if ($this->output->isDebug()) {
+            $this->io->info(" LOG: primeiro: $primeiro, ultimo: $ultimo, diferença: $diferenca");
+        }
+
+        if(count($execucoes) >= 20) {
+            $esperar = ($espacodetempo - $diferenca) + $delay;
+        }
+
+        if ($diferenca > $espacodetempo) {
+            $esperar = ($espacodetempo - $diferenca) + $delay;
+        }
+
+        return $esperar;
+
+    }
+
+    protected function aguardar($cvdw, $progressBar, int $segundos = 3): void
+    {
+
+        $mensagem = null;
+        for ($i = $segundos; $i > 0; $i--) {
+            if ($i == 1) {
+                $mensagem = ' <fg=blue>Aguardando ' . $i . ' segundo para a próxima requisição...</>';
+            } else {
+                $mensagem = ' <fg=blue>Aguardando ' . $i . ' segundos para a próxima requisição...</>';
+            }
+            $mensagem .= "\n <fg=gray>Proteção contra o Rate Limit do servidor. (20req/min)</>";
+            $mensagem = $cvdw->getMensagem($mensagem);
+            $progressBar->setMessage($mensagem);
+            $progressBar->display();
+            sleep(1);
+        }
+        $progressBar->setMessage($cvdw->getMensagem($mensagem));
+    }
+
+    protected function aguardarSemProgresso(int $segundos): void
+    {
+        $this->io->text("");
+        $this->io->text("<fg=gray>Proteção contra o Rate Limit do servidor. (20req/min)</>");
+        for ($i = $segundos; $i > 0; $i--) {
+            if ($i == 1) {
+                $this->io->text('<fg=blue>Aguardando ' . $i . ' segundo para a próxima requisição...</>');
+            } else {
+                $this->io->text('<fg=blue>Aguardando ' . $i . ' segundos para a próxima requisição...</>');
+            }
+            sleep(1);
+        }
+        $this->io->text(['','']);
+    }
+
+    
     public function pingAmbienteCVDW(string $endereco_cv) : array
     {
 

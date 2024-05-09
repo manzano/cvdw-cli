@@ -27,7 +27,7 @@ paths:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: "Aassistencias"
+          description: "Assistencias"
           content:
             application/json:
               schema:
@@ -1487,7 +1487,7 @@ components:
           example: 1
           type: integer
           description: "Página que deseja visualizar os registros"
-        registros_por_pagina:
+        registros:
           example: 30
           type: integer
           description: "Quantidade de registro por página, máximo 500 registros"
@@ -1510,8 +1510,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -1616,8 +1616,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -1666,8 +1666,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do atendimento"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -1896,8 +1896,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Número de identificação da vistoria"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2006,8 +2006,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Código identificador do tempo de workflow"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2056,8 +2056,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Código identificador do tempo de workflow"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2099,8 +2099,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Código identificador do tempo de workflow"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2187,8 +2187,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Código identificador do tempo de workflow"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2237,8 +2237,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 3
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da interação"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2295,8 +2295,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2385,8 +2385,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2447,8 +2447,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2497,8 +2497,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2547,8 +2547,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da assistência"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2574,6 +2574,14 @@ components:
           example: "Joao da silva"
           type: string
           description: "Nome do cliente"
+        idsindico:
+          example: 345
+          type: integer
+          description: "Id do síndico"
+        sindico:
+          example: "João"
+          type: string
+          description: "Nome do síndico"
         cep_cliente:
           example: "49010020"
           type: string
@@ -2717,8 +2725,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do item da assistência"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -2783,8 +2791,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 168523
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do lead"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3073,8 +3081,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 168523
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do lead"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3119,8 +3127,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 168523
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do lead"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3213,8 +3221,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 168523
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do lead"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3263,8 +3271,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 168523
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do lead"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3321,8 +3329,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 258
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da interação"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3399,8 +3407,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 2546
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da tarefa"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3473,8 +3481,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 2546
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da tarefa"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3567,8 +3575,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 45
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do tempo que o lead ficou em uma situação"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3617,8 +3625,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da perda do lead"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3671,8 +3679,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do lead"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3721,8 +3729,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 3
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do momento do lead"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3789,8 +3797,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 1
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do usuario"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3824,8 +3832,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 1
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da demanda"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -3879,8 +3887,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 14
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Id do Processo"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -4023,8 +4031,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 1
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do pré-cadastro"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -4198,8 +4206,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 1
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da imobiliaria"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -4307,8 +4315,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 1
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da corretor"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -4639,8 +4647,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do tempo que o pré-cadastro permaneceu na situação"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -4689,8 +4697,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Código de indentificação do histórico"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -4739,8 +4747,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 168523
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do repasse"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -4944,8 +4952,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 168523
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do tempo"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -4990,8 +4998,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 168523
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do histórico"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -5112,8 +5120,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 1
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -5419,8 +5427,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12414
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do campo adicional"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -5450,8 +5458,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12414
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do campo adicional"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -5497,8 +5505,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 1
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -5868,8 +5876,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 269
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da pessoa"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -5983,8 +5991,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 269
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -6190,8 +6198,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 269
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -6300,8 +6308,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 269
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -6425,8 +6433,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 269
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -6556,8 +6564,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 269
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -6604,7 +6612,7 @@ components:
           type: integer
           description: "Identificador da imobiliária vinculada"
         idcorretor:
-          example: 20
+          example: '2024-03-31 09:15:44'
           type: integer
           description: "Identificador do corretor vinculado"
         comissao_tipo:
@@ -6720,8 +6728,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 269
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-12-29 16:12:52"
@@ -6807,8 +6815,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -6846,8 +6854,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -6909,8 +6917,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -6956,8 +6964,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12414
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador workflow tempo da reserva"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -6999,8 +7007,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 132023
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do campo"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -7053,8 +7061,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12414
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da reserva"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -7189,8 +7197,8 @@ components:
           type: string
           description: "Nome da mídia"
         idtabela:
-          example: 0
-          type: integer
+          example: integer
+          type: string
           description: "Identificador da tabela de preço"
         nometabela:
           example: "Tabela Dezembro"
@@ -7219,8 +7227,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12414
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "ID do histórico registrado na situação"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -7277,8 +7285,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12414
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "ID do histórico registrado no histórico"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -7335,8 +7343,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12414
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Código identificador da reserva"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -7453,8 +7461,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12414
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da simulação"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -7721,7 +7729,7 @@ components:
           type: string
           description: "Tipo de cálculo para máxima comissão no contrato"
         porcentagem_total_fora_contrato:
-          example: 20
+          example: '2024-03-31 09:15:44'
           type: integer
           description: "Porcentagem máxima da comissão fora do contrato"
         pagamento_total_fora_contrato:
@@ -7813,8 +7821,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da reserva do sienge no CV"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -8019,8 +8027,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12414
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador da unidade _ Identificador da tabela"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -8086,8 +8094,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 12414
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Identificador do contrato na reserva"
         referencia_data:
           example: "2023-01-15 15:26:15"
@@ -8280,8 +8288,8 @@ components:
       type: object
       properties:
         referencia:
-          example: 193
-          type: integer
+          example: 193 ou 193_30
+          type: string
           description: "Número de identificação da reserva"
         referencia_data:
           example: "2023-01-15 15:26:15"

@@ -1,21 +1,23 @@
 path: /atendimentos/times/integrantes
 tabela: atendimentos_times_integrantes
 metodo: get
-descricao: Esta api retorna os integrantes dos times de atendimentos.
-nome: Atendimentos (atendimentos_times_integrantes)
+descricao: 'Esta api retorna os integrantes dos times de atendimentos.'
+nome: 'Atendimentos (atendimentos_times_integrantes)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -26,77 +28,76 @@ schema: RetornarAtendimentosTimesIntegrantes
 subschema: AtendimentosTimesIntegrantes
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador
+      description: 'Identificador'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
     idintegrante:
-      example: 3
       type: integer
-      description: Identificador do integrante
+      description: 'Identificador do integrante'
+      example: 3
     idtime:
-      example: 3
       type: integer
-      description: Identificador do time
+      description: 'Identificador do time'
+      example: 3
     time:
-      example: Time Atendimento
       type: string
-      description: Nome do time
+      description: 'Nome do time'
+      example: 'Time Atendimento'
     idusuario:
+      type: string
+      description: 'Identificador do usuário'
       example: 13
-      type: string
-      description: Identificador do usuário
     usuario:
-      example: Fátima Barreto
       type: string
-      description: Nome do usuário
+      description: 'Nome do usuário'
+      example: 'Fátima Barreto'
     ativo:
-      example: S
       type: string
-      description: Informa se está ativo no painel
+      description: 'Informa se está ativo ou não'
+      example: S
     data_cad:
-      example: 2022-10-06 09:58:03
       type: datetime
-      description: Data de cadastro
+      description: 'Data de cadastro'
+      example: '2024-03-31 09:15:54'
     data_modificacao:
-      example: 2022-01-14 18:05:35
       type: datetime
-      description: Data de modificação do item
+      description: 'Data de modificação do item'
+      example: '2024-03-31 09:15:54'

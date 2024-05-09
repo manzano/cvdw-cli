@@ -1,22 +1,23 @@
 path: /corretores
 tabela: corretores
 metodo: get
-descricao: Esta api retorna os dados dos Corretores a partir dos filtros
-  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
-nome: Corretores (corretores)
+descricao: 'Esta api retorna os dados dos Corretores a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Corretores (corretores)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,108 +28,212 @@ schema: RetornarCorretores
 subschema: Corretor
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador da corretor
+      description: 'Identificador da corretor'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
-    idcorretor:
-      example: 1
-      type: integer
-      description: Identificador da corretor
-    documento:
-      example: "04461372197"
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
+    ativo:
       type: string
-      description: Número do documento (CPF/CNPJ) do corretor
-    nome:
-      example: Corretor TK
-      type: string
-      description: Nome do corretor
-    sexo:
-      example: Feminino
-      type: string
-      description: Sexo do Corretor
-    ativo_login:
+      description: 'Informa se está ativo ou não'
       example: S
+    idcorretor:
+      type: integer
+      description: 'Identificador da corretor'
+      example: 1
+    documento:
       type: string
-      description: Indica se está ativo no login
+      description: 'Número do documento (CPF/CNPJ) do corretor'
+      example: '04461372197'
+    nome:
+      type: string
+      description: 'Nome do corretor'
+      example: 'Corretor TK'
+    apelido:
+      type: string
+      description: 'Apelido do corretor'
+      example: Corretor
+    sexo:
+      type: string
+      description: 'Sexo do Corretor'
+      example: Feminino
+    ativo_login:
+      type: string
+      description: 'Indica se está ativo no login'
+      example: Sim
     data_cad:
-      example: 2021-03-10 11:17:50
       type: datetime
-      description: Data de Cadastro do Corretor
+      description: 'Data de Cadastro do Corretor'
+      example: '2024-03-31 09:15:54'
     estado_civil:
+      type: string
+      description: 'Estado Civil do Corretor'
       example: Casado
-      type: string
-      description: Estado Civil do Corretor
     data_nasc:
-      example: 2021-03-10 11:17:50
       type: datetime
-      description: Data de nascimento do Corretor
+      description: 'Data de nascimento do Corretor'
+      example: '2024-03-31 09:15:54'
     telefone:
-      example: "7934421055"
       type: string
-      description: Telefone do Corretor
+      description: 'Telefone do Corretor'
+      example: '7934421055'
     celular:
-      example: "079999715866"
       type: string
-      description: Celular do Corretor
+      description: 'Celular do Corretor'
+      example: '079999715866'
     rg:
+      type: string
+      description: 'Numero do rg do corretor'
       example: 14.802.150-5
-      type: string
-      description: Numero do rg do corretor
     rg_orgao_expedidor:
+      type: string
+      description: 'Orgão Expedidor'
       example: SSP
-      type: string
-      description: Orgão Expedidor
     numero_pis:
-      example: "32014525254"
       type: string
-      description: Numero do Pis
+      description: 'Numero do Pis'
+      example: '32014525254'
     naturalidade:
+      type: string
+      description: 'Naturalidade do Corretor'
       example: brasileiro
-      type: string
-      description: Naturalidade do Corretor
     pais:
+      type: string
+      description: 'País do Corretor'
       example: brasil
-      type: string
-      description: País do Corretor
     possui_filhos:
-      example: "7999858588"
       type: string
+      description: 'Quantidade de filhos'
+      example: '2'
+    dependentes:
+      type: string
+      description: null
+      example: '1'
+    tamanho_camisa:
+      type: string
+      description: null
+      example: M
+    razao_social:
+      type: string
+      description: null
+      example: 'd fadsfadsf'
+    contrato_social_nire:
+      type: string
+      description: null
+      example: null
+    inscricao_estadual:
+      type: string
+      description: null
+      example: null
+    cep:
+      type: string
+      description: null
+      example: '49015110'
+    logradouro:
+      type: string
+      description: null
+      example: Rua
+    endereco:
+      type: string
+      description: null
+      example: 'Rua Itabaiana'
+    bairro:
+      type: string
+      description: null
+      example: 'São José'
+    numero:
+      type: string
+      description: null
+      example: '123'
+    complemento:
+      type: string
+      description: null
+      example: Apartamento
+    estado:
+      type: string
+      description: null
+      example: SE
+    cidade:
+      type: string
+      description: null
+      example: Aracaju
+    grau_instrucao:
+      type: string
+      description: null
+      example: 'Ensino médio completo'
+    curso:
+      type: string
+      description: null
+      example: Direito
+    ano_conclusao:
+      type: string
+      description: null
+      example: 3121
+    email:
+      type: string
+      description: null
+      example: teste@cvcrm.com.br
+    imobiliaria:
+      type: string
+      description: null
+      example: 'Imobiliária Qualidade'
+    categoria:
+      type: string
+      description: null
+      example: Ouro
+    nivel:
+      type: string
+      description: null
+      example: 'Corretor Externo'
+    participa_roleta_online:
+      type: string
+      description: null
+      example: Não
+    classificacao:
+      type: string
+      description: null
+      example: Vip
+    codigointerno:
+      type: string
+      description: null
+      example: '215'
+    identificador:
+      type: string
+      description: null
+      example: '123'

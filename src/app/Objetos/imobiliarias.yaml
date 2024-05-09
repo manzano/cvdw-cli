@@ -1,22 +1,23 @@
 path: /imobiliarias
 tabela: imobiliarias
 metodo: get
-descricao: Esta api retorna os dados das imobiliarias a partir dos filtros
-  solicitados, caso deseje saber o que cada campo representa basta ir no schema.
-nome: Imobiliarias (imobiliarias)
+descricao: 'Esta api retorna os dados das imobiliarias a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Imobiliarias (imobiliarias)'
 parametros:
   header:
-    - name: email
+    -
+      name: email
       in: header
       required: true
-      description: E-mail de autenticação do usuário administrativo
+      description: 'E-mail de autenticação do usuário administrativo'
       example: email@email.com
       schema:
         type: string
-    - name: token
+    -
+      name: token
       in: header
       required: true
-      description: Token criado no usuário administrativo do e-mail
+      description: 'Token criado no usuário administrativo do e-mail'
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -27,143 +28,160 @@ schema: RetornarImobiliarias
 subschema: Imobiliaria
 body:
   pagina:
+    type: integer
     example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
     type: integer
-    description: Página que deseja visualizar os registros
-  registros:
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   a_partir_referencia:
-    example: 1640
     type: integer
-    description: Retornará as vistorias a partir deste id, lembrando que está
-      ordenado em ordem decrescente
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
-    example: 2022-05-18 10:45:30
+    example: '2022-05-18 10:15:26'
     type: string
-    description: Retornará as vistorias criadas a partir da data informada
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
+    type: integer
     example: 1
-    type: integer
-    description: Página que deseja visualizar os registros
+    description: 'Página que deseja visualizar os registros'
   registros:
+    type: integer
     example: 30
-    type: integer
-    description: Quantidade de registro por página, máximo 500 registros
+    description: 'Quantidade de registro por página, máximo 500 registros'
   total_de_registros:
+    type: integer
     example: 1054
-    type: integer
-    description: Total de registros encontrados
+    description: 'Total de registros encontrados'
   total_de_paginas:
-    example: 36
     type: integer
-    description: Total de páginas encontradas
+    example: 36
+    description: 'Total de páginas encontradas'
   dados:
     referencia:
-      example: 193 ou 193_30
       type: string
-      description: Identificador da imobiliaria
+      description: 'Identificador da imobiliaria'
+      example: '193 ou 193_30'
     referencia_data:
-      example: 2023-01-15 15:26:15
       type: datetime
-      description: Data de referência
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
     idimobiliaria:
-      example: 1
       type: integer
-      description: Identificador da imobiliaria
+      description: 'Identificador da imobiliaria'
+      example: 1
     ativo:
+      type: string
+      description: 'Informa se está ativo ou não'
       example: S
-      type: string
-      description: Indica se imobiliária está ativa
     data_cad:
-      example: 2021-03-10 11:17:50
       type: datetime
-      description: Data de Cadastro da Imobiliária
+      description: 'Data de Cadastro da Imobiliária'
+      example: '2024-03-31 09:15:54'
     idestado:
-      example: 1
       type: integer
-      description: Identificação do estado da imobiliária
+      description: 'Identificação do estado da imobiliária'
+      example: 1
     idcidade:
-      example: 1
       type: integer
-      description: Identificação da cidade da imobiliária
+      description: 'Identificação da cidade da imobiliária'
+      example: 1
     nome:
-      example: Imobiliaria teste
       type: string
-      description: Nome da Imobiliária
+      description: 'Nome da Imobiliária'
+      example: 'Imobiliaria teste'
     razao_social:
-      example: Razao Social
       type: string
-      description: Razao Social da Imobiliára
+      description: 'Razao Social da Imobiliára'
+      example: 'Razao Social'
     cnpj:
-      example: 12.345.678/0001-55
       type: string
-      description: CNPJ da Imobiliária
+      description: 'CNPJ da Imobiliária'
+      example: 12.345.678/0001-55
     cnpj_faturamento:
+      type: string
+      description: 'CNPJ da faturmanto da Imobiliária'
       example: 12.345.678/0001-55
-      type: string
-      description: CNPJ da faturmanto da Imobiliária
     idlogradouro:
-      example: 1
       type: integer
-      description: Logradouro da Imobiliária
+      description: 'Logradouro da Imobiliária'
+      example: 1
     endereco:
-      example: rua teste
       type: string
-      description: Endereço da Imobiliária
+      description: 'Endereço da Imobiliária'
+      example: 'rua teste'
     complemento:
+      type: string
+      description: null
       example: apartamento
-      type: string
     numero:
-      example: 32 A
       type: string
+      description: null
+      example: '32 A'
     bairro:
-      example: bairro teste
       type: string
+      description: null
+      example: 'bairro teste'
     cep:
+      type: string
+      description: null
       example: 49500-235
-      type: string
     telefone:
-      example: "7999858588"
       type: string
+      description: null
+      example: '7999858588'
     celular:
-      example: "7999858588"
       type: string
+      description: null
+      example: '7999858588'
     email:
+      type: string
+      description: null
       example: teste@cvcrm.com.br
-      type: string
     creci:
-      example: "123456"
       type: string
+      description: null
+      example: '123456'
     avatar_nome:
+      type: string
+      description: null
       example: photo
-      type: string
     validade_creci:
-      example: 2021-03-10
       type: string
+      description: null
+      example: '2021-03-10'
     gerente_nome:
-      example: Nome gerente
       type: string
+      description: null
+      example: 'Nome gerente'
     gerente_cpf:
+      type: string
+      description: null
       example: 123.456.789-10
-      type: string
     gerente_telefone:
-      example: 799945-8585
       type: string
+      description: null
+      example: 799945-8585
     gerente_celular:
+      type: string
+      description: null
       example: 799945-8585
-      type: string
     gerente_email:
+      type: string
+      description: null
       example: gerente@cvcrm.com.br
-      type: string
     sigla:
+      type: string
+      description: null
       example: TS
-      type: string
     codigointerno:
-      example: "123456"
       type: string
+      description: null
+      example: '123456'
     observacoes:
-      example: observacao iumobiliaria
-      type: string
+      type: text
+      description: null
+      example: 'observacao iumobiliaria'

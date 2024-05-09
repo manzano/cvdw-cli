@@ -45,7 +45,9 @@ class Executar extends Command
     protected $evento = 'Executar';
     protected $qtd = 500;
     protected $apartir = null;
-    
+    protected $maxpag = null;
+    public array $execucoes = [];
+
     const OPCAO_SAIR = 'Sair (CTRL+C)';
 
     protected function configure()
@@ -54,33 +56,38 @@ class Executar extends Command
             ->setDescription('Executar o CVDW-CLI')
             ->addArgument('objeto', InputArgument::OPTIONAL, 'Qual objeto deseja executar')
             ->addOption(
-                'ignorar-data-referencia', // Nome da opção
-                'idr', // Atalho, pode ser NULL se não quiser um atalho
+                'ignorar-data-referencia',
+                'idr',
                 InputOption::VALUE_NONE, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 'Ignorar a data de referência.',
             )
             ->addOption(
-                'salvarlog', // Nome da opção
-                'log', // Atalho, pode ser NULL se não quiser um atalho
+                'salvarlog',
+                'log',
                 InputOption::VALUE_NONE, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 'Salvar Log da execução no diretorio de instalação.',
             )
             ->addOption(
-                'setEnv', // Nome da opção
-                'env', // Atalho, pode ser NULL se não quiser um atalho
+                'set-env',
+                'env',
                 InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
             )->addOption(
-                'setQtd', // Nome da opção
-                'qtd', // Atalho, pode ser NULL se não quiser um atalho
+                'set-qtd',
+                'qtd',
                 InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 'Quantidade de dados retornada por cada requisicao.',
             )->addOption(
-                'apartir', // Nome da opção
-                'a', // Atalho, pode ser NULL se não quiser um atalho
+                'apartir',
+                'a',
                 InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 "Consultar a partir de uma data de referencia especifica.\n
                 No formato: Y-m-d\TH:i:s ou Y-m-d.",
+            )->addOption(
+                'max-pag',
+                'm',
+                InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+                "Executa o número máximo de página informado.",
             );
     }
 
@@ -89,19 +96,23 @@ class Executar extends Command
 
         $this->eventosObj = new Eventos();
 
-        if ($input->getOption('setEnv')) {
-            $this->env = $input->getOption('setEnv');
+        if ($input->getOption('set-env')) {
+            $this->env = $input->getOption('set-env');
         }
 
-        if ($input->getOption('setQtd')) {
-            $this->qtd = $input->getOption('setQtd');
+        if ($input->getOption('set-qtd')) {
+            $this->qtd = $input->getOption('set-qtd');
         }
 
-        if($input->getOption('apartir')) {
+        if ($input->getOption('apartir')) {
             $this->apartir = trim($input->getOption('apartir'));
-            if(!validarData($this->apartir)){
-                throw new CvdwException('Data de referência informada ('.$this->apartir.') é inválida.');
+            if (!validarData($this->apartir)) {
+                throw new CvdwException('Data de referência informada (' . $this->apartir . ') é inválida.');
             }
+        }
+
+        if($input->getOption('max-pag')){
+            $this->maxpag = $input->getOption('max-pag');
         }
 
         $this->ambientesObj = new Ambientes($this->env);
@@ -115,7 +126,7 @@ class Executar extends Command
         $io = new CvdwSymfonyStyle($input, $output, $this->logObjeto);
         $this->limparTela();
         $this->validarConfiguracao($io);
-        
+
         $this->input = $input;
         $this->output = $output;
 
@@ -168,18 +179,17 @@ class Executar extends Command
 
     protected function voltarProMenu($io)
     {
-        if($this->voltarProMenu){
+        if ($this->voltarProMenu) {
             if ($io->confirm('Vamos voltar pro menu anterior?', true)) {
                 $this->limparTela();
                 return $this->execute($this->input, $this->output);
-
             } else {
                 return 0;
             }
         }
     }
 
-    public function validarConfiguracao($io) : void
+    public function validarConfiguracao($io): void
     {
         $envVars = $this->ambientesObj->getEnvEscope();
         // Listar todas as variáveis de $envVars e verificar se todas tem valor
@@ -195,7 +205,7 @@ class Executar extends Command
 
     public function exibirObjetos($io)
     {
-        
+
         $objetos = new Objeto($this->input, $this->output);
         $objetosArray = $objetos->retornarObjetos();
         $io->section('Objetos disponíveis: ');
@@ -210,7 +220,7 @@ class Executar extends Command
 
     public function executarObjeto($io, $inputObjeto, $inputDataReferencia = false)
     {
-        if($this->output->isDebug()) {
+        if ($this->output->isDebug()) {
             $io->info('## Função: ' . __FUNCTION__);
         }
 
@@ -236,15 +246,15 @@ class Executar extends Command
             }
 
             $objetoObj = new Objeto($this->input, $this->output);
-            $cvdw = new \Manzano\CvdwCli\Services\Cvdw($this->input, $this->output);
+            $cvdw = new \Manzano\CvdwCli\Services\Cvdw($this->input, $this->output, $this);
 
             foreach ($objetosArray as $objeto => $dados) {
                 $objeto = $objetoObj->retornarObjeto($objeto);
                 $io->section($dados['nome']);
                 $io->text('Executando objeto: ' . $dados['nome'] . '');
                 $this->eventosObj->registrarEvento($this->evento, 'executar', $dados['nome']);
-                
-                $cvdw->processar($objeto, $this->qtd, $io, $this->apartir, $inputDataReferencia, $this->logObjeto);
+
+                $cvdw->processar($objeto, $this->qtd, $io, $this->apartir, $inputDataReferencia, $this->logObjeto, $this->maxpag);
             }
         } else {
             $io->error('Objeto não especificado.');
@@ -266,19 +276,18 @@ class Executar extends Command
         $inputObjeto = $io->choice('Qual objeto deseja executar?', $objetosOpcoes);
 
         foreach ($objetosArray as $objeto => $dados) {
-            if($dados['nome'] == $inputObjeto){
+            if ($dados['nome'] == $inputObjeto) {
                 $inputObjeto = $objeto;
             }
         }
 
-        if($inputObjeto == $this::OPCAO_SAIR) {
+        if ($inputObjeto == $this::OPCAO_SAIR) {
             exit;
         }
 
         $this->limparTela();
 
         $this->executarObjeto($io, $inputObjeto);
-
     }
 
     public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
@@ -290,7 +299,7 @@ class Executar extends Command
         }
     }
 
-    protected function limparTela() : void
+    protected function limparTela(): void
     {
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             // Limpa a tela no Windows
@@ -299,5 +308,20 @@ class Executar extends Command
             // Limpa a tela em sistemas Unix-like
             system('clear');
         }
+    }
+
+    public function salvarExecucao()
+    {
+        $this->execucoes[] = time();
+    }
+
+    public function retornarExecucoes()
+    {
+        return $this->execucoes;
+    }
+
+    public function removerExecucao($index)
+    {
+        unset($this->execucoes[$index]);
     }
 }
