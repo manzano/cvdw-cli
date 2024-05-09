@@ -6,3 +6,6 @@ logs/*.log
 .phpunit.cache
 coverage-report/*
 tests/_output/*
+.vscode/*
+scannerwork/*
+sonar-project.properties
