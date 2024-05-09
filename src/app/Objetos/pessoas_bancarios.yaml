@@ -118,6 +118,6 @@ response:
       description: 'Chave PIX no banco'
       example: '1213112'
     banco_observacoes:
-      type: string
+      type: text
       description: 'Identificador do banco'
       example: 'Conta ativa desde 2011'

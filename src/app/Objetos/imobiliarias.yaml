@@ -182,6 +182,6 @@ response:
       description: null
       example: '123456'
     observacoes:
-      type: string
+      type: text
       description: null
       example: 'observacao iumobiliaria'

@@ -46,6 +46,7 @@ class Executar extends Command
     protected $qtd = 500;
     protected $apartir = null;
     protected $maxpag = null;
+    public array $execucoes = [];
 
     const OPCAO_SAIR = 'Sair (CTRL+C)';
 
@@ -67,12 +68,12 @@ class Executar extends Command
                 'Salvar Log da execução no diretorio de instalação.',
             )
             ->addOption(
-                'setEnv',
+                'set-env',
                 'env',
                 InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
             )->addOption(
-                'setQtd',
+                'set-qtd',
                 'qtd',
                 InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 'Quantidade de dados retornada por cada requisicao.',
@@ -83,7 +84,7 @@ class Executar extends Command
                 "Consultar a partir de uma data de referencia especifica.\n
                 No formato: Y-m-d\TH:i:s ou Y-m-d.",
             )->addOption(
-                'maxPag',
+                'max-pag',
                 'm',
                 InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 "Executa o número máximo de página informado.",
@@ -95,12 +96,12 @@ class Executar extends Command
 
         $this->eventosObj = new Eventos();
 
-        if ($input->getOption('setEnv')) {
-            $this->env = $input->getOption('setEnv');
+        if ($input->getOption('set-env')) {
+            $this->env = $input->getOption('set-env');
         }
 
-        if ($input->getOption('setQtd')) {
-            $this->qtd = $input->getOption('setQtd');
+        if ($input->getOption('set-qtd')) {
+            $this->qtd = $input->getOption('set-qtd');
         }
 
         if ($input->getOption('apartir')) {
@@ -110,8 +111,8 @@ class Executar extends Command
             }
         }
 
-        if($input->getOption('maxPag')){
-            $this->maxpag = $input->getOption('maxPag');
+        if($input->getOption('max-pag')){
+            $this->maxpag = $input->getOption('max-pag');
         }
 
         $this->ambientesObj = new Ambientes($this->env);
@@ -245,7 +246,7 @@ class Executar extends Command
             }
 
             $objetoObj = new Objeto($this->input, $this->output);
-            $cvdw = new \Manzano\CvdwCli\Services\Cvdw($this->input, $this->output);
+            $cvdw = new \Manzano\CvdwCli\Services\Cvdw($this->input, $this->output, $this);
 
             foreach ($objetosArray as $objeto => $dados) {
                 $objeto = $objetoObj->retornarObjeto($objeto);
@@ -307,5 +308,20 @@ class Executar extends Command
             // Limpa a tela em sistemas Unix-like
             system('clear');
         }
+    }
+
+    public function salvarExecucao()
+    {
+        $this->execucoes[] = time();
+    }
+
+    public function retornarExecucoes()
+    {
+        return $this->execucoes;
+    }
+
+    public function removerExecucao($index)
+    {
+        unset($this->execucoes[$index]);
     }
 }
