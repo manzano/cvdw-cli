@@ -106,7 +106,7 @@ response:
       description: 'Identificador do bloco'
       example: 232
     valor:
-      type: string
+      type: text
       description: 'Valor da unidade'
       example: '150000.00'
     idtabela:

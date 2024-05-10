@@ -361,7 +361,7 @@ response:
       nome:
         type: string
       valor:
-        type: string
+        type: text
       nome_referencia:
         type: string
     campos_adicionais_contrato:
@@ -376,6 +376,6 @@ response:
       nome:
         type: string
       valor:
-        type: string
+        type: text
       tipo:
         type: string
