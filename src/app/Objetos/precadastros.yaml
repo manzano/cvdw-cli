@@ -166,7 +166,7 @@ response:
       description: 'Prazo do pré-cadastro'
       example: '0'
     observacoes:
-      type: tex
+      type: text
       description: 'Observações do pré-cadastro'
       example: Nenhuma
     tabela:

@@ -277,7 +277,7 @@ class Configurar extends Command
     {
         
         $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $http = new Http($this->input, $this->output, $io);
+        $http = new Http($this->input, $this->output, $io, $this);
         $diferencasBanco = array();
 
         $io->text([$this::VAMOS_LA, 'Validando a instalação...', '' ]);
@@ -502,7 +502,7 @@ class Configurar extends Command
             'Ok! Agora vou tentar fazer uma requisição para tentar validar os dados...'
         ]);
 
-        $http = new Http($this->input, $this->output, $io);
+        $http = new Http($this->input, $this->output, $io, $this);
         $response = $http->pingAmbienteAutenticadoCVDW(
             $this->variaveisAmbiente['endereco_cv'],
             "/imobiliarias",
