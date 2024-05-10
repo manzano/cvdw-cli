@@ -94,7 +94,7 @@ response:
       description: 'Funcionalidade do campo'
       example: USO_CONTRATO
     valor:
-      type: string
+      type: text
       description: 'Valor do campo'
       example: USO_CONTRATO
     data_cad:

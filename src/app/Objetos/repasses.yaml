@@ -239,6 +239,6 @@ response:
       nome:
         type: string
       valor:
-        type: string
+        type: text
       nome_referencia:
         type: string
