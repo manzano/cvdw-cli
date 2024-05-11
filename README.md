@@ -21,7 +21,7 @@ O **CVDW Command-line Interface (cvdw-cli)** é uma ferramenta poderosa projetad
 
 Depois de instalado, use sempre esse comando para atualizar o CVDW.
 
-    $ curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | bash
+    curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | bash
 
 ## Instalação
 
@@ -29,7 +29,7 @@ Para instalar o CVDW-cli, siga as [instruções de instalação](Install.md).
 
 ## Configurando
 
-    $ cvdw configurar
+    cvdw configurar
 
 ![cvdw configurar](imgs/configurar.png "cvdw configurar")
 
