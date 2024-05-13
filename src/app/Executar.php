@@ -247,6 +247,7 @@ class Executar extends Command
 
             $objetoObj = new Objeto($this->input, $this->output);
             $cvdw = new \Manzano\CvdwCli\Services\Cvdw($this->input, $this->output, $this);
+            $cvdw->conectar();
 
             foreach ($objetosArray as $objeto => $dados) {
                 $objeto = $objetoObj->retornarObjeto($objeto);

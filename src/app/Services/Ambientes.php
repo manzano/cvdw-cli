@@ -15,6 +15,11 @@ class Ambientes
         $this->envVars = $this->getEnvEscope();
     }
 
+    public function retornarVersao(): string
+    {
+        return '0.8.0';
+    }
+
     public function ambienteAtivo(): string
     {
         $this->retornarEnvs($this->env);
@@ -97,6 +102,11 @@ class Ambientes
             $newEnv = $envPath . '/envs/' . $envName;
             rename($envFile, $newEnv);
         }
+    }
+
+    public function atualizarCVDW(): void
+    {
+        // Atualizar versão do CVDW
     }
 
 }

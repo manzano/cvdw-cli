@@ -132,7 +132,8 @@ class Http
         }
     }
 
-    protected function gerenciarRateLimit(): int {
+    protected function gerenciarRateLimit(): int 
+    {
 
         $espacodetempo = 60;
         $agora = time();
@@ -204,7 +205,6 @@ class Http
         }
         $this->io->text(['','']);
     }
-
     
     public function pingAmbienteCVDW(string $endereco_cv) : array
     {
@@ -317,4 +317,43 @@ class Http
             return false;
         }
     }
+
+    public function buscarVersaoRepositorio() : string
+    {
+        $repo = 'manzano/cvdw-cli'; // Altere para o usuário/repositorio desejado
+        $url = "https://api.github.com/repos/$repo/releases/latest";
+        $curl = curl_init();
+        $cabecalho = array('User-Agent: Github / CVDW-CLI', 'Accept: application/json');
+        $verbose = fopen('php://temp', 'w+');
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_CONNECTTIMEOUT => 10,
+                CURLOPT_TIMEOUT => 20,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => $cabecalho,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_VERBOSE => true,
+                CURLOPT_STDERR => $verbose
+            )
+        );
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        if ($response) {
+            $data = json_decode($response, true);
+            return $data['tag_name'];
+        } else {
+            return null;
+        }
+
+    }
+
 }

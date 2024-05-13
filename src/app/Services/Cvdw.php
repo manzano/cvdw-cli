@@ -41,8 +41,12 @@ class Cvdw
     {
         $this->input = $input;
         $this->output = $output;
-        $this->conn = conectarDB($input, $output);
         $this->executarObj = $executarObj;
+    }
+
+    public function conectar(): void
+    {
+        $this->conn = conectarDB($this->input, $this->output);
     }
 
     public function processar(array $objeto, int $qtd, $io, $apartir = null, $inputDataReferencia = false, $logObjeto = null, $maxpag = null): bool
@@ -222,8 +226,6 @@ class Cvdw
 
         return $mensagem;
     }
-
-
 
     protected function verificaPadrao(object $linha): bool
     {
@@ -445,4 +447,21 @@ class Cvdw
         }
         return $linha;
     }
+
+    public function verificarNovaVersao($io): string
+    {
+        $http = new Http($this->input, $this->output, $io, $this);
+        return $http->buscarVersaoRepositorio();
+    }
+
+    public function alertarNovaVersao($versaoCVDW, $io): void
+    {
+        $versaoRepositorio = $this->verificarNovaVersao($io);
+        if($versaoRepositorio !== $versaoCVDW){
+            $io->warning('Existe uma nova versão disponível: '.$versaoRepositorio."\n".
+            "Acesse https://github.com/manzano/cvdw-cli para mais informações \n".
+            "Ou utilize a opção 8 para atualizar o seu CVDW.");
+        }
+    }
+
 }
