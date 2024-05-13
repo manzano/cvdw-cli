@@ -17,7 +17,7 @@ class Ambientes
 
     public function retornarVersao(): string
     {
-        return '1.2.0';
+        return 'v1.2.1';
     }
 
     public function ambienteAtivo(): string
