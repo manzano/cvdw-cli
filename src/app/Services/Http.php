@@ -18,6 +18,12 @@ class Http
     protected $eventosObj;
     protected $evento = 'Requisição';
     public $executarObj;
+    const HEADER_CONTENT_TYPE = 'Content-Type: application/json';
+    const ERRO_REQUISICAO = 'Erro ao tentar fazer a requisição!';
+    const PROTOCOLO_HTTP = 'https://';
+    const RESPONSE_TOO_MANY_REQUESTS = 'Too many requests';
+    const ERRO_BLOQUEIO = 'O servidor bloqueia o acesso ao CVDW se forem feitas mais que 20 requisições por minuto.';
+    const TENTAR_NOVAMENTE = 'Você pode tentar novamente dentro de um minuto...';
 
     public function __construct(InputInterface $input, OutputInterface $output,
                                     CvdwSymfonyStyle $io, $executarObj, $logObjeto = false)
@@ -53,13 +59,10 @@ class Http
         $cabecalho = array(
             'email: '. $_ENV['CV_EMAIL'] .'',
             'token: ' . $_ENV['CV_TOKEN'] . '',
-            'Content-Type: application/json'
+            $this::HEADER_CONTENT_TYPE
         );
-        // Converter o array de parametros em string
-        $parametrosUrl = http_build_query($parametros);
 
-        $url = 'https://' . $_ENV['CV_URL'] . '.cvcrm.com.br/api/v1/cvdw'. $path;
-        //$url = $url . '?' . $parametrosUrl;
+        $url = $this::PROTOCOLO_HTTP . $_ENV['CV_URL'] . '.cvcrm.com.br/api/v1/cvdw'. $path;
         
         $curl = curl_init();
         $verbose = fopen('php://temp', 'w+');
@@ -103,19 +106,19 @@ class Http
         if(!isset($responseJson->total_de_registros) && $novaTentativa){
             $segundos = 3;
             $this->io->error([
-                'Erro ao tentar fazer a requisição!',
+                $this::ERRO_REQUISICAO,
                 'Vamos tentar novamente em '.$segundos.' segundos...',
             ]);
             sleep($segundos);
             $this->requestCVDW($path, $progressBar, $cvdw, $parametros, false);
         }
          
-        if(isset($responseJson->Response) && $responseJson->Response == "Too many requests"){
+        if(isset($responseJson->Response) && $responseJson->Response == $this::RESPONSE_TOO_MANY_REQUESTS){
             $this->io->error([
-                'Erro ao tentar fazer a requisição!',
-                'O servidor bloqueia o acesso ao CVDW se forem feitas mais que 20 requisições por minuto.',
-                'Você pode tentar novamente dentro de um minuto...',
-                'Retorno: '. $response
+                $this::ERRO_REQUISICAO,
+                $this::ERRO_BLOQUEIO,
+                $this::TENTAR_NOVAMENTE,
+                $response
             ]);
             return $this->io;
         }
@@ -125,14 +128,14 @@ class Http
         } else {
             
             $this->io->error([
-                'Erro ao tentar fazer a requisição!',
-                'Retorno: '. $response
+                $this::ERRO_REQUISICAO,
+                $response
             ]);
             return $this->io;
         }
     }
 
-    protected function gerenciarRateLimit(): int 
+    protected function gerenciarRateLimit(): int
     {
 
         $espacodetempo = 60;
@@ -210,9 +213,9 @@ class Http
     {
 
         $cabecalho = array(
-            'Content-Type: application/json'
+            $this::HEADER_CONTENT_TYPE
         );
-        $url = 'https://' . $endereco_cv . '.cvcrm.com.br/api/app/ambiente';
+        $url = $this::PROTOCOLO_HTTP . $endereco_cv . '.cvcrm.com.br/api/app/ambiente';
         $curl = curl_init();
         curl_setopt_array(
             $curl,
@@ -236,12 +239,12 @@ class Http
         
         $response = json_decode($response, true);
 
-        if (isset($response['Response']) && $response['Response'] == "Too many requests") {
+        if (isset($response['Response']) && $response['Response'] == $this::RESPONSE_TOO_MANY_REQUESTS) {
             $this->io->error([
-                'Erro ao tentar fazer a requisição!',
-                'O servidor bloqueia o acesso ao CVDW se forem feitas mais que 20 requisições por minuto.',
-                'Você pode tentar novamente dentro de um minuto...',
-                'Retorno: ' . $response
+                $this::ERRO_REQUISICAO,
+                $this::ERRO_BLOQUEIO,
+                $this::TENTAR_NOVAMENTE,
+                $response
             ]);
             exit;
             return false;
@@ -251,8 +254,8 @@ class Http
             return $response;
         } else {
             $this->io->error([
-                'Erro ao tentar fazer a requisição!',
-                'Retorno: ' . $response
+                $this::ERRO_REQUISICAO,
+                $response
             ]);
             return false;
         }
@@ -264,12 +267,12 @@ class Http
         $cabecalho = array(
             'email: ' . $email . '',
             'token: ' . $token . '',
-            'Content-Type: application/json'
+            $this::HEADER_CONTENT_TYPE
         );
         $parametros = array(
             "pagina" => "1"
         );
-        $url = 'https://' . $ambiente_cv . '.cvcrm.com.br/api/v1/cvdw' . $path;
+        $url = $this::PROTOCOLO_HTTP . $ambiente_cv . '.cvcrm.com.br/api/v1/cvdw' . $path;
 
         $curl = curl_init();
         curl_setopt_array(
@@ -296,12 +299,12 @@ class Http
 
         $responseJson = json_decode($response, true);
 
-        if (isset($responseJson->Response) && $responseJson->Response == "Too many requests") {
+        if (isset($responseJson->Response) && $responseJson->Response == $this::RESPONSE_TOO_MANY_REQUESTS) {
             $this->io->error([
-                'Erro ao tentar fazer a requisição!',
-                'O servidor bloqueia o acesso ao CVDW se forem feitas mais que 20 requisições por minuto.',
-                'Você pode tentar novamente dentro de um minuto...',
-                'Retorno: ' . $response
+                $this::ERRO_REQUISICAO,
+                $this::ERRO_BLOQUEIO,
+                $this,
+                $response
             ]);
             return false;
         }
@@ -312,7 +315,7 @@ class Http
 
             $this->io->error([
                 'Erro ao tentar fazer a requisição.',
-                'Retorno: ' . $response
+                $response
             ]);
             return false;
         }
@@ -321,7 +324,7 @@ class Http
     public function buscarVersaoRepositorio() : string
     {
         $repo = 'manzano/cvdw-cli'; // Altere para o usuário/repositorio desejado
-        $url = "https://api.github.com/repos/$repo/releases/latest";
+        $url = $this::PROTOCOLO_HTTP."api.github.com/repos/$repo/releases/latest";
         $curl = curl_init();
         $cabecalho = array('User-Agent: Github / CVDW-CLI', 'Accept: application/json');
         $verbose = fopen('php://temp', 'w+');

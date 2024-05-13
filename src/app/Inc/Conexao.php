@@ -21,10 +21,6 @@ function conectarDB(InputInterface $input, OutputInterface $output, $showExcepti
     );
 
     $conn = DriverManager::getConnection($connectionParams, $config);
-
-    //if(isset($_ENV['DB_HOST'])){
-    //    return $conn;
-    //}
     
     if (!$conn->isConnected()) {
         try {
@@ -35,6 +31,6 @@ function conectarDB(InputInterface $input, OutputInterface $output, $showExcepti
                 $io->error('Encontrei esse erro: ' . $e->getMessage());
             }
         }
-    } 
+    }
     return $conn;
 }

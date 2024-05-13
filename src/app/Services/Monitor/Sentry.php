@@ -6,7 +6,7 @@ class Sentry
 {
     public function getTracesSampler(): callable
     {
-        return function (\Sentry\Tracing\SamplingContext $context): float {
+        return function (): void {
             // return a number between 0 and 1
         };
     }

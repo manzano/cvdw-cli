@@ -181,7 +181,7 @@ class Configurar extends Command
             $shellScript = 'install.sh';
             $process = new Process(['./'.$shellScript]);
             $process->setWorkingDirectory($shellDir);
-            $process->run(function ($type, $buffer) use ($output) {
+            $process->run(function ($buffer) use ($output) {
                 $output->write($buffer);
             });
 
@@ -515,7 +515,7 @@ class Configurar extends Command
 
             $io = new CvdwSymfonyStyle($this->input, $this->output);
 
-            $http = new \Manzano\CvdwCli\Services\Http($this->input, $this->output, $io);
+            $http = new \Manzano\CvdwCli\Services\Http($this->input, $this->output, $io, $this);
             $response = $http->pingAmbienteCVDW($endereco_cv);
 
             if ($response['nome'] !== null) {
