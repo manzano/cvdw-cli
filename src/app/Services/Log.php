@@ -43,12 +43,10 @@ class Log
             $arquivo = fopen($diretorioLog."/".$this->arquivoLog, 'a');
             if ($arquivo === false) {
                 echo "Erro ao abrir o arquivo de log para escrita.";
-                return;
+            } else {
+                fwrite($arquivo, $mensagem . PHP_EOL);
+                fclose($arquivo);
             }
-            // Escreve a mensagem no arquivo de log
-            fwrite($arquivo, $mensagem . PHP_EOL);
-            // Fecha o arquivo
-            fclose($arquivo);
         }
     }
 

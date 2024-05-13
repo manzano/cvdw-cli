@@ -17,7 +17,7 @@ class Ambientes
 
     public function retornarVersao(): string
     {
-        return 'v1.2.1';
+        return 'v1.2.2';
     }
 
     public function ambienteAtivo(): string
@@ -45,7 +45,6 @@ class Ambientes
         $envVars = $this->getEnvDir();
         if (!file_exists($envVars)) {
             file_put_contents($envVars, '');
-            //chmod($envVars, 0755);
             $this->salvarEnv();
         }
         $dotenv = new \Symfony\Component\Dotenv\Dotenv();
@@ -89,8 +88,7 @@ class Ambientes
     {
         $this->alterarCaminhoEnv();
         $envPath = __DIR__ . '/../../envs';
-        $envFile = $envPath . ($this->env ? '/' . $this->env . '.env' : '/.env');
-        return $envFile;
+        return $envPath . ($this->env ? '/' . $this->env . '.env' : '/.env');
     }
 
     public function alterarCaminhoEnv()

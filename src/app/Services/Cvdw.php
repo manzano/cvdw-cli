@@ -29,9 +29,9 @@ class Cvdw
     public int $processados;
     public int $erros;
     public int $inseridos = 0;
-    public int $inseridos_erros = 0;
+    public int $inseridoserros = 0;
     public int $alterados = 0;
-    public int $alterados_erros = 0;
+    public int $alteradoserros = 0;
     
     public int $qtd = 500;
 
@@ -100,8 +100,8 @@ class Cvdw
             }
         }
         $this->processados = $this->erros = 0;
-        $this->inseridos = $this->inseridos_erros = 0;
-        $this->alterados = $this->alterados_erros = 0;
+        $this->inseridos = $this->inseridoserros = 0;
+        $this->alterados = $this->alteradoserros = 0;
 
         $resposta = $http->requestCVDW($objeto['path'], false, $this, $parametros);
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
@@ -112,7 +112,7 @@ class Cvdw
             ]);
         } else {
             $this->io->text('Registros encontrados: ' . $resposta->total_de_registros);
-            $totaldepaginas = 'Total de páginas: ' . $resposta->total_de_paginas; 
+            $totaldepaginas = 'Total de páginas: ' . $resposta->total_de_paginas;
             if(isset($maxpag)) {
                 $totaldepaginas .= '  <fg=red>(Será executado '.$maxpag.' página(s))</>';
             }
@@ -195,24 +195,18 @@ class Cvdw
 
     protected function getLimiteErros(): bool
     {
-        $qtdErros =  $this->erros;
-        if ($qtdErros >= 3) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->erros >= 3;
     }
 
     public function getMensagem($info = false, $erro = false): string
     {
         
-        // Se inseridos_erros for maior que 1, imprimir o (s)
+        // Se inseridoserros for maior que 1, imprimir o (s)
         $mensagem = "";
-        //$mensagem .= "Processados: " . $this->processados . "\n";
         $mensagem .= "Inseridos: <fg=green>" . $this->inseridos . " sucesso" . (($this->inseridos > 1) ? 's' : '') . "</fg=green> / ";
-        $mensagem .= "<fg=red>" . $this->inseridos_erros . " erro" . (($this->inseridos_erros > 1) ? 's' : '') . "</fg=red> \n";
+        $mensagem .= "<fg=red>" . $this->inseridoserros . " erro" . (($this->inseridoserros > 1) ? 's' : '') . "</fg=red> \n";
         $mensagem .= " Alterados: <fg=green>" . $this->alterados . " sucesso" . (($this->alterados > 1) ? 's' : '') . "</fg=green> / ";
-        $mensagem .= "<fg=red>" . $this->alterados_erros . " erro" . (($this->alterados_erros > 1) ? 's' : '') . "</fg=red> \n";
+        $mensagem .= "<fg=red>" . $this->alteradoserros . " erro" . (($this->alteradoserros > 1) ? 's' : '') . "</fg=red> \n";
 
         if ($info) {
             $mensagem .= "\n";
@@ -276,10 +270,6 @@ class Cvdw
             } else {
                 return 'nao_existe';
             }
-        } catch (\Doctrine\DBAL\Exception $e) {
-            // Trata o caso em que a tabela não existe ou outro erro de banco de dados ocorre
-            $this->io->error("Erro ao verificar se o dado existe em '$tabela': " . $e->getMessage());
-            return false;
         } catch (\Exception $e) {
             // Captura outras exceções genéricas
             $this->io->error("Erro inesperado: " . $e->getMessage());
@@ -296,7 +286,7 @@ class Cvdw
             if ($retorno) {
                 $this->alterados++;
             } else {
-                $this->alterados_erros++;
+                $this->alteradoserros++;
                 $this->erros++;
             }
         } elseif($existe == 'nao_existe') {
@@ -304,7 +294,7 @@ class Cvdw
             if ($retorno) {
                 $this->inseridos++;
             } else {
-                $this->inseridos_erros++;
+                $this->inseridoserros++;
                 $this->erros++;
             }
         } else {
@@ -433,16 +423,18 @@ class Cvdw
                 if ($coluna == 'referencia_data' && !isset($linha->$coluna)) {
                     $linha->$coluna = date('Y-m-d H:i:s');
                 }
+                
                 if ($valor["type"] == "int") {
                     $linha->$coluna = substr($linha->$coluna, 0, 11);
                     $linha->$coluna = intval($linha->$coluna);
+                } elseif ($valor["type"] == "number" && $linha->$coluna != null) {
+                    $linha->$coluna = number_format($linha->$coluna, 2, '.', '');
                 }
+
                 if ($linha->$coluna == '') {
                     $linha->$coluna = null;
                 }
-                if ($valor["type"] == "number" && $linha->$coluna != null) {
-                    $linha->$coluna = number_format($linha->$coluna, 2, '.', '');
-                }
+
             }
         }
         return $linha;

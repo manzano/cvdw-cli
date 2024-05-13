@@ -18,7 +18,7 @@ class Eventos
 
     public function registraAmbiente() : void
     {
-        if(isset($_ENV['CV_URL']) && $_ENV['CV_URL'] != '' 
+        if(isset($_ENV['CV_URL']) && $_ENV['CV_URL'] != ''
                 && isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD'){
             $this->gestor->identify($_ENV['CV_URL']);
             $this->gestor->people->set($_ENV['CV_URL'], array(
@@ -32,7 +32,7 @@ class Eventos
     }
     public function registrarEvento(string $evento, string $acao, $subacao = null, $dados = null) : void
     {
-        if(isset($_ENV['CV_URL']) && $_ENV['CV_URL'] != '' 
+        if(isset($_ENV['CV_URL']) && $_ENV['CV_URL'] != ''
                 && isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD'){
             $this->registraAmbiente();
             $this->evento = $evento;
