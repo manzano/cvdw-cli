@@ -15,6 +15,7 @@ use Symfony\Component\Console\Completion\CompletionSuggestions;
 
 use Manzano\CvdwCli\Services\Objeto;
 use Manzano\CvdwCli\Services\Log;
+use Manzano\CvdwCli\Services\Cvdw;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Manzano\CvdwCli\Services\Monitor\Eventos;
 use Manzano\CvdwCli\Services\Ambientes;
@@ -95,6 +96,8 @@ class Executar extends Command
     {
 
         $this->eventosObj = new Eventos();
+        $this->ambientesObj = new Ambientes($this->env);
+        $this->ambientesObj->retornarEnvs();
 
         if ($input->getOption('set-env')) {
             $this->env = $input->getOption('set-env');
@@ -115,15 +118,25 @@ class Executar extends Command
             $this->maxpag = $input->getOption('max-pag');
         }
 
-        $this->ambientesObj = new Ambientes($this->env);
-        $this->ambientesObj->retornarEnvs();
+        $io = new CvdwSymfonyStyle($input, $output, $this->logObjeto);
+        $io->title('Executando o CVDW-CLI');
+
+        $versaoCVDW = $this->ambientesObj->retornarVersao();
+        $io->text('Versão: ' . $versaoCVDW);
+
+        $ambienteAtivo = $this->ambientesObj->ambienteAtivo();
+        $io->text('Ambiente ativo: ' . $ambienteAtivo);
+
+        // Verificar a versão do repositorio
+        $cvdwObj = new Cvdw($input, $output, $this);
+        $cvdwObj->alertarNovaVersao($versaoCVDW, $io);
 
         if ($input->getOption('salvarlog')) {
             $this->arquivoLog = 'log_' . date('Y-m-d_H-i-s') . '.log';
             $this->logObjeto = new Log($this->arquivoLog);
             $this->logObjeto->criarArquivoLog();
         }
-        $io = new CvdwSymfonyStyle($input, $output, $this->logObjeto);
+        
         $this->limparTela();
         $this->validarConfiguracao($io);
 
@@ -133,7 +146,6 @@ class Executar extends Command
         $inputObjeto = $input->getArgument('objeto');
         $inputDataReferencia = $input->getOption('ignorar-data-referencia');
         if ($inputObjeto) {
-            $io->text(['Ambiente: ' . $_ENV['CV_URL'], '']);
             $this->executarObjeto($io, $inputObjeto, $inputDataReferencia);
             return Command::SUCCESS;
         }
