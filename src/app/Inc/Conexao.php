@@ -19,8 +19,13 @@ function conectarDB(InputInterface $input, OutputInterface $output, $showExcepti
         'port' => $_ENV['DB_PORT'],
         'driver' => $_ENV['DB_CONNECTION'],
     );
-    
+
     $conn = DriverManager::getConnection($connectionParams, $config);
+
+    //if(isset($_ENV['DB_HOST'])){
+    //    return $conn;
+    //}
+    
     if (!$conn->isConnected()) {
         try {
             $conn->connect();

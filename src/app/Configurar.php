@@ -18,8 +18,11 @@ use Manzano\CvdwCli\Services\DatabaseSetup;
 use Manzano\CvdwCli\Services\Http;
 use Manzano\CvdwCli\Services\Objeto;
 use Manzano\CvdwCli\Services\Ambientes;
+use Manzano\CvdwCli\Services\Cvdw;
 
 use Manzano\CvdwCli\Services\Monitor\Eventos;
+
+use Symfony\Component\Process\Process;
 
 #[AsCommand(
     name: 'configurar',
@@ -85,8 +88,15 @@ class Configurar extends Command
 
         $io->title('Configurando o CVDW-CLI');
 
+        $versaoCVDW = $this->ambientesObj->retornarVersao();
+        $io->text('Versão: ' . $versaoCVDW);
+
         $ambienteAtivo = $this->ambientesObj->ambienteAtivo();
         $io->text('Ambiente ativo: ' . $ambienteAtivo);
+
+        // Verificar a versão do repositorio
+        $cvdwObj = new Cvdw($input, $output, $this);
+        $cvdwObj->alertarNovaVersao($versaoCVDW, $io);
         
         $this->eventosObj->registrarEvento($this->evento, 'Início');
 
@@ -99,6 +109,7 @@ class Configurar extends Command
             'Apagar as tabelas do CVDW (Drop)',
             'Cadastrar novo ambiente a partir do padrão',
             'Listar e remover seus ambientes',
+            'Atualizar o ambiente do CVDW-CLI',
             'Sair (CTRL+C)'
         ]);
 
@@ -126,6 +137,7 @@ class Configurar extends Command
                 $this->apagarTabelas();
                 break;
             case 'Verificar/Atualizar meu ambiente':
+                $cvdwObj->conectar();
                 $this->verificarInstalacao();
                 break;
             case 'Cadastrar novo ambiente a partir do padrão':
@@ -134,12 +146,60 @@ class Configurar extends Command
             case 'Listar e remover seus ambientes':
                 $this->listarAmbientesRemover();
                 break;
+            case 'Atualizar o ambiente do CVDW-CLI':
+                $this->atualizarCVDW();
+                break;
             default:
                 return Command::INVALID;
                 break;
         }
 
         return Command::SUCCESS;
+    }
+
+    private function atualizarCVDW(){
+
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $this->ambientesObj = new Ambientes($this->env);
+        $versaoCVDW = $this->ambientesObj->retornarVersao();
+
+        $cvdwObj = new Cvdw($this->input, $this->output, $this);
+        $novaVersaoCVDW = $cvdwObj->verificarNovaVersao($io);
+        
+        $io->text([
+            $this::VAMOS_LA,
+            'Hoje o seu CVDW-CLI está na versão: ' . $versaoCVDW,
+            'Vamos atualizar o CVDW-CLI para a última versão disponível, '. $novaVersaoCVDW.'.',
+            '',
+            'Sugerimos fazer o backup do banco antes de prosseguir.'
+        ]);
+
+        if ($io->confirm('Deseja continuar?', false)) {
+
+            $output = $this->output;
+            $shellDir = str_replace('src/app', '', __DIR__);
+            $shellScript = 'install.sh';
+            $process = new Process(['./'.$shellScript]);
+            $process->setWorkingDirectory($shellDir);
+            $process->run(function ($type, $buffer) use ($output) {
+                $output->write($buffer);
+            });
+
+            if (!$process->isSuccessful()) {
+                $io->error('Aconteceu algum problema ao tentar executar o update.');
+                return Command::FAILURE;
+            }
+
+        }
+
+        $io->text('');
+        $io->success('Atualização finalizada!');
+        $io->text('É altamente recomendável você usar a opção 3 das configurações.');
+
+        $this->voltarProMenu = true;
+        $this->voltarProMenu();
+
+        return true;
     }
 
     private function listarAmbientes(): array
@@ -402,6 +462,7 @@ class Configurar extends Command
         );
         return isset($response['registros']);
     }
+
     private function executarCorrecoes($diferencasBanco)
     {
         $io = new CvdwSymfonyStyle($this->input, $this->output);
