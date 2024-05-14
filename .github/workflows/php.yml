@@ -15,6 +15,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
+        coverage: xdebug
         extensions: cli xml mbstring curl phar pdo mysql pgsql zip
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -34,10 +35,14 @@ jobs:
     - name: Check .env contents
       run: cat src/envs/.env
     - name: Run test suite
-      run: php vendor/bin/codecept run Unit --coverage --coverage-xml
+      run: XDEBUG_MODE=coverage php vendor/bin/codecept run Unit --coverage --coverage-xml
       # run: composer run-script test
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         slug: manzano/cvdw-cli
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
