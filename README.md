@@ -1,6 +1,16 @@
 
 # CVDW-CLI
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=manzano_cvdw-cli&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=manzano_cvdw-cli)
+
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=manzano_cvdw-cli&metric=bugs)](https://sonarcloud.io/summary/new_code?id=manzano_cvdw-cli)
+
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=manzano_cvdw-cli&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=manzano_cvdw-cli)
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=manzano_cvdw-cli&metric=coverage)](https://sonarcloud.io/summary/new_code?id=manzano_cvdw-cli)
+
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=manzano_cvdw-cli&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=manzano_cvdw-cli)
+
 O **CVDW Command-line Interface (cvdw-cli)** é uma ferramenta poderosa projetada para facilitar a busca de informações nas APIs do [CV CRM](https://www.cvcrm.com.br) e salvar em um banco de dados, seja local ou remoto. Isso torna a ferramenta extremamente útil para a criação de dashboards e análise de dados.
 
 ![CVDW-cli Terminal](imgs/terminal.gif "CVDW-cli")
