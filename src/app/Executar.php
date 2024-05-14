@@ -19,7 +19,7 @@ use Manzano\CvdwCli\Services\Cvdw;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Manzano\CvdwCli\Services\Monitor\Eventos;
 use Manzano\CvdwCli\Services\Ambientes;
-use Manzano\CvdwCli\CvdwException;
+use Manzano\CvdwCli\Inc\CvdwException;
 
 #[AsCommand(
     name: 'executar',

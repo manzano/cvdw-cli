@@ -19,6 +19,7 @@ use Manzano\CvdwCli\Services\Http;
 use Manzano\CvdwCli\Services\Objeto;
 use Manzano\CvdwCli\Services\Ambientes;
 use Manzano\CvdwCli\Services\Cvdw;
+use Manzano\CvdwCli\Inc\CvdwException;
 
 use Manzano\CvdwCli\Services\Monitor\Eventos;
 
