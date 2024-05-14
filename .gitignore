@@ -5,6 +5,5 @@ logs/*.log
 !logs/.gitkeep
 .phpunit.cache
 coverage-report/*
-tests/_output/*
 .vscode/*
 scannerwork/*
