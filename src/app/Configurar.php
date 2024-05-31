@@ -108,6 +108,7 @@ class Configurar extends Command
             'Verificar/Atualizar meu ambiente',
             'Limpar as tabelas do CVDW (Truncate)',
             'Apagar as tabelas do CVDW (Drop)',
+            'Configurar integração OpenAI',
             'Cadastrar novo ambiente a partir do padrão',
             'Listar e remover seus ambientes',
             'Atualizar o ambiente do CVDW-CLI',
@@ -131,15 +132,18 @@ class Configurar extends Command
             case 'Criar as tabelas em meu banco de dados':
                 $this->criarTabelas();
                 break;
+            case 'Verificar/Atualizar meu ambiente':
+                $cvdwObj->conectar();
+                $this->verificarInstalacao();
+                break;
             case 'Limpar as tabelas do CVDW (Truncate)':
                 $this->limparTabelas();
                 break;
             case 'Apagar as tabelas do CVDW (Drop)':
                 $this->apagarTabelas();
                 break;
-            case 'Verificar/Atualizar meu ambiente':
-                $cvdwObj->conectar();
-                $this->verificarInstalacao();
+            case 'Configurar integração OpenAI';
+                $this->configurarOpenAI();
                 break;
             case 'Cadastrar novo ambiente a partir do padrão':
                 $this->cadastarAmbiente();
@@ -158,345 +162,6 @@ class Configurar extends Command
         return Command::SUCCESS;
     }
 
-    private function atualizarCVDW(){
-
-        $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $this->ambientesObj = new Ambientes($this->env);
-        $versaoCVDW = $this->ambientesObj->retornarVersao();
-
-        $cvdwObj = new Cvdw($this->input, $this->output, $this);
-        $novaVersaoCVDW = $cvdwObj->verificarNovaVersao($io);
-        
-        $io->text([
-            $this::VAMOS_LA,
-            'Hoje o seu CVDW-CLI está na versão: ' . $versaoCVDW,
-            'Vamos atualizar o CVDW-CLI para a última versão disponível, '. $novaVersaoCVDW.'.',
-            '',
-            'Sugerimos fazer o backup do banco antes de prosseguir.'
-        ]);
-
-        if ($io->confirm('Deseja continuar?', false)) {
-
-            $output = $this->output;
-            $shellDir = str_replace('src/app', '', __DIR__);
-            $shellScript = 'install.sh';
-            $process = new Process(['./'.$shellScript]);
-            $process->setWorkingDirectory($shellDir);
-            $process->run(function ($buffer) use ($output) {
-                $output->write($buffer);
-            });
-
-            if (!$process->isSuccessful()) {
-                $io->error('Aconteceu algum problema ao tentar executar o update.');
-                return Command::FAILURE;
-            }
-
-        }
-
-        $io->text('');
-        $io->success('Atualização finalizada!');
-        $io->text('É altamente recomendável você usar a opção 3 das configurações.');
-
-        $this->voltarProMenu = true;
-        $this->voltarProMenu();
-
-        return true;
-    }
-
-    private function listarAmbientes(): array
-    {
-        $ambientes = array();
-        $envPadrao = glob($this->envPath . '/.env');
-        $envs = glob($this->envPath . '/*.env');
-        $envs = array_merge($envs, $envPadrao);
-        foreach ($envs as $env) {
-            $nomeAux = explode('/', $env);
-            $nome = end($nomeAux);
-            // Ler a primeira linha do arquivo .env
-            $linhas = file($env);
-            foreach ($linhas as $linha) {
-                if (strpos($linha, 'CV_URL') !== false) {
-                    $arrayExplode = explode('=', $linha);
-                    $cv_url = str_replace("\n", "", $arrayExplode[1]);
-                }
-                if (strpos($linha, 'CV_EMAIL') !== false) {
-                    $arrayExplode = explode('=', $linha);
-                    $cv_email = str_replace("\n", "", $arrayExplode[1]);
-                }
-            }
-            $arrayAux = array();
-            $arrayAux['referencia'] = $cv_url;
-            $arrayAux['arquivo'] = $env;
-            $arrayAux['nome'] = $nome;
-            $arrayAux['email'] = $cv_email;
-            $ambientes[] = $arrayAux;
-        }
-        return $ambientes;
-    }
-
-    private function listarAmbientesRemover(): bool
-    {
-        $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $this->verificarAmbientePadrao($io);
-
-        $ambientesOpcoes = array();
-        $ambientes = $this->listarAmbientes();
-        foreach ($ambientes as $ambiente) {
-            $ambientesOpcoes[] = $ambiente['referencia']." - ". $ambiente['email']. " - ". $ambiente['nome'];
-        }
-        $ambientesOpcoes[] =  'Nenhum / Cancelar';
-        $inputAmbiente = $io->choice('Qual objeto deseja remover?', $ambientesOpcoes);
-        if($inputAmbiente === 'Nenhum / Cancelar'){
-            $this->voltarProMenu = true;
-            $this->voltarProMenu();
-            return true;
-        }
-        $indiceEscolhido = array_search($inputAmbiente, $ambientesOpcoes);
-        $ambiente = $ambientes[$indiceEscolhido];
-        $io->text([
-            '',
-            'Você selecionou o ambiente: ',
-            ' - Endereço: https://'. $ambiente['referencia'].'.cvcrm.com.br/',
-            ' - Email: '.$ambiente['email'],
-            ' - Arquivo: '. $ambiente['nome']
-        ]);
-        if ($io->confirm('Posso remover o ambiente?', false)) {
-            // Remover arquivo
-            $arquivoEnv = $this->envPath."/". $ambiente['nome'];
-            if(file_exists($arquivoEnv)){
-                unlink($arquivoEnv);
-                $io->success('Ambiente remnovido com sucesso');
-            } else {
-                $io->error('Arquivo não encontrado');
-            }
-        }
-        
-        $this->voltarProMenu = true;
-        $this->voltarProMenu();
-        return true;
-    }
-
-    private function cadastarAmbiente()
-    {
-        $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $this->verificarAmbientePadrao($io);
-        $io->text([
-            $this::VAMOS_LA,
-            'Vou cadastrar um novo ambiente a partir do seu padrão...',
-            'Você precisa informar o nome para poder usar em seus comandos.',
-            'O ideal é somente usar letras minúsculas e sem espaços.',
-            'Depois é so usar: cvdw configurar --set-env=nome_escolhido'
-        ]);
-
-        $referencia = $io->ask(
-            'Qual nome de referencia deseja usar?',
-            null,
-            function (string $referencia): string {
-                // copiar arquivo .env
-                return $referencia;
-            }
-        );
-
-        if($referencia <> ''){
-            copy($this->envPath . "/.env", $this->envPath . "/$referencia.env");
-            $io->success('Ambiente clonado com sucesso.');
-            $io->text([
-                '',
-                'Agora é so usar: cvdw configurar --set-env='. $referencia,
-                'Ou: cvdw executar --set-env='. $referencia.' all',
-                ''
-            ]);
-        }
-
-        $this->voltarProMenu = true;
-        $this->voltarProMenu();
-
-        return true;
-    }
-
-    private function verificarAmbientePadrao($io): void
-    {
-        if($_ENV['CV_URL'] == '' && $this->env == null){
-            $io->text('<fg=white;bg=red>[PROBLEMA]</> Você ainda não tem um ambiente padrão configurado!');
-            $io->text([
-                '',
-                'Para seguir, você precisa configurar o ambiente.',
-                ''
-            ]);
-            if ($io->confirm('Vamos configurar um ambiente agora?', true)) {
-                $this->limparTela();
-                $this->configurarCV();
-            } else {
-                $this->voltarProMenu = true;
-                $this->voltarProMenu();
-            }
-            
-        }
-    }
-
-    private function verificarInstalacao(): bool
-    {
-        
-        $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $http = new Http($this->input, $this->output, $io, $this);
-        $diferencasBanco = array();
-
-        $io->text([$this::VAMOS_LA, 'Validando a instalação...', '' ]);
-        $validarObjetos = true;
-
-        if ($this->validarAmbiente($http)) {
-            $io->text('<bg=green>[OK]</> Conexão com o CVDW está funcionando!');
-        } else {
-            $io->text('<fg=white;bg=red>[PROBLEMA]</> Não consegui acessar o ambiente do CVDW!');
-            $validarObjetos = false;
-        }
-
-        $this->conn = conectarDB($this->input, $this->output, false);
-        if($this->conn->isConnected()) {
-            $io->text('<bg=green>[OK]</> Conexão com o banco de dados está funcionando!');
-            $databaseObj = new DatabaseSetup($this->input, $this->output);
-        } else {
-            $io->text('<fg=white;bg=red>[PROBLEMA]</> Não consegui acessar o banco de dados!');
-            $validarObjetos = false;
-        }
-        
-        if(!$validarObjetos) {
-            $io->note('Como o Banco ou Api não está acessível, não posso validar os objetos.');
-        } else {
-
-            $io->text(['', 'Agora vamos validar os objetos...', '']);
-            $bancoProblemas = false;
-            $objetoObj = new Objeto($this->input, $this->output);
-            $objetos = $objetoObj->retornarObjetos();
-            foreach($objetos as $key => $dados) {
-                $existe = $databaseObj->verificarSeTabelaExiste($key);
-                if ($existe) {
-                    $objeto = $objetoObj->retornarObjeto($key);
-                    $estrutura = $databaseObj->retornarEstruturaTabela($key);
-                    $logDiferencas = $databaseObj->compararTabelaObjeto($estrutura, $objeto);
-                    $diferencas = $logDiferencas[1];
-                    $logs = $logDiferencas[0];
-                    $subtabelas = $logDiferencas[2];
-                    if(count($diferencas) > 0) {
-                        $diferencasBanco[$key] = $diferencas;
-                        $bancoProblemas = true;
-                        $io->text('<fg=white;bg=red>[PROBLEMA]</> Encontrei algo na tabela ' . $key . '!');
-                        foreach ($logs as $log) {
-                            $io->text('- '.$log);
-                        }
-                    } else {
-                        $io->text('<bg=green>[OK]</> A tabela ' . $key . ' está atualizada!');
-                    }
-                } else {
-                    $bancoProblemas = true;
-                    $io->text('<fg=white;bg=red>[PROBLEMA]</> A tabela ' . $key . ' não foi encontrada!');
-                }
-
-                if(isset($subtabelas) && is_array($subtabelas) && count($subtabelas) > 0){
-                    foreach($subtabelas as $subespecificacao){
-                        $existe = $databaseObj->verificarSeTabelaExiste($subespecificacao['nome']);
-                        if($existe){
-                            $subestrutura = $databaseObj->retornarEstruturaTabela($subespecificacao['nome']);
-                            $subobjeto = array();
-                            $subobjeto['response']['dados'] = $subespecificacao['objeto']['dados'];
-                            
-                            $logDiferencas = $databaseObj->compararTabelaObjeto($subestrutura, $subobjeto);
-                            $diferencas = $logDiferencas[1];
-                            $logs = $logDiferencas[0];
-                            if (count($diferencas) > 0) {
-                                $diferencasBanco[$subespecificacao['nome']] = $diferencas;
-                                $bancoProblemas = true;
-                                $io->text('<fg=white;bg=red>[PROBLEMA]</>
-                                            -> Encontrei algo na sub-tabela ' . $estrutura['nome'] . '!');
-                                foreach ($logs as $log) {
-                                    $io->text('-- ' . $log);
-                                }
-                            } else {
-                                $io->text('<bg=green>[OK]</> -> A sub-tabela ' . $estrutura['nome'] . ' está atualizada!');
-                            }
-                        } else {
-                            $bancoProblemas = true;
-                            $io->text('<fg=white;bg=red>[PROBLEMA]</> -> A sub-tabela ' . $estrutura['nome'] . ' não foi encontrada!');
-                        
-                        }
-                    }
-                }
-
-            }
-        }
-
-        if($bancoProblemas) {
-            $io->text([
-                '',
-                'Encontrei problemas no banco de dados, vamos tentar corrigir?',
-                ''
-            ]);
-            if ($io->confirm('Quer tentar corrigir?', true)) {
-                $this->executarCorrecoes($diferencasBanco);
-            } else {
-                $io->text([
-                    '',
-                    'Ok, vamos parar por aqui...',
-                    ''
-                ]);
-            }
-        } else {
-            $io->text([
-                '',
-                'Parece que esta tudo ok!',
-                ''
-            ]);
-        }
-
-        $this->voltarProMenu = true;
-        $this->voltarProMenu();
-        return true;
-    }
-
-    private function validarAmbiente($http): bool
-    {
-        $response = $http->pingAmbienteAutenticadoCVDW(
-            $_ENV['CV_URL'],
-            "/imobiliarias",
-            $_ENV['CV_EMAIL'],
-            $_ENV['CV_TOKEN']
-        );
-        return isset($response['registros']);
-    }
-
-    private function executarCorrecoes($diferencasBanco)
-    {
-        $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $io->text(['', $this::VAMOS_LA, 'Corrigindo as diferenças...', '']);
-        $databaseObj = new DatabaseSetup($this->input, $this->output);
-        foreach ($diferencasBanco as $tabela => $diferencas) {
-            $io->text('Corrigindo a tabela ' . $tabela);
-            if (isset($diferencas['add'])) {
-                $databaseObj->executarInserirColuna($tabela, $diferencas['add'], $io);
-            }
-            if (isset($diferencas['remove'])) {
-                $databaseObj->executarRemoverColuna($tabela, $diferencas['remove'], $io);
-            }
-            if (isset($diferencas['change'])) {
-                $databaseObj->executarModificarColuna($tabela, $diferencas['change'], $io);
-            }
-            $io->text('');
-        }
-
-        if ($io->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
-            $tabelasLimpar = array();
-            foreach ($diferencasBanco as $tabela => $diferencas) {
-                $tabelasLimpar[$tabela] = [];
-            }
-            $this->limparTabelas($tabelasLimpar);
-        } else {
-            $io->text([
-                '',
-                'Tubo bem! Finalizamos...',
-                ''
-            ]);
-        }
-    }
 
     private function configurarCV(): int
     {
@@ -747,6 +412,125 @@ class Configurar extends Command
 
     }
 
+    private function verificarInstalacao(): bool
+    {
+        
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $http = new Http($this->input, $this->output, $io, $this);
+        $diferencasBanco = array();
+
+        $io->text([$this::VAMOS_LA, 'Validando a instalação...', '' ]);
+        $validarObjetos = true;
+
+        if ($this->validarAmbiente($http)) {
+            $io->text('<bg=green>[OK]</> Conexão com o CVDW está funcionando!');
+        } else {
+            $io->text('<fg=white;bg=red>[PROBLEMA]</> Não consegui acessar o ambiente do CVDW!');
+            $validarObjetos = false;
+        }
+
+        $this->conn = conectarDB($this->input, $this->output, false);
+        if($this->conn->isConnected()) {
+            $io->text('<bg=green>[OK]</> Conexão com o banco de dados está funcionando!');
+            $databaseObj = new DatabaseSetup($this->input, $this->output);
+        } else {
+            $io->text('<fg=white;bg=red>[PROBLEMA]</> Não consegui acessar o banco de dados!');
+            $validarObjetos = false;
+        }
+        
+        if(!$validarObjetos) {
+            $io->note('Como o Banco ou Api não está acessível, não posso validar os objetos.');
+        } else {
+
+            $io->text(['', 'Agora vamos validar os objetos...', '']);
+            $bancoProblemas = false;
+            $objetoObj = new Objeto($this->input, $this->output);
+            $objetos = $objetoObj->retornarObjetos();
+            foreach($objetos as $key => $dados) {
+                $existe = $databaseObj->verificarSeTabelaExiste($key);
+                if ($existe) {
+                    $objeto = $objetoObj->retornarObjeto($key);
+                    $estrutura = $databaseObj->retornarEstruturaTabela($key);
+                    $logDiferencas = $databaseObj->compararTabelaObjeto($estrutura, $objeto);
+                    $diferencas = $logDiferencas[1];
+                    $logs = $logDiferencas[0];
+                    $subtabelas = $logDiferencas[2];
+                    if(count($diferencas) > 0) {
+                        $diferencasBanco[$key] = $diferencas;
+                        $bancoProblemas = true;
+                        $io->text('<fg=white;bg=red>[PROBLEMA]</> Encontrei algo na tabela ' . $key . '!');
+                        foreach ($logs as $log) {
+                            $io->text('- '.$log);
+                        }
+                    } else {
+                        $io->text('<bg=green>[OK]</> A tabela ' . $key . ' está atualizada!');
+                    }
+                } else {
+                    $bancoProblemas = true;
+                    $io->text('<fg=white;bg=red>[PROBLEMA]</> A tabela ' . $key . ' não foi encontrada!');
+                }
+
+                if(isset($subtabelas) && is_array($subtabelas) && count($subtabelas) > 0){
+                    foreach($subtabelas as $subespecificacao){
+                        $existe = $databaseObj->verificarSeTabelaExiste($subespecificacao['nome']);
+                        if($existe){
+                            $subestrutura = $databaseObj->retornarEstruturaTabela($subespecificacao['nome']);
+                            $subobjeto = array();
+                            $subobjeto['response']['dados'] = $subespecificacao['objeto']['dados'];
+                            
+                            $logDiferencas = $databaseObj->compararTabelaObjeto($subestrutura, $subobjeto);
+                            $diferencas = $logDiferencas[1];
+                            $logs = $logDiferencas[0];
+                            if (count($diferencas) > 0) {
+                                $diferencasBanco[$subespecificacao['nome']] = $diferencas;
+                                $bancoProblemas = true;
+                                $io->text('<fg=white;bg=red>[PROBLEMA]</>
+                                            -> Encontrei algo na sub-tabela ' . $estrutura['nome'] . '!');
+                                foreach ($logs as $log) {
+                                    $io->text('-- ' . $log);
+                                }
+                            } else {
+                                $io->text('<bg=green>[OK]</> -> A sub-tabela ' . $estrutura['nome'] . ' está atualizada!');
+                            }
+                        } else {
+                            $bancoProblemas = true;
+                            $io->text('<fg=white;bg=red>[PROBLEMA]</> -> A sub-tabela ' . $estrutura['nome'] . ' não foi encontrada!');
+                        
+                        }
+                    }
+                }
+
+            }
+        }
+
+        if($bancoProblemas) {
+            $io->text([
+                '',
+                'Encontrei problemas no banco de dados, vamos tentar corrigir?',
+                ''
+            ]);
+            if ($io->confirm('Quer tentar corrigir?', true)) {
+                $this->executarCorrecoes($diferencasBanco);
+            } else {
+                $io->text([
+                    '',
+                    'Ok, vamos parar por aqui...',
+                    ''
+                ]);
+            }
+        } else {
+            $io->text([
+                '',
+                'Parece que esta tudo ok!',
+                ''
+            ]);
+        }
+
+        $this->voltarProMenu = true;
+        $this->voltarProMenu();
+        return true;
+    }
+
     private function limparTabelas($tabelasLimpar = false): bool
     {
 
@@ -885,6 +669,330 @@ class Configurar extends Command
 
         return true;
 
+    }
+
+    private function configurarOpenAI(){
+
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $io->text([
+            $this::VAMOS_LA,
+            'Agora vamos configurar a integração do CVDW-CLI com o OpenAI...'
+        ]);
+
+        $io->note([
+            'Para isso você precisa ter um cadastrdo na plataforma: https://platform.openai.com/',
+            'Acesse de configurações: https://platform.openai.com/settings/organization/general',
+            'Busque por Organization ID...',
+        ]);
+
+        $io->ask(
+            'Id da Organização:',
+            $_ENV['OPENAI_ORG'],
+            function (string $openai_org): string {
+                // Verificar se a string começa com 'org-'
+                if (substr($openai_org, 0, 4) !== 'org-') {
+                    throw new CvdwException('Id da Organização inválido, vamos tentar de novo?');
+                }
+                $this->variaveisAmbiente['openai_org'] = $openai_org;
+                putenv('OPENAI_ORG=' . $openai_org);
+                return $openai_org;
+            }
+        );
+
+        $io->note([
+            'Agora vamos precisar do ID do seu projeto.',
+            'Acesse de configurações: https://platform.openai.com/settings/organization/general',
+            'Acesse: Project >> General e encontre Project ID',
+        ]);
+
+        $io->ask(
+            'Id do Projeto:',
+            $_ENV['OPENAI_PROJ'],
+            function (string $openai_proj): string {
+                // Verificar se a string começa com 'org-'
+                if (substr($openai_proj, 0, 5) !== 'proj_') {
+                    throw new CvdwException('Id do projeto inválido, vamos tentar de novo?');
+                }
+                $this->variaveisAmbiente['openai_proj'] = $openai_proj;
+                putenv('OPENAI_PROJ=' . $openai_proj);
+                return $openai_proj;
+            }
+        );
+
+        $io->note([
+            'Agora vamos precisar de um token de acesso.',
+            'Acesse a opção Api Keys: https://platform.openai.com/api-keys',
+            'Gere um Token para o CVDW-CLI e cole aqui.',
+        ]);
+
+        $io->ask('Informe o token da plataforma:', 
+        $_ENV['OPENAI_TOKEN'], 
+        function (string $openai_token): string {
+            // Verificar se a string começa com 'org-'
+            if (substr($openai_token, 0, 8) !== 'sk-proj-') {
+                throw new CvdwException('Token inválido, vamos tentar de novo?');
+            }
+            $this->variaveisAmbiente['openai_token'] = $openai_token;
+            putenv('OPENAI_TOKEN=' . $openai_token);
+            return $openai_token;
+        });
+
+        $openaiObj = new \Manzano\CvdwCli\Services\OpenAi($this->input, $this->output, $io, $this);
+        $response = $openaiObj->validarToken($this->variaveisAmbiente['openai_token'], $this->variaveisAmbiente['openai_org'], $this->variaveisAmbiente['openai_proj']);
+
+        if(isset($response['object']) && $response['object'] == 'list') {
+            $io->text([
+                'Legal, conseguimos conectar ao OpenAI!',
+                ''
+            ]);
+        }else {
+            $io->error('Não conseguimos validar a conexão, vamos tentar de novo?');
+            $this->configurarOpenAI();
+        }
+
+        $io->text([
+            'Deixar eu salvar essas informações...'
+        ]);
+
+        $newEnv = [
+            'OPENAI_TOKEN' => $this->variaveisAmbiente['openai_token'],
+            'OPENAI_ORG' => $this->variaveisAmbiente['openai_org'],
+            'OPENAI_PROJ' => $this->variaveisAmbiente['openai_proj']
+        ];
+    
+        $this->ambientesObj->salvarEnv($newEnv);
+
+        $io->text('Salvo!');
+
+        $this->voltarProMenu = true;
+        $this->voltarProMenu();
+
+        return true;
+    }
+    private function cadastarAmbiente()
+    {
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $this->verificarAmbientePadrao($io);
+        $io->text([
+            $this::VAMOS_LA,
+            'Vou cadastrar um novo ambiente a partir do seu padrão...',
+            'Você precisa informar o nome para poder usar em seus comandos.',
+            'O ideal é somente usar letras minúsculas e sem espaços.',
+            'Depois é so usar: cvdw configurar --set-env=nome_escolhido'
+        ]);
+
+        $referencia = $io->ask(
+            'Qual nome de referencia deseja usar?',
+            null,
+            function (string $referencia): string {
+                // copiar arquivo .env
+                return $referencia;
+            }
+        );
+
+        if($referencia <> ''){
+            copy($this->envPath . "/.env", $this->envPath . "/$referencia.env");
+            $io->success('Ambiente clonado com sucesso.');
+            $io->text([
+                '',
+                'Agora é so usar: cvdw configurar --set-env='. $referencia,
+                'Ou: cvdw executar --set-env='. $referencia.' all',
+                ''
+            ]);
+        }
+
+        $this->voltarProMenu = true;
+        $this->voltarProMenu();
+
+        return true;
+    }
+
+    private function listarAmbientesRemover(): bool
+    {
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $this->verificarAmbientePadrao($io);
+
+        $ambientesOpcoes = array();
+        $ambientes = $this->listarAmbientes();
+        foreach ($ambientes as $ambiente) {
+            $ambientesOpcoes[] = $ambiente['referencia']." - ". $ambiente['email']. " - ". $ambiente['nome'];
+        }
+        $ambientesOpcoes[] =  'Nenhum / Cancelar';
+        $inputAmbiente = $io->choice('Qual objeto deseja remover?', $ambientesOpcoes);
+        if($inputAmbiente === 'Nenhum / Cancelar'){
+            $this->voltarProMenu = true;
+            $this->voltarProMenu();
+            return true;
+        }
+        $indiceEscolhido = array_search($inputAmbiente, $ambientesOpcoes);
+        $ambiente = $ambientes[$indiceEscolhido];
+        $io->text([
+            '',
+            'Você selecionou o ambiente: ',
+            ' - Endereço: https://'. $ambiente['referencia'].'.cvcrm.com.br/',
+            ' - Email: '.$ambiente['email'],
+            ' - Arquivo: '. $ambiente['nome']
+        ]);
+        if ($io->confirm('Posso remover o ambiente?', false)) {
+            // Remover arquivo
+            $arquivoEnv = $this->envPath."/". $ambiente['nome'];
+            if(file_exists($arquivoEnv)){
+                unlink($arquivoEnv);
+                $io->success('Ambiente remnovido com sucesso');
+            } else {
+                $io->error('Arquivo não encontrado');
+            }
+        }
+        
+        $this->voltarProMenu = true;
+        $this->voltarProMenu();
+        return true;
+    }
+
+    private function atualizarCVDW(){
+
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $this->ambientesObj = new Ambientes($this->env);
+        $versaoCVDW = $this->ambientesObj->retornarVersao();
+
+        $cvdwObj = new Cvdw($this->input, $this->output, $this);
+        $novaVersaoCVDW = $cvdwObj->verificarNovaVersao($io);
+        
+        $io->text([
+            $this::VAMOS_LA,
+            'Hoje o seu CVDW-CLI está na versão: ' . $versaoCVDW,
+            'Vamos atualizar o CVDW-CLI para a última versão disponível, '. $novaVersaoCVDW.'.',
+            '',
+            'Sugerimos fazer o backup do banco antes de prosseguir.'
+        ]);
+
+        if ($io->confirm('Deseja continuar?', false)) {
+
+            $output = $this->output;
+            $shellDir = str_replace('src/app', '', __DIR__);
+            $shellScript = 'install.sh';
+            $process = new Process(['./'.$shellScript]);
+            $process->setWorkingDirectory($shellDir);
+            $process->run(function ($buffer) use ($output) {
+                $output->write($buffer);
+            });
+
+            if (!$process->isSuccessful()) {
+                $io->error('Aconteceu algum problema ao tentar executar o update.');
+                return Command::FAILURE;
+            }
+
+        }
+
+        $io->text('');
+        $io->success('Atualização finalizada!');
+        $io->text('É altamente recomendável você usar a opção 3 das configurações.');
+
+        $this->voltarProMenu = true;
+        $this->voltarProMenu();
+
+        return true;
+    }
+
+
+
+
+
+
+    private function listarAmbientes(): array
+    {
+        $ambientes = array();
+        $envPadrao = glob($this->envPath . '/.env');
+        $envs = glob($this->envPath . '/*.env');
+        $envs = array_merge($envs, $envPadrao);
+        foreach ($envs as $env) {
+            $nomeAux = explode('/', $env);
+            $nome = end($nomeAux);
+            // Ler a primeira linha do arquivo .env
+            $linhas = file($env);
+            foreach ($linhas as $linha) {
+                if (strpos($linha, 'CV_URL') !== false) {
+                    $arrayExplode = explode('=', $linha);
+                    $cv_url = str_replace("\n", "", $arrayExplode[1]);
+                }
+                if (strpos($linha, 'CV_EMAIL') !== false) {
+                    $arrayExplode = explode('=', $linha);
+                    $cv_email = str_replace("\n", "", $arrayExplode[1]);
+                }
+            }
+            $arrayAux = array();
+            $arrayAux['referencia'] = $cv_url;
+            $arrayAux['arquivo'] = $env;
+            $arrayAux['nome'] = $nome;
+            $arrayAux['email'] = $cv_email;
+            $ambientes[] = $arrayAux;
+        }
+        return $ambientes;
+    }
+
+    private function verificarAmbientePadrao($io): void
+    {
+        if($_ENV['CV_URL'] == '' && $this->env == null){
+            $io->text('<fg=white;bg=red>[PROBLEMA]</> Você ainda não tem um ambiente padrão configurado!');
+            $io->text([
+                '',
+                'Para seguir, você precisa configurar o ambiente.',
+                ''
+            ]);
+            if ($io->confirm('Vamos configurar um ambiente agora?', true)) {
+                $this->limparTela();
+                $this->configurarCV();
+            } else {
+                $this->voltarProMenu = true;
+                $this->voltarProMenu();
+            }
+            
+        }
+    }
+
+    private function validarAmbiente($http): bool
+    {
+        $response = $http->pingAmbienteAutenticadoCVDW(
+            $_ENV['CV_URL'],
+            "/imobiliarias",
+            $_ENV['CV_EMAIL'],
+            $_ENV['CV_TOKEN']
+        );
+        return isset($response['registros']);
+    }
+
+    private function executarCorrecoes($diferencasBanco)
+    {
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $io->text(['', $this::VAMOS_LA, 'Corrigindo as diferenças...', '']);
+        $databaseObj = new DatabaseSetup($this->input, $this->output);
+        foreach ($diferencasBanco as $tabela => $diferencas) {
+            $io->text('Corrigindo a tabela ' . $tabela);
+            if (isset($diferencas['add'])) {
+                $databaseObj->executarInserirColuna($tabela, $diferencas['add'], $io);
+            }
+            if (isset($diferencas['remove'])) {
+                $databaseObj->executarRemoverColuna($tabela, $diferencas['remove'], $io);
+            }
+            if (isset($diferencas['change'])) {
+                $databaseObj->executarModificarColuna($tabela, $diferencas['change'], $io);
+            }
+            $io->text('');
+        }
+
+        if ($io->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
+            $tabelasLimpar = array();
+            foreach ($diferencasBanco as $tabela => $diferencas) {
+                $tabelasLimpar[$tabela] = [];
+            }
+            $this->limparTabelas($tabelasLimpar);
+        } else {
+            $io->text([
+                '',
+                'Tubo bem! Finalizamos...',
+                ''
+            ]);
+        }
     }
 
     private function executarApagarTabelas($tabelasApagar, $table, $progressBar): void

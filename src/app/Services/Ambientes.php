@@ -80,6 +80,9 @@ class Ambientes
             'DB_DATABASE' => null,
             'DB_USERNAME' => null,
             'DB_PASSWORD' => null,
+            'OPENAI_TOKEN' => null,
+            'OPENAI_PROJ' => null,
+            'OPENAI_ORG' => null,
             'CVDW_AMBIENTE' => 'PRD'
         ];
     }
