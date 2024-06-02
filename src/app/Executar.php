@@ -258,7 +258,7 @@ class Executar extends Command
             }
 
             $objetoObj = new Objeto($this->input, $this->output);
-            $cvdw = new \Manzano\CvdwCli\Services\Cvdw($this->input, $this->output, $this);
+            $cvdw = new Cvdw($this->input, $this->output, $this);
             $cvdw->conectar();
 
             foreach ($objetosArray as $objeto => $dados) {
@@ -301,15 +301,6 @@ class Executar extends Command
         $this->limparTela();
 
         $this->executarObjeto($io, $inputObjeto);
-    }
-
-    public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
-    {
-
-        if ($input->mustSuggestOptionValuesFor('executar')) {
-            // Sugestões para a opção 'role'
-            $suggestions->suggestValues(['ROLE_USER', 'ROLE_ADMIN']);
-        }
     }
 
     protected function limparTela(): void

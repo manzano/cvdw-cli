@@ -6,12 +6,15 @@ class Ambientes
 {
     private $envVars;
     public $env;
+    private $parent;
+    public $envPath = __DIR__ . '/../envs';
 
-    public function __construct($env = null)
+    public function __construct($env = null, $parent = null)
     {
         $this->env = $env;
+        $this->parent = $parent;
         $this->envVars = $this->getEnvEscope();
-        $this->retornarEnvs($env);
+        $this->retornarEnvs();
         $this->envVars = $this->getEnvEscope();
     }
 
@@ -20,9 +23,14 @@ class Ambientes
         return 'v1.2.3';
     }
 
+    public function getEnvPath(): string
+    {
+        return $this->envPath;
+    }
+
     public function ambienteAtivo(): string
     {
-        $this->retornarEnvs($this->env);
+        $this->retornarEnvs();
         $ambienteAtivo = strtoupper($_ENV['CV_URL'] ?? '');
         if ($ambienteAtivo == '') {
             if($this->env !== null){
@@ -108,6 +116,57 @@ class Ambientes
     public function atualizarCVDW(): void
     {
         // Atualizar versão do CVDW
+    }
+
+    public function listarAmbientes(): array
+    {
+        $ambientes = array();
+        $envPadrao = glob($this->envPath . '/.env');
+        $envs = glob($this->envPath . '/*.env');
+        $envs = array_merge($envs, $envPadrao);
+        foreach ($envs as $env) {
+            $nomeAux = explode('/', $env);
+            $nome = end($nomeAux);
+            // Ler a primeira linha do arquivo .env
+            $linhas = file($env);
+            foreach ($linhas as $linha) {
+                if (strpos($linha, 'CV_URL') !== false) {
+                    $arrayExplode = explode('=', $linha);
+                    $cv_url = str_replace("\n", "", $arrayExplode[1]);
+                }
+                if (strpos($linha, 'CV_EMAIL') !== false) {
+                    $arrayExplode = explode('=', $linha);
+                    $cv_email = str_replace("\n", "", $arrayExplode[1]);
+                }
+            }
+            $arrayAux = array();
+            $arrayAux['referencia'] = $cv_url;
+            $arrayAux['arquivo'] = $env;
+            $arrayAux['nome'] = $nome;
+            $arrayAux['email'] = $cv_email;
+            $ambientes[] = $arrayAux;
+        }
+        return $ambientes;
+    }
+
+    public function verificarAmbientePadrao($io): void
+    {
+        if($_ENV['CV_URL'] == '' && $this->env == null){
+            $io->text('<fg=white;bg=red>[PROBLEMA]</> Você ainda não tem um ambiente padrão configurado!');
+            $io->text([
+                '',
+                'Para seguir, você precisa configurar o ambiente.',
+                ''
+            ]);
+            if ($io->confirm('Vamos configurar um ambiente agora?', true)) {
+                $this->parent->limparTela();
+                $this->parent->configurarCV();
+            } else {
+                $this->parent->voltarProMenu = true;
+                $this->parent->voltarProMenu();
+            }
+            
+        }
     }
 
 }

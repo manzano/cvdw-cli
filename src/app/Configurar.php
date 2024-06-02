@@ -47,9 +47,10 @@ class Configurar extends Command
     public \Doctrine\DBAL\Connection $conn;
     protected $eventosObj;
     protected $ambientesObj;
+    protected $databaseObj;
+    protected $cvdwObj;
     protected $env = null;
     protected $evento = 'Configurar';
-    public $envPath = __DIR__ . '/../envs';
     const VAMOS_LA = 'Vamos Lá!';
     const QUER_TENTAR_NOVAMENTE = 'Quer tentar novamente?';
 
@@ -79,8 +80,10 @@ class Configurar extends Command
         if ($input->getOption('set-env')) {
             $this->env = $input->getOption('set-env');
         }
-        $this->ambientesObj = new Ambientes($this->env);
+        $this->ambientesObj = new Ambientes($this->env, $this);
         $this->ambientesObj->retornarEnvs();
+
+        $this->cvdwObj = new Cvdw($input, $output, $this);
 
         $io = new CvdwSymfonyStyle($input, $output);
 
@@ -156,7 +159,6 @@ class Configurar extends Command
                 break;
             default:
                 return Command::INVALID;
-                break;
         }
 
         return Command::SUCCESS;
@@ -265,7 +267,7 @@ class Configurar extends Command
         } else {
             $io->error('Não consegui acessar o ambiente.');
             if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
-                return $this->configurarCV($io);
+                return $this->configurarCV();
             }
             return 0;
         }
@@ -393,7 +395,7 @@ class Configurar extends Command
 
         $io->text('Serão criadas as tabelas abaixo:');
 
-        $database = new DatabaseSetup($this->input, $this->output);
+        $database = new DatabaseSetup($this->input, $this->output, $this);
         $database->listarTabelas();
 
         if ($io->confirm('Podemos continuar?', true)) {
@@ -422,7 +424,7 @@ class Configurar extends Command
         $io->text([$this::VAMOS_LA, 'Validando a instalação...', '' ]);
         $validarObjetos = true;
 
-        if ($this->validarAmbiente($http)) {
+        if ($this->cvdwObj->validarAmbiente($http)) {
             $io->text('<bg=green>[OK]</> Conexão com o CVDW está funcionando!');
         } else {
             $io->text('<fg=white;bg=red>[PROBLEMA]</> Não consegui acessar o ambiente do CVDW!');
@@ -432,7 +434,7 @@ class Configurar extends Command
         $this->conn = conectarDB($this->input, $this->output, false);
         if($this->conn->isConnected()) {
             $io->text('<bg=green>[OK]</> Conexão com o banco de dados está funcionando!');
-            $databaseObj = new DatabaseSetup($this->input, $this->output);
+            $databaseObj = new DatabaseSetup($this->input, $this->output, $this);
         } else {
             $io->text('<fg=white;bg=red>[PROBLEMA]</> Não consegui acessar o banco de dados!');
             $validarObjetos = false;
@@ -510,7 +512,7 @@ class Configurar extends Command
                 ''
             ]);
             if ($io->confirm('Quer tentar corrigir?', true)) {
-                $this->executarCorrecoes($diferencasBanco);
+                $this->databaseObj->executarCorrecoes($diferencasBanco);
             } else {
                 $io->text([
                     '',
@@ -531,11 +533,11 @@ class Configurar extends Command
         return true;
     }
 
-    private function limparTabelas($tabelasLimpar = false): bool
+    public function limparTabelas($tabelasLimpar = false): bool
     {
 
         $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $database = new DatabaseSetup($this->input, $this->output);
+        $database = new DatabaseSetup($this->input, $this->output, $this);
 
         $io->warning([
             '',
@@ -632,7 +634,7 @@ class Configurar extends Command
                     return $tabela;
                 }
             );
-            $database = new DatabaseSetup($this->input, $this->output);
+            $database = new DatabaseSetup($this->input, $this->output, $this);
             $tabelasApagar = array();
             if ($tabela === 'all') {
                 $io->text([ 'Ok! Vou apagar todas as tabelas.', '' ]);
@@ -656,7 +658,7 @@ class Configurar extends Command
             $progressBar = new ProgressBar($this->output, $totalObjetos);
             $progressBar->start();
 
-            $this->executarApagarTabelas($tabelasApagar, $table, $progressBar);
+            $this->databaseObj->executarApagarTabelas($tabelasApagar, $table, $progressBar);
         
             $progressBar->finish();
             $table->render();
@@ -772,7 +774,7 @@ class Configurar extends Command
     private function cadastarAmbiente()
     {
         $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $this->verificarAmbientePadrao($io);
+        $this->ambientesObj->verificarAmbientePadrao($io);
         $io->text([
             $this::VAMOS_LA,
             'Vou cadastrar um novo ambiente a partir do seu padrão...',
@@ -791,7 +793,7 @@ class Configurar extends Command
         );
 
         if($referencia <> ''){
-            copy($this->envPath . "/.env", $this->envPath . "/$referencia.env");
+            copy($this->ambientesObj->getEnvPath() . "/.env", $this->ambientesObj->getEnvPath() . "/$referencia.env");
             $io->success('Ambiente clonado com sucesso.');
             $io->text([
                 '',
@@ -810,10 +812,10 @@ class Configurar extends Command
     private function listarAmbientesRemover(): bool
     {
         $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $this->verificarAmbientePadrao($io);
+        $this->ambientesObj->verificarAmbientePadrao($io);
 
         $ambientesOpcoes = array();
-        $ambientes = $this->listarAmbientes();
+        $ambientes = $this->ambientesObj->listarAmbientes();
         foreach ($ambientes as $ambiente) {
             $ambientesOpcoes[] = $ambiente['referencia']." - ". $ambiente['email']. " - ". $ambiente['nome'];
         }
@@ -835,7 +837,7 @@ class Configurar extends Command
         ]);
         if ($io->confirm('Posso remover o ambiente?', false)) {
             // Remover arquivo
-            $arquivoEnv = $this->envPath."/". $ambiente['nome'];
+            $arquivoEnv = $this->ambientesObj->getEnvPath()."/". $ambiente['nome'];
             if(file_exists($arquivoEnv)){
                 unlink($arquivoEnv);
                 $io->success('Ambiente remnovido com sucesso');
@@ -892,141 +894,6 @@ class Configurar extends Command
         $this->voltarProMenu();
 
         return true;
-    }
-
-
-
-
-
-
-    private function listarAmbientes(): array
-    {
-        $ambientes = array();
-        $envPadrao = glob($this->envPath . '/.env');
-        $envs = glob($this->envPath . '/*.env');
-        $envs = array_merge($envs, $envPadrao);
-        foreach ($envs as $env) {
-            $nomeAux = explode('/', $env);
-            $nome = end($nomeAux);
-            // Ler a primeira linha do arquivo .env
-            $linhas = file($env);
-            foreach ($linhas as $linha) {
-                if (strpos($linha, 'CV_URL') !== false) {
-                    $arrayExplode = explode('=', $linha);
-                    $cv_url = str_replace("\n", "", $arrayExplode[1]);
-                }
-                if (strpos($linha, 'CV_EMAIL') !== false) {
-                    $arrayExplode = explode('=', $linha);
-                    $cv_email = str_replace("\n", "", $arrayExplode[1]);
-                }
-            }
-            $arrayAux = array();
-            $arrayAux['referencia'] = $cv_url;
-            $arrayAux['arquivo'] = $env;
-            $arrayAux['nome'] = $nome;
-            $arrayAux['email'] = $cv_email;
-            $ambientes[] = $arrayAux;
-        }
-        return $ambientes;
-    }
-
-    private function verificarAmbientePadrao($io): void
-    {
-        if($_ENV['CV_URL'] == '' && $this->env == null){
-            $io->text('<fg=white;bg=red>[PROBLEMA]</> Você ainda não tem um ambiente padrão configurado!');
-            $io->text([
-                '',
-                'Para seguir, você precisa configurar o ambiente.',
-                ''
-            ]);
-            if ($io->confirm('Vamos configurar um ambiente agora?', true)) {
-                $this->limparTela();
-                $this->configurarCV();
-            } else {
-                $this->voltarProMenu = true;
-                $this->voltarProMenu();
-            }
-            
-        }
-    }
-
-    private function validarAmbiente($http): bool
-    {
-        $response = $http->pingAmbienteAutenticadoCVDW(
-            $_ENV['CV_URL'],
-            "/imobiliarias",
-            $_ENV['CV_EMAIL'],
-            $_ENV['CV_TOKEN']
-        );
-        return isset($response['registros']);
-    }
-
-    private function executarCorrecoes($diferencasBanco)
-    {
-        $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $io->text(['', $this::VAMOS_LA, 'Corrigindo as diferenças...', '']);
-        $databaseObj = new DatabaseSetup($this->input, $this->output);
-        foreach ($diferencasBanco as $tabela => $diferencas) {
-            $io->text('Corrigindo a tabela ' . $tabela);
-            if (isset($diferencas['add'])) {
-                $databaseObj->executarInserirColuna($tabela, $diferencas['add'], $io);
-            }
-            if (isset($diferencas['remove'])) {
-                $databaseObj->executarRemoverColuna($tabela, $diferencas['remove'], $io);
-            }
-            if (isset($diferencas['change'])) {
-                $databaseObj->executarModificarColuna($tabela, $diferencas['change'], $io);
-            }
-            $io->text('');
-        }
-
-        if ($io->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
-            $tabelasLimpar = array();
-            foreach ($diferencasBanco as $tabela => $diferencas) {
-                $tabelasLimpar[$tabela] = [];
-            }
-            $this->limparTabelas($tabelasLimpar);
-        } else {
-            $io->text([
-                '',
-                'Tubo bem! Finalizamos...',
-                ''
-            ]);
-        }
-    }
-
-    private function executarApagarTabelas($tabelasApagar, $table, $progressBar): void
-    {
-        $database = new DatabaseSetup($this->input, $this->output);
-        foreach ($tabelasApagar as $tabela => $valor) {
-            $tabelaExiste = $database->verificarSeTabelaExiste($tabela);
-            if (!$tabelaExiste) {
-                $this->retornarTabelaNaoEncontrada($table, $tabela, $progressBar);
-                continue;
-            }
-            $this->apagarTabela($table, $tabela, $progressBar);
-        }
-    }
-
-    private function retornarTabelaNaoEncontrada($table, $tabela, $progressBar): void
-    {
-        $table->addRow([$tabela, '<error>Não encontrada!</error>']);
-        $progressBar->setMessage("A tabela {$tabela} não existe");
-        $progressBar->advance();
-    }
-
-    private function apagarTabela($table, $tabela, $progressBar): void
-    {
-        $database = new DatabaseSetup($this->input, $this->output);
-        $truncate  = $database->apagarTabela($tabela);
-        if ($truncate) {
-            $table->addRow([$tabela, '<info>Apagada!</info>']);
-            $progressBar->setMessage("A tabela {$tabela} foi limpa");
-        } else {
-            $table->addRow([$tabela, '<error>Ocorreu algum erro!</error>']);
-            $progressBar->setMessage("A tabela {$tabela} não foi limpa");
-        }
-        $progressBar->advance();
     }
 
     protected function voltarProMenu()

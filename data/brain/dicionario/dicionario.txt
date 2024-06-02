@@ -1,0 +1,214 @@
+Dicionário de dados do CSV de Pessoas
+ referencia: Identificador
+ referencia_data: Data de referência
+ ativo: Informa se está ativo ou não
+ idpessoa: Identificador da pessoa
+ idpessoa_int: Identificador da pessoa (Código Interno)
+ idpessoa_legado: Identificador da pessoa (legado)
+ data_cad: Data de cadastro
+ ativo_painel: Informa se a pessoa está ativa
+ ativo_login: Informa se a pessoa te login ativo
+ situacao: Informa a situação da Pessoa (Cliente; Não cliente; Prospect)
+ validado: Informa se a pessoa está validada
+ documento_tipo: Tipo do documento
+ documento: Documento
+ pessoa_estrangeira: Informa se pessoa estrangeira
+ nome: Nome
+ reconhecimento_firma: Reconhecimento de firma
+ sexo: Sexo da pessoa (Feminino; Masculino; Não desejo informar)
+ data_nasc: Data de nascimento
+ estado_civil: Estado civil
+ data_casamento: Data de casamento
+ pacto_antenupcial_livro: Informação do Pacto antenupcial, Livro
+ folha: Folha
+ cartorio: Cartório
+ pais: País
+ naturalidade: Naturalidade
+ possui_dependentes: Informa se possui dependentes
+ quantidade_dependentes: Quantidade de dependentes
+ possui_procuracao: Informa se possui procuração
+ possui_pacto_antenupcial: Informa se possui pacto antenupcial
+ menor_nao_emancipado: Informa se é menor e não emancipado
+ grau_instrucao: Grau de instrução
+ renda_familiar: Renda familiar
+ marketing_pos_venda: Marketing Pós-venda
+ rg: Número do RG
+ rg_orgao_emissor: Orgão emissor do RG
+ rg_data_emissao: Data de emissão do RG
+ rne: Número do RNE
+ rne_orgao_emissor: Orgão emissor do RNE
+ rne_data_emissao: Data de emissão do RNE
+ passaporte: Número do passaporte
+ passaporte_orgao_emissor: Orgão emissor do passaporte
+ passaporte_data_emissao: Data de emissão do passaporte
+ cnh: Número da CNH
+ cnh_orgao_emissor: Orgão emissor da CNH
+ data_primeira_habilitacao_cnh: Data da primeira habilitação da CNH
+ data_fim_validade_cnh: Data de validade da CNH
+ cnh_data_emissao: Data de emissão da CNH
+ rnm: Número do RNM
+ rnm_orgao_emissor: Orgão emissor do RNM
+ rnm_data_emissao: Data de emissão do RNM
+ filiacao_mae: Filiação Mãe/2
+ filiacao_pai: Filiação Pai/1
+ razao_social: Razão Social
+ segmento_razao: Segmento/Ramo
+ razao_social_anterior: Razão social anterior
+ sucessao: Sucessão
+ forma_constituicao: Forma de constituição
+ data_constituicao: Data de constituição
+ numero_junta_comercial: Número da junta comercial
+ classificacao: Classificação da pessoa
+ insc_estadual: Inscrição estadual
+ insc_municipal: Inscrição municipal
+ cep: CEP
+ logradouro: Logradou
+ endereco: Endereço
+ bairro: Bairro
+ numero: Número
+ complemento: Complemento
+ estado: Estado
+ cidade: Cidade
+ endereco_pais: País
+ tipo_residencia: Tipo da resdência
+ reside_com: Com quem Reside
+ valor_aluguel: Valor de aluguel
+ tempo_residencia: Tempo de residência (mês)
+ tipo_correspondencia: Tipo de correspondência
+ politicamente_exposta: Pessoa politicamente exposta
+ ppe_cargo: Cargo/Função
+ ppe_exercicio: Período de exercício
+ suspeito: Pessoa contemplada na lista de indivíduos suspeitos/envolvidos em lavagem de dinheiro e financiamento ao terrorismo
+ residente_municipio_fronteira: Pessoa residente em município de faixa de fronteira
+ relacionamento_ppe: Relacionamento com um PPE
+ relacionamento_ppe_nome: Nome do relacionamento
+ relacionamento_ppe_parentesco: Parentesco do relacionamento
+ relacionamento_ppe_cargo: Cargo/Função do relacionamento
+ relacionamento_ppe_exercicio: Período de exercício do relacionamento
+ relacionamento_ppe_identificacao: Número de identificação do relacionamento
+ relacionamento_ppe_orgao_emissor: Orgão emissor do relacionamento
+ relacionamento_ppe_data_nasc: Data de nascimento do relacionamento
+ relacionamento_ppe_cpf: CPF do relacionamento
+ numero_pis: Número do PIS
+ observacoes: Observações
+
+
+Dicionário de dados do CSV de Vendas
+ referencia: Identificador da reserva
+ referencia_data: Data de referência
+ ativo: Informa se está ativo ou não
+ idreserva: Identificador da reserva
+ aprovada: Aprovação da reserva
+ valor_contrato: Valor do contrato da reserva
+ data: Data de cadastro da reserva
+ data_venda: Data de venda da reserva
+ cliente: Nome do cliente da reserva
+ idcliente: Código identificador do cliente
+ documento_cliente: Número do documento (CPF/CNPJ) do cliente
+ email: E-mail do cliente da reserva
+ cidade: Cidade de origem do cliente
+ cep_cliente: CEP do cliente
+ renda: Renda do cliente da reserva
+ sexo: Sexo do cliente da reserva
+ idade: Idade do cliente da reserva
+ estado_civil: Estado civil do cliente da reserva
+ idcorretor: Identificador do corretor vinculado
+ corretor: Corretor da reserva
+ idimobiliaria: Identificador da imobiliária vinculada
+ imobiliaria: Imobiliária da reserva
+ unidade: Unidade do empreendimento
+ empreendimento: Empreendimento da reserva
+ area_privativa: Tamanho da área privativa
+ idempreendimento: Código identificador do empreendimento
+ codigointerno_empreendimento: Código interno do empreendimento
+ bloco: Bloco do empreendimento
+ regiao: Região do empreendimento da reserva
+ planta: Planta da unidade da venda
+ campanha: Campanha da reserva
+ idmidia: Identificador da mídia
+ midia: Nome da mídia
+ idtabela: Identificador da tabela de preço
+ idtipovenda: Identificador do tipo da venda
+ tipovenda: Descrição do tipo da venda
+ nometabela: Nome da tabela de preço
+ codigointernotabela: Identificador da tabela de preço para integrações
+ idlead: Identificador dos leads vinculados separados por ,
+
+
+Dicionário de dados do CSV de Reservas
+ referencia: Identificador
+ referencia_data: Data de referência
+ ativo: Informa se está ativo ou não
+ idreserva: Identificador da reserva
+ codigointerno: Código interno da reserva
+ numero_venda: Número da venda
+ aprovada: Aprovação da reserva
+ data_cad: Data de cadastro da reserva
+ data_venda: Data de venda da reserva
+ situacao: Situação da reserva
+ idsituacao: ID da situação da reserva
+ situacao_comercial: Nome da situação comercial
+ idempreendimento: Código identificador do empreendimento
+ codigointerno_empreendimento: Código interno do empreendimento
+ empreendimento: Empreendimento da reserva
+ data_entrega_chaves_contrato_cliente: Data de entrega das chaves conforme contrato com cliente
+ bloco: Bloco do empreendimento
+ unidade: Unidade do empreendimento
+ regiao: Região do empreendimento da reserva
+ venda: Informa se a reserva foi vendida
+ idcliente: Código identificador do cliente
+ documento_cliente: Número do documento (CPF/CNPJ) do cliente
+ cliente: Nome do cliente da reserva
+ email: E-mail do cliente da reserva
+ cidade: Cidade de origem do cliente
+ cep_cliente: CEP do cliente
+ renda: Renda do cliente da reserva
+ sexo: Sexo do cliente da reserva
+ idade: Idade do cliente da reserva
+ estado_civil: Estado civil do cliente da reserva
+ idcorretor: Identificador do corretor vinculado
+ corretor: Corretor da reserva
+ idimobiliaria: Identificador da imobiliária vinculada
+ imobiliaria: Imobiliária da reserva
+ valor_contrato: Valor do contrato da reserva
+ vencimento: Vencimento da reserva
+ campanha: Campanha da reserva
+ cessao: Mudança de cliente da reserva
+ motivo_cancelamento: Título da razão do cancelamento
+ espacos_complementares: Nome do espaço complementar
+ idlead: Identificador dos leads vinculados separados por ,
+ data_ultima_alteracao_situacao: Data da última alteração de situação
+ empresa_correspondente: Empresa correspondente vinculada à reserva
+ valor_fgts: Valor do FGTS usado na reserva
+ valor_financiamento: Valor do financiamento
+ valor_subsidio: Valor do subsidio da reserva
+ nome_usuario: Nome do usuário
+ idunidade: Identificador da unidade
+ idprecadastro: Identificador do pré cadastro
+ idmidia: Identificador da mídia
+ midia: Nome da mídia
+ descricao_motivo_cancelamento: Descrição da razão do cancelamento
+ idsituacao_anterior: Identificador da situação anterior
+ situacao_anterior: Nome da situação anterior
+ idtabela: Identificador da tabela de preço
+ nometabela: Nome da tabela de preço
+ codigointernotabela: Código interno da tabela de preço
+ data_contrato: Data de contrato da reserva
+ valor_proposta: Valor da proposta da reserva
+ vpl_tabela: VPL da tabela de preço da reserva
+ vpl_reserva: VPL da reserva
+ usuario_aprovacao: Usuário que aprovou a reserva
+ data_aprovacao: Data que o usuário aprovou a reserva
+ juros_condicao_aprovada: Valor do juros da aprovação
+ juros_apos_entrega_condicao_aprovada: Valor do juros futuro da aprovação
+ idtabela_condicao_aprovada: Id da tabela da condição aprovada
+ data_primeira_aprovacao: Data que o usuário aprovou a reserva pela primeira vez
+ aprovacao_absoluto: indicar o valor máximo (em porcentagem) para a aprovação.
+ aprovacao_vpl_valor: Porcentagem máxima permitida para a aprovação do VPL
+ idtipovenda: Identificador do tipo de venda
+ tipovenda: Tipo de venda da reserva
+ idgrupo: Identificador do grupo de situação
+ grupo: Nome do grupo de situação
+ data_modificacao: Data de modificação da reserva
+
+

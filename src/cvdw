@@ -5,6 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Manzano\CvdwCli\Configurar;
 use Manzano\CvdwCli\Opcoes;
 use Manzano\CvdwCli\Executar;
+use Manzano\CvdwCli\Treinar;
 use Manzano\CvdwCli\Services\Ambientes;
 
 use Symfony\Component\Console\Application;
@@ -28,5 +29,6 @@ $app = new Application('Manzano // CVDW-CLI', $ambienteObj->retornarVersao());
 $app->add(new Opcoes());
 $app->add(new Configurar());
 $app->add(new Executar());
+$app->add(new Treinar());
 $app->setDefaultCommand('opcoes', false);
 $app->run();

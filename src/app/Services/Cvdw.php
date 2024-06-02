@@ -66,7 +66,7 @@ class Cvdw
         if (is_object($logObjeto)) {
             $this->logObjeto = $logObjeto;
         }
-        $this->database = new DatabaseSetup($this->input, $this->output);
+        $this->database = new DatabaseSetup($this->input, $this->output, $this);
         $http = new Http($this->input, $this->output, $io, $this->executarObj, $this->logObjeto );
         $parametros = array(
             'pagina' => 1,
@@ -242,7 +242,7 @@ class Cvdw
                 ->from($tabela);
             $stmt = $queryBuilder->executeQuery();
             $dados = $stmt->fetchAssociative();
-        } catch (\Doctrine\DBAL\Exception $e) {
+        } catch (Exception $e) {
             // Trata o caso em que a tabela não existe ou outro erro de banco de dados ocorre
             $this->io->error("Erro ao buscar a última data na tabela '$tabela': " . $e->getMessage());
             return null;
@@ -454,6 +454,17 @@ class Cvdw
             "Acesse https://github.com/manzano/cvdw-cli para mais informações \n".
             "Ou utilize a opção 8 para atualizar o seu CVDW.");
         }
+    }
+
+    public function validarAmbiente($http): bool
+    {
+        $response = $http->pingAmbienteAutenticadoCVDW(
+            $_ENV['CV_URL'],
+            "/imobiliarias",
+            $_ENV['CV_EMAIL'],
+            $_ENV['CV_TOKEN']
+        );
+        return isset($response['registros']);
     }
 
 }
