@@ -95,13 +95,13 @@ class Executar extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $this->eventosObj = new Eventos();
-        $this->ambientesObj = new Ambientes($this->env);
-        $this->ambientesObj->retornarEnvs();
-
         if ($input->getOption('set-env')) {
             $this->env = $input->getOption('set-env');
         }
+
+        $this->eventosObj = new Eventos();
+        $this->ambientesObj = new Ambientes($this->env);
+        $this->ambientesObj->retornarEnvs();
 
         if ($input->getOption('set-qtd')) {
             $this->qtd = $input->getOption('set-qtd');
@@ -137,7 +137,7 @@ class Executar extends Command
             $this->logObjeto->criarArquivoLog();
         }
         
-        $this->limparTela();
+        //$this->limparTela();
         $this->validarConfiguracao($io);
 
         $this->input = $input;
