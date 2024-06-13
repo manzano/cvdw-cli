@@ -137,7 +137,6 @@ class Executar extends Command
             $this->logObjeto->criarArquivoLog();
         }
         
-        //$this->limparTela();
         $this->validarConfiguracao($io);
 
         $this->input = $input;
