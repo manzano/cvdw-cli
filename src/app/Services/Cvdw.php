@@ -254,7 +254,7 @@ class Cvdw
         return $dados['referencia_data'];
     }
 
-    protected function verificaSeExiste(string $tabela, int $referencia): string
+    protected function verificaSeExiste(string $tabela, string $referencia): string
     {
         try {
             $queryBuilder = $this->conn->createQueryBuilder();
