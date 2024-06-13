@@ -282,7 +282,7 @@ class Objeto
                 "arquivo" => "corretores_profissional.yaml"
             ],
             "unidades_precos" => [
-                "nome" => "Unidades (/unidades-precos)",
+                "nome" => "Unidades (/unidades/precos)",
                 "arquivo" => "unidades_precos.yaml"
             ],
             "campos_adicionais" => [
