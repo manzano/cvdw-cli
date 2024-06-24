@@ -97,6 +97,7 @@ response:
       type: string
       description: 'Nome do cliente da reserva'
       example: 'Pessoa de teste'
+      sensivel: true
     idcliente:
       type: integer
       description: 'Código identificador do cliente'
@@ -105,10 +106,12 @@ response:
       type: string
       description: 'Número do documento (CPF/CNPJ) do cliente'
       example: '04461372197'
+      sensivel: true
     email:
       type: string
       description: 'E-mail do cliente da reserva'
       example: karline@email.com
+      sensivel: true
     cidade:
       type: string
       description: 'Cidade de origem do cliente'

@@ -137,8 +137,8 @@ class Executar extends Command
             $this->logObjeto->criarArquivoLog();
         }
         
-        //$this->limparTela();
-        $this->validarConfiguracao($io);
+        $ignorar = ['DB_SCHEMA', 'ANONIMIZAR', 'ANONIMIZAR_TIPO', 'OPENAI_TOKEN', 'OPENAI_PROJ', 'OPENAI_ORG'];
+        $this->ambientesObj->validarConfiguracao($io, $ignorar);
 
         $this->input = $input;
         $this->output = $output;
@@ -201,20 +201,6 @@ class Executar extends Command
         }
     }
 
-    public function validarConfiguracao($io): void
-    {
-        $envVars = $this->ambientesObj->getEnvEscope();
-        // Listar todas as variáveis de $envVars e verificar se todas tem valor
-        foreach ($envVars as $envVar => $value) {
-            if (!isset($_ENV[$envVar]) || $_ENV[$envVar] == '') {
-                $io->error('Configuração não encontrada, invalida ou incompleta. (' . $envVar . ')');
-                $io->text(['Por favor use o comando "cvdw configurar" para configurar o CVDW-CLI.']);
-                $io->text(['']);
-                exit;
-            }
-        }
-    }
-
     public function exibirObjetos($io)
     {
 
@@ -258,7 +244,7 @@ class Executar extends Command
             }
 
             $objetoObj = new Objeto($this->input, $this->output);
-            $cvdw = new \Manzano\CvdwCli\Services\Cvdw($this->input, $this->output, $this);
+            $cvdw = new Cvdw($this->input, $this->output, $this);
             $cvdw->conectar();
 
             foreach ($objetosArray as $objeto => $dados) {
@@ -301,15 +287,6 @@ class Executar extends Command
         $this->limparTela();
 
         $this->executarObjeto($io, $inputObjeto);
-    }
-
-    public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
-    {
-
-        if ($input->mustSuggestOptionValuesFor('executar')) {
-            // Sugestões para a opção 'role'
-            $suggestions->suggestValues(['ROLE_USER', 'ROLE_ADMIN']);
-        }
     }
 
     protected function limparTela(): void

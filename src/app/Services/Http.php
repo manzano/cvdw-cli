@@ -246,8 +246,7 @@ class Http
                 $this::TENTAR_NOVAMENTE,
                 $response
             ]);
-            exit;
-            return false;
+            return [];
         }
 
         if ( isset($response['nome']) ) {
@@ -257,7 +256,7 @@ class Http
                 $this::ERRO_REQUISICAO,
                 $response
             ]);
-            return false;
+            return [];
         }
     }
 
@@ -321,7 +320,7 @@ class Http
         }
     }
 
-    public function buscarVersaoRepositorio() : string
+    public function buscarVersaoRepositorio()
     {
         $repo = 'manzano/cvdw-cli'; // Altere para o usuário/repositorio desejado
         $url = $this::PROTOCOLO_HTTP."api.github.com/repos/$repo/releases/latest";
@@ -352,9 +351,12 @@ class Http
 
         if ($response) {
             $data = json_decode($response, true);
+            if(!isset($data['tag_name'])) {
+                return "OFF";
+            }
             return $data['tag_name'];
         } else {
-            return null;
+            return "OFF";
         }
 
     }

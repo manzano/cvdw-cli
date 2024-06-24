@@ -133,10 +133,12 @@ response:
       type: string
       description: 'Número do documento (CPF/CNPJ) do cliente'
       example: '04461372197'
+      sensivel: true
     cliente:
       type: string
       description: 'Nome do cliente da reserva'
       example: 'KARLINE ARAUJO DOS SANTOS'
+      sensivel: true
     cep_cliente:
       type: string
       description: 'CEP do cliente'

@@ -81,10 +81,12 @@ response:
       type: string
       description: 'Documento do cliente'
       example: '12345678900'
+      sensivel: true
     cliente:
       type: string
       description: 'Nome do cliente'
       example: 'Joao da silva'
+      sensivel: true
     idsindico:
       type: integer
       description: 'Id do síndico'

@@ -26,10 +26,14 @@ class DatabaseSetup
 
     public Table $tabelaIO;
     public ProgressBar $progressBar;
+    public $parent;
+    const VAMOS_LA = 'Vamos Lá!';
+    const QUER_TENTAR_NOVAMENTE = 'Quer tentar novamente?';
 
-    public function __construct(InputInterface $input, OutputInterface $output)
+    public function __construct(InputInterface $input, OutputInterface $output, $parent = null)
     {
         $this->io = new CvdwSymfonyStyle($input, $output);
+        $this->parent = $parent;
         $this->input = $input;
         $this->output = $output;
         $this->conn = conectarDB($input, $output);
@@ -63,7 +67,7 @@ class DatabaseSetup
 
             $objeto = $objetoObj->retornarObjeto($key);
             if (!$objeto) {
-                $this->io->error("O objeto {$objeto} não existe.");
+                $this->io->error("O objeto {$objeto['nome']} não existe.");
             }
             $this->criarTabela($key, $objeto["response"]["dados"]);
             // Verificar se há subtabelas no objeto
@@ -95,7 +99,7 @@ class DatabaseSetup
 
             $objeto = $objetoObj->retornarObjeto($key);
             if (!$objeto) {
-                $this->io->error("O objeto {$objeto} não existe.");
+                $this->io->error("O objeto {$objeto['nome']} não existe.");
             }
 
             $tabelas[$key] = $objeto['nome'];
@@ -340,11 +344,6 @@ class DatabaseSetup
         return $this->conn->executeQuery("TRUNCATE TABLE {$tabela}");
     }
 
-    public function apagarTabela(string $tabela): \Doctrine\DBAL\Result
-    {
-        return $this->conn->executeQuery("DROP TABLE {$tabela}");
-    }
-
     public function inserirColuna(string $tabela, string $coluna, array $especificacao): bool
     {
         $especificacao = $this->tratarEspecificacao($especificacao);
@@ -438,4 +437,76 @@ class DatabaseSetup
             }
         }
     }
+
+
+
+
+    public function executarCorrecoes($diferencasBanco)
+    {
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $io->text(['', $this::VAMOS_LA, 'Corrigindo as diferenças...', '']);
+        $databaseObj = new DatabaseSetup($this->input, $this->output);
+        foreach ($diferencasBanco as $tabela => $diferencas) {
+            $io->text('Corrigindo a tabela ' . $tabela);
+            if (isset($diferencas['add'])) {
+                $databaseObj->executarInserirColuna($tabela, $diferencas['add'], $io);
+            }
+            if (isset($diferencas['remove'])) {
+                $databaseObj->executarRemoverColuna($tabela, $diferencas['remove'], $io);
+            }
+            if (isset($diferencas['change'])) {
+                $databaseObj->executarModificarColuna($tabela, $diferencas['change'], $io);
+            }
+            $io->text('');
+        }
+
+        if ($io->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
+            $tabelasLimpar = array();
+            foreach ($diferencasBanco as $tabela => $diferencas) {
+                $tabelasLimpar[$tabela] = [];
+            }
+            $this->parent->limparTabelas($tabelasLimpar);
+        } else {
+            $io->text([
+                '',
+                'Tubo bem! Finalizamos...',
+                ''
+            ]);
+        }
+    }
+
+    public function executarApagarTabelas($tabelasApagar, $table, $progressBar): void
+    {
+        $database = new DatabaseSetup($this->input, $this->output);
+        foreach ($tabelasApagar as $tabela => $valor) {
+            $tabelaExiste = $database->verificarSeTabelaExiste($tabela);
+            if (!$tabelaExiste) {
+                $this->retornarTabelaNaoEncontrada($table, $tabela, $progressBar);
+                continue;
+            }
+            $this->apagarTabela($table, $tabela, $progressBar);
+        }
+    }
+
+    public function retornarTabelaNaoEncontrada($table, $tabela, $progressBar): void
+    {
+        $table->addRow([$tabela, '<error>Não encontrada!</error>']);
+        $progressBar->setMessage("A tabela {$tabela} não existe");
+        $progressBar->advance();
+    }
+
+    public function apagarTabela($table, $tabela, $progressBar): void
+    {
+        $truncate = $this->conn->executeQuery("DROP TABLE {$tabela}");
+        if ($truncate) {
+            $table->addRow([$tabela, '<info>Apagada!</info>']);
+            $progressBar->setMessage("A tabela {$tabela} foi limpa");
+        } else {
+            $table->addRow([$tabela, '<error>Ocorreu algum erro!</error>']);
+            $progressBar->setMessage("A tabela {$tabela} não foi limpa");
+        }
+        $progressBar->advance();
+    }
+
+
 }

@@ -81,6 +81,7 @@ response:
       type: string
       description: 'Número do documento (CPF/CNPJ) do corretor'
       example: '04461372197'
+      sensivel: true
     nome:
       type: string
       description: 'Nome do corretor'

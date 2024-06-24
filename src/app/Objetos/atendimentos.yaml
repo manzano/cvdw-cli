@@ -177,10 +177,12 @@ response:
       type: string
       description: 'Número do documento (CPF/CNPJ) do cliente'
       example: '12345678910'
+      sensivel: true
     cliente:
       type: string
       description: 'Nome do cliente'
       example: João
+      sensivel: true
     cep_cliente:
       type: string
       description: 'CEP de endereço do cliente'

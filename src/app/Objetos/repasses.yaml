@@ -123,10 +123,12 @@ response:
       type: string
       description: "CPF/CNPJ do cliente do repasse"
       example: "12345678910"
+      sensivel: true
     cliente:
       type: string
       description: "Nome do cliente do repasse"
       example: João
+      sensivel: true
     cep_cliente:
       type: string
       description: "CEP do endereço do cliente"
