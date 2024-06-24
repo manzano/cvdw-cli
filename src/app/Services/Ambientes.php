@@ -20,7 +20,7 @@ class Ambientes
 
     public function retornarVersao(): string
     {
-        return 'v1.2.5';
+        return 'v1.3.0';
     }
 
     public function getEnvPath(): string
@@ -88,6 +88,9 @@ class Ambientes
             'DB_DATABASE' => null,
             'DB_USERNAME' => null,
             'DB_PASSWORD' => null,
+            'DB_SCHEMA' => null,
+            'ANONIMIZAR' => null,
+            'ANONIMIZAR_TIPO' => null,
             'OPENAI_TOKEN' => null,
             'OPENAI_PROJ' => null,
             'OPENAI_ORG' => null,
@@ -166,6 +169,25 @@ class Ambientes
                 $this->parent->voltarProMenu();
             }
             
+        }
+    }
+
+    public function validarConfiguracao($io, $ignorar = []): void
+    {
+        $envVars = $this->getEnvEscope();
+        // Listar todas as variáveis de $envVars e verificar se todas tem valor
+        foreach ($envVars as $envVar => $value) {
+
+            if(in_array($envVar, $ignorar)){
+                continue;
+            }
+
+            if (!isset($_ENV[$envVar]) || $_ENV[$envVar] == '') {
+                $io->error('Configuração não encontrada, invalida ou incompleta. (' . $envVar . ')');
+                $io->text(['Por favor use o comando "cvdw configurar" para configurar o CVDW-CLI.']);
+                $io->text(['']);
+                exit;
+            }
         }
     }
 

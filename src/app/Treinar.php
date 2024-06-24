@@ -98,7 +98,9 @@ class Treinar extends Command
         }
         
         $this->limparTela();
-        $this->validarConfiguracao($io);
+
+        $ignorar = ['DB_SCHEMA', 'ANONIMIZAR', 'ANONIMIZAR_TIPO'];
+        $this->ambientesObj->validarConfiguracao($io, $ignorar);
 
         $this->input = $input;
         $this->output = $output;
@@ -156,20 +158,6 @@ class Treinar extends Command
                 return $this->execute($this->input, $this->output);
             } else {
                 return 0;
-            }
-        }
-    }
-
-    public function validarConfiguracao($io): void
-    {
-        $envVars = $this->ambientesObj->getEnvEscope();
-        // Listar todas as variáveis de $envVars e verificar se todas tem valor
-        foreach ($envVars as $envVar => $value) {
-            if (!isset($_ENV[$envVar]) || $_ENV[$envVar] == '') {
-                $io->error('Configuração não encontrada, invalida ou incompleta. (' . $envVar . ')');
-                $io->text(['Por favor use o comando "cvdw configurar" para configurar o CVDW-CLI.']);
-                $io->text(['']);
-                exit;
             }
         }
     }

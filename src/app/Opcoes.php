@@ -2,9 +2,8 @@
 
 namespace Manzano\CvdwCli;
 
-use Symfony\Component\Console\Attribute\AsCommand;
+use Manzano\CvdwCli\Services\Ambientes;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,8 +35,11 @@ class Opcoes extends Command
     {
         $io = new CvdwSymfonyStyle($input, $output);
 
+        $ambientesObj = new Ambientes();
+        $versaoCVDW = $ambientesObj->retornarVersao();
+
         // Aqui você pode personalizar a saída do comando de ajuda
-        $io->title('Manzano // CVDW CLI v1.0.0');
+        $io->title('Manzano // CVDW CLI '.$versaoCVDW );
 
         if ($input->getOption('dir')) {
             $dir = __DIR__;

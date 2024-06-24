@@ -20,11 +20,32 @@ function conectarDB(InputInterface $input, OutputInterface $output, $showExcepti
         'driver' => $_ENV['DB_CONNECTION'],
     );
 
+
+    if ($_ENV['DB_CONNECTION'] == 'pdo_pgsql') {
+        $connectionParams['driverOptions'] = array(
+            \PDO::ATTR_PERSISTENT => true,
+        );
+        $connectionParams['options'] = array(
+            'search_path' => $_ENV['DB_SCHEMA']
+        );
+    }
+
     $conn = DriverManager::getConnection($connectionParams, $config);
     
     if (!$conn->isConnected()) {
         try {
             $conn->connect();
+
+            if($_ENV['DB_CONNECTION'] == 'pdo_pgsql'){
+                if(isset($_ENV['DB_SCHEMA']) && $_ENV['DB_SCHEMA'] <> ""){
+                    $schema = $_ENV['DB_SCHEMA'];
+                } else {
+                    $schema = 'public';
+                }
+                $conn->executeQuery("CREATE SCHEMA IF NOT EXISTS $schema");
+                $conn->executeQuery("SET search_path TO $schema");
+            }
+
         } catch (\Exception $e) {
             if($showException){
                 $io->error('Não foi possível conectar ao banco de dados.');

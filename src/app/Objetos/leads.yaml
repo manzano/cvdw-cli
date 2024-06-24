@@ -93,18 +93,22 @@ response:
       type: string
       description: 'Nome do lead'
       example: 'Saulo Nunes'
+      sensivel: true
     email:
       type: string
       description: 'E-mail do lead'
       example: importacao_nandes2.3@hotmail.com
+      sensivel: true
     telefone:
       type: string
       description: 'Telefone do lead'
       example: '31984658621'
+      sensivel: true
     documento_cliente:
       type: string
       description: 'Documento do lead'
       example: '09809809812'
+      sensivel: true
     cep_cliente:
       type: string
       description: 'CEP do lead'

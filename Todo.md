@@ -5,6 +5,10 @@ Aqui está uma lista de tarefas pendentes para melhorar e otimizar o projeto CVD
 
 ## Tarefas Pendentes
 
+- **Anonimizar Dados Sensíveis**: https://fakerphp.org/formatters/text-and-paragraphs/
+
+- **Schemas**: Adicionar schema para Postgres e SqlServer;
+
 - **Sub Tabelas**: Carregar dados que retornam na Api como um Array em Sub Tabelas. Ex: reservas_sub_campos_adicionais.
 
 - **Criação de tabelas**: Ao criar tabelas do banco de dados, o terminal está imprimindo a tabelas várias vezes.

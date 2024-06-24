@@ -108,6 +108,7 @@ class Configurar extends Command
             'Acesso ao CVDW API',
             'Acesso ao meu Banco de dados',
             'Criar as tabelas em meu banco de dados',
+            'Configurar anonimização de dados sensíveis',
             'Verificar/Atualizar meu ambiente',
             'Limpar as tabelas do CVDW (Truncate)',
             'Apagar as tabelas do CVDW (Drop)',
@@ -135,6 +136,9 @@ class Configurar extends Command
             case 'Criar as tabelas em meu banco de dados':
                 $this->criarTabelas();
                 break;
+            case 'Configurar anonimização de dados sensíveis':
+                $this->configurarAnonimizacao();
+                break;
             case 'Verificar/Atualizar meu ambiente':
                 $cvdwObj->conectar();
                 $this->verificarInstalacao();
@@ -157,6 +161,7 @@ class Configurar extends Command
             case 'Atualizar o ambiente do CVDW-CLI':
                 $this->atualizarCVDW();
                 break;
+                
             default:
                 return Command::INVALID;
         }
@@ -183,7 +188,7 @@ class Configurar extends Command
 
             $io = new CvdwSymfonyStyle($this->input, $this->output);
 
-            $http = new \Manzano\CvdwCli\Services\Http($this->input, $this->output, $io, $this);
+            $http = new Http($this->input, $this->output, $io, $this);
             $response = $http->pingAmbienteCVDW($endereco_cv);
 
             if ($response['nome'] !== null) {
@@ -314,6 +319,21 @@ class Configurar extends Command
             }
         );
 
+        if($this->variaveisAmbiente['banco'] == 'pdo_pgsql'){
+            // se não tiver $_ENV['DB_SCHEMA'], $_ENV['DB_SCHEMA'] = 'public';
+            if(!isset($_ENV['DB_SCHEMA']) || $_ENV['DB_SCHEMA'] == ''){
+                $_ENV['DB_SCHEMA'] = 'public';
+            }
+            $io->ask(
+                'Qual a schema?',
+                $_ENV['DB_SCHEMA'],
+                function (string $db_schema): string {
+                    $this->variaveisAmbiente['db_schema'] = $db_schema;
+                    return $db_schema;
+                }
+            );
+        }
+
         $io->ask(
             'Qual o usuário?',
             $_ENV['DB_USERNAME'],
@@ -338,7 +358,8 @@ class Configurar extends Command
             'DB_PORT' => $this->variaveisAmbiente['db_port'],
             'DB_DATABASE' => $this->variaveisAmbiente['db_database'],
             'DB_USERNAME' => $this->variaveisAmbiente['db_username'],
-            'DB_PASSWORD' => $this->variaveisAmbiente['db_password']
+            'DB_PASSWORD' => $this->variaveisAmbiente['db_password'],
+            'DB_SCHEMA' => $this->variaveisAmbiente['db_schema']
         ];
 
         $io->text([
@@ -356,22 +377,32 @@ class Configurar extends Command
             'driver' => $this->variaveisAmbiente['banco'],
         );
 
+        if ($this->variaveisAmbiente['banco'] == 'pdo_pgsql') {
+            $connectionParams['driverOptions'] = array(
+                \PDO::ATTR_PERSISTENT => true,
+            );
+            $connectionParams['options'] = array(
+                'search_path' => $this->variaveisAmbiente['db_schema'],
+            );
+        }
+
         try {
             $conn = DriverManager::getConnection($connectionParams, $config);
             $conn->connect();
             if ($conn->isConnected()) {
+                
                 $io->success('Conexão bem-sucedida!');
             } else {
                 $io->error('Não foi possível conectar ao banco de dados.');
                 if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
-                    return $this->configurarBanco($io);
+                    return $this->configurarBanco();
                 }
             }
         } catch (\Exception $e) {
             $io->error('Não foi possível conectar ao banco de dados.');
             $io->error('Encontrei esse erro: ' . $e->getMessage());
             if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
-                return $this->configurarBanco($io);
+                return $this->configurarBanco();
             }
         }
 
@@ -412,6 +443,54 @@ class Configurar extends Command
 
         return true;
 
+    }
+
+    private function configurarAnonimizacao(): bool
+    {
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+
+        $io->text('A anonimização dos dados sensíveis de pessoas é uma prática recomendada para proteger a privacidade dos usuários');
+        $io->text('O CVDW-CLI pode ajudar você a esconder esses dados.');
+        $io->text('Exemplo: Nome, E-mail, Telefone, CPF, RG, etc.');
+
+        if(!isset($_ENV['ANONIMIZAR'])){
+            $_ENV['ANONIMIZAR'] = false;
+            $_ENV['ANONIMIZAR_TIPO'] = 'Asteriscos';
+        } else {
+            if($_ENV['ANONIMIZAR'] == 'true'){
+                $_ENV['ANONIMIZAR'] = true;
+            } else {
+                $_ENV['ANONIMIZAR'] = false;
+            }
+        }
+        $_ENV['ANONIMIZAR'] = $io->confirm('Você deseja anonimizar os dados sensíveis?', $_ENV['ANONIMIZAR']);
+
+        if($_ENV['ANONIMIZAR']) {
+
+            $io->text('Ok, vamos configurar a anonimização...');
+            $io->text('Agora você pode escolher como deseja anonimizar os dados sensíveis.');
+            $nomeEx = 'Gabriel Manzano';
+            $io->text(' - Com asteriscos:');
+            $io->text("   Ex: $nomeEx -> ".substituirPorAsteriscos($nomeEx));
+            $io->text(' - Com um hash unico:');
+            $io->text("   Ex: $nomeEx -> ".substituirPorHash($nomeEx, 20));
+
+            $_ENV['ANONIMIZAR_TIPO'] = $io->choice('Como você deseja anonimizar?',
+            ['Asteriscos', 'Hash'],
+            $_ENV['ANONIMIZAR_TIPO']);
+            $io->text('Você escolheu: ' . $_ENV['ANONIMIZAR_TIPO']);
+            $_ENV['ANONIMIZAR'] = 'true';
+
+        } else {
+            $_ENV['ANONIMIZAR'] = 'false';
+        }
+
+        $this->ambientesObj->salvarEnv($_ENV);
+        $io->text('Pronto, configuração salva...');
+        $this->voltarProMenu = true;
+        $this->voltarProMenu();
+
+        return true;
     }
 
     private function verificarInstalacao(): bool
@@ -646,7 +725,7 @@ class Configurar extends Command
                 } else {
                     $io->text([ 'Não encontrei a tabela "' . $tabela . '".', '' ]);
                     if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
-                        return $this->apagarTabelas($io);
+                        return $this->apagarTabelas();
                     }
                 }
             }
@@ -658,7 +737,7 @@ class Configurar extends Command
             $progressBar = new ProgressBar($this->output, $totalObjetos);
             $progressBar->start();
 
-            $this->databaseObj->executarApagarTabelas($tabelasApagar, $table, $progressBar);
+            $database->executarApagarTabelas($tabelasApagar, $table, $progressBar);
         
             $progressBar->finish();
             $table->render();
@@ -727,8 +806,8 @@ class Configurar extends Command
             'Gere um Token para o CVDW-CLI e cole aqui.',
         ]);
 
-        $io->ask('Informe o token da plataforma:', 
-        $_ENV['OPENAI_TOKEN'], 
+        $io->ask('Informe o token da plataforma:',
+        $_ENV['OPENAI_TOKEN'],
         function (string $openai_token): string {
             // Verificar se a string começa com 'org-'
             if (substr($openai_token, 0, 8) !== 'sk-proj-') {

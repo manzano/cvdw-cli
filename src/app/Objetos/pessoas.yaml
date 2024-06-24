@@ -112,7 +112,8 @@ response:
     documento:
       type: string
       description: Documento
-      example: 111.111.111-11
+      example: '111.111.111-11'
+      sensivel: true
     pessoa_estrangeira:
       type: string
       description: 'Informa se pessoa estrangeira'
@@ -121,6 +122,7 @@ response:
       type: string
       description: Nome
       example: 'Associado Silva Santos'
+      sensivel: true
     reconhecimento_firma:
       type: string
       description: 'Reconhecimento de firma'

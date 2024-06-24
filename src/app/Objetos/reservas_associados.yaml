@@ -93,10 +93,12 @@ response:
       type: string
       description: 'Nome do associado da reserva'
       example: 'Anna Luiza'
+      sensivel: true
     documento:
       type: string
       description: 'Documento do associado da reserva'
       example: '12345678925'
+      sensivel: true
     renda_familiar:
       type: number
       description: 'Renda familiar do associado da reserva'

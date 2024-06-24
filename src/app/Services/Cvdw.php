@@ -331,6 +331,7 @@ class Cvdw
             }
             $retorno = true;
         } catch (Exception $e) {
+
             $erroMsg = [
                 'Erro ao tentar executar o SQL! (Update)',
                 'Objeto: ' . print_r($linha, true),
@@ -435,6 +436,22 @@ class Cvdw
                     $linha->$coluna = null;
                 }
 
+                if(isset($valor['sensivel']) && $valor['sensivel'] == 1 && $_ENV['ANONIMIZAR'] == 'true'){
+                        if($_ENV['ANONIMIZAR_TIPO'] == 'Asteriscos') {
+                            $linha->$coluna = substituirPorAsteriscos($linha->$coluna);
+                            // Converter para UTF*
+                            $linha->$coluna = mb_convert_encoding($linha->$coluna, 'UTF-8');
+                        }
+                        if($_ENV['ANONIMIZAR_TIPO'] == 'Hash') {
+                            $tamanho = 32;
+                            if (strpos($coluna, "documento") !== false) {
+                                $tamanho = 11;
+                            }
+                            $linha->$coluna = substituirPorHash($linha->$coluna, $tamanho);
+                            $linha->$coluna = mb_convert_encoding($linha->$coluna, 'UTF-8');
+                        }
+                }
+
             }
         }
         return $linha;
@@ -449,10 +466,15 @@ class Cvdw
     public function alertarNovaVersao($versaoCVDW, $io): void
     {
         $versaoRepositorio = $this->verificarNovaVersao($io);
-        if($versaoRepositorio !== $versaoCVDW){
-            $io->warning('Existe uma nova versão disponível: '.$versaoRepositorio."\n".
-            "Acesse https://github.com/manzano/cvdw-cli para mais informações \n".
-            "Ou utilize a opção 8 para atualizar o seu CVDW.");
+
+        if($versaoRepositorio == 'OFF'){
+            $io->warning('Não consegui acessar o repositório do CV, considere verificar a conexão com a internet.');
+        } else {
+            if($versaoRepositorio !== $versaoCVDW){
+                $io->warning('Existe uma nova versão disponível: '.$versaoRepositorio."\n".
+                "Acesse https://github.com/manzano/cvdw-cli para mais informações \n".
+                "Ou utilize a opção 8 para atualizar o seu CVDW.");
+            }
         }
     }
 
