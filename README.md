@@ -31,7 +31,9 @@ O **CVDW Command-line Interface (cvdw-cli)** é uma ferramenta poderosa projetad
 
 Depois de instalado, use sempre esse comando para atualizar o CVDW.
 
-    curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | bash
+```console
+curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | bash
+```
 
 ## Instalação
 
@@ -39,14 +41,30 @@ Para instalar o CVDW-cli, siga as [instruções de instalação](Install.md).
 
 ## Configurando
 
-    cvdw configurar
+```console
+configurar [-env|--set-env [SET-ENV]]
+```
+
+* `--set-env` `-env` — Diz qual ENV usar. Exemplo: dev, homologacao, producao.
 
 ![cvdw configurar](imgs/configurar.png "cvdw configurar")
 
 ## Executando
 Agora sim, podemos executar...
 
-    $ cvdw executar
+```console
+executar [-idr|--ignorar-data-referencia] [-log|--salvarlog] [-env|--set-env [SET-ENV]] [-qtd|--set-qtd [SET-QTD]] [-a|--apartir [APARTIR]] [-m|--max-pag [MAX-PAG]] [--] [<objeto>]
+```
+
+* `--ignorar-data-referencia` `-idr` — Ignorar a data de referência.
+* `--salvarlog` `-log` — Salvar Log da execução no diretorio de instalação.
+* `--set-env` `-env` — Diz qual ENV usar. Exemplo: dev, homologacao, producao.
+* `--set-qtd` `-qtd` — Quantidade de dados retornada por cada requisicao.
+* `--apartir` `-a` — Consultar a partir de uma data de referencia especifica.
+
+                No formato: Y-m-d\TH:i:s ou Y-m-d.
+* `--max-pag` `-m` — Executa o número máximo de página informado.
+* `<objeto>` Qual objeto deseja executar
 
 ![cvdw executar](imgs/executar.png "cvdw executar")
 

@@ -6,7 +6,7 @@ Este guia fornece uma visão geral detalhada dos passos necessários para config
 
 Se você já instalou os pré-requisitos, basta rodar o comando abaixo em seu terminal
 
-```bash
+```console
 curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | bash
 ```
 

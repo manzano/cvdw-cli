@@ -23,7 +23,7 @@ Este guia detalha a instalação do Windows Subsystem for Linux (WSL), seguido p
 
 Com o WSL instalado e a distribuição Linux escolhida configurada, atualize os pacotes do seu sistema:
 
-```bash
+```console
 sudo apt update
 sudo apt upgrade -y
 ```
@@ -32,13 +32,13 @@ sudo apt upgrade -y
 
 Instale o Git com o seguinte comando:
 
-```bash
+```console
 sudo apt install git -y
 ```
 
 Para verificar a instalação, execute:
 
-```bash
+```console
 git --version
 ```
 
@@ -46,7 +46,7 @@ git --version
 
 Para instalar o PHP 8.2 e as extensões necessárias, incluindo suporte para Phar, PDO_MySQL, PDO, PDO_SQLSRV (para SQL Server) e PDO_PGSQL (para PostgreSQL), siga os comandos abaixo. Note que PDO_SQLSRV pode requerer passos adicionais para instalação em algumas distribuições Linux:
 
-```bash
+```console
 sudo apt install -y software-properties-common
 sudo add-apt-repository ppa:ondrej/php -y
 sudo apt update
@@ -57,7 +57,7 @@ Para o PDO_SQLSRV em distribuições Linux baseadas em Debian/Ubuntu, você pode
 
 Verifique a instalação do PHP:
 
-```bash
+```console
 php -v
 ```
 
@@ -65,7 +65,7 @@ php -v
 
 O Composer pode ser instalado globalmente com os seguintes comandos:
 
-```bash
+```console
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
@@ -75,7 +75,7 @@ sudo chmod +x /usr/local/bin/composer
 
 Para verificar a instalação do Composer:
 
-```bash
+```console
 composer --version
 ```
 
@@ -83,7 +83,7 @@ composer --version
 
 Agora é so executar o comando:
 
-```bash
+```console
 curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | bash
 ```
 

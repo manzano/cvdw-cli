@@ -7,7 +7,7 @@ Este guia detalha a instalação do Git, PHP 8.2, Composer e extensões específ
 
 Atualize os pacotes do seu sistema:
 
-```bash
+```console
 sudo apt update
 sudo apt upgrade -y
 ```
@@ -16,13 +16,13 @@ sudo apt upgrade -y
 
 Instale o Git:
 
-```bash
+```console
 sudo apt install git -y
 ```
 
 Verifique a instalação do Git:
 
-```bash
+```console
 git --version
 ```
 
@@ -30,7 +30,7 @@ git --version
 
 Adicione o repositório PPA do PHP e instale o PHP 8.2 e as extensões necessárias:
 
-```bash
+```console
 sudo apt install -y software-properties-common
 sudo add-apt-repository ppa:ondrej/php -y
 sudo apt update
@@ -39,7 +39,7 @@ sudo apt install php8.2 php8.2-cli php8.2-xml php8.2-mbstring php8.2-curl php8.2
 
 Verifique a instalação do PHP:
 
-```bash
+```console
 php -v
 ```
 
@@ -47,7 +47,7 @@ php -v
 
 Instale o Composer globalmente:
 
-```bash
+```console
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
 sudo mv composer.phar /usr/local/bin/composer
@@ -55,7 +55,7 @@ sudo mv composer.phar /usr/local/bin/composer
 
 Verifique a instalação do Composer:
 
-```bash
+```console
 composer --version
 ```
 
@@ -63,7 +63,7 @@ composer --version
 
 Agora é so executar o comando:
 
-```bash
+```console
 curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | bash
 ```
 

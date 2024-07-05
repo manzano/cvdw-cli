@@ -7,7 +7,7 @@ Este guia detalha a instalação do Git, PHP 8.2, Composer e extensões específ
 
 Homebrew é um gerenciador de pacotes para macOS. Instale-o executando o seguinte comando no Terminal:
 
-```bash
+```console
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
@@ -15,13 +15,13 @@ Homebrew é um gerenciador de pacotes para macOS. Instale-o executando o seguint
 
 Com o Homebrew instalado, instale o Git:
 
-```bash
+```console
 brew install git
 ```
 
 Verifique a instalação do Git:
 
-```bash
+```console
 git --version
 ```
 
@@ -29,13 +29,13 @@ git --version
 
 Instale o PHP 8.2 usando o Homebrew:
 
-```bash
+```console
 brew install php@8.2
 ```
 
 Adicione o PHP ao seu PATH para usar a versão instalada pelo Homebrew:
 
-```bash
+```console
 echo 'export PATH="/usr/local/opt/php@8.2/bin:$PATH"' >> ~/.zshrc
 echo 'export PATH="/usr/local/opt/php@8.2/sbin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
@@ -43,7 +43,7 @@ source ~/.zshrc
 
 Verifique a instalação do PHP:
 
-```bash
+```console
 php -v
 ```
 
@@ -51,7 +51,7 @@ php -v
 
 Instale o Composer globalmente:
 
-```bash
+```console
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
 mv composer.phar /usr/local/bin/composer
@@ -59,7 +59,7 @@ mv composer.phar /usr/local/bin/composer
 
 Verifique a instalação do Composer:
 
-```bash
+```console
 composer --version
 ```
 
@@ -67,7 +67,7 @@ composer --version
 
 Agora é so executar o comando:
 
-```bash
+```console
 curl -sSL https://raw.githubusercontent.com/manzano/cvdw-cli/main/install.sh | bash
 ```
 

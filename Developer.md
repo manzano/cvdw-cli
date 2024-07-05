@@ -9,7 +9,7 @@ Este documento orienta a preparação do ambiente de desenvolvimento e as melhor
 
 Garanta que seu sistema está atualizado:
 
-```bash
+```console
 sudo yum update -y
 ```
 
@@ -17,7 +17,7 @@ sudo yum update -y
 
 Instale o git, PHP 8.2, e outras ferramentas necessárias:
 
-```bash
+```console
 sudo yum install -y git tmux php8.2 php8.2-cli php8.2-pdo
 ```
 
@@ -25,7 +25,7 @@ sudo yum install -y git tmux php8.2 php8.2-cli php8.2-pdo
 
 Clone o repositório do projeto para sua máquina local:
 
-```bash
+```console
 git clone https://github.com/manzano/cvdw-cli.git
 cd cvdw-cli
 ```
@@ -34,7 +34,7 @@ cd cvdw-cli
 
 Antes de iniciar o desenvolvimento, crie uma nova branch para suas alterações:
 
-```bash
+```console
 git checkout -b nome-da-sua-branch
 ```
 
@@ -46,7 +46,7 @@ Faça suas alterações no código localmente. Teste suas alterações rigorosam
 
 Após completar suas alterações, envie-as para o repositório remoto:
 
-```bash
+```console
 git add .
 git commit -m "Descrição das suas alterações"
 git push origin nome-da-sua-branch
