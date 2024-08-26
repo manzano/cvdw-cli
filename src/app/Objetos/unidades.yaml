@@ -1,0 +1,178 @@
+path: /unidades
+tabela: unidades
+metodo: get
+descricao: 'Esta Api retorna os dados das unidades'
+nome: 'Unidades dos empreendimentos'
+parametros:
+  header:
+    -
+      name: email
+      in: header
+      required: true
+      description: 'E-mail de autenticação do usuário administrativo'
+      example: email@email.com
+      schema:
+        type: string
+    -
+      name: token
+      in: header
+      required: true
+      description: 'Token criado no usuário administrativo do e-mail'
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarCamposAdicionais
+subschema: CamposAdicionaisRetorno
+body:
+  pagina:
+    type: integer
+    example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
+    type: integer
+    example: 30
+    description: 'Quantidade de registro por página, máximo 500 registros'
+  a_partir_referencia:
+    type: integer
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
+  a_partir_data_referencia:
+    example: '2022-05-18 10:15:26'
+    type: string
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
+response:
+  pagina:
+    type: integer
+    example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros:
+    type: integer
+    example: 30
+    description: 'Quantidade de registro por página, máximo 500 registros'
+  total_de_registros:
+    type: integer
+    example: 1054
+    description: 'Total de registros encontrados'
+  total_de_paginas:
+    type: integer
+    example: 36
+    description: 'Total de páginas encontradas'
+  dados:
+    referencia: 
+      example: 1186,
+      type: integer
+    referencia_data:
+      example: "2023-01-15 15:26:15"
+      type: string
+    idempreendimento: 
+      example: 1186,
+      type: integer
+    idempreendimento_int:
+      example: 1186,
+      type: integer   
+    nome_empreendimento:
+      example: "Empreendimento X"
+      type: string
+    idetapa: 
+      example: 1186
+      type: integer
+    idetapa_int:
+      example: 1186
+      type: integer
+    etapa:
+      example: "1Âª ETAPA"
+      type: string
+    idbloco:
+      example: 1186
+      type: integer
+    idbloco_int: 
+      example: 1186
+      type: integer
+    bloco: 
+      example: "BLOCO 01"
+      type: string
+    nome:
+      example: "001"
+      type: string
+    area_privativa:
+      example: "122.00"
+      type: string
+    idunidade:
+      example: "12345"
+      type: string
+    idunidade_int:
+      example: "123"
+      type: string  
+    vagas_garagem:
+      example: "1"
+      type: string
+    andar:
+      example: "7"
+      type: string
+    area_comum:
+      example: "33.39"
+      type: string
+    coluna:
+      example: 10
+      type: integer
+    posicao:
+      example: "Leste"
+      type: string
+    tipologia:
+      example: "3 suites com terraÃ§o gourmet"
+      type: string
+    tipo:
+      example: "Apartamento"
+      type: string
+    idtipo_int:
+      example: "123"
+      type: string
+    empresa_terceirizacao:
+      example: "Nome da empresa de terceirizaÃ§Ã£o"
+      type: string
+    valor:
+      example: "9999.99"
+      type: string
+    valor_avaliacao:
+      example: "497242.40"
+      type: string
+    data_bloqueio:
+      example: "01/10/2024"
+      type: string
+    data_entrega:
+      example: "01/01/2023"
+      type: string
+    agendar_a_partir:
+      example: "01/01/2023"
+      type: string
+    liberar_a_partir:
+      example: "01/01/2023"
+      type: string  
+    plantas:
+      idplanta:
+        type: integer
+      nome:
+        type: string
+    campos_adicionais:
+      nome_referencia:
+        type: string
+      valor:
+        type: string        
+    situacao:
+      vendida:
+        type: string
+      vendida_idsituacao:
+        type: string
+      idmotivo:
+        type: string
+      situacao_para_venda:
+        type: integer
+      situacao_mapa_disponibilidade:
+        type: integer
+        description: "Situacao da unidade no mapa de disponibilidade (1 - Disponível; 2 - Reservada; 3 - Vendida; 4 - Bloqueada; 5 - Em processo de reserva)"
+      possui_reserva_solicitacao_distrato:
+        type: string    
+

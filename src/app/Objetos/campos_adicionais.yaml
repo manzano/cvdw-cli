@@ -101,7 +101,7 @@ response:
       type: datetime
       description: 'Data de cadastro'
       example: USO_CONTRATO
-    data_sincronizacao:
+    data_modificacao:
       type: datetime
       description: 'Data de sincronização'
       example: USO_CONTRATO

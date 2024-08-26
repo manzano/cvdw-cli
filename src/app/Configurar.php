@@ -590,8 +590,9 @@ class Configurar extends Command
                 'Encontrei problemas no banco de dados, vamos tentar corrigir?',
                 ''
             ]);
+            
             if ($io->confirm('Quer tentar corrigir?', true)) {
-                $this->databaseObj->executarCorrecoes($diferencasBanco);
+                $databaseObj->executarCorrecoes($diferencasBanco);
             } else {
                 $io->text([
                     '',

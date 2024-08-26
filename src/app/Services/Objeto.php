@@ -285,6 +285,10 @@ class Objeto
                 "nome" => "Unidades (/unidades/precos)",
                 "arquivo" => "unidades_precos.yaml"
             ],
+            "unidades" => [
+                "nome" => "Unidades (/unidades)",
+                "arquivo" => "unidades.yaml"
+            ],
             "campos_adicionais" => [
                 "nome" => "Campos Adicionais (/campos_adicionais)",
                 "arquivo" => "campos_adicionais.yaml"

@@ -443,35 +443,44 @@ class DatabaseSetup
 
     public function executarCorrecoes($diferencasBanco)
     {
-        $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $io->text(['', $this::VAMOS_LA, 'Corrigindo as diferenças...', '']);
-        $databaseObj = new DatabaseSetup($this->input, $this->output);
-        foreach ($diferencasBanco as $tabela => $diferencas) {
-            $io->text('Corrigindo a tabela ' . $tabela);
-            if (isset($diferencas['add'])) {
-                $databaseObj->executarInserirColuna($tabela, $diferencas['add'], $io);
-            }
-            if (isset($diferencas['remove'])) {
-                $databaseObj->executarRemoverColuna($tabela, $diferencas['remove'], $io);
-            }
-            if (isset($diferencas['change'])) {
-                $databaseObj->executarModificarColuna($tabela, $diferencas['change'], $io);
-            }
-            $io->text('');
-        }
 
-        if ($io->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
-            $tabelasLimpar = array();
-            foreach ($diferencasBanco as $tabela => $diferencas) {
-                $tabelasLimpar[$tabela] = [];
-            }
-            $this->parent->limparTabelas($tabelasLimpar);
-        } else {
+        if(is_null($diferencasBanco)){
             $io->text([
                 '',
-                'Tubo bem! Finalizamos...',
+                'Estranho, não encontrei diferenças...',
                 ''
             ]);
+        } else {
+            $io = new CvdwSymfonyStyle($this->input, $this->output);
+            $io->text(['', $this::VAMOS_LA, 'Corrigindo as diferenças...', '']);
+            $databaseObj = new DatabaseSetup($this->input, $this->output);
+            foreach ($diferencasBanco as $tabela => $diferencas) {
+                $io->text('Corrigindo a tabela ' . $tabela);
+                if (isset($diferencas['add'])) {
+                    $databaseObj->executarInserirColuna($tabela, $diferencas['add'], $io);
+                }
+                if (isset($diferencas['remove'])) {
+                    $databaseObj->executarRemoverColuna($tabela, $diferencas['remove'], $io);
+                }
+                if (isset($diferencas['change'])) {
+                    $databaseObj->executarModificarColuna($tabela, $diferencas['change'], $io);
+                }
+                $io->text('');
+            }
+
+            if ($io->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
+                $tabelasLimpar = array();
+                foreach ($diferencasBanco as $tabela => $diferencas) {
+                    $tabelasLimpar[$tabela] = [];
+                }
+                $this->parent->limparTabelas($tabelasLimpar);
+            } else {
+                $io->text([
+                    '',
+                    'Tubo bem! Finalizamos...',
+                    ''
+                ]);
+            }
         }
     }
 
