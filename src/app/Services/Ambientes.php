@@ -20,7 +20,7 @@ class Ambientes
 
     public function retornarVersao(): string
     {
-        return 'v1.4.0';
+        return 'v1.4.1';
     }
 
     public function getEnvPath(): string

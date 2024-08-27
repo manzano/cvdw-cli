@@ -68,7 +68,7 @@ class Objeto
     public function identificarTipoDeDados(array $dados): string
     {
         foreach ($dados as $valor) {
-            if (is_array($valor)) {
+            if (is_array($valor) || is_object($valor)) {
                 return "TABELA";
             }
         }

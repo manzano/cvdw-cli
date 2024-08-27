@@ -149,7 +149,6 @@ class DatabaseSetup
             }
         }
     }
-
     private function criarTabelaSchema($schema, $tabela, $colunas)
     {
         $objetoObj = new Objeto($this->input, $this->output);
@@ -159,6 +158,7 @@ class DatabaseSetup
             if ($tipoDeDados == "TABELA") {
                 continue;
             }
+
             $colunaTratada = $this->tratarEspecificacao($especificacao);
             $especificacao = $colunaTratada[0];
             $opcoes = $colunaTratada[1];

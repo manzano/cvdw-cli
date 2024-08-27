@@ -314,7 +314,7 @@ class Cvdw
         $indice = 0;
         foreach ($objeto['response']['dados'] as $colunaInd => $valor) {
             $nomeColuna = $this->database->tratarNomeColuna($colunaInd, $valor);
-            if (isset($linha->$colunaInd) && !is_array($linha->$colunaInd)) {
+            if (isset($linha->$colunaInd) && !is_array($linha->$colunaInd) && !is_object($linha->$colunaInd)) {
                 $queryBuilder->set($nomeColuna, ':valor' . $indice);
                 $queryBuilder->setParameter('valor' . $indice, $linha->$colunaInd);
                 $indice++;
@@ -358,17 +358,20 @@ class Cvdw
         
         $linha = $this->trataDados($objeto, $linha);
         $queryBuilder = $this->conn->createQueryBuilder();
-        $queryBuilder->insert($objeto['tabela']);
 
+        $queryBuilder->insert($objeto['tabela']);
+        
         $indice = 0;
         foreach ($objeto['response']['dados'] as $colunaInd => $valor) {
             $nomeColuna = $this->database->tratarNomeColuna($colunaInd, $valor);
-            if (isset($linha->$colunaInd) && !is_array($linha->$colunaInd)) {
+            if (isset($linha->$colunaInd) && !is_array($linha->$colunaInd) && !is_object($linha->$colunaInd)) {
                 $queryBuilder->setValue($nomeColuna, '?');
                 $queryBuilder->setParameter($indice, $linha->$colunaInd);
                 $indice++;
             }
         }
+
+
         try {
 
             $queryBuilder->executeStatement();
@@ -410,7 +413,9 @@ class Cvdw
     {
         
         $objetoObj = new Objeto($this->input, $this->output);
+
         foreach ($objeto['response']['dados'] as $coluna => $valor) {
+            
             if (isset($linha->$coluna) && $objetoObj->identificarTipoDeDados($valor) !== "TABELA") {
 
                 if (strpos($coluna, "data") !== false) {

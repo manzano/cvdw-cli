@@ -1,23 +1,21 @@
 path: /unidades
 tabela: unidades
 metodo: get
-descricao: 'Esta Api retorna os dados das unidades'
-nome: 'Unidades dos empreendimentos'
+descricao: "Esta Api retorna os dados das unidades"
+nome: "Unidades dos empreendimentos"
 parametros:
   header:
-    -
-      name: email
+    - name: email
       in: header
       required: true
-      description: 'E-mail de autenticação do usuário administrativo'
+      description: "E-mail de autenticação do usuário administrativo"
       example: email@email.com
       schema:
         type: string
-    -
-      name: token
+    - name: token
       in: header
       required: true
-      description: 'Token criado no usuário administrativo do e-mail'
+      description: "Token criado no usuário administrativo do e-mail"
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -30,53 +28,53 @@ body:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros_por_pagina:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   a_partir_referencia:
     type: integer
     example: 1640
-    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
+    description: "Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente"
   a_partir_data_referencia:
-    example: '2022-05-18 10:15:26'
+    example: "2022-05-18 10:15:26"
     type: string
-    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
+    description: "Retornará os dados criadas criados ou alterados a partir da data informada"
 response:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   total_de_registros:
     type: integer
     example: 1054
-    description: 'Total de registros encontrados'
+    description: "Total de registros encontrados"
   total_de_paginas:
     type: integer
     example: 36
-    description: 'Total de páginas encontradas'
+    description: "Total de páginas encontradas"
   dados:
-    referencia: 
+    referencia:
       example: 1186,
       type: integer
     referencia_data:
       example: "2023-01-15 15:26:15"
       type: string
-    idempreendimento: 
+    idempreendimento:
       example: 1186,
       type: integer
     idempreendimento_int:
       example: 1186,
-      type: integer   
+      type: string
     nome_empreendimento:
       example: "Empreendimento X"
       type: string
-    idetapa: 
+    idetapa:
       example: 1186
       type: integer
     idetapa_int:
@@ -88,10 +86,10 @@ response:
     idbloco:
       example: 1186
       type: integer
-    idbloco_int: 
+    idbloco_int:
       example: 1186
       type: integer
-    bloco: 
+    bloco:
       example: "BLOCO 01"
       type: string
     nome:
@@ -105,7 +103,7 @@ response:
       type: string
     idunidade_int:
       example: "123"
-      type: string  
+      type: string
     vagas_garagem:
       example: "1"
       type: string
@@ -150,7 +148,7 @@ response:
       type: string
     liberar_a_partir:
       example: "01/01/2023"
-      type: string  
+      type: string
     plantas:
       idplanta:
         type: integer
@@ -160,7 +158,7 @@ response:
       nome_referencia:
         type: string
       valor:
-        type: string        
+        type: string
     situacao:
       vendida:
         type: string
@@ -174,5 +172,4 @@ response:
         type: integer
         description: "Situacao da unidade no mapa de disponibilidade (1 - Disponível; 2 - Reservada; 3 - Vendida; 4 - Bloqueada; 5 - Em processo de reserva)"
       possui_reserva_solicitacao_distrato:
-        type: string    
-
+        type: string
