@@ -7,5 +7,5 @@ logs/*.log
 coverage-report/*
 .vscode/*
 scannerwork/*
-data/brain/csv/*
-data/brain/txt/*
+data/brain/*.csv
+data/brain/*.txt
