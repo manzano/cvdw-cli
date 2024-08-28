@@ -63,7 +63,7 @@ response:
   dados:
     referencia:
       type: string
-      description: 'Identificador do momento do lead'
+      description: 'Identificador workflow tempo da reserva'
       example: '193 ou 193_30'
     referencia_data:
       type: datetime
@@ -73,35 +73,31 @@ response:
       type: string
       description: 'Informa se está ativo ou não'
       example: S
-    idmomento_lead:
+    idtempo:
       type: integer
-      description: 'Identificador do momento do lead'
-      example: 3
+      description: 'Identificador workflow tempo da reserva'
+      example: 12414
     idlead:
       type: integer
-      description: 'Identificador do lead referente ao momento'
-      example: 1
-    idusuario:
+      description: 'Identificador da reserva'
+      example: 12414
+    idsituacao:
       type: integer
-      description: 'Identificador do ID do usuario que vinculou o momento ao lead'
-      example: 2
-    nome_usuario:
+      description: 'Identificador da situacao do workflow tempo'
+      example: 12414
+    situacao:
       type: string
-      description: 'Nome do usuário que vinculou o momento ao lead'
-      example: 'Marcelo da Silva'
-    painel_usuario:
+      description: 'Descrição da Situação'
+      example: 'Nova Reserva'
+    sigla:
       type: string
-      description: 'Painel pelo qual o usuario estava logado qunando vinculou o momento ao lead'
-      example: gestor
-    momentos_lead:
-      type: string
-      description: 'Nome pelo qual o momento do lead foi cadastrado'
-      example: 'Momento Quente'
+      description: 'Sigla do workflow'
+      example: NR
+    tempo:
+      type: integer
+      description: 'Tempo gasto em segundos'
+      example: 288
     data_cad:
       type: datetime
-      description: 'Data de cadastro'
-      example: '2024-03-31 09:15:54'
-    data_sincronizacao:
-      type: datetime
-      description: 'Data da sincronização'
+      description: 'Data da condição'
       example: '2024-03-31 09:15:54'

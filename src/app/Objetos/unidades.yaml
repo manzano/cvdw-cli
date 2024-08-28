@@ -159,17 +159,67 @@ response:
         type: string
       valor:
         type: string
-    situacao:
-      vendida:
-        type: string
-      vendida_idsituacao:
-        type: string
-      idmotivo:
-        type: string
-      situacao_para_venda:
-        type: integer
-      situacao_mapa_disponibilidade:
-        type: integer
-        description: "Situacao da unidade no mapa de disponibilidade (1 - Disponível; 2 - Reservada; 3 - Vendida; 4 - Bloqueada; 5 - Em processo de reserva)"
-      possui_reserva_solicitacao_distrato:
-        type: string
+    situacao_reservada:
+      example: 123
+      type: integer
+    situacao_reservada_vencimento:
+      example: "2016-05-24 05:05:05"
+      type: string
+      description: "Data de vencimento da reserva"
+    situacao_reservada_idsituacao:
+      example: 1
+      type: integer
+    situacao_reservada_nomesituacao:
+      example: "Reservada"
+      type: string
+    situacao_cor_bg:
+      example: "990000"
+      type: string
+    situacao_cor_nome:
+      example: "ffffff"
+      type: string
+    situacao_nome:
+      example: "João da Silva"
+      type: string
+      description: "Nome da pessoa"
+    situacao_reservada_inicio:
+      example: "N"
+      type: string
+      description: "Indica se é situação de início"
+    situacao_vendida:
+      example: 1332
+      type: integer
+    situacao_vendida_idsituacao:
+      example: 3
+      type: integer
+    situacao_idmotivo:
+      example: 1
+      type: integer
+    situacao_bloqueados_internos:
+      example: "N"
+      type: string
+    situacao_bloqueada:
+      example: "N"
+      type: string
+    situacao_bloqueada_idmotivo:
+      example: 1
+      type: integer
+    situacao_bloqueada_motivo:
+      example: "Solicitação da Diretoria"
+      type: string
+    situacao_tipo_id:
+      example: 1
+      type: integer
+    situacao_tipo_nome:
+      example: "Garagem"
+      type: string
+    situacao_para_venda:
+      example: 1
+      type: integer
+    situacao_mapa_disponibilidade:
+      example: 1
+      type: integer
+      description: "Situação da unidade no mapa de disponibilidade (1 - Disponível; 2 - Reservada; 3 - Vendida; 4 - Bloqueada; 5 - Em processo de reserva)"
+    situacao_possui_reserva_solicitacao_distrato:
+      example: "N"
+      type: string
