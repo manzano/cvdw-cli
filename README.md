@@ -42,7 +42,7 @@ Para instalar o CVDW-cli, siga as [instruções de instalação](Install.md).
 ## Configurando
 
 ```console
-configurar [-env|--set-env [SET-ENV]]
+cvdw configurar [-env|--set-env [SET-ENV]]
 ```
 
 * `--set-env` `-env` — Diz qual ENV usar. Exemplo: dev, homologacao, producao.
@@ -53,7 +53,7 @@ configurar [-env|--set-env [SET-ENV]]
 Agora sim, podemos executar...
 
 ```console
-executar [-idr|--ignorar-data-referencia] [-log|--salvarlog] [-env|--set-env [SET-ENV]] [-qtd|--set-qtd [SET-QTD]] [-a|--apartir [APARTIR]] [-m|--max-pag [MAX-PAG]] [--] [<objeto>]
+cvdw executar [-idr|--ignorar-data-referencia] [-log|--salvarlog] [-env|--set-env [SET-ENV]] [-qtd|--set-qtd [SET-QTD]] [-a|--apartir [APARTIR]] [-m|--max-pag [MAX-PAG]] [--] [<objeto>]
 ```
 
 * `--ignorar-data-referencia` `-idr` — Ignorar a data de referência.
