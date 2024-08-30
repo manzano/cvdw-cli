@@ -332,6 +332,8 @@ class Configurar extends Command
                     return $db_schema;
                 }
             );
+        } else {
+            $this->variaveisAmbiente['db_schema'] = null;
         }
 
         $io->ask(
