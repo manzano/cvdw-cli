@@ -9,4 +9,3 @@ coverage-report/*
 scannerwork/*
 data/brain/*.csv
 data/brain/*.txt
-sonar-project.properties
