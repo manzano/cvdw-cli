@@ -344,6 +344,17 @@ class DatabaseSetup
         return $this->conn->executeQuery("TRUNCATE TABLE {$tabela}");
     }
 
+    public function limparDataReferenciaTabela(string $tabela): \Doctrine\DBAL\Result
+    {
+        try {
+            $limpar = $this->conn->executeQuery("update {$tabela} set referencia_data = null");
+            return $limpar;
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $this->io->error("Erro ao tentar limpar a tabela: {$tabela} \nMensagem: " . $e->getMessage());
+            return $this->conn;
+        }
+    }
+
     public function inserirColuna(string $tabela, string $coluna, array $especificacao): bool
     {
         $especificacao = $this->tratarEspecificacao($especificacao);

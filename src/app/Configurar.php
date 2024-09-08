@@ -110,6 +110,7 @@ class Configurar extends Command
             'Criar as tabelas em meu banco de dados',
             'Configurar anonimização de dados sensíveis',
             'Verificar/Atualizar meu ambiente',
+            'Limpar datas de referências das tabelas',
             'Limpar as tabelas do CVDW (Truncate)',
             'Apagar as tabelas do CVDW (Drop)',
             'Configurar integração OpenAI',
@@ -142,6 +143,9 @@ class Configurar extends Command
             case 'Verificar/Atualizar meu ambiente':
                 $cvdwObj->conectar();
                 $this->verificarInstalacao();
+                break;
+            case 'Limpar datas de referências das tabelas':
+                $this->limparDataReferenciaTabelas();
                 break;
             case 'Limpar as tabelas do CVDW (Truncate)':
                 $this->limparTabelas();
@@ -613,6 +617,105 @@ class Configurar extends Command
         $this->voltarProMenu = true;
         $this->voltarProMenu();
         return true;
+    }
+
+    public function limparDataReferenciaTabelas($tabelasLimpar = false): bool
+    {
+
+        $io = new CvdwSymfonyStyle($this->input, $this->output);
+        $database = new DatabaseSetup($this->input, $this->output, $this);
+
+        $io->warning([
+            '',
+            'Essa opção apaga as datas de referência mas mantém os dados das tabelas.',
+            'Mas isso vai forçar o plugin a baixar todos os dados novamente ok?',
+            'Mas o seu BI vai continuar trabalhando normalmente.'
+        ]);
+
+        if ($io->confirm('Quer continuar?', false)) {
+            $tabela = $io->ask(
+                'Qual tabela você quer limpar? (Use all para todas)',
+                'all',
+                function (string $tabela): string {
+                    return $tabela;
+                }
+            );
+
+            if(!is_array($tabelasLimpar)){
+                $tabelasLimpar = array();
+                if ($tabela === 'all') {
+                    $io->text([
+                        'Ok! Vou limpar todas as tabelas.',
+                        ''
+                    ]);
+                    $tabelasLimpar = $database->listarTabelasArray();
+                } else {
+
+                    if ($database->verificarSeTabelaExiste($tabela)) {
+                        $tabelasLimpar[$tabela] = "";
+                        $io->text([
+                            'Encontrei a tabela "' . $tabela . '".',
+                            ''
+                        ]);
+                    } else {
+                        $io->text([
+                            'Não encontrei a tabela "' . $tabela . '".',
+                            ''
+                        ]);
+                        if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
+                            $this->limparDataReferenciaTabelas($io);
+                        }
+                    }
+                }
+            }
+
+            $table = new Table($this->output);
+            $table->setHeaders(['Tabela', 'Situação']);
+
+            $totalObjetos = count($tabelasLimpar);
+            $progressBar = new ProgressBar($this->output, $totalObjetos);
+            $progressBar->setFormat('normal'); // debug
+            $progressBar->setBarCharacter('<fg=green>=</>');
+            $progressBar->setProgressCharacter("\xF0\x9F\x9A\x80");
+            $progressBar->setFormat(" Dados processados %current% de %max% [%bar%] %percent:3s%% \n %message%");
+            $progressBar->start();
+            foreach ($tabelasLimpar as $tabela => $valor) {
+
+                $progressBar->setMessage("Executando tabela: {$tabela}.");
+
+                $tabelaExiste = $database->verificarSeTabelaExiste($tabela);
+                if (!$tabelaExiste) {
+                    $table->addRow([$tabela, '<error>Não encontrada!</error>']);
+                    $progressBar->setMessage("A tabela {$tabela} não existe");
+                    $progressBar->setMessage("Tabela {$tabela} não encontrada.");
+                    $progressBar->advance();
+                    continue;
+                }
+                $progressBar->setMessage("Tabela {$tabela} encontrada.");
+                $dataReferenciaNull  = $database->limparDataReferenciaTabela($tabela);
+                if ($dataReferenciaNull) {
+                    $table->addRow([$tabela, '<info>Data de Referencia limpa!</info>']);
+                    $progressBar->setMessage("A tabela {$tabela} teve sua data de referencia apagada.");
+                    $progressBar->advance();
+                } else {
+                    $table->addRow([$tabela, '<error>Ocorreu algum erro!</error>']);
+                    $progressBar->setMessage("A tabela {$tabela} não pode ter a data apagada!");
+                    $progressBar->advance();
+                }
+            }
+            $progressBar->finish();
+            $table->render();
+
+            $io->text([
+                '',
+                'Pronto!'
+            ]);
+        }
+        $this->voltarProMenu = true;
+        $this->voltarProMenu();
+
+        return true;
+
     }
 
     public function limparTabelas($tabelasLimpar = false): bool
