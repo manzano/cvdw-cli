@@ -61,6 +61,14 @@ response:
     example: 36
     description: 'Total de páginas encontradas'
   dados:
+    referencia:
+      type: string
+      description: 'Identificador da resposta'
+      example: '193 ou 193_30'
+    referencia_data:
+      type: datetime
+      description: 'Data de referência'
+      example: '2024-03-31 09:15:54'
     idpesquisa:
       type: integer
       description: 'Código identificador da pesquisa'
