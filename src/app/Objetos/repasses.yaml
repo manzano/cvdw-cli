@@ -83,7 +83,7 @@ response:
       type: string
       description: "Nome da situação do repasse"
       example: Cartório
-    reserva:
+    idreserva:
       type: integer
       description: "Identificador da reserva"
       example: 13360
