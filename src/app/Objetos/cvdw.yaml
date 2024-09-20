@@ -368,7 +368,7 @@ paths:
     get:
       tags:
         - Leads
-      description: "Esta api retorna os dados das conversões dos leads."
+      description: "Esta api retorna os dados das conversões dos leads. A data de referência é equivalente a data de cadastro da conversão"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
@@ -1150,7 +1150,7 @@ paths:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: "simulações"
+          description: "Reservas Sienge"
           content:
             application/json:
               schema:
@@ -1475,11 +1475,15 @@ components:
         a_partir_referencia:
           example: 1640
           type: integer
-          description: "Retornará as vistorias a partir deste id, lembrando que está ordenado em ordem decrescente"
+          description: "Retornará os registros a partir deste id, lembrando que está ordenado em ordem decrescente"
         a_partir_data_referencia:
           example: "2022-05-18 10:15:26"
           type: string
-          description: "Retornará as vistorias criadas a partir da data informada"
+          description: "Retornará os registros criados a partir da data informada"
+        ate_data_referencia:
+          example: "2022-05-18 10:15:26"
+          type: string
+          description: "Retornará os registros criados até a data informada"
     RetornoCVDW:
       type: object
       properties:
@@ -1797,6 +1801,10 @@ components:
           example: "Em Atendimento"
           type: string
           description: "Nome da situação atual do atendimento"
+        data_situacao:
+          example: "2022-05-18 10:02:10"
+          type: string
+          description: "Data em que passou para a situação atual"
         idprotocolo:
           example: 12
           type: integer
@@ -1881,6 +1889,14 @@ components:
           example: "GE"
           type: string
           description: "Origem do atendimento"
+        quantidade_mensagens:
+          example: 3
+          type: integer
+          description: "Quantidade das mensagens no atendimento"
+        quantidade_interacoes:
+          example: 2
+          type: integer
+          description: "Quantidade das interações no atendimento"
         data_modificacao:
           example: "2022-10-10"
           type: string
@@ -2129,6 +2145,14 @@ components:
     PesquisasPerguntas:
       type: object
       properties:
+        referencia:
+          example: 193
+          type: integer
+          description: "Código identificador da pergunta"
+        referencia_data:
+          example: "2023-01-15 15:26:15"
+          type: string
+          description: "Data de referência"
         idpesquisa_pergunta:
           example: 193
           type: integer
@@ -2156,6 +2180,14 @@ components:
     PesquisasRespostas:
       type: object
       properties:
+        referencia:
+          example: 193
+          type: integer
+          description: "Código identificador da resposta"
+        referencia_data:
+          example: "2023-01-15 15:26:15"
+          type: string
+          description: "Data de referência"
         idpesquisa:
           example: 5166
           type: integer
@@ -2625,11 +2657,15 @@ components:
         unidade_manual:
           example: "103"
           type: string
-          description: "Unidade informada na criação da assitência"
+          description: "Unidade informada na criação da assistência"
         bloco_manual:
           example: "Bloco manual"
           type: string
           description: "Bloco informado na criação da assistência"
+        parecer_tecnico:
+          example: "Parecer dado pelo técnico"
+          type: string
+          description: "Descrição do parecer técnico"
         empreendimento_manual:
           example: "Empreendimento"
           type: string
@@ -2768,6 +2804,10 @@ components:
           example: "2022-10-15"
           type: string
           description: "Data de conclusão"
+        data_inicio_servico:
+          example: "2022-10-15"
+          type: string
+          description: "Data de início do serviço"
         data_previsao:
           example: "2022-10-14"
           type: string
@@ -3050,6 +3090,10 @@ components:
           example: 2
           type: integer
           description: "Identificador do penúltimo corretor do lead"
+        idimobiliaria_ultimo:
+          example: 3
+          type: integer
+          description: "Identificador da ultima imobiliaria do lead"
         corretor_penultimo:
           example: "Corretor Quase Top"
           type: string
@@ -3070,6 +3114,14 @@ components:
           example: "2022-06-21 08:25:48"
           type: string
           description: "Data da última alteração do lead"
+        vencido:
+          example: "S"
+          type: string
+          description: "Lead vencido"
+        data_vencimento:
+          example: "2022-06-21 08:25:48"
+          type: string
+          description: "Data da vencimento do lead"
     RetornarLeadsInfos:
       type: object
       properties:
@@ -4066,6 +4118,14 @@ components:
           example: "Parque do Carmo - Condomínio 7"
           type: string
           description: "Empreendimento do pré-cadastro"
+        idunidade:
+          example: 665
+          type: integer
+          description: "Identificador da unidade do pré-cadastro"
+        unidade:
+          example: "Apto 302"
+          type: string
+          description: "Unidade do pré-cadastro"
         idcorretor:
           example: 11808
           type: integer
@@ -4562,7 +4622,6 @@ components:
         ju_cep:
           example: "49015110"
           type: string
-          description:
         ju_logradouro:
           example: "Rua"
           type: string
@@ -5355,14 +5414,18 @@ components:
           example: 650000.50
           type: number
           description: "Valor da proposta da reserva"
-        vpl_tabela:
-          example: 631520.44
-          type: number
-          description: "VPL da tabela de preço da reserva"
         vpl_reserva:
           example: 628176.55
           type: number
           description: "VPL da reserva"
+        vgv_tabela:
+          example: 650000.50
+          type: number
+          description: "Valor da tabela de preço da reserva"
+        vpl_tabela:
+          example: 631520.44
+          type: number
+          description: "VPL da tabela de preço da reserva"
         usuario_aprovacao:
           example: "Manoel Gomes"
           type: string
@@ -6612,7 +6675,7 @@ components:
           type: integer
           description: "Identificador da imobiliária vinculada"
         idcorretor:
-          example: '2024-03-31 09:15:44'
+          example: 20
           type: integer
           description: "Identificador do corretor vinculado"
         comissao_tipo:
@@ -7729,7 +7792,7 @@ components:
           type: string
           description: "Tipo de cálculo para máxima comissão no contrato"
         porcentagem_total_fora_contrato:
-          example: '2024-03-31 09:15:44'
+          example: 20
           type: integer
           description: "Porcentagem máxima da comissão fora do contrato"
         pagamento_total_fora_contrato:
@@ -8078,6 +8141,10 @@ components:
           example: 1234
           type: integer
           description: "Identificador da tabela de preço"
+        tabela:
+          example: 'Tabela de Alto Padrão'
+          type: string
+          description: "Nome da tabela de preço"
         data_vigencia_de:
           example: "2021-05-01"
           type: string
@@ -8343,10 +8410,6 @@ components:
           example: 123
           type: integer
           description: "Identificador do corretor"
-        data_sincronizacao:
-          example: "2022-12-27 16:05:36"
-          type: string
-          description: "Data de sincronização"
         flag_inicio:
           example: "Sim"
           type: string
