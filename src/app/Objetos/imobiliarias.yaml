@@ -66,19 +66,23 @@ response:
       description: 'Identificador da imobiliaria'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
       description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
-    idimobiliaria:
-      type: integer
-      description: 'Identificador da imobiliaria'
-      example: 1
+      example: '2024-03-31 09:15:54' 
     ativo:
       type: string
       description: 'Informa se está ativo ou não'
       example: S
+    ativo_painel:
+      type: string
+      description : 'Informa se está ativo ou não'
+      example: S
+    idimobiliaria:
+      type: integer
+      description: 'Identificador da imobiliaria'
+      example: 1
     data_cad:
-      type: datetime
+      type: string
       description: 'Data de Cadastro da Imobiliária'
       example: '2024-03-31 09:15:54'
     idestado:
@@ -149,6 +153,18 @@ response:
       type: string
       description: null
       example: photo
+    avatar_servidor:
+      type: string
+      description: null
+      example: photo
+    avatar_tipo:
+      type: string
+      description: null
+      example: photo
+    avatar_tamanho:
+      type: integer
+      description: null
+      example: photo
     validade_creci:
       type: string
       description: null
@@ -184,4 +200,92 @@ response:
     observacoes:
       type: text
       description: null
-      example: 'observacao iumobiliaria'
+      example: 'observacao imobiliaria'
+    inscricao_estadual:
+      type: string
+      description: null
+      example: '456.669.456.444'
+    inscricao_municipal:
+     type: string
+     description: null
+     example: "123654"
+    tipo_conta: 
+     type: string
+     description: null
+     example: 'C'
+    idbanco: 
+      type: integer
+      description: null
+      example: 1
+    nome_agencia: 
+      type: string
+      description: null
+      example: 'Agência Exemplo'
+    numero_agencia: 
+      type: string
+      description: null
+      example: "1234"
+    digito_agencia: 
+      type: string
+      description: null
+      example: "0"
+    numero_conta": 
+      type: string
+      description: null
+      example: "123456"
+    digito_conta: 
+      type: string
+      description: null
+      example: "1"
+    nome_favorecido": 
+      type: string
+      description: null
+      example: 'José dos Santos Silva'
+    cnpj_favorecido: 
+      type: string
+      description: null
+      example: '87728824000160'
+    alterar_login_corretor": 
+      type: string
+      description: null
+      example: 'S'
+    escala_plantao: 
+      type: string
+      description: null
+      example: 'S'
+    idimobiliaria_nov: 
+      type: string
+      description: null
+      example: '123456789'
+    bloqueado_recebimento_pagamento_comissao: 
+      type: string
+      description: null
+      example: 'N'
+    autocadastro_corretor: 
+      type: string
+      description: null
+      example: 'S'
+    diretor_nome: 
+      type: string
+      description: null
+      example: 'Pedro Paulo Pedroso'
+    diretor_cpf: 
+      type: string
+      description: null
+      example: '24290203515'
+    diretor_telefone: 
+      type: string
+      description: null
+      example: '+557933561247'
+    diretor_celular: 
+      type: string
+      description: null
+      example: '+5579998654478'
+    diretor_email: 
+      type: string
+      description: null
+      example: 'diretordaimobiliaria@mail.com'
+    data_modificacao: 
+      type: datetime
+      description: null
+      example: '2024-09-18 17:51:51'
