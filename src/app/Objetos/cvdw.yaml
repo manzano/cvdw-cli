@@ -49,7 +49,7 @@ paths:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: "Aassistencias"
+          description: "Assistencias"
           content:
             application/json:
               schema:

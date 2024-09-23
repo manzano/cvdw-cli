@@ -28,7 +28,7 @@ echo "Validando os arquivos YAMLs\n";
 echo "\n";
 
 $objetoCVDWFile = __DIR__ . "/$localPath";
-// $objetoCVDWCOnteudo é um Yaml de uma documentacao de Apis no formasto OpenApi
+// $objetoCVDWCOnteudo é um Yaml de uma documentacao de Apis no formato OpenApi
 $objetoCVDWConteudo = file_get_contents($objetoCVDWFile);
 // $objetoCVDWJson é um json de $objetoCVDWCOnteudo
 $objetoCVDWJson =  Yaml::parse($objetoCVDWConteudo);
