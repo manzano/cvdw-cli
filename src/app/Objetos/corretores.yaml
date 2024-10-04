@@ -77,6 +77,10 @@ response:
       type: integer
       description: 'Identificador da corretor'
       example: 1
+    idimobiliaria:
+      type: integer
+      description: 'Nome da imobiliária do corretor'
+      example: 123
     documento:
       type: string
       description: 'Número do documento (CPF/CNPJ) do corretor'
