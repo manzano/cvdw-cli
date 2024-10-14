@@ -121,6 +121,14 @@ response:
       type: string
       description: 'Informa se a visita é virtual ou não'
       example: Revisita
+    idresponsavel_por_criar_visita:
+      type: integer
+      description: 'Identificador do responsável de criar visita'
+      example: 2465
+    responsavel_por_criar_visita:
+      type: string
+      description: 'Responsável por criar visita'
+      example: "CAROLINE.RS"
     funcionalidade:
       type: string
       description: 'Funcionalidade da visita'
