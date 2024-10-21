@@ -220,20 +220,13 @@ response:
       type: text
       description: 'Identificador dos leads vinculados separados por ,'
       example: '168523,4322 (TEXT)'
-  associados:
-    id_pessoas_cv:
-      type: integer
-      description: 'Identificador de pessoas'
-      example: 231
-    idtipo_associacao:
-      type: integer
-      description: 'Identificador do tipo de associação'
-      example: 1
-    tipo_associacao:
-      type: string
-      description: 'Descrição do tipo de associação'
-      example: 'Cônjuge'
-    percentagem_participacao:
-      type: string
-      description: 'Porcentagem do participação'
-      example: '43.24'
+    associados:
+      id_pessoas_cv:
+        type: integer
+      idtipo_associacao:
+        type: integer
+      tipo_associacao:
+        type: string
+      percentagem_participacao:
+        type: number
+      
