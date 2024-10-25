@@ -8,25 +8,29 @@ echo ""
 echo "🔍 Verificando os pre-requisitos..."
 echo ""
 
+# Função para capturar saída e erros
+execute() {
+    cmd_output=$($1 2>&1)
+    exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        echo "Erro ao executar: $1"
+        echo "Saída: $cmd_output"
+        exit $exit_code
+    else
+        echo "Saída: $cmd_output"
+    fi
+}
+
 # Checando se o Git está instalado
-if ! command -v git >/dev/null 2>&1; then
-  echo "❌ Git não encontrado. Por favor instale o Git e tente novamente."
-  exit 1
-fi
+execute "command -v git"
 echo "✅ Git encontrado."
 
 # Checando se o PHP está instalado
-if ! command -v php >/dev/null 2>&1; then
-  echo "❌ PHP não encontrado. Por favor instale o PHP e tente novamente."
-  exit 1
-fi
+execute "command -v php"
 echo "✅ PHP encontrado."
 
 # Checando se o Composer está instalado
-if ! command -v composer >/dev/null 2>&1; then
-  echo "❌ Composer não encontrado. Por favor instale o Composer e tente novamente."
-  exit 1
-fi
+execute "command -v composer"
 echo "✅ Composer encontrado."
 
 echo ""
@@ -34,35 +38,28 @@ echo "🚀 Iniciando a instalação do CVDW-CLI."
 
 REPO_DIR="$HOME/cvdw-cli"
 
-# Check if repository already exists
+# Verificar se o repositório já existe
 if [ -d "$REPO_DIR" ]; then
-  echo "🔄 O CVDW-CLI já está instalado em $REPO_DIR - Iniciciando o Update."
+  echo "🔄 O CVDW-CLI já está instalado em $REPO_DIR - Iniciando o Update."
   echo ""
   cd "$REPO_DIR"
-  git checkout main
-  git pull 2>&1 || {
-    read -p "⚠️ Erro ao tentar fazer o Pull. Limpar e atualizar? [Y/n]: " answer
-    answer=${answer:-Y}
-    if [[ $answer =~ ^[Yy]$ ]]; then
-      git reset --hard >/dev/null 2>&1
-      git clean -fd >/dev/null 2>&1
-      git pull >/dev/null 2>&1
-    fi
-  }
+  execute "git checkout main"
+  execute "git pull"
 else
   echo "📦 Clonando o repositório para $REPO_DIR..."
-  git clone https://github.com/manzano/cvdw-cli.git "$REPO_DIR" >/dev/null 2>&1
+  execute "git clone https://github.com/manzano/cvdw-cli.git $REPO_DIR"
   cd "$REPO_DIR"
-  git checkout main >/dev/null 2>&1
+  execute "git checkout main"
 fi
 
 chmod u+w $REPO_DIR
 
 echo ""
 echo "Instalando as dependências do Composer..."
-composer install
-composer dump-autoload --optimize
+execute "composer install"
+execute "composer dump-autoload --optimize"
 echo "✅ Dependências do Composer instaladas."
+
 
 # Define o comando do alias
 alias_command="alias cvdw='php $REPO_DIR/src/cvdw'"

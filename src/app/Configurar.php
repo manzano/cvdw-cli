@@ -1073,7 +1073,8 @@ class Configurar extends Command
 
         $io->text('');
         $io->success('Atualização finalizada!');
-        $io->text('É altamente recomendável você usar a opção 3 das configurações.');
+        $io->text('Seu CVDW-CLI foi atualizado para versão: ' . $versaoCVDW);
+        $io->text('É altamente recomendável você usar a opção 4 das configurações.');
 
         $this->voltarProMenu = true;
         $this->voltarProMenu();
