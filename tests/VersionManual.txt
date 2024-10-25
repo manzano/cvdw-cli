@@ -1,0 +1,27 @@
+Para fazer uma atualização manual no CVDW-CLI, será necessário verificar qual versão atualmente está no seu ambiente local, usando o comando:
+
+cvdw -V 
+
+Após realizar a verificação da versão e notar que está precisando fazer uma atualização no seu CLI local, ao perceber que essa atualização não foi realizada pela opção 11 do painel de configuração, utilize esses seguintes comandos:
+
+git fetch --all
+git checkout main
+git pull origin main
+
+Isso garantirá que todas as atualizações disponíveis no repositório remoto estão no seu ambiente local.
+
+Se a atualização automática não funcionou corretamente, você pode tentar forçar a atualização manualmente. Execute os comandos de atualização e instalação do Composer novamente:
+
+git reset --hard HEAD
+git clean -fd
+git pull origin main
+composer install
+composer dump-autoload --optimize
+
+Isso deve garantir que todos os arquivos estão na última versão e que as dependências estão corretamente configuradas. Então use comando abaixo para reiniciar o ambiente
+
+source ~/.bashrc
+ou 
+source ~/.zshrc
+
+
