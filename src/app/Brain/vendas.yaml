@@ -168,3 +168,20 @@ dicionario:
     type: text
     description: 'Identificador dos leads vinculados separados por ,'
     example: '168523,4322 (TEXT)'
+  associados:
+      id_pessoas_cv:
+        type: integer
+        description: 'Codigo do associado no CV'
+        example: 231
+      idtipo_associacao:
+        type: integer
+        description: 'Código do tipo do associado' 
+        example: 1
+      tipo_associacao:
+        type: string
+        description: 'Descrição do tipo do associado'
+        example: 'Cônjuge'
+      porcentagem_participacao:
+        type: number
+        description: 'Porcentagem de participação do associado'
+        example: 43.24

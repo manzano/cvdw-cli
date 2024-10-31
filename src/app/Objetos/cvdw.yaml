@@ -276,6 +276,28 @@ paths:
                 allOf:
                   - $ref: "#/components/schemas/RetornoCVDW"
                   - $ref: "#/components/schemas/RetornarAtendimentosTimesIntegrantes"
+  "/atendimentos/tarefas":
+    get:
+      tags:
+        - Atendimentos
+      description: "Esta api retorna as respostas dos atendimentos."
+      parameters:
+        - $ref: '#/components/parameters/HeaderEmail'
+        - $ref: '#/components/parameters/HeaderToken'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BodyCvdw"
+      responses:
+        "200":
+          description: "Atendimentos Workflow Tempo"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/RetornoCVDW"
+                  - $ref: "#/components/schemas/RetornarAtendimentosTarefas"
   "/comissoes":
     get:
       tags:

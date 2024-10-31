@@ -223,6 +223,10 @@ class Objeto
                 "nome" => "Atendimentos (/atendimentos/times/integrantes)",
                 "arquivo" => "atendimentos_times_integrantes.yaml"
             ],
+            "atendimentos_tarefas" => [
+                "nome" => "Atendimentos (/atendimentos/tarefas)",
+                "arquivo" => "atendimentos_tarefas.yaml"
+            ],
         ];
     }
 
