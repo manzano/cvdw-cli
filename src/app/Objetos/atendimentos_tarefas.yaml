@@ -1,0 +1,194 @@
+path: /atendimentos/tarefas
+tabela: atendimentos_tarefas
+metodo: get
+descricao: 'Esta api retorna as respostas dos atendimentos.'
+nome: 'Atendimentos (atendimentos_respostas)'
+parametros:
+  header:
+    -
+      name: email
+      in: header
+      required: true
+      description: 'E-mail de autenticação do usuário administrativo'
+      example: email@email.com
+      schema:
+        type: string
+    -
+      name: token
+      in: header
+      required: true
+      description: 'Token criado no usuário administrativo do e-mail'
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarAtendimentosRespostas
+subschema: AtendimentosRespostas
+body:
+  pagina:
+    type: integer
+    example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
+    type: integer
+    example: 30
+    description: 'Quantidade de registro por página, máximo 500 registros'
+  a_partir_referencia:
+    type: integer
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
+  a_partir_data_referencia:
+    example: '2022-05-18 10:15:26'
+    type: string
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
+response:
+  pagina:
+    type: integer
+    example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros:
+    type: integer
+    example: 30
+    description: 'Quantidade de registro por página, máximo 500 registros'
+  total_de_registros:
+    type: integer
+    example: 1054
+    description: 'Total de registros encontrados'
+  total_de_paginas:
+    type: integer
+    description: 'Total de páginas encontradas'
+    example: 36
+dados:
+  referencia:
+    type: string
+    description: 'Identificador'
+    example: '193 ou 193_30'
+  referencia_data:
+    type: datetime
+    description: 'Data de referência'
+    example: '2023-01-15 15:26:15'
+  ativo:
+    type: string
+    description: 'Informa se está ativo ou não'
+    example: 'S'
+  idtarafe_criada:
+    type: integer
+    description: 'Identificador da tarefa criada'
+    example: 3
+  idtarefa:
+    type: integer
+    description: 'Identificador da tarefa'
+    exemple: 3
+  idatendimento:
+    type: integer
+    description: 'Identificador do atendimento'
+    example: 443
+  protocolo:
+    type: string
+    description: 'Protocolo do atendimento'
+    example: '2012310786'
+  cliente:
+    type: string
+    description: 'Nome do cliente do atendimento'
+    example: 'Pessoa Teste'
+  assunto:
+    type: string
+    description: 'Nome do assunto do atendimento'
+    example: 'Assistência Técnica'
+  subassunto:
+    type: string
+    description: 'Nome do subassunto do atendimento'
+    example: 'Parede'
+  empreendimento:
+    type: string
+    description: 'Nome do empreendimento do atendimento'
+    example: 'Empreendimento Qualidade'
+  unidade:
+    type: string
+    description: 'Nome da unidade do atendimento'
+    example: 'APTO 101'
+  idtime:
+    type: integer
+    description: 'Identificador do time responsável pela tarefa'
+    example:  3
+  time:
+    type: string
+    description: 'Nome do time responsável pela tarefa'
+    example: 'Sac'
+  idresponsavel:
+    type: integer
+    description: 'Identificador do responsável pela tarefa'
+    example: 3
+  responsavel:
+    type: string
+    description: 'Nome do responsável pela tarefa'
+    example: 'Responsável Teste'
+  nota_conclusao:
+    type: string
+    description: 'Informação acerca da conclusão da tarefa'
+    example: 'O problema foi identificado e solucionado utilizando[...]'
+  observacao:
+    type: string
+    description: 'Observação geral acerca da tarefa'
+    example: 'O problema foi identificado e solucionado utilizando[...]'
+  situacao:
+    type: string  
+    description: 'Situação da tarefa (A: Aberta, F: Fechada, C: Cancelada)'
+    example: 'A'
+  motivo_cancelamento:
+    type: string
+    description: 'Motivo de cancelamento tarefa'
+    example: 'Cancelado por razão de [...]'
+  visibilidade:
+    type: string
+    description: 'Visibilidade da tarefa (I: Interna, C: Cliente)'
+    example: 'C'
+  data_cad: 
+    type: string
+    description: 'Data de cadastro de tarefa'
+    example: '2022-01-10 18:05:35'
+  data_finalizou:
+    type: string
+    description: 'Data de finalização da tarefa'
+    example: '2022-01-14 18:05:35'
+  idusuario_finalizou:
+    type: integer
+    description: 'Identificador do usuário que finalizou a tarefa'
+    example: 3
+  finalizador:
+    type: string
+    description: 'Nome do usuário que finalizou a tarefa'
+    example: 'Usuário Teste'
+  status:
+    type: string
+    description: 'Status da tarefa (AT: Atrasada, NO: No prazo, CA: Cancelada)'
+    example: 'AT'
+  data_vencimento:
+    type: string
+    description: 'Data de vencimento da tarefa'
+    example: '2022-01-14 18:05:35'
+  idusuario_criou:
+    type: integer
+    description: 'Identificador do usuário que criou a tarefa'
+    example: 3
+  criador:
+    type: string
+    description: 'Nome do usuário que criou a tarefa'
+    example: 'Usuário Teste'
+  ultima_criada:
+    type: string
+    description: 'Utilizado para permitir a criação mais de uma tarefa do mesmo templete.'
+    example: 'S'
+  ignorada:
+    type: string
+    description: 'Determina se a tarefa foi criada para ignorar uma tarefa do templete.'
+    example: 'S' 
+  idtarefa_origem:
+    type: integer
+    description: 'Identificador da tarefa que originou a tarefa'
+    example: 3
+
+
+  
