@@ -197,7 +197,7 @@ response:
       description: 'Nome da mídia'
       example: Midia
     idtabela:
-      type: integer
+      type: string
       description: 'Identificador da tabela de preço'
       example: integer
     idtipovenda:
@@ -214,19 +214,27 @@ response:
       example: 'Tabela Dezembro'
     codigointernotabela:
       type: string
-      description: 'Identificador da tabela de preço para integrações'
+      description: 'Código identificador da tabela de preço para integrações'
       example: '5848'
     idlead:
       type: text
-      description: 'Identificador dos leads vinculados separados por ,'
+      description: 'Código identificador dos leads vinculados separados por ,'
       example: '168523,4322 (TEXT)'
     associados:
       id_pessoas_cv:
         type: integer
+        description: 'Codigo do associado no CV'
+        example: 231
       idtipo_associacao:
         type: integer
+        description: 'Código do tipo do associado' 
+        example: 1
       tipo_associacao:
         type: string
-      percentagem_participacao:
+        description: 'Descrição do tipo do associado'
+        example: 'Cônjuge'
+      porcentagem_participacao:
         type: number
+        description: 'Porcentagem de participação do associado'
+        example: 43.24
       
