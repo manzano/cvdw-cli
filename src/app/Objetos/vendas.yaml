@@ -221,7 +221,7 @@ response:
       description: 'Código identificador dos leads vinculados separados por ,'
       example: '168523,4322 (TEXT)'
     associados:
-      id_pessoas_cv:
+      idpessoa_cv:
         type: integer
         description: 'Codigo do associado no CV'
         example: 231
@@ -233,7 +233,7 @@ response:
         type: string
         description: 'Descrição do tipo do associado'
         example: 'Cônjuge'
-      porcentagem_participacao:
+      percentagem_participacao:
         type: number
         description: 'Porcentagem de participação do associado'
         example: 43.24
