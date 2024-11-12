@@ -8,7 +8,7 @@ use Symfony\Component\Yaml\Dumper;
 //$url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
 $url = __DIR__ . '/../../CV-Aplicacao/docs/yaml-files/cvdw.yaml';
 // Caminho local onde o arquivo será salvo
-$localPath = '../src/app/Objetos/cvdw.yaml';
+$localPath = '../src/app/Services/Objeto.php';
 // Usa file_get_contents para pegar o arquivo do URL
 $contents = file_get_contents($url);
 if ($contents !== false) {
@@ -37,6 +37,13 @@ $objetoCVDWJson =  Yaml::parse($objetoCVDWConteudo);
 //exit();
 
 foreach ($objetoCVDWJson['paths'] as $path => $objetoCVDWDados) {
+    if ($path == '/Objeto.php') {
+        continue;
+    }
+    elseif ($path != '/Objeto.php') {
+        return "Alguma chave do caminho $path não existe";
+
+    }
     echo $path . "\n";
 
 }

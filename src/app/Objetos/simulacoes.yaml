@@ -72,7 +72,7 @@ response:
     ativo:
       type: string
       description: 'Informa se está ativo ou não'
-      example: S
+      example: 'S'
     idsimulacao:
       type: integer
       description: 'Identificador da simulação'
@@ -92,7 +92,7 @@ response:
     situacao_simulacao:
       type: string
       description: 'Situação da simulação'
-      example: Vendida
+      example: 'Vendida'
     idsituacao:
       type: integer
       description: 'ID da situação da simulação'
@@ -105,10 +105,22 @@ response:
       type: integer
       description: 'Identificador do usuário da imobiliária que cadastrou a simulação'
       example: 589
+    idcorretor:
+      type: integer
+      description: 'Identificador do corretor vinculado a simulação'
+      example: 14
     corretor:
       type: string
       description: 'Nome do corretor vinculado a simulação'
       example: 'Corretor CV'
+    idimobiliaria:
+      type: integer 
+      description: 'Identificador da imobiliária vinculada a simulação'
+      example: 14
+    imobiliaria:
+      type: string
+      description: 'Nome da imobiliária vinculada a simulação'
+      example: 'Imob CV'
     idreserva:
       type: integer
       description: 'Identificador da reserva vinculada a simulação'
@@ -117,10 +129,6 @@ response:
       type: integer
       description: 'Identificador do pré-cadastro vinculado a simulação'
       example: 123
-    imobiliaria:
-      type: string
-      description: 'Nome da imobiliária vinculada a simulação'
-      example: 'Imob CV'
     lead:
       sufixo: _nome
       type: string
@@ -157,11 +165,11 @@ response:
     solicitacao_aprovacao:
       type: string
       description: 'Informa a solicitação de aprovação da simulação'
-      example: Não
+      example: 'Não'
     condicao_aprovada:
       type: string
       description: 'Informa a aprovação da simulação'
-      example: Sim
+      example: 'Sim'
     data_primeira_aprovacao:
       type: datetime
       description: 'Data e hora de alteração da primeira aprovação'
@@ -277,11 +285,11 @@ response:
     juros:
       type: string
       description: 'Informa se vai ter juros'
-      example: Não
+      example: 'Não'
     juros_embutido:
       type: string
       description: 'Informa se vai ter juros embutido'
-      example: Não
+      example: 'Não'
     quantidade_parcelas_min:
       type: integer
       description: 'Quantidade de parcelas mínima'
@@ -301,7 +309,7 @@ response:
     data_base_calculo_pv_alterada:
       type: string
       description: 'Informa se a data base para cálculo de valor PV foi modificada'
-      example: Não
+      example: 'Não'
     data_contrato_aprovacao_comercial:
       type: datetime
       description: 'Data de contrato da simulação'
@@ -309,23 +317,23 @@ response:
     usuario_preencheu_data_contrato:
       type: string
       description: 'Informa se o usuário preencheu a data de contrato'
-      example: Não
+      example: 'Não'
     porcentagem_total_comissao:
       type: number
       description: 'Percentual total da comissão'
       example: 0
     pagamento_total_comissao:
-      type: number
+      type: string
       description: 'Pagamento total da comissão'
-      example: VGV
+      example: 'VGV'
     porcentagem_total_premiacao:
       type: number
       description: 'Porcetagem total da premiação'
       example: 100
     pagamento_total_premiacao:
-      type: number
+      type: string
       description: 'Pagamento total da premiação'
-      example: VGV
+      example: 'VGV'
     adimplencia_premiada:
       type: number
       description: 'Valor da adimplência premiada'
@@ -333,11 +341,11 @@ response:
     ignorar_validacao_adimplencia_premiada:
       type: string
       description: 'Informa se vai ignorara validação de adimplência premiada'
-      example: Não
+      example: 'Não'
     calculo_juros_price_baseado_em:
       type: string
       description: 'Informa qual a data base que será usada para cálculo de juros'
-      example: DB
+      example: 'DB'
     porcentagem_total_contrato:
       type: number
       description: 'Porcentagem máxima de comissão no contrato'
@@ -345,7 +353,7 @@ response:
     pagamento_total_contrato:
       type: string
       description: 'Tipo de cálculo para máxima comissão no contrato'
-      example: VGV
+      example: 'VGV'
     porcentagem_total_fora_contrato:
       type: number
       description: 'Porcentagem máxima da comissão fora do contrato'
@@ -353,7 +361,7 @@ response:
     pagamento_total_fora_contrato:
       type: string
       description: 'Tipo de cálculo para máxima comissão fora do contrato'
-      example: VGV
+      example: 'VGV'
     idtipovenda:
       type: integer
       description: 'Identificador do tipo de venda da simulação'
@@ -374,7 +382,7 @@ response:
       valor_com_juros:
         type: number
       vencimento:
-        type: datetime
+        type: string
       idportador:
         type: integer
       idindexador:
