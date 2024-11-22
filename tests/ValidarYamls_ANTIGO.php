@@ -6,7 +6,8 @@ use Symfony\Component\Yaml\Dumper;
 
 // Fazer o download de $urlYamlCVDQ e salvar em ../src/app/Objetos/cvdw.yaml
 //$url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
-$url = __DIR__ . '/../../CV-Aplicacao/docs/yaml-files/cvdw.yaml';
+//$url = __DIR__ . '/../../CV-Aplicacao/docs/yaml-files/cvdw.yaml';
+$url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
 // Caminho local onde o arquivo será salvo
 $localPath = '../src/app/Objetos/cvdw.yaml';
 // Usa file_get_contents para pegar o arquivo do URL
@@ -33,8 +34,8 @@ $objetoCVDWConteudo = file_get_contents($objetoCVDWFile);
 // $objetoCVDWJson é um json de $objetoCVDWCOnteudo
 $objetoCVDWJson =  Yaml::parse($objetoCVDWConteudo);
 
-//print_r($objetoCVDWJson);
-//exit();
+// print_r($objetoCVDWJson);
+// exit();
 
 foreach ($objetoCVDWJson['paths'] as $path => $objetoCVDWDados) {
     echo $path . "\n";
