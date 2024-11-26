@@ -60,16 +60,16 @@ response:
     description: "Total de páginas encontradas"
   dados:
     referencia:
-      example: 1186,
+      example: 1186
       type: integer
     referencia_data:
       example: "2023-01-15 15:26:15"
       type: string
     idempreendimento:
-      example: 1186,
+      example: 1186
       type: integer
     idempreendimento_int:
-      example: 1186,
+      example: "1186"
       type: string
     nome_empreendimento:
       example: "Empreendimento X"
@@ -78,8 +78,8 @@ response:
       example: 1186
       type: integer
     idetapa_int:
-      example: 1186
-      type: integer
+      example: "1186"
+      type: string
     etapa:
       example: "1Âª ETAPA"
       type: string
@@ -87,8 +87,8 @@ response:
       example: 1186
       type: integer
     idbloco_int:
-      example: 1186
-      type: integer
+      example: "1186"
+      type: string
     bloco:
       example: "BLOCO 01"
       type: string

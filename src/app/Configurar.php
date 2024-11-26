@@ -17,6 +17,7 @@ use Doctrine\DBAL\DriverManager;
 use Manzano\CvdwCli\Services\DatabaseSetup;
 use Manzano\CvdwCli\Services\Http;
 use Manzano\CvdwCli\Services\Objeto;
+use Manzano\CvdwCli\Services\Executar;
 use Manzano\CvdwCli\Services\Ambientes;
 use Manzano\CvdwCli\Services\Cvdw;
 use Manzano\CvdwCli\Inc\CvdwException;
@@ -113,10 +114,10 @@ class Configurar extends Command
             'Limpar datas de referências das tabelas',
             'Limpar as tabelas do CVDW (Truncate)',
             'Apagar as tabelas do CVDW (Drop)',
-            'Configurar integração OpenAI',
             'Cadastrar novo ambiente a partir do padrão',
             'Listar e remover seus ambientes',
             'Atualizar o ambiente do CVDW-CLI',
+            'Executar o CVDW-CLI',
             'Sair (CTRL+C)'
         ]);
 
@@ -153,9 +154,6 @@ class Configurar extends Command
             case 'Apagar as tabelas do CVDW (Drop)':
                 $this->apagarTabelas();
                 break;
-            case 'Configurar integração OpenAI';
-                $this->configurarOpenAI();
-                break;
             case 'Cadastrar novo ambiente a partir do padrão':
                 $this->cadastarAmbiente();
                 break;
@@ -165,8 +163,15 @@ class Configurar extends Command
             case 'Atualizar o ambiente do CVDW-CLI':
                 $this->atualizarCVDW();
                 break;
-                
+            case 'Executar o CVDW-CLI':                
+                 if ($io->confirm('Deseja executar o CVDW-CLI?') == true) {
+                        $io->success('Executando o CVDW-CLI...');
+                        $this->getApplication()->find('executar')->run($input, $output);
+                    return Command::SUCCESS;
+                }
+                break;
             default:
+            
                 return Command::INVALID;
         }
 

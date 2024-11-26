@@ -3,7 +3,7 @@ suite_namespace: Tests\ApiCVDW
 modules:
     enabled:
         - PhpBrowser:
-            url: hhttps://dev.cvcrm.com.br/api/v1/cvdw
+            url: https://dev.cvcrm.com.br/api/v1/cvdw
             timeout: 60 # Timeout em segundos
         - REST:
             url: https://dev.cvcrm.com.br/api/v1/cvdw

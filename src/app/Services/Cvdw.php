@@ -301,8 +301,56 @@ class Cvdw
             $this->erros++;
             $retorno = false;
         }
+
+        if($retorno){
+            $subTabelas = array();
+            $subTabelas = $this->retornarColunasTabelas($linha);
+
+            foreach($subTabelas as  $subTabelaNome => $subTabelaLinhas){
+                // converter objeto em um array
+                foreach($subTabelaLinhas as $subTabelaLinha){
+                    $subTabela = (array) $subTabelaLinha;
+                    $subTabelaDados = array();
+                    $subTabelaDados['referencia'] = $linha->referencia.'_'.$subTabela[array_key_first($subTabela)];
+                    $subTabelaDados['referencia_data'] = $linha->referencia_data;
+                    $subTabelaDados = array_merge($subTabelaDados, $subTabela);
+                    
+
+                    $subTabelaObjetoVirtual = array();
+                    $subTabelaObjetoVirtual["tabela"] = $objeto["tabela"].'_sub_'.$subTabelaNome;
+                    $subTabelaObjetoVirtual["path"] = $objeto["tabela"];
+                    $arrayAux = array(
+                        "referencia" => $objeto["response"]["dados"]['referencia'],
+                        "referencia_data" => $objeto["response"]["dados"]['referencia_data'],
+                    );
+
+                    $subTabelaObjetoVirtual["response"]["dados"] = array_merge($arrayAux, $objeto["response"]["dados"][$subTabelaNome]);
+                    
+                    $this->processaSql($subTabelaObjetoVirtual, (object) $subTabelaDados);
+
+                }
+            }
+
+        }
+
         $this->processados++;
         return $retorno;
+    }
+
+    
+    protected function retornarColunasTabelas(object $linha): array
+    {
+        $retorno = [];
+        foreach ($linha as $colunaNome => $colunaValor) {
+            if ( is_object($colunaValor) && is_countable($colunaValor) && count( $colunaValor) > 0) {
+                $retorno[$colunaNome] = (array) $linha->$colunaNome;
+            }
+            if ( is_array($colunaValor) && count( $colunaValor) > 0 ) {
+                $retorno[$colunaNome] = (array) $linha->$colunaNome;
+            }
+        }
+        return $retorno;
+
     }
 
     protected function executaUpdate(array $objeto, object $linha): bool
@@ -415,8 +463,8 @@ class Cvdw
         $objetoObj = new Objeto($this->input, $this->output);
 
         foreach ($objeto['response']['dados'] as $coluna => $valor) {
-            
-            if (isset($linha->$coluna) && $objetoObj->identificarTipoDeDados($valor) !== "TABELA") {
+            $tipoLinha = $objetoObj->identificarTipoDeDados($valor);
+            if (isset($linha->$coluna) && $tipoLinha  !== "TABELA") {
 
                 if (strpos($coluna, "data") !== false) {
                     if ($linha->$coluna == "0000-00-00 00:00:00") {
@@ -434,7 +482,13 @@ class Cvdw
                     $linha->$coluna = substr($linha->$coluna, 0, 11);
                     $linha->$coluna = intval($linha->$coluna);
                 } elseif ($valor["type"] == "number" && $linha->$coluna != null) {
-                    $linha->$coluna = number_format($linha->$coluna, 2, '.', '');
+                    if (is_numeric($linha->$coluna)) {
+                        $linha->$coluna = number_format($linha->$coluna, 2, '.', '');
+                    }
+                }
+
+                if($valor["type"] == "datetime" && $linha->$coluna != null) {
+                    $linha->$coluna = date('Y-m-d H:i:s', strtotime($linha->$coluna));
                 }
 
                 if ($linha->$coluna == '') {
@@ -457,7 +511,7 @@ class Cvdw
                         }
                 }
 
-            }
+            } 
         }
         return $linha;
     }
