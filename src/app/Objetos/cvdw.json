@@ -4859,6 +4859,11 @@
                         "type": "string",
                         "description": "Informa se está ativo ou não"
                     },
+                    "idpesquisa": {
+                        "example": 5166,
+                        "type": "integer",
+                        "description": "Código identificador da pesquisa"
+                    },
                     "dataInicio": {
                         "example": "2020-11-20",
                         "type": "string",
@@ -4872,7 +4877,7 @@
                     "idpergunta": {
                         "example": 5166,
                         "type": "integer",
-                        "description": "Código identificador da pesquisa"
+                        "description": "Código identificador da pergunta"
                     },
                     "perguntas": {
                         "example": "Qual é a pergunta?",
@@ -7815,6 +7820,11 @@
                         "example": "08223000",
                         "type": "string",
                         "description": "CEP do cliente do pré-cadastro."
+                    },
+                    "renda_cliente_principal": {
+                        "example": "2300.00",
+                        "type": "string",
+                        "description": "Renda do cliente do pré-cadastro."
                     },
                     "idusuario_correspondente": {
                         "example": 2,

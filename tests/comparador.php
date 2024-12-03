@@ -7,77 +7,68 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-// Configurar o logger
 $log = new Logger('CVDW-Logger');
 $log->pushHandler(new StreamHandler(__DIR__ . '/../tests/log/cvdwComparador.log', Logger::DEBUG));
-// Fazer o download de $urlYamlCVDQ e salvar em ../src/app/Objetos/cvdw.yaml
-$url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
-//$url = __DIR__ . '/../../CV-Aplicacao/docs/yaml-files/cvdw.yaml';
-//$url = __DIR__ . 'https://dev.cvcrm.com.br/api/v1/cvdw';
-// Caminho local onde o arquivo será salvo
-$localPath = '../src/app/Objetos/cvdw.yaml';
-// Caminho onde o arquivo JSON convertido será salvo
-$jsonPath = __DIR__ . '/../src/app/Objetos/cvdw.json';
 
-
-//Usa file_get_contents para pegar o arquivo do URL
-echo "Baixando o arquivo...\n";
-$contents = file_get_contents($url);
-
-if ($contents !== false) {
-    // Verifica se o arquivo já existe e exclui antes de salvar
-    if (file_exists($localPath)) {
-        unlink($localPath);
-    }
-
-    // Salvar o arquivo no caminho especificado
-    $saveFile = file_put_contents($localPath, $contents);
-    if ($saveFile !== false) {
-        echo "Arquivo YAML baixado e salvo com sucesso em '$localPath'!\n";
-    } else {
-        echo "Erro ao salvar o arquivo YAML.\n";
-        exit(1);
-    }
-} else {
-    echo "Erro ao baixar o arquivo.\n";
-    exit(1);
-}
-
-echo "\nValidando e convertendo o arquivo YAML para JSON...\n";
 
 try {
-    // Carregar e analisar o arquivo YAML
-    $objetoCVDWConteudo = file_get_contents($localPath);
-    $objetoCVDWArray = Yaml::parseFile($objetoCVDWConteudo);
+$url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
+$convert = file_get_contents($url);
+$objetoUrl = Yaml::parse($convert);
 
-    // Validar a estrutura básica do YAML
-    if (!isset($objetoCVDWArray['paths']) || !is_array($objetoCVDWArray['paths'])) {
-        throw new Exception("Estrutura inválida: 'paths' não encontrada ou mal formatada.");
-    }
+// var_dump($objetoUrl);
+// die();
 
-    // Converter o array do YAML para JSON
-    $objetoCVDWJson = json_encode($objetoCVDWArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-
-    // Salvar o JSON no caminho especificado
-    $jsonSave = file_put_contents($jsonPath, $objetoCVDWJson);
-    if ($jsonSave !== false) {
-        echo "Arquivo convertido e salvo como JSON em '$jsonPath'.\n";
-    } else {
-        echo "Erro ao salvar o arquivo JSON.\n";
-        exit(1);
-    }
-
-    // Exemplo de validação e exibição de paths do JSON
-    foreach ($objetoCVDWArray['paths'] as $objeto => $dados) {
-        echo "Path '$objeto' encontrado na documentação do CVDW.\n";
-    }
+$localPaths = __DIR__ . '/../src/app/Objetos/cvdw.yaml';
+$contents = Yaml::parseFile($localPaths);
+ 
 } catch (ParseException $e) {
-    echo "Erro ao analisar o YAML: " . $e->getMessage() . "\n";
-    exit(1);
-} catch (Exception $e) {
-    echo "Erro: " . $e->getMessage() . "\n";
-    exit(1);
+    $log->error('Erro ao analisar o arquivo YAML.', ['message' => $e->getMessage()]);   
 }
 
-echo "\nProcesso concluído com sucesso.\n";
 
+function compararArrays($array1, $array2, $path = '') {
+    $differences = [];
+
+    // Iterar sobre o primeiro array
+    foreach ($array1 as $key => $value) {
+        $currentPath = $path ? "$path.$key" : $key;
+
+        if (array_key_exists($key, $array2)) {
+            if (is_array($value) && is_array($array2[$key])) {
+                // Recursão para subarrays
+                $subDiff = compararArrays($value, $array2[$key], $currentPath);
+                $differences = array_merge($differences, $subDiff);
+            } elseif ($value !== $array2[$key]) {
+                // Valores diferentes
+                $differences[] = "Diferença em '$currentPath': '" . print_r($value, true) . "' != '" . print_r($array2[$key], true) . "'";
+            }
+        } else {
+            // Chave ausente no segundo array
+            $differences[] = "Chave '$currentPath' está ausente no segundo array.";
+        }
+    }
+
+    // Verificar chaves presentes no segundo array, mas ausentes no primeiro
+    foreach ($array2 as $key => $value) {
+        $currentPath = $path ? "$path.$key" : $key;
+
+        if (!array_key_exists($key, $array1)) {
+            $differences[] = "Chave '$currentPath' está ausente no primeiro array.";
+        }
+    }
+
+    return $differences;
+}
+
+
+$differences = compararArrays($objetoUrl, $contents);
+
+if (empty($differences)) {
+    echo "Os arquivos YAML são iguais!" . PHP_EOL;
+} else {
+    echo "Diferenças encontradas:" . PHP_EOL;
+    foreach ($differences as $difference) {
+        echo $difference . PHP_EOL;
+    }
+}

@@ -15,6 +15,9 @@ $url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
 
 // Caminhos para salvar os arquivos localmente
 $localPath = __DIR__ . '/../src/app/Objetos/cvdw.yaml';
+
+
+
 $jsonPath = __DIR__ . '/../src/app/Objetos/cvdw.json';
 
 $log->info('Iniciando o processo de download e validação do arquivo YAML.', [
@@ -53,6 +56,9 @@ try {
     $objetoCVDWConteudo = file_get_contents($localPath);
     $objetoCVDWArray = Yaml::parse($objetoCVDWConteudo);
 
+    // print_r($objetoCVDWArray);
+    // die();
+
     // Validar estrutura básica do YAML
     if (!isset($objetoCVDWArray['paths']) || !is_array($objetoCVDWArray['paths'])) {
         $log->warning('Estrutura YAML inválida: "paths" não encontrada ou mal formatada.', ['local_path' => $localPath]);
@@ -69,88 +75,10 @@ try {
 
     $log->info('Arquivo JSON gerado e salvo com sucesso.', ['json_path' => $jsonPath]);
 
-    
-    $objetoCliJson = $objetoCVDWArray['get']['dados'];
-    // Exibir e registrar os paths encontrados
-    foreach ($objetoCVDWArray['paths'] as $objeto => $dados) {
-        $log->info('Path encontrado na documentação do CVDW.', ['path' => $objeto]);
-        echo "Path '$objeto' encontrado na documentação do CVDW.\n";
-        foreach ($dados as $path => $metodos) {
-            echo " $path\n";
-        
-            foreach ($metodos as $metodo => $detalhe) {
-                echo "  Dados: $metodo\n";
-        
-                if (isset($detalhe['tags'])) {
-                    echo "  Tags: " . implode(', ', $detalhe['tags']) . "\n";
-                }
-        
-                if (isset($detalhe['description'])) {
-                    echo "  Descrição: " . $detalhe['description'] . "\n";
-                }
-        
-                if (isset($detalhe['parameters'])) {
-                    echo "  Parâmetros:\n";
-                    foreach ($detalhe['parameters'] as $parameter) {
-                        echo "    - $parameter\n";
-                    }
-                }
-        
-                if (isset($detalhe['requestBody']['content']['application/json']['schema']['$ref'])) {
-                    echo "  Request Body Schema: " . $detalhe['requestBody']['content']['application/json']['schema']['$ref'] . "\n";
-                }
-        
-                if (isset($detalhe['responses'])) {
-                    echo "  Respostas:\n";
-                    foreach ($detalhe['responses'] as $status => $responseDetails) {
-                        echo "    Status: $status\n";
-                        echo "    Descrição: " . ($responseDetails['description'] ?? 'Sem descrição') . "\n";
-        
-                        if (isset($responseDetails['content']['application/json']['schema']['allOf'])) {
-                            echo "    Schemas combinados:\n";
-                            foreach ($responseDetails['content']['application/json']['schema']['allOf'] as $schema) {
-                                echo "      - " . $schema['$ref'] . "\n";
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        
-        
-
-        // foreach ($dados as $cvdwMetodo => $detalhes) {
-        //     $log->info('Metodo encontrado na documentação do CVDW.', ['metodo' => $cvdwMetodo]);
-        //     echo "Método '$cvdwMetodo' encontrado na documentação do CVDW.\n";
-        // }
-
-        // foreach ($detalhes as $detalhe => $descricao) {
-        //     if($dados == 'description') {
-        //         $log->info('Detalhe encontrado na documentação do CVDW.', ['dados' => $dados]);
-        //         echo "Detalhe '$detalhe' encontrado na documentação do CVDW.\n";
-        //     } else if($detalhe == 'tags') {
-        //         $log->info('Detalhe encontrado na documentação do CVDW.', ['detalhe' => $detalhe]);
-        //         echo "Detalhe '$detalhe' encontrado na documentação do CVDW.\n";
-        //     } else if($detalhe == 'parameters') {
-        //         $log->info('Detalhe encontrado na documentação do CVDW.', ['detalhe' => $detalhe]);
-        //         echo "Detalhe '$detalhe' encontrado na documentação do CVDW.\n";    
-        //     } else if($detalhe == 'requestBody') {
-        //         $log->info('Detalhe encontrado na documentação do CVDW.', ['detalhe' => $detalhe]);
-        //         echo "Detalhe '$detalhe' encontrado na documentação do CVDW.\n";
-        //     } else if($detalhe == 'responses') {
-        //         $log->info('Detalhe encontrado na documentação do CVDW.', ['detalhe' => $detalhe]);
-        //         echo "Detalhe '$detalhe' encontrado na documentação do CVDW.\n";
-        //     } else {
-        //     $log->info('Detalhe encontrado na documentação do CVDW.', ['detalhe' => $detalhe]);
-        //     echo "Detalhe '$detalhe' encontrado na documentação do CVDW.\n";
-        //     }
-        // }
-
-        // foreach ($descricao as $response => $campos) {
-        //     $log->info('Responses encontrado na documentação do CVDW.', ['responses' => $response]);
-        //     echo "Responses '$response' encontrado na documentação do CVDW.\n";
-        // }
+    foreach($objetoCVDWArray['paths'] as $key => $value){
+       
     }
+   
     
 
 } catch (ParseException $e) {
