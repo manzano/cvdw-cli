@@ -182,12 +182,12 @@ class Executar extends Command
             case 'Executar um objeto especifico':
                 $this->executarObjetoOpcoes($io);
                 break;
-                case 'Configurar o CVDW-CLI':                
-                    if ($io->confirm('Deseja configurar o CVDW-CLI?') == true) {
+            case 'Configurar o CVDW-CLI':                
+                if ($io->confirm('Deseja configurar o CVDW-CLI?') == true) {
                            $io->success('Configurando o CVDW-CLI...');
                            $this->getApplication()->find('configurar')->run($input, $output);
-                       return Command::SUCCESS;
-                   }
+                     return Command::SUCCESS;
+                    }
             default:
                 $this->execute($this->input, $this->output);
                 break;

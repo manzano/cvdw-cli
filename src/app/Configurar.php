@@ -1058,7 +1058,7 @@ class Configurar extends Command
             'Sugerimos fazer o backup do banco antes de prosseguir.'
         ]);
 
-        if ($io->confirm('Deseja continuar?', false)) {
+        if ($io->confirm('Deseja continuar?', true)) {
 
             $output = $this->output;
             $shellDir = str_replace('src/app', '', __DIR__);
@@ -1078,7 +1078,7 @@ class Configurar extends Command
 
         $io->text('');
         $io->success('Atualização finalizada!');
-        $io->text('Seu CVDW-CLI foi atualizado para versão: ' . $versaoCVDW);
+        $io->text('Seu CVDW-CLI está atualizado na versão: ' . $versaoCVDW);
         $io->text('É altamente recomendável você usar a opção 4 das configurações.');
 
         $this->voltarProMenu = true;

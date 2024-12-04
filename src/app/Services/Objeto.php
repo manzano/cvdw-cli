@@ -387,6 +387,10 @@ class Objeto
                 "nome" => "Comissões (/comissoes)",
                 "arquivo" => "comissoes.yaml"
             ],
+            "comissoes_pagamentos" => [
+                "nome" => "Comissões (/comissoes/pagamentos)",
+                "arquivo" => "comissoes_pagamentos.yaml"
+            ],
             "comissoes_workflow_tempo" => [
                 "nome" => "Comissões (/comissoes/workflow/tempo)",
                 "arquivo" => "comissoes_workflow_tempo.yaml"

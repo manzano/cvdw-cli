@@ -72,7 +72,7 @@ response:
     ativo:
       type: string
       description: 'Informa se está ativo ou não'
-      example: S
+      example: 'Sim'
     idtarefa:
       type: integer
       description: 'Identificador da tarefa'
@@ -104,19 +104,19 @@ response:
     tipo_responsavel:
       type: string
       description: 'Tipo de responsável'
-      example: C
+      example: 'C'
     situacao:
       type: string
       description: 'Situação da tarefa'
-      example: P
+      example: 'Pendente'
     tipo_interacao:
       type: string
       description: 'Tipo da interação'
-      example: L
+      example: 'L'
     funcionalidade:
       type: string
       description: 'Funcionalidade da tarefa'
-      example: lead
+      example: 'lead'
     idempreendimento:
       type: integer
       description: 'Identificador do empreemdimento'

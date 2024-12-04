@@ -1,8 +1,8 @@
-path: /leads/corretores
-tabela: leads_corretores
+path: /comissoes/pagamentos
+tabela: comissoes_pagamentos
 metodo: get
-descricao: 'Esta api retorna os dados do corretor dos leads.'
-nome: 'Leads (leads_corretores)'
+descricao: 'Esta api retorna os dados das comissões a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Comissões (comissoes_pagamentos)'
 parametros:
   header:
     -
@@ -24,8 +24,8 @@ parametros:
   query: []
   path: []
   cookie: []
-schema: RetornarDadosLeadsCorretores
-subschema: DadosLeadsCorretores
+schema: RetornarComissoesPagamentos
+subschema: ComissoesPagamentos
 body:
   pagina:
     type: integer
@@ -63,38 +63,37 @@ response:
   dados:
     referencia:
       type: string
-      description: 'Identificador do lead'
+      description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
       type: datetime
       description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
-    ativo:
-      type: string
-      description: 'Informa se está ativo ou não'
-      example: S
-    idlead:
+      example: '2023-01-15 15:26:15'
+    idcomissao:
       type: integer
-      description: 'Identificador do lead'
-      example: 193
-    data_cad:
-      type: datetime
-      description: 'Data de cadastro'
-      example: '2024-03-31 09:15:54'
-    idcorretor:
+      description: 'Numero identificador da comissão'
+      example: 5166
+    idpagamento:
       type: integer
-      description: 'Identificador do corretor vinculado'
-      example: 274
-    corretor:
+      description: 'Numero identificador do pagamento'
+      example: 51
+    valor:
+      type: float
+      description: 'Valor da comissão'
+      example: 100.5
+    vencimento: 
       type: string
-      description: 'Corretor do lead'
-      example: 'CORRETOR QC'
-    idimobiliaria:
-      type: integer
-      description: 'Identificador da imobiliária vinculada'
-      example: 274
-    imobiliaria:
+      description: 'Data de vencimento da comissão'
+      example: '2022-01-14'
+    bloco:
       type: string
-      description: 'Imobiliária do lead'
-      example: 'IMOBILIÁRIA QC'
-   
+      description: 'Bloco do empreendimento'
+      example: 'Bloco C'
+    unidade:
+      type: string
+      description: 'Unidade do empreendimento'
+      example: '1070'
+    situacao:
+      type: string
+      description: 'Situacao da comissão'
+      example: 'Pago'

@@ -404,6 +404,99 @@ paths:
               examples:
                 1:
                   $ref: '#/components/examples/422'
+   "/comissoes/pagamentos":
+    get:
+      tags:
+        - ComissÃµes
+      summary: "Retorna os pagamentos das comissÃµes"
+      description: "Esta api retorna os dados dos pagamentos das comissÃµes a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: comissoesPagamentos
+      parameters:
+        - $ref: '#/components/parameters/HeaderEmail'
+        - $ref: '#/components/parameters/HeaderToken'
+      requestBody:
+        description: Filtros que podem ser usados na API de pagamentos das comissÃµes
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BodyCvdw"
+      responses:
+        "200":
+          description: "Pagamentos das comissÃµes"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/RetornoCVDW"
+                  - $ref: "#/components/schemas/RetornarComissoesPagamentos"
+              examples:
+                1:
+                  $ref: "#/components/examples/RetornarComissoesPagamentos"
+        "204":
+          description: "Nenhum dado foi encontrado na API de pagamentos das comissÃµes."
+        "400":
+          description: "Erro de solicitaÃ§Ã£o da API de pagamentos das comissÃµes, revise os parÃ¢metros!"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    format: "string"
+                    maxLength: 10000
+                    example: "O campo pagina deve ser um inteiro."
+                  codigo:
+                    type: integer
+                    minimum: 0
+                    maximum: 9999
+                    format: "int32"
+                    example: 400
+              examples:
+                1:
+                  $ref: '#/components/examples/400'
+        "401":
+          description: "E-mail e/ou token incorreto(s)."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    format: "string"
+                    maxLength: 10000
+                    example: "E-mail e/ou token incorreto(s)."
+                  codigo:
+                    type: integer
+                    minimum: 0
+                    maximum: 9999
+                    format: "int32"
+                    example: 401
+              examples:
+                1:
+                  $ref: '#/components/examples/401'
+        "422":
+          description: "Erro inesperado na API de pagamentos das comissÃµes, por favor entre em contato com o suporte tÃ©cnico."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    format: "string"
+                    maxLength: 10000
+                    example: "Ocorreu um erro inesperado, por favor tente mais tarde."
+                  codigo:
+                    type: integer
+                    minimum: 0
+                    maximum: 9999
+                    format: "int32"
+                    example: 422
+              examples:
+                1:
+                  $ref: '#/components/examples/422'
   "/comissoes/workflow/tempo":
     get:
       tags:
@@ -2881,6 +2974,10 @@ components:
           example: "S"
           type: string
           description: "Informa se está ativo ou não"
+        idpesquisa:
+          example: 5166
+          type: integer
+          description: "Código identificador da pesquisa"
         dataInicio:
           example: "2020-11-20"
           type: string
@@ -2892,7 +2989,7 @@ components:
         idpergunta:
           example: 5166
           type: integer
-          description: "Código identificador da pesquisa"
+          description: "Código identificador da pergunta"
         perguntas:
           example: "Qual é a pergunta?"
           type: string
@@ -5169,6 +5266,10 @@ components:
           example: "08223000"
           type: string
           description: "CEP do cliente do pré-cadastro."
+        renda_cliente_principal:
+          example: "2300.00"
+          type: string
+          description: "Renda do cliente do pré-cadastro."
         idusuario_correspondente:
           example: 2
           type: integer
