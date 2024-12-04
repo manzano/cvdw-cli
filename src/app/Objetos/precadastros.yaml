@@ -1,23 +1,21 @@
 path: /precadastros
 tabela: precadastros
 metodo: get
-descricao: 'Esta api os dados dos pré-cadastros a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
-nome: 'Pre-cadastro (precadastros)'
+descricao: "Esta api os dados dos pré-cadastros a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+nome: "Pre-cadastro (precadastros)"
 parametros:
   header:
-    -
-      name: email
+    - name: email
       in: header
       required: true
-      description: 'E-mail de autenticação do usuário administrativo'
+      description: "E-mail de autenticação do usuário administrativo"
       example: email@email.com
       schema:
         type: string
-    -
-      name: token
+    - name: token
       in: header
       required: true
-      description: 'Token criado no usuário administrativo do e-mail'
+      description: "Token criado no usuário administrativo do e-mail"
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -30,206 +28,239 @@ body:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros_por_pagina:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   a_partir_referencia:
     type: integer
     example: 1640
-    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
+    description: "Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente"
   a_partir_data_referencia:
-    example: '2022-05-18 10:15:26'
+    example: "2022-05-18 10:15:26"
     type: string
-    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
+    description: "Retornará os dados criadas criados ou alterados a partir da data informada"
 response:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   total_de_registros:
     type: integer
     example: 1054
-    description: 'Total de registros encontrados'
+    description: "Total de registros encontrados"
   total_de_paginas:
     type: integer
     example: 36
-    description: 'Total de páginas encontradas'
+    description: "Total de páginas encontradas"
   dados:
     referencia:
       type: string
-      description: 'Identificador do pré-cadastro'
-      example: '193 ou 193_30'
+      description: "Identificador do pré-cadastro"
+      example: "193 ou 193_30"
     referencia_data:
       type: datetime
-      description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
+      description: "Data de referência"
+      example: "2024-03-31 09:15:54"
     ativo:
       type: string
-      description: 'Informa se está ativo ou não'
+      description: "Informa se está ativo ou não"
       example: S
     idprecadastro:
       type: integer
-      description: 'Identificador do pré-cadastro'
+      description: "Identificador do pré-cadastro"
       example: 1
     idsituacao:
       type: integer
-      description: 'Identificador da situação do pré-cadastro'
+      description: "Identificador da situação do pré-cadastro"
       example: 2
     situacao:
       type: string
-      description: 'Situação do pré-cadastro'
+      description: "Situação do pré-cadastro"
       example: Novo
     condicao_aprovada:
       type: string
-      description: 'Condição de aprovação do pré-cadastro'
-      example: 'N'
+      description: "Condição de aprovação do pré-cadastro"
+      example: "N"
     idempreendimento:
       type: integer
-      description: 'Identificador do empreendimento do pré-cadastro'
+      description: "Identificador do empreendimento do pré-cadastro"
       example: 665
     empreendimento:
       type: string
-      description: 'Empreendimento do pré-cadastro'
-      example: 'Parque do Carmo - Condomínio 7'
+      description: "Empreendimento do pré-cadastro"
+      example: "Parque do Carmo - Condomínio 7"
     idcorretor:
       type: integer
-      description: 'Identificador do corretor do pré-cadastro'
+      description: "Identificador do corretor do pré-cadastro"
       example: 11808
     corretor:
       type: string
-      description: 'Corretor do pré-cadastro'
-      example: 'TSURI BRASIL'
+      description: "Corretor do pré-cadastro"
+      example: "TSURI BRASIL"
     idempresa:
       type: integer
-      description: 'Identificador da empresa do pré-cadastro'
+      description: "Identificador da empresa do pré-cadastro"
       example: 1
     empresa:
       type: string
-      description: 'Empresa do pré-cadastro'
+      description: "Empresa do pré-cadastro"
       example: Ava
     pessoa:
       type: string
-      description: 'Nome do cliente'
-      example: 'GUILHERME MACEDO SILVA'
+      description: "Nome do cliente"
+      example: "GUILHERME MACEDO SILVA"
     cep_cliente:
       type: string
-      description: 'CEP do cliente'
-      example: '08223000'
+      description: "CEP do cliente"
+      example: "08223000"
+    renda_cliente_principal:
+      type: float
+      description: "Renda do cliente"
+      example: 2300.00
     idusuario_correspondente:
       type: integer
-      description: 'Identificador do usuário correspondente'
+      description: "Identificador do usuário correspondente"
       example: 2
     usuario_correspondente:
       type: string
-      description: 'Usuário correspondente'
-      example: 'Josão correspondente'
+      description: "Usuário correspondente"
+      example: "Josão correspondente"
     idpessoa:
       type: integer
-      description: 'Identificador do cliente'
+      description: "Identificador do cliente"
       example: 3
     idlead:
       type: string
-      description: 'Identificador do lead'
-      example: '2,3,4'
+      description: "Identificador do lead"
+      example: "2,3,4"
     valor_avaliacao:
       type: number
-      description: 'Valor de avaliação do pré-cadastro'
+      description: "Valor de avaliação do pré-cadastro"
       example: 0
     valor_aprovado:
       type: number
-      description: 'Valor aprovado do pré-cadastro'
+      description: "Valor aprovado do pré-cadastro"
       example: 0
     valor_subsidio:
       type: number
-      description: 'Valor de subsídio do pré-cadastro'
+      description: "Valor de subsídio do pré-cadastro"
       example: 0
     valor_total:
       type: number
-      description: 'Valor total do pré-cadastro'
+      description: "Valor total do pré-cadastro"
       example: 0
     valor_fgts:
       type: number
-      description: 'Valor de FGTS do pré-cadastro'
+      description: "Valor de FGTS do pré-cadastro"
       example: 0
     saldo_devedor:
       type: number
-      description: 'Saldo devedor do pré-cadastro'
+      description: "Saldo devedor do pré-cadastro"
       example: 0
     prazo:
       type: string
-      description: 'Prazo do pré-cadastro'
-      example: '0'
+      description: "Prazo do pré-cadastro"
+      example: "0"
     observacoes:
       type: text
-      description: 'Observações do pré-cadastro'
+      description: "Observações do pré-cadastro"
       example: Nenhuma
     tabela:
       type: string
-      description: 'Tabela do pré-cadastro'
-      example: 'Tabela Simples'
+      description: "Tabela do pré-cadastro"
+      example: "Tabela Simples"
     valor_prestacao:
       type: number
-      description: 'Valor da prestação do pré-cadastro'
+      description: "Valor da prestação do pré-cadastro"
       example: 0
     carta_credito:
       type: string
-      description: 'Carta de crédito do pré-cadastro'
+      description: "Carta de crédito do pré-cadastro"
       example: Sem
     vencimento_aprovacao:
       type: string
-      description: 'Data de vencimento da aprovação'
-      example: '2021-03-10'
+      description: "Data de vencimento da aprovação"
+      example: "2021-03-10"
     idmotivo_reprovacao:
       type: integer
-      description: 'Identificador do motivo de reprovação'
+      description: "Identificador do motivo de reprovação"
       example: 3
     motivo_reprovacao:
       type: string
-      description: 'Motivo de reprovação'
-      example: 'Reprovado sem crédito'
+      description: "Motivo de reprovação"
+      example: "Reprovado sem crédito"
     descricao_motivo_reprovacao:
       type: text
-      description: 'Descrição do motivo de reprovação'
-      example: 'Sem crédito'
+      description: "Descrição do motivo de reprovação"
+      example: "Sem crédito"
     idmotivo_cancelamento:
       type: integer
-      description: 'Identificador do motivo de cancelamento'
+      description: "Identificador do motivo de cancelamento"
       example: 1
     motivo_cancelamento:
       type: string
-      description: 'Motivo de cancelamento'
+      description: "Motivo de cancelamento"
       example: Cancelado
     descricao_motivo_cancelamento:
       type: text
-      description: 'Descrição do motivo de cancelamento'
-      example: 'Cancelado pela empresa'
+      description: "Descrição do motivo de cancelamento"
+      example: "Cancelado pela empresa"
     sla_vencimento:
       type: string
-      description: 'Data de vencimento do SLA'
-      example: '2021-03-10'
+      description: "Data de vencimento do SLA"
+      example: "2021-03-10"
     data_cad:
       type: datetime
-      description: 'Data de cadastro'
-      example: '2024-03-31 09:15:54'
+      description: "Data de cadastro"
+      example: "2024-03-31 09:15:54"
     empresa_correspondente:
       type: string
-      description: 'Empresa correspondente'
+      description: "Empresa correspondente"
       example: Empresa
     idsituacao_anterior:
       type: integer
-      description: 'Identidicador da situação anterior do pré-cadastro'
+      description: "Identidicador da situação anterior do pré-cadastro"
       example: 2
     situacao_anterior:
       type: string
-      description: 'Situação anterior do pré-cadastro'
+      description: "Situação anterior do pré-cadastro"
       example: Aprovado
     data_ultima_alteracao_situacao:
       type: datetime
-      description: 'Data de última alteração de situação'
-      example: '2024-03-31 09:15:54'
+      description: "Data de última alteração de situação"
+      example: "2024-03-31 09:15:54"
+    campos_adicionais:
+      referencia:
+        type: string
+        description: "Código identificador do campo adicional"
+        example: "312"
+      referencia_data:
+        type: datetime
+        description: "Data de referência"
+        example: "2023-12-29 16:12:52"
+      idcampo_valores:
+        type: integer
+        description: "Código identificador do valor do campo adicional"
+        example: 12414
+      idcampo:
+        type: integer
+        description: "Código identificador do campo adicional"
+        example: 312
+      nome:
+        type: string
+        description: "Descrição do campo adicional"
+        example: "CONTRATO - USO"
+      valor:
+        type: string
+        description: "Dado que foi inserido pelo usuário na funcionalidade"
+        example: "valor informado pelo usuário"
+      tipo:
+        type: string
+        description: "Tipo do campo"
+        example: "texto"

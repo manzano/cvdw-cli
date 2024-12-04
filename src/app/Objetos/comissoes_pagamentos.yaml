@@ -1,23 +1,21 @@
 path: /comissoes/pagamentos
 tabela: comissoes_pagamentos
 metodo: get
-descricao: 'Esta api retorna os dados das comissões a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
-nome: 'Comissões (comissoes_pagamentos)'
+descricao: "Esta api retorna os dados das comissões a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+nome: "Comissões (comissoes_pagamentos)"
 parametros:
   header:
-    -
-      name: email
+    - name: email
       in: header
       required: true
-      description: 'E-mail de autenticação do usuário administrativo'
+      description: "E-mail de autenticação do usuário administrativo"
       example: email@email.com
       schema:
         type: string
-    -
-      name: token
+    - name: token
       in: header
       required: true
-      description: 'Token criado no usuário administrativo do e-mail'
+      description: "Token criado no usuário administrativo do e-mail"
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -30,70 +28,70 @@ body:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros_por_pagina:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   a_partir_referencia:
     type: integer
     example: 1640
-    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
+    description: "Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente"
   a_partir_data_referencia:
-    example: '2022-05-18 10:15:26'
+    example: "2022-05-18 10:15:26"
     type: string
-    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
+    description: "Retornará os dados criadas criados ou alterados a partir da data informada"
 response:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   total_de_registros:
     type: integer
     example: 1054
-    description: 'Total de registros encontrados'
+    description: "Total de registros encontrados"
   total_de_paginas:
     type: integer
     example: 36
-    description: 'Total de páginas encontradas'
+    description: "Total de páginas encontradas"
   dados:
     referencia:
       type: string
-      description: 'Identificador'
-      example: '193 ou 193_30'
+      description: "Identificador"
+      example: "193 ou 193_30"
     referencia_data:
       type: datetime
-      description: 'Data de referência'
-      example: '2023-01-15 15:26:15'
+      description: "Data de referência"
+      example: "2023-01-15 15:26:15"
     idcomissao:
       type: integer
-      description: 'Numero identificador da comissão'
+      description: "Numero identificador da comissão"
       example: 5166
     idpagamento:
       type: integer
-      description: 'Numero identificador do pagamento'
+      description: "Numero identificador do pagamento"
       example: 51
     valor:
       type: float
-      description: 'Valor da comissão'
+      description: "Valor da comissão"
       example: 100.5
-    vencimento: 
+    vencimento:
       type: string
-      description: 'Data de vencimento da comissão'
-      example: '2022-01-14'
+      description: "Data de vencimento da comissão"
+      example: "2022-01-14"
     bloco:
       type: string
-      description: 'Bloco do empreendimento'
-      example: 'Bloco C'
+      description: "Bloco do empreendimento"
+      example: "Bloco C"
     unidade:
       type: string
-      description: 'Unidade do empreendimento'
-      example: '1070'
+      description: "Unidade do empreendimento"
+      example: "1070"
     situacao:
       type: string
-      description: 'Situacao da comissão'
-      example: 'Pago'
+      description: "Situacao da comissão"
+      example: "Pago"
