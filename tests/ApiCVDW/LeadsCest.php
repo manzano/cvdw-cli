@@ -21,6 +21,7 @@ class LeadsCest extends Common
             'dados' => 'array'
         ];
         $i->sendGet('/leads', $bodyContent);
+        sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
         if ($duration > 5) {
@@ -57,6 +58,7 @@ class LeadsCest extends Common
             'dados' => 'array'
         ];
         $i->sendGet('/leads', $bodyContent);
+        sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
         if ($duration > 5) {

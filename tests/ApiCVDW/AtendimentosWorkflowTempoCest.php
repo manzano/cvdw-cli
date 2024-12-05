@@ -16,11 +16,13 @@ class AtendimentosWorkflowTempoCest extends Common
         $responseContent = [
             'pagina' => 'integer',
             'registros' => 'integer',
+            'ativo' => 'string',
             'total_de_registros' => 'integer',
             'total_de_paginas' => 'integer',
             'dados' => 'array'
         ];
         $i->sendGet('/atendimentos/workflow/tempo', $bodyContent);
+        sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
         if ($duration > 5) {
@@ -52,11 +54,13 @@ class AtendimentosWorkflowTempoCest extends Common
         $responseContent = [
             'pagina' => 'integer',
             'registros' => 'integer',
+            'ativo' => 'string',
             'total_de_registros' => 'integer',
             'total_de_paginas' => 'integer',
             'dados' => 'array'
         ];
         $i->sendGet('/atendimentos/workflow/tempo', $bodyContent);
+        sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
         if ($duration > 5) {

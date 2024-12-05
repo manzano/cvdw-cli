@@ -150,12 +150,9 @@ class Executar extends Command
             return Command::SUCCESS;
         }
 
-        $io->title('Executando o CVDW-CLI');
-        $ambienteAtivo = $this->ambientesObj->ambienteAtivo();
-        $io->text('Ambiente ativo: ' . $ambienteAtivo);
-
         $this->eventosObj->registrarEvento($this->evento, 'Início');
-
+        
+        
         $this->variaveisAmbiente['executar'] = $io->choice('O que deseja fazer agora?', [
             'Listar todos os objetos disponíveis no CVDW-CLI',
             'Executar todos os objetos',

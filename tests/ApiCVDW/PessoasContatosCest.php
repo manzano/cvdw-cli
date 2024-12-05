@@ -21,6 +21,7 @@ class PessoasContatosCest extends Common
             'dados' => 'array'
         ];
         $i->sendGet('/pessoas/contatos', $bodyContent);
+        sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
         if ($duration > 5) {
@@ -57,6 +58,7 @@ class PessoasContatosCest extends Common
             'dados' => 'array'
         ];
         $i->sendGet('/pessoas/contatos', $bodyContent);
+        sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
         if ($duration > 5) {

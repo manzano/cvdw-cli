@@ -281,10 +281,10 @@ class Objeto
                 "nome" => "Corretores (/corretores)",
                 "arquivo" => "corretores.yaml"
             ],
-            "corretores_profissional" => [
-                "nome" => "Corretores (/corretores)",
-                "arquivo" => "corretores_profissional.yaml"
-            ],
+            // "corretores_profissional" => [
+            //     "nome" => "Corretores (/corretores)",
+            //     "arquivo" => "corretores_profissional.yaml"
+            // ],
             "unidades_precos" => [
                 "nome" => "Unidades (/unidades/precos)",
                 "arquivo" => "unidades_precos.yaml"

@@ -125,6 +125,10 @@ response:
       type: string
       description: 'Enviado e-mail sobre interação para cliente"'
       example: 'N'
+    idgestor:
+      type: integer
+      description: 'Identificador do gestor vinculado'
+      example: 144
     gestor_interacao:
       type: string
       description: 'Gestor responsável"'

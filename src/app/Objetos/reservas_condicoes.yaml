@@ -1,23 +1,21 @@
 path: /reservas/condicoes
 tabela: reservas_condicoes
 metodo: get
-descricao: 'Esta api retorna os dados das condições da reservas a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
-nome: 'Reservas (reservas_condicoes)'
+descricao: "Esta api retorna os dados das condições da reservas a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+nome: "Reservas (reservas_condicoes)"
 parametros:
   header:
-    -
-      name: email
+    - name: email
       in: header
       required: true
-      description: 'E-mail de autenticação do usuário administrativo'
+      description: "E-mail de autenticação do usuário administrativo"
       example: email@email.com
       schema:
         type: string
-    -
-      name: token
+    - name: token
       in: header
       required: true
-      description: 'Token criado no usuário administrativo do e-mail'
+      description: "Token criado no usuário administrativo do e-mail"
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -30,94 +28,98 @@ body:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros_por_pagina:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   a_partir_referencia:
     type: integer
     example: 1640
-    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
+    description: "Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente"
   a_partir_data_referencia:
-    example: '2022-05-18 10:15:26'
+    example: "2022-05-18 10:15:26"
     type: string
-    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
+    description: "Retornará os dados criadas criados ou alterados a partir da data informada"
 response:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   total_de_registros:
     type: integer
     example: 1054
-    description: 'Total de registros encontrados'
+    description: "Total de registros encontrados"
   total_de_paginas:
     type: integer
     example: 36
-    description: 'Total de páginas encontradas'
+    description: "Total de páginas encontradas"
   dados:
     referencia:
       type: string
-      description: 'Identificador'
-      example: '193 ou 193_30'
+      description: "Identificador"
+      example: "193 ou 193_30"
     referencia_data:
       type: datetime
-      description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
+      description: "Data de referência"
+      example: "2024-03-31 09:15:54"
     ativo:
       type: string
-      description: 'Informa se está ativo ou não'
+      description: "Informa se está ativo ou não"
       example: S
     idreservascondicoes:
       type: integer
-      description: 'Identificador da condição da reserva'
+      description: "Identificador da condição da reserva"
       example: 12414
     idreserva:
       type: integer
-      description: 'Identificador da reserva'
+      description: "Identificador da reserva"
       example: 12414
     serie:
       type: string
-      description: 'Nome da série'
+      description: "Nome da série"
       example: Ato
     parcela_quantidade:
       type: integer
-      description: 'Quantidade de parcelas da condição'
+      description: "Quantidade de parcelas da condição"
       example: 1221
     valor:
       type: number
-      description: 'valor da condição'
+      description: "valor da condição"
       example: 12.21
     valor_com_juros:
       type: number
-      description: 'valor da condição com juros'
+      description: "valor da condição com juros"
       example: 12.21
     valor_com_comissao_fora_do_contrato:
       type: number
-      description: 'valor com comissão fora do contrato'
+      description: "valor com comissão fora do contrato"
       example: 12.21
     valor_sem_comissao:
       type: number
-      description: 'Valor sem comissão'
+      description: "Valor sem comissão"
       example: 12.21
     vencimento:
       type: string
-      description: 'Data do vencimento'
-      example: '2022-02-23'
+      description: "Data do vencimento"
+      example: "2022-02-23"
     portador:
       type: string
       description: Portador
-      example: '2022-02-23'
+      example: "2022-02-23"
     indexador:
       type: string
       description: Indexador
-      example: '2022-02-23'
+      example: "2022-02-23"
     data_reservas_condicoes:
       type: datetime
-      description: 'Data da condição'
-      example: '2024-03-31 09:15:54'
+      description: "Data da condição"
+      example: "2024-03-31 09:15:54"
+    data_modificacao:
+      type: datetime
+      description: "Data de modificação da condição"
+      example: "2024-03-31 09:15:54"

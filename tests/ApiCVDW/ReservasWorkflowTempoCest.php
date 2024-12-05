@@ -20,7 +20,8 @@ class ReservasWorkflowTempoCest extends Common
             'total_de_paginas' => 'integer',
             'dados' => 'array'
         ];
-        $i->sendGet('/reservas/workflow/tempo', $bodyContent);
+        $i->sendGet('/reservas/workflow/tempo', $bodyContent);  
+        sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
         if ($duration > 5) {
@@ -57,6 +58,7 @@ class ReservasWorkflowTempoCest extends Common
             'dados' => 'array'
         ];
         $i->sendGet('/reservas/workflow/tempo', $bodyContent);
+        sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
         if ($duration > 5) {

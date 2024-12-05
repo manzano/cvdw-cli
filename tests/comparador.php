@@ -22,6 +22,9 @@ $objetoUrl = Yaml::parse($convert);
 $localPaths = __DIR__ . '/../src/app/Objetos/cvdw.yaml';
 $contents = Yaml::parseFile($localPaths);
  
+// var_dump($objetoUrl);
+//  die();
+
 } catch (ParseException $e) {
     $log->error('Erro ao analisar o arquivo YAML.', ['message' => $e->getMessage()]);   
 }

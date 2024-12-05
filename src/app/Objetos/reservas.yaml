@@ -358,26 +358,52 @@ response:
       description: "Data de modificação da reserva"
       example: "2022-12-07"
     campos_adicionais:
-      idcampo_adicional:
-        type: integer
-      nome:
-        type: string
-      valor:
-        type: text
-      nome_referencia:
-        type: string
-    campos_adicionais_contrato:
       referencia:
-        type: string
+        type: integer
+        description: "Código identificador do campo adicional"
+        example: 132
       referencia_data:
         type: datetime
+        description: "Data de referência"
+        example: "2023-12-29 16:12:52"
       idcampo_valores:
         type: integer
-      idcampo:
-        type: integer
+        description: "Código identificador do valor do campo adicional"
+        example: 12414
       nome:
         type: string
+        description: "Descrição do campo adicional"
+        example: "CONTRATO - USO"
       valor:
-        type: text
+        type: string
+        description: "Dado que foi inserido pelo usuário na funcionalidade"
+        example: valor informado pelo usuário
       tipo:
         type: string
+        description: "Tipo do campo"
+        example: texto
+    campos_adicionais_contrato:
+      referencia:
+        type: integer
+        description: "Código identificador do campo adicional"
+        example: 132
+      referencia_data:
+        type: datetime
+        description: "Data de referência"
+        example: "2023-12-29 16:12:52"
+      idcampo_valores:
+        type: integer
+        description: "Código identificador do valor do campo adicional"
+        example: 12414
+      nome:
+        type: string
+        description: "Descrição do campo adicional"
+        example: "CONTRATO - USO"
+      valor:
+        type: string
+        description: "Dado que foi inserido pelo usuário na funcionalidade"
+        example: valor informado pelo usuário
+      tipo:
+        type: string
+        description: "Tipo do campo"
+        example: texto

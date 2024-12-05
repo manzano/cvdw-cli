@@ -21,6 +21,7 @@ class ReservasContratosCest extends Common
             'dados' => 'array'
         ];
         $i->sendGet('/reservas/contratos', $bodyContent);
+        sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
         if ($duration > 5) {
@@ -57,6 +58,7 @@ class ReservasContratosCest extends Common
             'dados' => 'array'
         ];
         $i->sendGet('/reservas/contratos', $bodyContent);
+        sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
         if ($duration > 5) {

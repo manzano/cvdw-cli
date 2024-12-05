@@ -6,9 +6,9 @@ use Tests\ApiCVDW\Common;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Assert;
 
-class AtendimentosInteracoesCest extends Common
+class ComissoesPagamentosCest extends Common
 {
-    public function getAtendimentosInteracoes(ApiTester $i)
+    public function getComissoesPagamentos(ApiTester $i)
     {
         sleep(3);
         $startTime = time();
@@ -20,7 +20,7 @@ class AtendimentosInteracoesCest extends Common
             'total_de_paginas' => 'integer',
             'dados' => 'array'
         ];
-        $i->sendGet('/atendimentos/interacoes', $bodyContent);
+        $i->sendGet('/comissoes/pagamentos', $bodyContent);
         sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;
@@ -40,7 +40,7 @@ class AtendimentosInteracoesCest extends Common
         }
     }
 
-    public function getAtendimentosInteracoesComDataReferencia(ApiTester $i)
+    public function getComissoesPagamentosComDataReferencia(ApiTester $i)
     {
         
         sleep(3);
@@ -57,7 +57,7 @@ class AtendimentosInteracoesCest extends Common
             'total_de_paginas' => 'integer',
             'dados' => 'array'
         ];
-        $i->sendGet('/atendimentos/interacoes', $bodyContent);
+        $i->sendGet('/comissoes/pagamentos', $bodyContent);
         sleep(3);
         $endTime = time();
         $duration = $endTime - $startTime;

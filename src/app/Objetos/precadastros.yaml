@@ -237,9 +237,9 @@ response:
       example: "2024-03-31 09:15:54"
     campos_adicionais:
       referencia:
-        type: string
+        type: integer
         description: "Código identificador do campo adicional"
-        example: "312"
+        example: 312
       referencia_data:
         type: datetime
         description: "Data de referência"
