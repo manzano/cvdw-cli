@@ -1,3 +1,4 @@
+
 path: /vendas
 tabela: vendas
 metodo: get
@@ -233,7 +234,7 @@ response:
         type: string
         description: 'Descrição do tipo do associado'
         example: 'Cônjuge'
-      percentagem_participacao:
+      porcentagem_participacao:
         type: number
         description: 'Porcentagem de participação do associado'
         example: 43.24

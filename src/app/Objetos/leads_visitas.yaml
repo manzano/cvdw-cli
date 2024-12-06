@@ -1,23 +1,21 @@
 path: /leads/visitas
 tabela: leads_visitas
 metodo: get
-descricao: 'Esta api retorna a listagem de interações de visitas de leads.'
-nome: 'Leads (leads_visitas)'
+descricao: "Esta api retorna a listagem de interações de visitas de leads."
+nome: "Leads (leads_visitas)"
 parametros:
   header:
-    -
-      name: email
+    - name: email
       in: header
       required: true
-      description: 'E-mail de autenticação do usuário administrativo'
+      description: "E-mail de autenticação do usuário administrativo"
       example: email@email.com
       schema:
         type: string
-    -
-      name: token
+    - name: token
       in: header
       required: true
-      description: 'Token criado no usuário administrativo do e-mail'
+      description: "Token criado no usuário administrativo do e-mail"
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -30,126 +28,130 @@ body:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros_por_pagina:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   a_partir_referencia:
     type: integer
     example: 1640
-    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
+    description: "Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente"
   a_partir_data_referencia:
-    example: '2022-05-18 10:15:26'
+    example: "2022-05-18 10:15:26"
     type: string
-    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
+    description: "Retornará os dados criadas criados ou alterados a partir da data informada"
 response:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   total_de_registros:
     type: integer
     example: 1054
-    description: 'Total de registros encontrados'
+    description: "Total de registros encontrados"
   total_de_paginas:
     type: integer
     example: 36
-    description: 'Total de páginas encontradas'
+    description: "Total de páginas encontradas"
   dados:
     referencia:
       type: string
-      description: 'Identificador da tarefa'
-      example: '193 ou 193_30'
+      description: "Identificador da tarefa"
+      example: "193 ou 193_30"
     referencia_data:
       type: datetime
-      description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
+      description: "Data de referência"
+      example: "2024-03-31 09:15:54"
     ativo:
       type: string
-      description: 'Informa se está ativo ou não'
+      description: "Informa se está ativo ou não"
       example: S
     idtarefa:
       type: integer
-      description: 'Identificador da tarefa'
+      description: "Identificador da tarefa"
       example: 2546
     idinteracao:
       type: integer
-      description: 'Identificador da interacao'
+      description: "Identificador da interacao"
       example: 259
     idlead:
       type: integer
-      description: 'Identificador do lead'
+      description: "Identificador do lead"
       example: 168523
     data_cad:
       type: datetime
-      description: 'Data de cadastro da tarefa'
-      example: '2024-03-31 09:15:54'
+      description: "Data de cadastro da tarefa"
+      example: "2024-03-31 09:15:54"
     data:
       type: datetime
-      description: 'Data para qual está marcada a visita'
-      example: '2024-03-31 09:15:54'
+      description: "Data para qual está marcada a visita"
+      example: "2024-03-31 09:15:54"
     idresponsavel:
       type: integer
-      description: 'Identificador do responsável pela visita'
+      description: "Identificador do responsável pela visita"
       example: 274
     responsavel:
       type: string
-      description: 'Responsável pela visita'
-      example: 'Kelly Lima'
+      description: "Responsável pela visita"
+      example: "Kelly Lima"
     tipo_responsavel:
       type: string
-      description: 'Tipo de responsável'
+      description: "Tipo de responsável"
       example: C
     situacao:
       type: string
-      description: 'Situação da visita'
+      description: "Situação da visita"
       example: Pendente
     tipo_interacao:
       type: string
-      description: 'Tipo da interação'
+      description: "Tipo da interação"
       example: Visita
     idtipo_visita:
       type: string
-      description: 'Identificador do tipo da visita'
-      example: '5'
+      description: "Identificador do tipo da visita"
+      example: "5"
     nome_tipo_visita:
       type: string
-      description: 'Informa se a visita é virtual ou não'
+      description: "Informa se a visita é virtual ou não"
       example: Revisita
     idresponsavel_por_criar_visita:
       type: integer
-      description: 'Identificador do responsável de criar visita'
+      description: "Identificador do responsável de criar visita"
       example: 2465
     responsavel_por_criar_visita:
       type: string
-      description: 'Responsável por criar visita'
+      description: "Responsável por criar visita"
       example: "CAROLINE.RS"
     funcionalidade:
       type: string
-      description: 'Funcionalidade da visita'
+      description: "Funcionalidade da visita"
       example: lead
     data_conclusao:
       type: datetime
-      description: 'Data em que a visita foi concluída'
-      example: '2024-03-31 09:15:54'
+      description: "Data em que a visita foi concluída"
+      example: "2024-03-31 09:15:54"
     pdv:
       type: string
-      description: 'Pdv associado a visita'
-      example: 'Quiosque no Shopping'
+      description: "Pdv associado a visita"
+      example: "Quiosque no Shopping"
+    painel_pdv:
+      type: string
+      description: "Informa se a visita foi cadastrada por pdv"
+      example: "Não"
     visita_virtual:
       type: string
-      description: 'Informa se a visita é virtual ou não'
+      description: "Informa se a visita é virtual ou não"
       example: S
     idempreendimento:
       type: integer
-      description: 'Identificador do empreemdimento'
+      description: "Identificador do empreemdimento"
       example: 10
     nome_empreendimento:
       type: string
-      description: 'Nome do empreemdimento'
-      example: 'Empreendimento 10'
+      description: "Nome do empreemdimento"
+      example: "Empreendimento 10"

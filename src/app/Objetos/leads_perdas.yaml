@@ -85,10 +85,6 @@ response:
       type: string
       description: 'Nome do Lead'
       example: 'Maria de Jesus'
-    data_perda:
-      type: datetime
-      description: 'Data de perca do lead'
-      example: '2024-03-31 09:15:54'
     email:
       type: string
       description: 'E-mail do lead'
@@ -97,6 +93,10 @@ response:
       type: string
       description: 'Telefone do Lead'
       example: '+5579998412500'
+    data_perda:
+      type: datetime
+      description: 'Data de perca do lead'
+      example: '2024-03-31 09:15:54'
     idusuario:
       type: integer
       description: 'Identificador do usuário responsável'

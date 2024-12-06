@@ -1,23 +1,21 @@
 path: /leads/tarefas
 tabela: leads_tarefas
 metodo: get
-descricao: 'Esta api retorna a listagem as tarefas dos leads.'
-nome: 'Leads (leads_tarefas)'
+descricao: "Esta api retorna a listagem as tarefas dos leads."
+nome: "Leads (leads_tarefas)"
 parametros:
   header:
-    -
-      name: email
+    - name: email
       in: header
       required: true
-      description: 'E-mail de autenticação do usuário administrativo'
+      description: "E-mail de autenticação do usuário administrativo"
       example: email@email.com
       schema:
         type: string
-    -
-      name: token
+    - name: token
       in: header
       required: true
-      description: 'Token criado no usuário administrativo do e-mail'
+      description: "Token criado no usuário administrativo do e-mail"
       example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
       schema:
         type: string
@@ -30,98 +28,106 @@ body:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros_por_pagina:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   a_partir_referencia:
     type: integer
     example: 1640
-    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
+    description: "Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente"
   a_partir_data_referencia:
-    example: '2022-05-18 10:15:26'
+    example: "2022-05-18 10:15:26"
     type: string
-    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
+    description: "Retornará os dados criadas criados ou alterados a partir da data informada"
 response:
   pagina:
     type: integer
     example: 1
-    description: 'Página que deseja visualizar os registros'
+    description: "Página que deseja visualizar os registros"
   registros:
     type: integer
     example: 30
-    description: 'Quantidade de registro por página, máximo 500 registros'
+    description: "Quantidade de registro por página, máximo 500 registros"
   total_de_registros:
     type: integer
     example: 1054
-    description: 'Total de registros encontrados'
+    description: "Total de registros encontrados"
   total_de_paginas:
     type: integer
     example: 36
-    description: 'Total de páginas encontradas'
+    description: "Total de páginas encontradas"
   dados:
     referencia:
       type: string
-      description: 'Identificador da tarefa'
-      example: '193 ou 193_30'
+      description: "Identificador da tarefa"
+      example: "193 ou 193_30"
     referencia_data:
       type: datetime
-      description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
+      description: "Data de referência"
+      example: "2024-03-31 09:15:54"
     ativo:
       type: string
-      description: 'Informa se está ativo ou não'
-      example: 'Sim'
+      description: "Informa se está ativo ou não"
+      example: "Sim"
     idtarefa:
       type: integer
-      description: 'Identificador da tarefa'
+      description: "Identificador da tarefa"
       example: 2546
     idinteracao:
       type: integer
-      description: 'Identificador da interacao'
+      description: "Identificador da interacao"
       example: 259
     idlead:
       type: integer
-      description: 'Identificador do lead'
+      description: "Identificador do lead"
       example: 168523
     data_cad:
       type: datetime
-      description: 'Data de cadastro da tarefa'
-      example: '2024-03-31 09:15:54'
+      description: "Data de cadastro da tarefa"
+      example: "2024-03-31 09:15:54"
     data:
       type: datetime
-      description: 'Data para qual está marcada a tarefa'
-      example: '2024-03-31 09:15:54'
+      description: "Data para qual está marcada a tarefa"
+      example: "2024-03-31 09:15:54"
     idresponsavel:
       type: integer
-      description: 'Identificador do responsável pela tarefa'
+      description: "Identificador do responsável pela tarefa"
       example: 274
     responsavel:
       type: string
-      description: 'Responsável pela tarefa'
-      example: 'João da Silva'
+      description: "Responsável pela tarefa"
+      example: "João da Silva"
     tipo_responsavel:
       type: string
-      description: 'Tipo de responsável'
-      example: 'C'
+      description: "Tipo de responsável"
+      example: "C"
     situacao:
       type: string
-      description: 'Situação da tarefa'
-      example: 'Pendente'
+      description: "Situação da tarefa"
+      example: "Pendente"
     tipo_interacao:
       type: string
-      description: 'Tipo da interação'
-      example: 'L'
+      description: "Tipo da interação"
+      example: "L"
     funcionalidade:
       type: string
-      description: 'Funcionalidade da tarefa'
-      example: 'lead'
+      description: "Funcionalidade da tarefa"
+      example: "lead"
+    idusuario:
+      type: integer
+      description: "Identificador do usuário que cadastrou a tarefa"
+      example: 178
+    tipo_usuario:
+      type: string
+      description: "Painel do usuário que cadastrou a tarefa"
+      example: "gestor"
     idempreendimento:
       type: integer
-      description: 'Identificador do empreemdimento'
+      description: "Identificador do empreemdimento"
       example: 10
     nome_empreendimento:
       type: string
-      description: 'Nome do empreemdimento'
-      example: 'Empreendimento 10'
+      description: "Nome do empreemdimento"
+      example: "Empreendimento 10"
