@@ -101,7 +101,19 @@ response:
       type: datetime
       description: 'Data de cadastro'
       example: '2024-03-31 09:15:54'
-    data_sincronizacao:
-      type: datetime
-      description: 'Data da sincronização'
-      example: '2024-03-31 09:15:54'
+    nome_lead:
+      type: string
+      description: 'Nome do lead'
+      example: 'John Smith'
+    email_lead:
+      type: string
+      description: 'E-mail do lead'
+      example: 'aGk2Q@example.com'
+    telefone_lead:
+      type: string
+      description: 'Telefone do lead'
+      example: '+55(11)9999-9999'
+    idsituacao_lead:
+      type: integer
+      description: 'Código identificador da situação vinculada ao lead'
+      example: 2

@@ -150,9 +150,6 @@ class Executar extends Command
             return Command::SUCCESS;
         }
 
-        $io->title('Executando o CVDW-CLI');
-        $ambienteAtivo = $this->ambientesObj->ambienteAtivo();
-        $io->text('Ambiente ativo: ' . $ambienteAtivo);
 
         $this->eventosObj->registrarEvento($this->evento, 'Início');
 
