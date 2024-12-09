@@ -229,6 +229,10 @@ response:
       type: datetime
       description: "Data da última alteração de situação"
       example: "2024-03-31 09:15:54"
+    idempresa_correspondente:
+      type: integer
+      description: "Identificador da empresa correspondente vinculada"
+      example: 234
     empresa_correspondente:
       type: string
       description: "Empresa correspondente vinculada à reserva"
