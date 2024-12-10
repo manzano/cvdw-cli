@@ -1,0 +1,183 @@
+path: /corretores
+tabela: corretores_profissional
+metodo: get
+descricao: 'Esta api retorna os dados dos Corretores a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema.'
+nome: 'Corretores (corretores)'
+parametros:
+  header:
+    -
+      name: email
+      in: header
+      required: true
+      description: 'E-mail de autenticação do usuário administrativo'
+      example: email@email.com
+      schema:
+        type: string
+    -
+      name: token
+      in: header
+      required: true
+      description: 'Token criado no usuário administrativo do e-mail'
+      example: 2ed820f89afa16cabb6f1585f9a85b4e6bfc80c3
+      schema:
+        type: string
+  query: []
+  path: []
+  cookie: []
+schema: RetornarCorretores
+subschema: Corretor
+body:
+  pagina:
+    type: integer
+    example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros_por_pagina:
+    type: integer
+    example: 30
+    description: 'Quantidade de registro por página, máximo 500 registros'
+  a_partir_referencia:
+    type: integer
+    example: 1640
+    description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
+  a_partir_data_referencia:
+    example: '2022-05-18 10:15:26'
+    type: string
+    description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
+response:
+  pagina:
+    type: integer
+    example: 1
+    description: 'Página que deseja visualizar os registros'
+  registros:
+    type: integer
+    example: 30
+    description: 'Quantidade de registro por página, máximo 500 registros'
+  total_de_registros:
+    type: integer
+    example: 1054
+    description: 'Total de registros encontrados'
+  total_de_paginas:
+    type: integer
+    example: 36
+    description: 'Total de páginas encontradas'
+  dados:
+    referencia:
+      type: string
+    referencia_data:
+      type: datetime
+    ativo:
+      type: string
+    idcorretor:
+      type: integer
+    profissional_experiencia_ramo_imobiliario:
+      type: string
+    profissional_quanto_tempo:
+      type: string
+    profissional_ultima_atual_empresa:
+      type: string
+    profissional_segmento:
+      type: string
+    profissional_data_inicio:
+      type: string
+    profissional_data_fim:
+      type: string
+    profissional_motivo_saida:
+      type: string
+    profissional_superior_imediato:
+      type: string
+    profissional_telefone:
+      type: string
+    profissional_cargo_inicial:
+      type: string
+    profissional_cargo_final:
+      type: string
+    profissional_descricao_atividades:
+      type: string
+    profissional_ultimos_atuais_ganhos:
+      type: string
+    profissional_expectativa_ganhos:
+      type: string
+    tipo_creci:
+      type: string
+    creci:
+      type: string
+    situacao_creci:
+      type: string
+    estado_creci:
+      type: string
+    cidade_creci:
+      type: string
+    vencimento_creci:
+      type: string
+    tipo_conta:
+      type: string
+    banco:
+      type: string
+    nome_agencia:
+      type: string
+    numero_agencia:
+      type: string
+    digito_agencia:
+      type: string
+    numero_conta:
+      type: string
+    digito_conta:
+      type: string
+    cpf_favorecido:
+      type: string
+    nome_favorecido:
+      type: string
+    cnpj:
+      type: string
+    inscricao_municipal:
+      type: string
+    ju_cep:
+      type: string
+    ju_logradouro:
+      type: string
+    ju_endereco:
+      type: string
+    ju_bairro:
+      type: string
+    ju_numero:
+      type: string
+    ju_complemento:
+      type: string
+    ju_estado:
+      type: string
+    ju_cidade:
+      type: string
+    cnpj_faturamento:
+      type: string
+    razaosocial_faturamento:
+      type: string
+    nomefantasia_faturamento:
+      type: string
+    representante_nome:
+      type: string
+    representante_telefone:
+      type: string
+    representante_celular:
+      type: string
+    representante_email:
+      type: string
+    representante_rg:
+      type: string
+    representante_documento:
+      type: string
+    representante_creci:
+      type: string
+    representante_vencimento_creci:
+      type: string
+    representante_data_nasc:
+      type: string
+    representante_quantidade_filhos:
+      type: string
+    banco_tipo_doc:
+      type: string
+    banco_cpf_titular:
+      type: string
+    banco_cnpj_titular:
+      type: string
+    data_ult_hist:
+      type: datetime
