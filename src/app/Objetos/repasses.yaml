@@ -210,7 +210,7 @@ response:
       description: "Data da assinatura do contrato do repasse"
       example: "2022-03-03"
     idlead:
-      type: string
+      type: text
       description: "Identificador dos leads vinculados separados por vírgula"
       example: "166902,164524"
     data_recurso_liberado:

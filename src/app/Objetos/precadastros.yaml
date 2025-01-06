@@ -75,6 +75,10 @@ response:
       type: integer
       description: "Identificador do pré-cadastro"
       example: 1
+    codigointerno:
+      type: string
+      description: "Código Interno do pré-cadastro"
+      example: "123456"
     idsituacao:
       type: integer
       description: "Identificador da situação do pré-cadastro"
@@ -95,6 +99,14 @@ response:
       type: string
       description: "Empreendimento do pré-cadastro"
       example: "Parque do Carmo - Condomínio 7"
+    idunidade:    
+      type: integer
+      description: "Identificador da unidade do pré-cadastro"
+      example: 1
+    unidade:
+      type: string
+      description: "Unidade do pré-cadastro"
+      example: "Apto 302"
     idcorretor:
       type: integer
       description: "Identificador do corretor do pré-cadastro"
