@@ -105,7 +105,8 @@ class Cvdw
 
         $resposta = $http->requestCVDW($objeto['path'], false, $this, $parametros);
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
-        if (!isset($resposta->total_de_registros)) {
+        //if (!isset($resposta->total_de_registros)) {
+        if (!property_exists($resposta, 'total_de_registros')) { 
             $this->io->error([
                 'A requisição não retornou os dados esperados!',
                 'Parametros: ' . print_r($parametros, true)

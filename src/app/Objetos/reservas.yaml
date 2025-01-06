@@ -75,6 +75,10 @@ response:
       type: integer
       description: "Identificador da reserva"
       example: 12414
+    data_cad:
+      type: datetime
+      description: "Data de cadastro da reserva"
+      example: "2024-03-31 09:15:54"
     codigointerno:
       type: string
       description: "Código interno da reserva"
@@ -87,10 +91,6 @@ response:
       type: string
       description: "Aprovação da reserva"
       example: Sim
-    data_cad:
-      type: datetime
-      description: "Data de cadastro da reserva"
-      example: "2024-03-31 09:15:54"
     data_venda:
       type: datetime
       description: "Data de venda da reserva"

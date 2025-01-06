@@ -293,10 +293,15 @@ class Objeto
                 "nome" => "Unidades (/unidades)",
                 "arquivo" => "unidades.yaml"
             ],
+            "campanhas_ativacao" => [
+                "nome" => "Campanhas de Ativação (/campanhas_ativacao)",
+                "arquivo" => "campanhas_ativacao.yaml"
+            ],
             "campos_adicionais" => [
                 "nome" => "Campos Adicionais (/campos_adicionais)",
                 "arquivo" => "campos_adicionais.yaml"
             ]
+            
         ];
     }
 

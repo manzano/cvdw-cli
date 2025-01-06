@@ -113,6 +113,10 @@ response:
       type: string
       description: 'Bloco do empreendimento'
       example: 'Bloco E06'
+    idunidade:
+      type: integer
+      description: 'Id da unidade do empreendimento'
+      example: 47
     unidade:
       type: string
       description: 'Unidade do empreendimento'
