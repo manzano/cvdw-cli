@@ -79,6 +79,20 @@ Para verificar a instalação do Composer:
 composer --version
 ```
 
+## Banco de Dados
+
+Certifique-se de algum dos bancos de dados está configurado em seu ambiente:
+
+- mysql --version
+
+- mariadb --version
+
+- psql --version
+
+- /opt/mssql/bin/sqlservr --version
+
+Caso não tenho nenhum banco configurado, por favor, siga o [guia de banco de dados](GuiaDB.md).
+
 ## Instale o CVDW-CLI
 
 Agora é so executar o comando:

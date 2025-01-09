@@ -72,6 +72,10 @@ cvdw executar [-idr|--ignorar-data-referencia] [-log|--salvarlog] [-env|--set-en
 
 Contribuições para o projeto são bem-vindas! Se você deseja contribuir, por favor, siga as [instruções de contribuição](Developer.md).
 
+## Guia de Uso 
+
+Após o processo de instalação, por favor, siga o [guia de uso](Guia_Uso.md).
+
 ## Licença
 
 Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.

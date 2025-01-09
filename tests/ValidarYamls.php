@@ -6,90 +6,108 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-// Configurar o logger
-$log = new Logger('CVDW-Logger');
-$log->pushHandler(new StreamHandler(__DIR__ . '/../tests/log/cvdw.log', Logger::DEBUG));
+// Configuração do logger
+$log = new Logger('cvdw');
+$log->pushHandler(new StreamHandler(__DIR__ . '/log/cvdw.log', Logger::DEBUG));
 
-// URL do arquivo YAML
-$url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
-
-// Caminhos para salvar os arquivos localmente
-$localPath = __DIR__ . '/../src/app/Objetos/cvdw.yaml';
-
-
-
-$jsonPath = __DIR__ . '/../src/app/Objetos/cvdw.json';
-
-$log->info('Iniciando o processo de download e validação do arquivo YAML.', [
-    'url' => $url,
-    'local_path' => $localPath,
-    'json_path' => $jsonPath,
-]);
-
-try {
-    // Baixar o arquivo YAML/JSON
-    $log->info('Baixando o arquivo YAML...');
-    $contents = file_get_contents($url);
-
-    if ($contents === false) {
-        $log->error('Erro ao baixar o arquivo da URL.', ['url' => $url]);
-        throw new Exception("Erro ao baixar o arquivo da URL: $url");
-    }
-
-    // Excluir arquivo existente antes de salvar o novo
-    if (file_exists($localPath)) {
-        unlink($localPath);
-        $log->info('Arquivo YAML anterior excluído.', ['local_path' => $localPath]);
-    }
-
-    // Salvar o arquivo no caminho especificado
-    $saveFile = file_put_contents($localPath, $contents);
-    if ($saveFile === false) {
-        $log->error('Erro ao salvar o arquivo YAML.', ['local_path' => $localPath]);
-        throw new Exception("Erro ao salvar o arquivo em: $localPath");
-    }
-
-    $log->info('Arquivo YAML baixado e salvo com sucesso.', ['local_path' => $localPath]);
-
-    // Validar e converter YAML para JSON
-    $log->info('Validando e convertendo o arquivo YAML para JSON...');
-    $objetoCVDWConteudo = file_get_contents($localPath);
-    $objetoCVDWArray = Yaml::parse($objetoCVDWConteudo);
-
-    // print_r($objetoCVDWArray);
-    // die();
-
-    // Validar estrutura básica do YAML
-    if (!isset($objetoCVDWArray['paths']) || !is_array($objetoCVDWArray['paths'])) {
-        $log->warning('Estrutura YAML inválida: "paths" não encontrada ou mal formatada.', ['local_path' => $localPath]);
-        throw new Exception("Estrutura inválida no arquivo YAML: 'paths' não encontrada ou mal formatada.");
-    }
-
-    // Converter para JSON
-    $objetoCVDWJson = json_encode($objetoCVDWArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    $jsonSave = file_put_contents($jsonPath, $objetoCVDWJson);
-    if ($jsonSave === false) {
-        $log->error('Erro ao salvar o arquivo JSON.', ['json_path' => $jsonPath]);
-        throw new Exception("Erro ao salvar o arquivo JSON em: $jsonPath");
-    }
-
-    $log->info('Arquivo JSON gerado e salvo com sucesso.', ['json_path' => $jsonPath]);
-
-    foreach($objetoCVDWArray['paths'] as $key => $value){
-       
-    }
-   
-    
-
-} catch (ParseException $e) {
-    $log->error('Erro ao analisar o arquivo YAML.', ['message' => $e->getMessage()]);
-    echo "Erro ao analisar o arquivo YAML: " . $e->getMessage() . "\n";
-    exit(1);
-} catch (Exception $e) {
-    $log->error('Erro durante o processo.', ['message' => $e->getMessage()]);
-    echo "Erro: " . $e->getMessage() . "\n";
-    exit(1);
+// Funções de formatação
+function printError($message)
+{
+    echo "\033[31m$message\033[0m" . PHP_EOL; // Vermelho
 }
 
-$log->info('Processo concluído com sucesso.');
-echo "\nProcesso concluído com sucesso.\n";
+function printSuccess($message)
+{
+    echo "\033[32m$message\033[0m" . PHP_EOL; // Verde
+}
+
+function printWarning($message)
+{
+    echo "\033[33m$message\033[0m" . PHP_EOL; // Amarelo
+}
+
+// URLs e arquivos locais
+// Arquivo remoto 
+$url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
+// Arquivo local atualizado
+$local = __DIR__ . '/../src/app/Brain/cvdw2.yaml';
+// Arquivo local para comparação e possivel atualização
+$local2 = __DIR__ . '/../src/app/Brain/cvdw.yaml';
+
+try {
+    // Baixa o arquivo remoto 
+    $down = file_put_contents($local, file_get_contents($url));
+    if ($down) {
+        printSuccess("✅ Arquivo baixado com sucesso!");
+        $log->info("Arquivo baixado com sucesso: $local");
+    } elseif (file_exists($local) && file_get_contents($local) === file_get_contents($url)) {
+        printSuccess("✅ Arquivo já baixado com sucesso!");    
+        $log->info("Arquivo já baixado com sucesso: $local");
+    } else {
+        $message = "Erro ao baixar o arquivo!";
+        printError("❌ $message");
+        $log->error($message);
+        exit;
+    }
+} catch (ParseException $e) {
+    $message = "Erro ao analisar o arquivo YAML: " . $e->getMessage();
+    printError("❌ $message");
+    $log->error($message);
+    exit;
+}
+
+// Converte o arquivo baixado
+try {
+    $objetoCVDW = Yaml::parseFile($local);
+} catch (ParseException $e) {
+    $message = "Erro ao converter o arquivo baixado: " . $e->getMessage();
+    printError("❌ $message");
+    $log->error($message);
+    exit;
+}
+
+$objetoCVDWLocal = Yaml::parseFile($local2);
+
+// Função para comparar arrays recursivamente
+function array_diff_recursive($array1, $array2)
+{
+    $difference = [];
+
+    foreach ($array1 as $key => $value) {
+        if (!array_key_exists($key, $array2)) {
+            $difference[$key] = $value;
+        } elseif (is_array($value)) {
+            $new_diff = array_diff_recursive($value, $array2[$key]);
+            if (!empty($new_diff)) {
+                $difference[$key] = $new_diff;
+            }
+        } elseif ($value !== $array2[$key]) {
+            $difference[$key] = $value;
+        }
+    }
+
+    return $difference;
+}
+
+// Função para exibir as diferenças
+function displayDifferences($differences) {
+    foreach ($differences as $key => $value) {
+        if (is_array($value)) {
+            echo "\033[33m$key:\033[0m\n"; // Amarelo
+            displayDifferences($value); // Exibe diferenças internas
+        } else {
+            echo "\033[31m$key => $value\033[0m\n"; // Vermelho
+        }
+    }
+}
+
+// Verifica as diferenças entre os arquivos
+$differences = array_diff_recursive($objetoCVDW, $objetoCVDWLocal);
+if (empty($differences)) {
+    printSuccess("✅ Os arquivos estão atualizados!");
+    $log->info("Os arquivos estão atualizados.");
+} else {
+    printWarning("❌ Diferenças encontradas entre os arquivos!");
+    $log->warning("Diferenças encontradas entre os arquivos.", ['differences' => $differences]);
+    displayDifferences($differences);
+}
