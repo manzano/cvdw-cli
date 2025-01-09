@@ -71,6 +71,10 @@ response:
       type: integer
       description: 'Código identificador do tempo de workflow'
       example: 5166
+    idatendimento:
+      type: integer
+      description: "Código identificador do atendimento"
+      example: 1
     idassistencia:
       type: integer
       description: 'Código identificador do atendimento'

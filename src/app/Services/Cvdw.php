@@ -73,7 +73,7 @@ class Cvdw
             'registros_por_pagina' => $this->qtd
         );
         if ($inputDataReferencia) {
-            $this->io->text('Data de referência: <fg=red>Ignorada</>');
+            $this->io->text('Data de referência: <fg=yellow>Ignorada</>');
         } else {
             
             if($apartir) {
@@ -107,7 +107,7 @@ class Cvdw
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
         //if (!isset($resposta->total_de_registros)) {
         if (!property_exists($resposta, 'total_de_registros')) { 
-            $this->io->error([
+            $this->io->warning([
                 'A requisição não retornou os dados esperados!',
                 'Parametros: ' . print_r($parametros, true)
             ]);
@@ -115,7 +115,7 @@ class Cvdw
             $this->io->text('Registros encontrados: ' . $resposta->total_de_registros);
             $totaldepaginas = 'Total de páginas: ' . $resposta->total_de_paginas;
             if(isset($maxpag)) {
-                $totaldepaginas .= '  <fg=red>(Será executado '.$maxpag.' página(s))</>';
+                $totaldepaginas .= '  <fg=yellow>(Será executado '.$maxpag.' página(s))</>';
             }
             $this->io->text($totaldepaginas);
             $progressBar = new ProgressBar($this->output, $resposta->total_de_registros);
@@ -146,7 +146,7 @@ class Cvdw
                     $progressBar->setMessage($this->getMensagem());
                     $progressBar->display();
                     if (!isset($resposta->dados) || !is_array($resposta->dados)) {
-                        $this->io->error([
+                        $this->io->warning([
                             'A requisição não retornou os dados esperados!'
                         ]);
                     } else {
@@ -154,7 +154,7 @@ class Cvdw
                         if (!$dadosNoPadrao) {
                             $progressBar->finish();
                             $mensagem = 'Os dados de ' . $objeto['path'] . ' não estão no padrão esperado!';
-                            $this->io->error([
+                            $this->io->warning([
                                 $mensagem,
                             ]);
                             $metadata = [
