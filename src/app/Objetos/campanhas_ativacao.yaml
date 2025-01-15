@@ -64,8 +64,9 @@ response:
       description: "Código identificador do registro da campanha de ativação."
       example: "193 ou 193_30"
     referencia_data:
-      type: datetime
-      description: "Data de referência"
+      type: string
+      format: datetime
+      description: "Data de referência."
       example: "2023-01-15 15:26:15"
     ativo:
       type: string
@@ -93,8 +94,8 @@ response:
       example: 1
     imobiliaria:
       type: string
-      description: "Nome da imobiliaria."
-      example: "IMOBILIÁRIA QC" 
+      description: "Nome da imobiliária."
+      example: "Imobiliária A" 
     idcorretor:
       type: integer
       description: "Código identificador do corretor."
@@ -106,7 +107,7 @@ response:
     idusuario:
       type: integer
       description: "Código identificador do gestor."
-      example: 1
+      example: 144
     usuario:
       type: string
       description: "Nome do gestor."
@@ -180,6 +181,7 @@ response:
       description: "Total de leads descartados da campanha."
       example: 1
     data_ultima_alteracao:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data da ultima alteração."
       example: "2023-05-15 17:16:15"

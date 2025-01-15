@@ -24,8 +24,8 @@ parametros:
   query: []
   path: []
   cookie: []
-schema: RetornarPesquisasAtivas
-subschema: PesquisasAtivas
+schema: RetornarPesquisasRespostas
+subschema: PesquisasRespostas
 body:
   pagina:
     type: integer
@@ -66,9 +66,14 @@ response:
       description: 'Identificador da resposta'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
+    ativo:
+      example: "S"  
+      type: string
+      description: "Informa se está ativo ou não"
     idpesquisa:
       type: integer
       description: 'Código identificador da pesquisa'

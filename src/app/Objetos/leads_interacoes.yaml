@@ -64,7 +64,8 @@ response:
       description: "Identificador da interação"
       example: "193 ou 193_30"
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de referência"
       example: "2024-03-31 09:15:54"
     ativo:
@@ -80,7 +81,8 @@ response:
       description: "Identificador do lead"
       example: 168523
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de cadastro"
       example: "2024-03-31 09:15:54"
     idcorretor:

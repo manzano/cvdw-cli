@@ -66,7 +66,8 @@ response:
       description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -114,11 +115,13 @@ response:
       description: 'Informa o valor programado'
       example: 1000.0
     data_previsao:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Informa a data de previsão'
       example: '2021-01-01'
     data_previsao_pagadoria:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Informa a data de previsão para pagadoria'
       example: '2021-01-01'
     forma_pagamento:
@@ -142,6 +145,7 @@ response:
       description: 'Identificador da programação no lançamento'
       example: 12
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de cadastro'
       example: '2024-03-31 09:15:54'

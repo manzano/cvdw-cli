@@ -66,13 +66,18 @@ response:
       description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
-      description: 'Data de referência'
+      type: string
+      format: datetime
+      description: 'Data de referência da comissão'
       example: '2024-03-31 09:15:54'
     ativo:
       type: string
       description: 'Informa se está ativo ou não'
       example: S
+    idcomissao:
+      type: integer
+      description: 'Código identificador da comissão'
+      example: 5166
     numero:
       type: integer
       description: 'Número identificador da comissão'
@@ -150,10 +155,12 @@ response:
       description: 'Número da nota fiscal'
       example: '1070'
     data_pagamento:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data do pagamento da comissão'
       example: '2022-01-14'
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de cadastro desse tempo de workflow'
       example: '2024-03-31 09:15:54'

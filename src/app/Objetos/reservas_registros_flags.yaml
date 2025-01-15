@@ -66,7 +66,8 @@ response:
       description: 'Número de identificação da reserva'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -78,7 +79,8 @@ response:
       description: 'Identificador da reserva'
       example: 12414
     data_criacao_reserva:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de criação da reserva'
       example: '2024-03-31 09:15:54'
     empreendimento:
@@ -89,10 +91,22 @@ response:
       type: integer
       description: 'Identificador do empreendimento'
       example: 123
+    etapa:
+      type: string
+      description: 'Nome da etapa'
+      example: 'Etapa A'
+    idetapa:
+      type: integer
+      description: 'Código identificador da etapa nome_cliente: empreendimento'
+      example: 123
     bloco:
       type: string
       description: 'Nome do bloco'
       example: '003'
+    idbloco:
+      type: integer
+      description: 'Código identificador da bloco nome_cliente: empreendimento'
+      example: 123
     unidade:
       type: string
       description: 'Nome da unidade'
@@ -118,190 +132,214 @@ response:
       description: 'Identificador do corretor'
       example: 123
     data_sincronizacao:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de sincronização'
       example: '2024-03-31 09:15:54'
     flag_inicio:
       type: string
       description: 'Informa se a reserva está na situação com flag início'
       example: Sim
-    data_entrada_flag_inicio:
-      type: datetime
+    data_flag_inicio:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag início'
       example: '2024-03-31 09:15:54'
     flag_inicio_semproposta:
       type: string
       description: 'Informa se a reserva está na situação com flag início_semproposta'
       example: Sim
-    data_entrada_flag_inicio_semproposta:
-      type: datetime
+    data_flag_inicio_semproposta:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag início_semproposta'
       example: '2024-03-31 09:15:54'
     flag_vencida:
       type: string
       description: 'Informa se a reserva está na situação com flag vencida'
       example: Sim
-    data_entrada_flag_vencida:
-      type: datetime
+    data_flag_vencida:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag vencida'
       example: '2024-03-31 09:15:54'
     flag_vendida:
       type: string
       description: 'Informa se a reserva está na situação com flag vendida'
       example: Sim
-    data_entrada_flag_vendida:
-      type: datetime
+    data_flag_vendida:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag vendida'
       example: '2024-03-31 09:15:54'
     flag_distrato:
       type: string
       description: 'Informa se a reserva está na situação com flag distrato'
       example: Sim
-    data_entrada_flag_distrato:
-      type: datetime
+    data_flag_distrato:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag distrato'
       example: '2024-03-31 09:15:54'
     flag_analisada:
       type: string
       description: 'Informa se a reserva está na situação com flag analisada'
       example: Sim
-    data_entrada_flag_analisada:
-      type: datetime
+    data_flag_analisada:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag analisada'
       example: '2024-03-31 09:15:54'
     flag_aprovada:
       type: string
       description: 'Informa se a reserva está na situação com flag aprovada'
       example: Sim
-    data_entrada_flag_aprovada:
-      type: datetime
+    data_flag_aprovada:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag aprovada'
       example: '2024-03-31 09:15:54'
     flag_aprovada_comercial:
       type: string
       description: 'Informa se a reserva está na situação com flag aprovada_comercial'
       example: Sim
-    data_entrada_flag_aprovada_comercial:
-      type: datetime
+    data_flag_aprovada_comercial:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag aprovada_comercial'
       example: '2024-03-31 09:15:54'
     flag_vender_sienge:
       type: string
       description: 'Informa se a reserva está na situação com flag vender_sienge'
       example: Sim
-    data_entrada_flag_vender_sienge:
-      type: datetime
+    data_flag_vender_sienge:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag vender_sienge'
       example: '2024-03-31 09:15:54'
     flag_cancelada_sienge:
       type: string
       description: 'Informa se a reserva está na situação com flag cancelada_sienge'
       example: Sim
-    data_entrada_flag_cancelada_sienge:
-      type: datetime
+    data_flag_cancelada_sienge:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag cancelada_sienge'
       example: '2024-03-31 09:15:54'
     flag_cancelada:
       type: string
       description: 'Informa se a reserva está na situação com flag cancelada'
       example: Sim
-    data_entrada_flag_cancelada:
-      type: datetime
+    data_flag_cancelada:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag cancelada'
       example: '2024-03-31 09:15:54'
     flag_pode_faturar:
       type: string
       description: 'Informa se a reserva está na situação com flag pode_faturar'
       example: Sim
-    data_entrada_flag_pode_faturar:
-      type: datetime
+    data_flag_pode_faturar:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag pode_faturar'
       example: '2024-03-31 09:15:54'
     flag_documentos:
       type: string
       description: 'Informa se a reserva está na situação com flag documentos'
       example: Sim
-    data_entrada_flag_documentos:
-      type: datetime
+    data_flag_documentos:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag documentos'
       example: '2024-03-31 09:15:54'
     flag_contrato:
       type: string
       description: 'Informa se a reserva está na situação com flag contrato'
       example: Sim
-    data_entrada_flag_contrato:
-      type: datetime
+    data_flag_contrato:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag contrato'
       example: '2024-03-31 09:15:54'
     flag_aguardando_faturamento:
       type: string
       description: 'Informa se a reserva está na situação com flag aguardando_faturamento'
       example: Sim
-    data_entrada_flag_aguardando_faturamento:
-      type: datetime
+    data_flag_aguardando_faturamento:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag aguardando_faturamento'
       example: '2024-03-31 09:15:54'
     flag_faturada:
       type: string
       description: 'Informa se a reserva está na situação com flag faturada'
       example: Sim
-    data_entrada_flag_faturada:
-      type: datetime
+    data_flag_faturada:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag faturada'
       example: '2024-03-31 09:15:54'
     flag_pendente_assinatura_eletronica:
       type: string
       description: 'Informa se a reserva está na situação com flag pendente_assinatura_eletronica'
       example: Sim
-    data_entrada_flag_pendente_assinatura_eletronica:
-      type: datetime
+    data_flag_pendente_assinatura_eletronica:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag pendente_assinatura_eletronica'
       example: '2024-03-31 09:15:54'
     flag_pendente_assinatura_eletronica_segundo_envelope:
       type: string
       description: 'Informa se a reserva está na situação com flag pendente_assinatura_eletronica_segundo_envelope'
       example: Sim
-    data_entrada_flag_pendente_assinatura_eletronica_segundo_envelope:
-      type: datetime
+    data_flag_pendente_assinatura_eletronica_segundo_envelope:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag pendente_assinatura_eletronica_segundo_envelope'
       example: '2024-03-31 09:15:54'
     flag_assinatura_clientes_associados:
       type: string
       description: 'Informa se a reserva está na situação com flag assinatura_clientes_associados'
       example: Sim
-    data_entrada_flag_assinatura_clientes_associados:
-      type: datetime
+    data_flag_assinatura_clientes_associados:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag assinatura_clientes_associados'
       example: '2024-03-31 09:15:54'
     flag_assinatura_todas_partes:
       type: string
       description: 'Informa se a reserva está na situação com flag assinatura_todas_partes'
       example: Sim
-    data_entrada_flag_assinatura_todas_partes:
-      type: datetime
+    data_flag_assinatura_todas_partes:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag assinatura_todas_partes'
       example: '2024-03-31 09:15:54'
     flag_reprovada_comercial:
       type: string
       description: 'Informa se a reserva está na situação com flag reprovada_comercial'
       example: Sim
-    data_entrada_flag_reprovada_comercial:
-      type: datetime
+    data_flag_reprovada_comercial:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag reprovada_comercial'
       example: '2024-03-31 09:15:54'
     flag_pendente_comercial:
       type: string
       description: 'Informa se a reserva está na situação com flag pendente_comercial'
       example: Sim
-    data_entrada_flag_pendente_comercial:
-      type: datetime
+    data_flag_pendente_comercial:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag pendente_comercial'
       example: '2024-03-31 09:15:54'
     flag_devolucao_erp:
       type: string
       description: 'Informa se a reserva está na situação com flag devolucao_erp'
       example: Sim
-    data_entrada_flag_devolucao_erp:
-      type: datetime
+    data_flag_devolucao_erp:
+      type: string
+      format: datetime
       description: 'Data e hora de entrada da reserva na situação com flag devolucao_erp'
       example: '2024-03-31 09:15:54'

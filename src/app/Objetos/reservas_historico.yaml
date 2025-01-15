@@ -64,7 +64,8 @@ response:
       description: "ID do histórico registrado no histórico"
       example: "193 ou 193_30"
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de referência"
       example: "2024-03-31 09:15:54"
     ativo:
@@ -80,7 +81,8 @@ response:
       description: "ID da reserva registrada na situação"
       example: 12414
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de cadastro do histórico"
       example: "2024-03-31 09:15:54"
     usuario:

@@ -66,7 +66,8 @@ response:
       description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -103,34 +104,67 @@ response:
       example: '16151.15'
     novos_bens:
       idpessoa_novo_bem:
+        example: '5'
         type: string
+        description: Código identificador do bem
       data_cad:
+        example: '2020-09-30 17:55:19'
         type: string
+        format: datetime
+        description: Data de cadastro do bem
       tipo_novo_bem:
+        example: Imóveis
         type: string
+        description: Tipo do bem - Imóveis ou Automóvel
       cep_novo_bem:
+        example: 49037550
         type: string
+        description: CEP do bem
       endereco_novo_bem:
+        example: Avenida Rotary
         type: string
+        description: Endereço do bem
       bairro_novo_bem:
+        example: Atalaia
         type: string
+        description: Bairro do bem
       valor_onus_mensal_novo_bem:
+        example:
         type: string
+        description: Valor ônus mensal do bem
       prazo_meses_novo_bem:
+        example:
         type: string
+        description: Prazo em meses do bem
       marca_modelo_automovel_novo_bem:
+        example:
         type: string
+        description: Marca/Modelo do bem automóvel
       ano_automovel_novo_bem:
+        example:
         type: string
+        description: Ano do bem automóvel
       placa_renavam_automovel_novo_bem:
+        example:
         type: string
+        description: Placa/Renavam do bem automóvel
       situacao_automovel_novo_bem:
+        example:
         type: string
+        description: Situação do bem automóvel
       quantidade_parcelas_automovel_novo_bem:
+        example:
         type: string
+        description: Situação do bem automóvel
       valor_parcela_automovel_novo_bem:
+        example:
         type: string
+        description: Valor parcela do bem automóvel
       estado:
+        example: Sergipe
         type: string
+        description: Estado do bem
       cidade:
+        example: Aracaju
         type: string
+        description: Cidade do bem

@@ -64,7 +64,8 @@ response:
       description: "Identificador do campo adicional"
       example: "193 ou 193_30"
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de referência"
       example: "2024-03-31 09:15:54"
     ativo:
@@ -92,10 +93,12 @@ response:
       description: "Valor do campo"
       example: USO_CONTRATO
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de cadastro"
       example: USO_CONTRATO
     data_modificacao:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de sincronização"
       example: USO_CONTRATO

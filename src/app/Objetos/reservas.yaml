@@ -64,7 +64,8 @@ response:
       description: "Identificador"
       example: "193 ou 193_30"
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de referência"
       example: "2024-03-31 09:15:54"
     ativo:
@@ -76,7 +77,8 @@ response:
       description: "Identificador da reserva"
       example: 12414
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de cadastro da reserva"
       example: "2024-03-31 09:15:54"
     codigointerno:
@@ -92,7 +94,8 @@ response:
       description: "Aprovação da reserva"
       example: Sim
     data_venda:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de venda da reserva"
       example: "2024-03-31 09:15:54"
     situacao:
@@ -120,9 +123,14 @@ response:
       description: "Empreendimento da reserva"
       example: "Retiro Teixeira"
     data_entrega_chaves_contrato_cliente:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de entrega das chaves conforme contrato com cliente"
       example: "2023-01-01"
+    etapa:
+      type: string
+      description: "Etapa do empreendimento"
+      example: "Etapa A"
     bloco:
       type: string
       description: "Bloco do empreendimento"
@@ -205,6 +213,11 @@ response:
       type: string
       description: "Vencimento da reserva"
       example: "2024-03-31 09:15:54"
+    data_cancelamento:
+      type: string
+      format: datetime
+      description: "Data de cancelamento da reserva"
+      example: "2024-03-31 09:15:54"
     campanha:
       type: string
       description: "Campanha da reserva"
@@ -226,7 +239,8 @@ response:
       description: "Identificador dos leads vinculados separados por ,"
       example: "168523,4322"
     data_ultima_alteracao_situacao:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data da última alteração de situação"
       example: "2024-03-31 09:15:54"
     idempresa_correspondente:
@@ -294,7 +308,8 @@ response:
       description: "Código interno da tabela de preço"
       example: JAN23
     data_contrato:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de contrato da reserva"
       example: "2022-12-23"
     valor_proposta:
@@ -305,6 +320,10 @@ response:
       type: number
       description: "VPL da tabela de preço da reserva"
       example: 631520.44
+    vgv_tabela:
+      type: number
+      description: " Valor da tabela de preço da reserva"
+      example: 650000.5
     vpl_reserva:
       type: number
       description: "VPL da reserva"
@@ -314,7 +333,8 @@ response:
       description: "Usuário que aprovou a reserva"
       example: "Manoel Gomes"
     data_aprovacao:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data que o usuário aprovou a reserva"
       example: "2022-12-07"
     juros_condicao_aprovada:
@@ -330,7 +350,8 @@ response:
       description: "Id da tabela da condição aprovada"
       example: 168523
     data_primeira_aprovacao:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data que o usuário aprovou a reserva pela primeira vez"
       example: "2022-12-07"
     aprovacao_absoluto:
@@ -358,7 +379,8 @@ response:
       description: "Nome do grupo de situação"
       example: "Grupo Teste"
     data_modificacao:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de modificação da reserva"
       example: "2022-12-07"
     campos_adicionais:
@@ -367,7 +389,8 @@ response:
         description: "Código identificador do campo adicional"
         example: 132
       referencia_data:
-        type: datetime
+        type: string
+        format: datetime
         description: "Data de referência"
         example: "2023-12-29 16:12:52"
       idcampo_valores:
@@ -392,13 +415,18 @@ response:
         description: "Código identificador do campo adicional"
         example: 132
       referencia_data:
-        type: datetime
+        type: string
+        format: datetime
         description: "Data de referência"
         example: "2023-12-29 16:12:52"
       idcampo_valores:
         type: integer
         description: "Código identificador do valor do campo adicional"
         example: 12414
+      idcampo:
+        type: integer
+        description: "Código identificador do campo adicional"
+        example: 132
       nome:
         type: string
         description: "Descrição do campo adicional"

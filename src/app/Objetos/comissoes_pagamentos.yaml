@@ -64,7 +64,8 @@ response:
       description: "Identificador"
       example: "193 ou 193_30"
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de referência"
       example: "2023-01-15 15:26:15"
     idcomissao:
@@ -81,6 +82,7 @@ response:
       example: 100.5
     vencimento:
       type: string
+      format: date
       description: "Data de vencimento da comissão"
       example: "2022-01-14"
     bloco:

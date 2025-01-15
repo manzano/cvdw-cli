@@ -66,7 +66,8 @@ response:
       description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -75,11 +76,11 @@ response:
       example: S
     idtime:
       type: integer
-      description: 'Identificador do time'
+      description: 'Código identificador do time'
       example: 3
     idgestor:
       type: integer
-      description: 'Identificador do gestor'
+      description: 'Código identificador do time'
       example: 443
     gestor:
       type: string
@@ -106,10 +107,12 @@ response:
       description: 'Informa se está ativo no painel'
       example: S
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de cadastro'
       example: '2024-03-31 09:15:54'
     data_modificacao:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de modificação do item'
       example: '2024-03-31 09:15:54'

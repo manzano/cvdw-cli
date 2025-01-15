@@ -66,7 +66,8 @@ response:
       description: 'Identificador do histórico'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -98,7 +99,8 @@ response:
       description: 'Nome do correspondente'
       example: 'correspondente teste'
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data da situacao'
       example: 23-05-2022
     de:

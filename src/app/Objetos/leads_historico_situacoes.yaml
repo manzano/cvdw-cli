@@ -66,7 +66,8 @@ response:
       description: 'Identificador do lead'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -78,7 +79,8 @@ response:
       description: 'Identificador do lead'
       example: 168523
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de cadastro'
       example: '2024-03-31 09:15:54'
     de:
@@ -97,10 +99,19 @@ response:
       type: string
       description: 'Nome da situação atual'
       example: Fim
+    motivo_cancelamento:
+      type: string
+      description: 'Motivo do cancelamento'
+      example: 'Localização'
     telefone:
       type: string
       description: 'Telefone do lead'
       example: '31984658621'
+    data_cancelamento:
+      type: string
+      format: datetime
+      description: 'Data do cancelamento'
+      example: '2024-03-31 09:15:54'
     painel_usuario:
       type: string
       description: 'Painel pelo qual o lead foi ganho'

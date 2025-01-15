@@ -64,7 +64,8 @@ response:
       description: "Identificador da tarefa"
       example: "193 ou 193_30"
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de referência"
       example: "2024-03-31 09:15:54"
     ativo:
@@ -84,11 +85,13 @@ response:
       description: "Identificador do lead"
       example: 168523
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de cadastro da tarefa"
       example: "2024-03-31 09:15:54"
     data:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data para qual está marcada a visita"
       example: "2024-03-31 09:15:54"
     idresponsavel:
@@ -132,7 +135,8 @@ response:
       description: "Funcionalidade da visita"
       example: lead
     data_conclusao:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data em que a visita foi concluída"
       example: "2024-03-31 09:15:54"
     pdv:

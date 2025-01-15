@@ -66,7 +66,8 @@ response:
       description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -82,11 +83,13 @@ response:
       description: 'Identificador da reserva'
       example: 12414
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data que foi gravado no banco'
       example: '2024-03-31 09:15:54'
     data_modificacao:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data da última alteração de situação'
       example: '2024-03-31 09:15:54'
     idusuario:

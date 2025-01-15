@@ -66,7 +66,8 @@ response:
       description: 'Identificador da corretor'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -103,7 +104,8 @@ response:
       description: 'Indica se está ativo no login'
       example: Sim
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de Cadastro do Corretor'
       example: '2024-03-31 09:15:54'
     estado_civil:
@@ -111,7 +113,8 @@ response:
       description: 'Estado Civil do Corretor'
       example: Casado
     data_nasc:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de nascimento do Corretor'
       example: '2024-03-31 09:15:54'
     telefone:

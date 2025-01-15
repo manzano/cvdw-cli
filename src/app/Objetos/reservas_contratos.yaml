@@ -64,7 +64,8 @@ response:
       description: "Identificador do contrato na reserva"
       example: "193 ou 193_30"
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de referência"
       example: "2024-03-31 09:15:54"
     idreservacontrato:
@@ -80,7 +81,8 @@ response:
       description: "Informa se está ativo ou não"
       example: S
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de geração do contrato"
       example: "2024-03-31 09:15:54"
     idcontrato:
@@ -160,7 +162,8 @@ response:
       description: "Identificador do corretor que gerou o contrato"
       example: 1
     data_entrega:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de previsão da entrega"
       example: "2024-03-31 09:15:54"
     justificativa:
@@ -232,7 +235,8 @@ response:
       description: "Informa que o foi iniciou a gerar o contrato do word"
       example: Sim
     data_iniciado_geracao_word:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data e hora que iniciou a gerar o contrato do word"
       example: "2024-03-31 09:15:54"
     _post:
@@ -240,6 +244,7 @@ response:
       description: "Informações do post da geração do contrato do word"
       example: null
     data_sincronizacao:
-      type: datetime
+      type: string
+      format: datetime
       description: "Data de sincronização"
       example: "2024-03-31 09:15:54"

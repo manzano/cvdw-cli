@@ -66,7 +66,8 @@ response:
       description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -85,8 +86,13 @@ response:
       type: integer
       description: 'Identificador da pessoa associada da reserva'
       example: 12414
+    idconjuge:
+      type: integer
+      description: 'Código identificador da pessoa que o associado é conjuge'
+      example: 2518
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data da condição'
       example: '2024-03-31 09:15:54'
     nome:

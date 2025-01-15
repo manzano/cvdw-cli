@@ -69,7 +69,8 @@ response:
       description: "Identificador do campo"
     referencia_data:
       example: "2024-03-31 09:15:44"
-      type: datetime
+      type: string
+      format: datetime
       description: Data de referência
     idcampo:
       example: 132023
@@ -81,7 +82,8 @@ response:
       description: "Identificador"
     data_cad:
       example: "2024-03-31 09:15:44"
-      type: datetime
+      type: string
+      format: datetime
       description: Data de cadastro do valor do campo
     nome:
       example: Nome do Campo

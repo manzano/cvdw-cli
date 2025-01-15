@@ -66,7 +66,8 @@ response:
       description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -86,7 +87,8 @@ response:
       description: 'Identificador da pessoa (legado)'
       example: 1
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de cadastro'
       example: '2024-03-31 09:15:54'
     ativo_painel:
@@ -132,7 +134,7 @@ response:
       description: 'Sexo da pessoa (Feminino; Masculino; Não desejo informar)'
       example: Masculino
     data_nasc:
-      type: datetime
+      type: string
       description: 'Data de nascimento'
       example: '1985-05-12'
     estado_civil:
@@ -140,7 +142,7 @@ response:
       description: 'Estado civil'
       example: 'Casado(a) - Participação final nos aquestos'
     data_casamento:
-      type: datetime
+      type: string
       description: 'Data de casamento'
       example: '2023-03-01'
     pacto_antenupcial_livro:
@@ -228,7 +230,7 @@ response:
       description: 'Orgão emissor do passaporte'
       example: PF
     passaporte_data_emissao:
-      type: datetime
+      type: string
       description: 'Data de emissão do passaporte'
       example: '2023-05-25'
     cnh:
@@ -240,15 +242,15 @@ response:
       description: 'Orgão emissor da CNH'
       example: Detran
     data_primeira_habilitacao_cnh:
-      type: datetime
+      type: string
       description: 'Data da primeira habilitação da CNH'
       example: '2018-05-25'
     data_fim_validade_cnh:
-      type: datetime
+      type: string
       description: 'Data de validade da CNH'
       example: '2024-05-35'
     cnh_data_emissao:
-      type: datetime
+      type: string
       description: 'Data de emissão da CNH'
       example: '2022-02-28'
     rnm:
@@ -260,7 +262,7 @@ response:
       description: 'Orgão emissor do RNM'
       example: PF
     rnm_data_emissao:
-      type: datetime
+      type: string
       description: 'Data de emissão do RNM'
       example: '2022-02-28'
     filiacao_mae:
@@ -292,7 +294,7 @@ response:
       description: 'Forma de constituição'
       example: LTDA
     data_constituicao:
-      type: datetime
+      type: string
       description: 'Data de constituição'
       example: '2023-11-13'
     numero_junta_comercial:
@@ -377,6 +379,7 @@ response:
       example: null
     ppe_exercicio:
       type: string
+      format: datetime
       description: 'Período de exercício'
       example: '2024-03-31 09:15:44'
     suspeito:
@@ -405,6 +408,7 @@ response:
       example: Analista
     relacionamento_ppe_exercicio:
       type: string
+      format: datetime
       description: 'Período de exercício do relacionamento'
       example: '2024-03-31 09:15:44'
     relacionamento_ppe_identificacao:

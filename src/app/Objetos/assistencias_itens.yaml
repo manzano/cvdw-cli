@@ -63,48 +63,73 @@ response:
   dados:
     referencia:
       type: string
-      description: 'Identificador do item da assistência'
+      description: 'Código identificador do item da assistência'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
+      example: '2023-01-15 15:26:15'
     idassistencia_item:
       type: integer
-      description: 'Identificador do item da assistência'
+      description: 'Código identificador do item da assistência'
       example: 104
     idassistencia:
       type: integer
-      description: 'Identificador da assistência'
+      description: 'Código identificador da assistência'
       example: 345
     item:
       type: string
       description: 'Nome do item'
       example: Parede
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de cadastro'
-      example: '2022-10-10'
+      example: '2022-05-09 09:36:02'
     descricao:
       type: text
       description: 'Descrição do registro'
       example: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis neque. (TEXT)'
     idsituacao:
       type: integer
-      description: 'Identificador da situação atual'
+      description: 'Código identificador da situação atual'
       example: 6
     situacao:
       type: string
       description: 'Situação atual'
       example: Cancelado
     data_conclusao:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de conclusão'
       example: '2022-10-15'
+    data_inicio_servico:
+      example: '2022-10-15'
+      type: string
+      format: datetime
+      description: 'Data de início do serviço'
     data_previsao:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de previsão da conclusão'
       example: '2022-10-14'
+    valor:
+      type: number
+      description: 'Valor do item'
+      example: 22.2
+    contabilizar_valor_total:
+      type: string
+      description: 'Contabiliza no total'
+      example: 'S'
+    coberto:
+      type: string
+      description: 'Se o item é coberto ou não'
+      example: 'S'
+    recorrente:
+      type: string
+      description: 'Caso seja um item recorrente'
+      example: 'S'
     horas_servico:
       type: integer
       description: 'Quantidade de horas investidas no serviço'
@@ -113,7 +138,13 @@ response:
       type: string
       description: 'Informa se está ativo ou não'
       example: S
+    data_modificacao:
+      type: string
+      format: datetime
+      description: 'Data da última modificação'
+      example: '2021-06-02 10:19:46'
     data_sincronizacao:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de sincronização com a base de dados'
       example: '2022-10-15'

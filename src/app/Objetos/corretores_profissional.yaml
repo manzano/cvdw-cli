@@ -64,7 +64,8 @@ response:
     referencia:
       type: string
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
     ativo:
       type: string
     idcorretor:
@@ -180,4 +181,5 @@ response:
     banco_cnpj_titular:
       type: string
     data_ult_hist:
-      type: datetime
+      type: string
+      format: datetime

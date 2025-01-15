@@ -65,6 +65,7 @@ response:
     referencia_data:
       example: "2023-01-15 15:26:15"
       type: string
+      format: datetime
     idempreendimento:
       example: 1186
       type: integer
@@ -140,15 +141,19 @@ response:
     data_bloqueio:
       example: "01/10/2024"
       type: string
+      format: datetime
     data_entrega:
       example: "01/01/2023"
       type: string
+      format: datetime
     agendar_a_partir:
       example: "01/01/2023"
       type: string
+      format: datetime
     liberar_a_partir:
       example: "01/01/2023"
       type: string
+      format: datetime
     plantas:
       idplanta:
         type: integer
@@ -165,6 +170,7 @@ response:
     situacao_reservada_vencimento:
       example: "2016-05-24 05:05:05"
       type: string
+      format: datetime
       description: "Data de vencimento da reserva"
     situacao_reservada_idsituacao:
       example: 1
