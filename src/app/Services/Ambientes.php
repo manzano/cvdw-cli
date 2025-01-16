@@ -7,7 +7,7 @@ class Ambientes
     private $envVars;
     public $env;
     private $parent;
-    public $envPath = __DIR__ . '/../envs';
+    public $envPath = __DIR__ . '/../../envs';
 
     public function __construct($env = null, $parent = null)
     {
