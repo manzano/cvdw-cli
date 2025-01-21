@@ -64,8 +64,7 @@ response:
       description: "Identificador do repasse"
       example: "193 ou 193_30"
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de referência"
       example: "2024-03-31 09:15:54"
     ativo:
@@ -179,8 +178,7 @@ response:
       description: "Número do contrato do repasse"
       example: "154457"
     data_registro:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de registro do contrato"
       example: "2022-05-18"
     correspondente:
@@ -196,23 +194,19 @@ response:
       description: "Agência do banco"
       example: "0102"
     data_alteracao_status:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da última alteração de status do repasse"
       example: "2024-03-31 09:15:54"
     data_venda:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da venda da reserva do repasse"
       example: "2024-03-31 09:15:54"
     data_contrato_contabilizado:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data do contrato do repasse"
       example: "2022-03-01"
     data_assinatura_de_contrato:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da assinatura do contrato do repasse"
       example: "2022-03-03"
     idlead:
@@ -220,18 +214,15 @@ response:
       description: "Identificador dos leads vinculados separados por vírgula"
       example: "166902,164524"
     data_recurso_liberado:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de liberação do recurso do repasse"
       example: "2022-04-01"
     data_sincronizacao:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da sincronização"
       example: "2024-03-31 09:15:54"
     data_cadastro:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de cadastro do repasse"
       example: "2024-03-31 09:15:54"
     idunidade:
@@ -243,8 +234,7 @@ response:
       description: "Reserva do repasse"
       example: 13360
     data_modificacao:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da última modificação"
       example: "2024-03-31 09:15:54"
     campos_adicionais:

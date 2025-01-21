@@ -64,122 +64,177 @@ response:
     referencia:
       type: string
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
     ativo:
       type: string
     idcorretor:
       type: integer
     profissional_experiencia_ramo_imobiliario:
+      example: "Sim"
       type: string
     profissional_quanto_tempo:
+      example: "1"
       type: string
     profissional_ultima_atual_empresa:
+      example: "Empresa Antiga"
       type: string
     profissional_segmento:
+      example: "Construção Civil"
       type: string
     profissional_data_inicio:
+      example: "1983-10-01"
       type: string
     profissional_data_fim:
+      example: "1982-01-01"
       type: string
     profissional_motivo_saida:
+      example: "Busca de novos caminhos"
       type: string
     profissional_superior_imediato:
+      example: "José Silva"
       type: string
     profissional_telefone:
+      example: "(98) 78977-8979"
       type: string
     profissional_cargo_inicial:
+      example: "Secretario"
       type: string
     profissional_cargo_final:
+      example: "Vice-diretor"
       type: string
     profissional_descricao_atividades:
+      example: "Atividades realizadas"
       type: string
     profissional_ultimos_atuais_ganhos:
+      example: "R$ 2000.00"
       type: string
     profissional_expectativa_ganhos:
+      example: "R$ 2970.00"
       type: string
     tipo_creci:
+      example: "Definitivo"
       type: string
     creci:
+      example: "1312"
       type: string
     situacao_creci:
+      example: "Ativo"
       type: string
     estado_creci:
+      example: "AC"
       type: string
     cidade_creci:
+      example: "Manoel Urbano"
       type: string
     vencimento_creci:
+      example: "1982-01-01"
       type: string
     tipo_conta:
+      example: "Conta corrente"
       type: string
     banco:
+      example: "Banco do Brasil S.A."
       type: string
     nome_agencia:
+      example: "Jardins"
       type: string
     numero_agencia:
+      example: "232"
       type: string
     digito_agencia:
+      example: "32"
       type: string
     numero_conta:
+      example: "3232"
       type: string
     digito_conta:
+      example: "32"
       type: string
     cpf_favorecido:
+      example: null
       type: string
     nome_favorecido:
+      example: "José Silva"
       type: string
     cnpj:
+      example: "04767675000111"
       type: string
     inscricao_municipal:
+      example: "12154-45"
       type: string
     ju_cep:
+      example: "49015110"
       type: string
     ju_logradouro:
+      example: "Rua"
       type: string
     ju_endereco:
+      example: "Rua Itabaiana"
       type: string
     ju_bairro:
+      example: "São José"
       type: string
     ju_numero:
+      example: "110"
       type: string
     ju_complemento:
+      example: "sdfasdf"
       type: string
     ju_estado:
+      example: "SE"
       type: string
     ju_cidade:
+      example: "Aracaju"
       type: string
     cnpj_faturamento:
+      example: null
       type: string
     razaosocial_faturamento:
+      example: null
       type: string
     nomefantasia_faturamento:
+      example: null
       type: string
     representante_nome:
+      example: null
       type: string
     representante_telefone:
+      example: null
       type: string
     representante_celular:
+      example: null
       type: string
     representante_email:
+      example: null
       type: string
     representante_rg:
+      example: null
       type: string
     representante_documento:
+      example: null
       type: string
     representante_creci:
+      example: null
       type: string
     representante_vencimento_creci:
+      example: null
       type: string
     representante_data_nasc:
+      example: null
       type: string
     representante_quantidade_filhos:
+      example: null
       type: string
     banco_tipo_doc:
+      example: "CPF"
       type: string
     banco_cpf_titular:
+      example: "04286482073"
       type: string
     banco_cnpj_titular:
+      example: null
       type: string
     data_ult_hist:
-      type: string
-      format: datetime
+      type: datetime
+      example: '2024-02-21 16:02:56'
+      description: Data da último historico

@@ -63,11 +63,10 @@ response:
   dados:
     referencia:
       type: string
-      description: 'Identificador'
+      description: 'Código identificador da comissão'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência da comissão'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -88,10 +87,10 @@ response:
       example: 'Comissão Gerada (1)'
     idsituacao:
       type: integer
-      description: 'ID da situação da comissão'
+      description: 'Código identificador da situação da comissão'
       example: 1
     idreserva:
-      type: string
+      type: integer
       description: 'Código identificador da reserva da comissão'
       example: 11346
     corretor:
@@ -109,11 +108,11 @@ response:
     bloco:
       type: string
       description: 'Bloco do empreendimento'
-      example: '1'
+      example: 'Bloco C'
     etapa:
       type: string
       description: 'Etapa do empreendimento'
-      example: '1'
+      example: 'Etapa A'
     unidade:
       type: string
       description: 'Unidade do empreendimento'
@@ -133,34 +132,32 @@ response:
     valor_contrato:
       type: string
       description: 'Valor do contrato da reserva que gerou a comissão'
-      example: 43438267.0
+      example: 43438267.8
     porcentagem_comissao:
       type: number
       description: 'Porcentagem da comissão'
-      example: 0.0
+      example: 1.02
     valor_comissao:
       type: number
       description: 'Valor da comissão'
-      example: 0.0
+      example: 100.5
     valor_comissao_apagar:
       type: number
       description: 'Valor da comissão restante à pagar'
-      example: 0.0
+      example: 100.5
     valor_pagamento:
       type: number
       description: 'Valor do pagamento da comissão'
-      example: 0.0
+      example: 100.5
     nota_fiscal:
       type: string
       description: 'Número da nota fiscal'
       example: '1070'
     data_pagamento:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data do pagamento da comissão'
       example: '2022-01-14'
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de cadastro desse tempo de workflow'
       example: '2024-03-31 09:15:54'

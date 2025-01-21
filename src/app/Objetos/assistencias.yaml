@@ -66,8 +66,7 @@ response:
       description: 'Identificador da assistência'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     idassistencia:
@@ -133,8 +132,7 @@ response:
       description: 'Informa se está ativo ou não'
       example: S
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de cadastro da assistência'
       example: '2021-01-08 14:10:44'
     idsituacao:
@@ -158,13 +156,11 @@ response:
       description: 'Empreendimento informado na criação da assistência'
       example: Empreendimento
     data_prevista_termino:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data prevista para a conclusão da assistência'
       example: '2027-01-01'
     data_conclusao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de conclusão da assistência'
       example: '2027-01-01'
     recorrente:
@@ -232,7 +228,6 @@ response:
       description: 'Data da última atualização da situação da assistência'
       example: '2022-10-10 17:00:10'
     data_modificacao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de modificação do registro'
       example: '2022-10-10 10:47:40'

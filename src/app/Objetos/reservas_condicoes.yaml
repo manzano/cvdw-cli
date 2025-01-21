@@ -64,8 +64,7 @@ response:
       description: "Identificador"
       example: "193 ou 193_30"
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de referência"
       example: "2024-03-31 09:15:54"
     ativo:
@@ -117,12 +116,10 @@ response:
       description: Indexador
       example: "2022-02-23"
     data_reservas_condicoes:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da condição"
       example: "2024-03-31 09:15:54"
     data_modificacao:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de modificação da condição"
       example: "2024-03-31 09:15:54"

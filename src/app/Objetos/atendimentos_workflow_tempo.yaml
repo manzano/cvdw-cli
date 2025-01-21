@@ -60,8 +60,7 @@ response:
       description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -97,7 +96,6 @@ response:
       description: 'Tempo que a assistência ficou na situação (Em minutos)'
       example: 2
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de cadastro desse tempo de workflow'
       example: '2024-03-31 09:15:54'

@@ -66,8 +66,7 @@ response:
       description: 'Código identificador do item da assistência'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2023-01-15 15:26:15'
     idassistencia_item:
@@ -83,8 +82,7 @@ response:
       description: 'Nome do item'
       example: Parede
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de cadastro'
       example: '2022-05-09 09:36:02'
     descricao:
@@ -100,18 +98,15 @@ response:
       description: 'Situação atual'
       example: Cancelado
     data_conclusao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de conclusão'
       example: '2022-10-15'
     data_inicio_servico:
       example: '2022-10-15'
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de início do serviço'
     data_previsao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de previsão da conclusão'
       example: '2022-10-14'
     valor:
@@ -139,8 +134,7 @@ response:
       description: 'Informa se está ativo ou não'
       example: S
     data_modificacao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data da última modificação'
       example: '2021-06-02 10:19:46'
     data_sincronizacao:

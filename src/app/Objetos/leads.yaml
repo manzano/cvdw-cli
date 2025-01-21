@@ -64,8 +64,7 @@ response:
       description: "Identificador do lead"
       example: "193 ou 193_30"
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de referência"
       example: "2024-03-31 09:15:54"
     ativo:
@@ -85,8 +84,7 @@ response:
       description: "Situação do lead"
       example: Descartado
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de cadastro"
       example: "2024-03-31 09:15:54"
     nome:
@@ -230,23 +228,19 @@ response:
       description: "Motivo de cancelamento do lead"
       example: "Desistiu de tudo"
     data_cancelamento:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de cancelamento do lead"
       example: "2022-06-21"
     data_sincronizacao:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de sincronização"
       example: "2024-03-31 09:15:54"
     data_ultima_interacao:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da última interação do lead"
       example: "2024-03-31 09:15:54"
     data_vencimento:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de vencimento do lead"
       example: "2024-03-31 09:15:54"
     cidade:
@@ -266,13 +260,11 @@ response:
       description: "Informa se o lead está vencido."
       example: "N"
     ultima_data_conversao:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da última conversão do lead"
       example: "2022-03-06"
     data_reativacao:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da reativação do lead"
       example: "2022-03-06"
     idsituacao_anterior:
@@ -300,13 +292,11 @@ response:
       description: "Inserção do lead no bolsão"
       example: S
     data_primeira_interacao_gestor:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da primeira interação do gestor"
       example: "2022-03-06"
     data_primeira_interacao_corretor:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da primeira interação do corretor"
       example: "2022-03-06"
     score:
@@ -350,8 +340,7 @@ response:
       description: "Lead retornado"
       example: "N"
     data_ultima_alteracao:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da última alteração do lead"
       example: "2024-03-31 09:15:54"
     origem_nome:

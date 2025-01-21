@@ -66,8 +66,7 @@ response:
       description: 'Identificador da interação'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     idinteracao:
@@ -87,8 +86,7 @@ response:
       description: 'Nome do usuário'
       example: Maria
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de cadastro'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -108,7 +106,6 @@ response:
       description: 'Nome do canal'
       example: Internet
     data_modificacao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de modificação do item'
       example: '2024-03-31 09:15:54'

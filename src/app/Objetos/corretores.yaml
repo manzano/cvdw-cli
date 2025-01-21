@@ -63,11 +63,10 @@ response:
   dados:
     referencia:
       type: string
-      description: 'Identificador da corretor'
+      description: ' Código identificador da corretor'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -80,7 +79,7 @@ response:
       example: 1
     idimobiliaria:
       type: integer
-      description: 'Nome da imobiliária do corretor'
+      description: 'Identificador da imobiliaria'
       example: 123
     documento:
       type: string
@@ -104,8 +103,7 @@ response:
       description: 'Indica se está ativo no login'
       example: Sim
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de Cadastro do Corretor'
       example: '2024-03-31 09:15:54'
     estado_civil:
@@ -113,8 +111,7 @@ response:
       description: 'Estado Civil do Corretor'
       example: Casado
     data_nasc:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de nascimento do Corretor'
       example: '2024-03-31 09:15:54'
     telefone:
@@ -146,13 +143,13 @@ response:
       description: 'País do Corretor'
       example: brasil
     possui_filhos:
-      type: string
+      type: integer
       description: 'Quantidade de filhos'
-      example: '2'
+      example: 2
     dependentes:
-      type: string
+      type: integer
       description: null
-      example: '1'
+      example: 1
     tamanho_camisa:
       type: string
       description: null

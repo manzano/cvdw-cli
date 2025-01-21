@@ -63,11 +63,10 @@ response:
   dados:
     referencia:
       type: string
-      description: 'Identificador da demanda'
+      description: 'Código identificador da demanda'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -76,25 +75,22 @@ response:
       example: S
     iddemanda:
       type: integer
-      description: 'Identificador da demanda'
+      description: 'Código identificador da demanda'
       example: 1
     demanda:
       type: string
       description: 'nome da demanda'
       example: 'demanda 1'
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data do Cadastro'
       example: '2022-05-18'
     data_encerramento:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data do Encerramento'
       example: '2022-05-18'
     data_conclusao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data da Conclusão'
       example: '2022-05-18'
     agencia:
@@ -102,8 +98,7 @@ response:
       description: 'Nome da Agência'
       example: 'agencia teste"'
     data_situacao_finalizada:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data da Finalização da Situação'
       example: '2022-05-18'
     situacao_demanda:
@@ -115,7 +110,6 @@ response:
       description: 'Nome do Empreendimento'
       example: 'empreendimento teste'
     data_ult_situacao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data da Ultima Situação'
       example: '2022-05-18'

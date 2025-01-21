@@ -67,8 +67,7 @@ response:
       description: "Código identificador do tempo de workflow"
     referencia_data:
       example: "2023-01-15 15:26:15"
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de referência"
     ativo:
       example: "S"
@@ -148,6 +147,5 @@ response:
       description: "Região do empreendimento da pesquisa"
     data_sincronizacao:
       example: "2023-01-15 15:26:15"
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de sincronização"

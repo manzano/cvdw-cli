@@ -66,8 +66,7 @@ response:
       description: 'Identificador da simulação'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -79,18 +78,15 @@ response:
       description: 'Identificador da simulação'
       example: 12414
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de cadastro da simulação'
       example: '2024-03-31 09:15:54'
     data_vencimento:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de vencimento da reserva'
       example: '2024-03-31 09:15:54'
     data_email_venc_corretor:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data e hora de envio do e-mail de vencimento para corretor'
       example: '2024-03-31 09:15:54'
     situacao_simulacao:
@@ -159,8 +155,7 @@ response:
       description: 'Identificador da tabela de preço'
       example: 30491
     data_alteracao_situacao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data e hora de alteração da situação'
       example: '2024-03-31 09:15:54'
     quantidade_mensagens:
@@ -176,18 +171,15 @@ response:
       description: 'Informa a aprovação da simulação'
       example: 'Sim'
     data_primeira_aprovacao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data e hora de alteração da primeira aprovação'
       example: '2024-03-31 09:15:54'
     data_entrega:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de entrega'
       example: '2024-08-01'
     data_base_calculo_juros:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data base para cálculo de juros'
       example: '2024-08-01'
     descricao_motivo_reprovacao:
@@ -231,13 +223,11 @@ response:
       description: 'Renda familiar'
       example: 7900
     sla_vencimento:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de vencimento do sla'
       example: '2024-08-01'
     data_condicao_aprovada:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de aprovação da simulação'
       example: '2024-08-01'
     idusuario_condicao_aprovada:
@@ -309,13 +299,11 @@ response:
       description: 'Quantidade de parcelas máxima'
       example: 2
     data_base_juros_futuro_cadastro:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data base para cálculo de juros futuro'
       example: '2022-06-20'
     data_base_calculo_pv:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data base para cálculo de valor PV'
       example: '2022-06-20'
     data_base_calculo_pv_alterada:
@@ -323,8 +311,7 @@ response:
       description: 'Informa se a data base para cálculo de valor PV foi modificada'
       example: 'Não'
     data_contrato_aprovacao_comercial:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de contrato da simulação'
       example: '2022-06-20'
     usuario_preencheu_data_contrato:

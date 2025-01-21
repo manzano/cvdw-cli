@@ -64,8 +64,7 @@ response:
       description: "Código identificador do registro da campanha de ativação."
       example: "193 ou 193_30"
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de referência."
       example: "2023-01-15 15:26:15"
     ativo:
@@ -181,7 +180,6 @@ response:
       description: "Total de leads descartados da campanha."
       example: 1
     data_ultima_alteracao:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data da ultima alteração."
       example: "2023-05-15 17:16:15"

@@ -67,8 +67,7 @@ response:
       description: "Código identificador do usuario"
     referencia_data:
       example: "2023-01-15 15:26:15"
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de referência"
     ativo:
       example: "S"

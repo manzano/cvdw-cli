@@ -66,8 +66,7 @@ response:
       description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -91,8 +90,7 @@ response:
       description: 'Código identificador da pessoa que o associado é conjuge'
       example: 2518
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data da condição'
       example: '2024-03-31 09:15:54'
     nome:

@@ -66,8 +66,7 @@ response:
       description: 'Identificador da reserva do sienge no CV'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     idsienge_reserva:
@@ -91,8 +90,7 @@ response:
       description: 'Tipo do contrato'
       example: Contrato
     data_contrato:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data do contrato'
       example: '2024-03-31 09:15:54'
     tipo_correcao:
@@ -152,8 +150,7 @@ response:
       description: 'Código do corretor'
       example: 2
     data_base:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data base'
       example: '2024-03-31 09:15:54'
     qtd_meses_carencia:
@@ -161,13 +158,11 @@ response:
       description: 'Quantidade de meses de carência'
       example: 1
     data_base_juros:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data base de juros'
       example: '2024-03-31 09:15:54'
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de cadastro'
       example: '2024-03-31 09:15:54'
     enviado:
@@ -175,8 +170,7 @@ response:
       description: 'Informa se reserva foi enviada para o Sienge'
       example: Sim
     data_envio:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de envio'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -204,8 +198,7 @@ response:
       description: 'Valor de mora diário em reais'
       example: 100.49
     data_contabil:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data contábil'
       example: '2024-03-31 09:15:54'
     juros_mora_mensal:
@@ -213,7 +206,6 @@ response:
       description: 'Percentual de juros de mora mensal'
       example: 0.7412
     data_modificacao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data da última modificação'
       example: '2024-03-31 09:15:54'

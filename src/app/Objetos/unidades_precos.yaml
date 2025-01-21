@@ -66,8 +66,7 @@ response:
       description: 'Identificador da unidade _ Identificador da tabela'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -119,13 +118,11 @@ response:
       description: 'Nome da tabela de preço'
       example: 'Tabela de Alto Padrão'
     data_vigencia_de:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de vigência (De) da tabela associada'
       example: '2021-05-01'
     data_vigencia_ate:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de vigência (Até) da tabela associada'
       example: '2022-05-31'
     valor_avaliacao:

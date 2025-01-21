@@ -66,8 +66,7 @@ response:
       description: 'Identificador'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2023-01-15 15:26:15'
     ativo:
@@ -147,13 +146,11 @@ response:
       description: 'Visibilidade da tarefa (I: Interna, C: Cliente)'
       example: 'C'
     data_cad: 
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de cadastro da tarefa'
       example: '2022-10-06 09:58:03'
     data_finalizou:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de finalização da tarefa'
       example: '2022-01-14 18:05:35'
     idusuario_finalizou:
@@ -169,8 +166,7 @@ response:
       description: 'Status da tarefa (AT: Atrasada, NO: No prazo, CA: Cancelada)'
       example: 'AT'
     data_vencimento:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de vencimento da tarefa'
       example: '2022-01-14 18:05:35'
     idusuario_criou:

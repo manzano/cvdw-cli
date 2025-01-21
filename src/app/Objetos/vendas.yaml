@@ -68,8 +68,7 @@ response:
       description: "Código identificador da reserva"
     referencia_data:
       example: "2023-01-15 15:26:15"
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de referência"
     ativo:
       example: "S"
@@ -81,13 +80,11 @@ response:
       description: "Código identificador da reserva"
     data_reserva:
       example: "2021-01-01 00:00:00"
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de cadastro da reserva"
     data_venda:
       example: "2021-01-01 00:00:00"
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de venda da reserva"
     idhistorico:
       example: 254
@@ -95,8 +92,7 @@ response:
       description: "Código identificador do histórico"
     data_historico:
       example: "2023-01-15 15:26:15"
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de cadastro do histórico"
     aprovada:
       example: "Sim"

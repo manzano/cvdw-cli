@@ -64,8 +64,7 @@ response:
       description: "Identificador do pré-cadastro"
       example: "193 ou 193_30"
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de referência"
       example: "2024-03-31 09:15:54"
     ativo:
@@ -237,8 +236,7 @@ response:
       description: "Data de vencimento do SLA"
       example: "2021-03-10"
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de cadastro"
       example: "2024-03-31 09:15:54"
     empresa_correspondente:
@@ -254,8 +252,7 @@ response:
       description: "Situação anterior do pré-cadastro"
       example: Aprovado
     data_ultima_alteracao_situacao:
-      type: string
-      format: datetime
+      type: datetime
       description: "Data de última alteração de situação"
       example: "2024-03-31 09:15:54"
     campos_adicionais:

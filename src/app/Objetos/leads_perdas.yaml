@@ -66,8 +66,7 @@ response:
       description: 'Identificador da perda do lead'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -95,8 +94,7 @@ response:
       description: 'Telefone do Lead'
       example: '+5579998412500'
     data_perda:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de perca do lead'
       example: '2024-03-31 09:15:54'
     idusuario:
