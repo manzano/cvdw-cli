@@ -71,6 +71,12 @@ response:
     idempreendimento_int:
       example: "1186"
       type: string
+    idtipo_empreendimento:
+      example: 1
+      type: integer
+    tipo_empreendimento:
+      example: "Horizontal"
+      type: string
     nome_empreendimento:
       example: "Empreendimento X"
       type: string
