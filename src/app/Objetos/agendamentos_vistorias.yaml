@@ -63,23 +63,23 @@ response:
   dados:
     referencia:
       type: string
-      description: 'Número de identificação da vistoria'
+      description: 'Código identificador da vistoria'
       example: '193 ou 193_30'
     referencia_data:
       type: datetime
       description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
+      example: '2023-01-15 15:26:15'
     ativo:
       type: string
       description: 'Informa se está ativo ou não'
       example: S
     idvistoria:
       type: integer
-      description: 'Número de identificação da vistoria'
+      description: 'Código identificador da vistoria'
       example: 193
     idvistoria_pai:
       type: integer
-      description: 'Número de identificação da vistoria origem'
+      description: 'Código identificador da vistoria origem'
       example: 174
     idempreendimento:
       type: integer
@@ -122,9 +122,10 @@ response:
       description: 'CEP do endereço do cliente'
       example: '49010020'
     data_agendamento:
-      type: datetime
+      type: string
+      format: date
       description: 'Data de cadastro do agendamento da vistoria'
-      example: '2024-03-31 09:15:54'
+      example: '2022-05-18'
     horario:
       type: string
       description: 'Horário do agendamento da vistoria'
@@ -157,6 +158,10 @@ response:
       type: integer
       description: 'Código identificador da reserva da unidade'
       example: 13014
+    numero:
+      type: integer
+      description: "Número"
+      example: 0
     data_modificacao:
       type: datetime
       description: 'Data da última modificação'

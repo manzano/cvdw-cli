@@ -85,6 +85,10 @@ response:
       type: integer
       description: 'Identificador da pessoa associada da reserva'
       example: 12414
+    idconjuge:
+      type: integer
+      description: 'Código identificador da pessoa que o associado é conjuge'
+      example: 2518
     data_cad:
       type: datetime
       description: 'Data da condição'

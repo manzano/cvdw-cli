@@ -91,7 +91,7 @@ Certifique-se de algum dos bancos de dados está configurado em seu ambiente:
 
 - /opt/mssql/bin/sqlservr --version
 
-Caso não tenho nenhum banco configurado, por favor, siga o [guia de banco de dados](GuiaDB.md).
+Caso não tenho nenhum banco configurado, por favor, siga o [guia de banco de dados](Guia_DB_Windows.md).
 
 ## Instale o CVDW-CLI
 

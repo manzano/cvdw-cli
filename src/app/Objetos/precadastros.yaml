@@ -115,6 +115,14 @@ response:
       type: string
       description: "Corretor do pré-cadastro"
       example: "TSURI BRASIL"
+    idimobiliaria:
+      type: integer
+      description: "Código identificador da imobiliária do pré-cadastro"
+      example: 2
+    imobiliaria:
+      type: string
+      description: "Nome da imobiliária do pré-cadastro."
+      example: "TSURI BRASIL"
     idempresa:
       type: integer
       description: "Identificador da empresa do pré-cadastro"
@@ -253,7 +261,8 @@ response:
         description: "Código identificador do campo adicional"
         example: 312
       referencia_data:
-        type: datetime
+        type: string
+        format: datetime
         description: "Data de referência"
         example: "2023-12-29 16:12:52"
       idcampo_valores:

@@ -33,19 +33,19 @@ Informe as credenciais do banco de dados onde deseja criar e alimentar as tabela
 Com o ambiente devidamente configurado, selecione esta opção para criar automaticamente as tabelas no banco de dados. Essa é a terceira etapa da configuração inicial.
 
 ### 3. Configurar Anonimização de Dados Sensíveis
-Escolha como os dados sensíveis do banco de dados serão tratados e anonimizados.
+Escolha como os dados sensíveis do banco de dados serão tratados e anonimizados. Este passo é optativo.
 
 ### 4. Verificar/Atualizar o Ambiente
-Utilize esta opção para atualizar o ambiente ou alterar o domínio, se necessário. Realize essa verificação após configurar a anonimização dos dados.
+Esta opção deverá ser utilizada para atualizar o ambiente com novas colunas/tabelas ou alterar o domínio apontado. Realize essa verificação após configurar a anonimização dos dados.
 
 ### 5. Limpar Datas de Referência das Tabelas
-Essa opção limpa as datas de referência das tabelas do banco de dados.
+Essa opção limpa as datas de referência das tabelas do banco de dados e permite que a inserção seja atualizada do primeiro registro da tabela.
 
 ### 6. Limpar Tabelas do CVDW (Truncate)
-Utilize esta opção para limpar todos os dados das tabelas ou de uma tabela específica, fornecendo o nome correto. Use com cautela.
+Utilize esta opção para limpar todos os dados das tabelas ou de uma tabela específica, fornecendo o nome correto. Use com cautela. Somente os dados contidos na tabela
 
 ### 7. Apagar Tabelas do CVDW (Drop)
-Essa opção permite apagar todas as tabelas ou uma tabela específica do banco de dados. Tenha cuidado, pois essa ação é irreversível.
+Essa opção permite apagar todas as tabelas ou uma tabela específica do banco de dados. Tenha cuidado, pois essa ação é irreversível. Faz-se necessário usar a opção 2 após essa ação.
 
 ### 8. Cadastrar Novo Ambiente a Partir do Padrão
 Permite cadastrar um novo ambiente baseado em um padrão já existente.

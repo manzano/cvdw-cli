@@ -123,6 +123,10 @@ response:
       type: datetime
       description: "Data de entrega das chaves conforme contrato com cliente"
       example: "2023-01-01"
+    etapa:
+      type: string
+      description: "Etapa do empreendimento"
+      example: "Etapa A"
     bloco:
       type: string
       description: "Bloco do empreendimento"
@@ -204,6 +208,10 @@ response:
     vencimento:
       type: string
       description: "Vencimento da reserva"
+      example: "2024-03-31 09:15:54"
+    data_cancelamento:
+      type: datetime
+      description: "Data de cancelamento da reserva"
       example: "2024-03-31 09:15:54"
     campanha:
       type: string
@@ -305,6 +313,10 @@ response:
       type: number
       description: "VPL da tabela de preço da reserva"
       example: 631520.44
+    vgv_tabela:
+      type: number
+      description: " Valor da tabela de preço da reserva"
+      example: 650000.5
     vpl_reserva:
       type: number
       description: "VPL da reserva"
@@ -367,7 +379,8 @@ response:
         description: "Código identificador do campo adicional"
         example: 132
       referencia_data:
-        type: datetime
+        type: string
+        format: datetime
         description: "Data de referência"
         example: "2023-12-29 16:12:52"
       idcampo_valores:
@@ -392,13 +405,18 @@ response:
         description: "Código identificador do campo adicional"
         example: 132
       referencia_data:
-        type: datetime
+        type: string
+        format: datetime
         description: "Data de referência"
         example: "2023-12-29 16:12:52"
       idcampo_valores:
         type: integer
         description: "Código identificador do valor do campo adicional"
         example: 12414
+      idcampo:
+        type: integer
+        description: "Código identificador do campo adicional"
+        example: 132
       nome:
         type: string
         description: "Descrição do campo adicional"

@@ -62,34 +62,34 @@ response:
     description: 'Total de páginas encontradas'
   dados:
     referencia:
+      example: 193 ou 193_30
       type: string
-      description: 'Identificador do usuario'
-      example: '193 ou 193_30'
+      description: "Código identificador do usuario"
     referencia_data:
+      example: "2023-01-15 15:26:15"
       type: datetime
-      description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
-    idusuario:
-      type: integer
-      description: 'Identificador do usuario'
-      example: 1
-    ativo_painel:
-      type: string
-      description: 'Informa se está ativo ou não'
-      example: ''
+      description: "Data de referência"
     ativo:
+      example: "S"
       type: string
-      description: 'Informa se está ativo ou não'
-      example: S
+      description: "Informa se está ativo ou não"
+    idusuario:
+      example: 1
+      type: integer
+      description: "Código identificador do usuario"
+    ativo_painel:
+      example: ""
+      type: string
+      description: "Informa se está ativo ou não"
     tipo_login:
+      example: "CV"
       type: string
-      description: 'Informa o tipo do Login'
-      example: CV
+      description: "Informa o tipo do Login"
     usuario:
+      example: "usuario nome"
       type: string
-      description: 'Nome do Usuario'
-      example: 'usuario nome'
+      description: "Nome do Usuario"
     motivo_bloqueiologin:
+      example: "I"
       type: string
-      description: 'Informa o motivo do bloqueio'
-      example: I
+      description: "Informa o motivo do bloqueio"

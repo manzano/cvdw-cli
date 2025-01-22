@@ -73,14 +73,14 @@ response:
       type: string
       description: 'Informa se está ativo ou não'
       example: 'S'
-    idtarafe_criada:
+    idtarefa_criada:
       type: integer
       description: 'Identificador da tarefa criada'
       example: 3
     idtarefa:
       type: integer
       description: 'Identificador da tarefa'
-      exemple: 3
+      example: 3
     idatendimento:
       type: integer
       description: 'Identificador do atendimento'
@@ -116,7 +116,7 @@ response:
     time:
       type: string
       description: 'Nome do time responsável pela tarefa'
-      example: 'Sac'
+      example: 'SAC'
     idresponsavel:
       type: integer
       description: 'Identificador do responsável pela tarefa'
@@ -139,18 +139,18 @@ response:
       example: 'A'
     motivo_cancelamento:
       type: string
-      description: 'Motivo de cancelamento tarefa'
+      description: 'Motivo do cancelamento da tarefa'
       example: 'Cancelado por razão de [...]'
     visibilidade:
       type: string
       description: 'Visibilidade da tarefa (I: Interna, C: Cliente)'
       example: 'C'
     data_cad: 
-      type: string
-      description: 'Data de cadastro de tarefa'
-      example: '2022-01-10 18:05:35'
+      type: datetime
+      description: 'Data de cadastro da tarefa'
+      example: '2022-10-06 09:58:03'
     data_finalizou:
-      type: string
+      type: datetime
       description: 'Data de finalização da tarefa'
       example: '2022-01-14 18:05:35'
     idusuario_finalizou:
@@ -166,7 +166,7 @@ response:
       description: 'Status da tarefa (AT: Atrasada, NO: No prazo, CA: Cancelada)'
       example: 'AT'
     data_vencimento:
-      type: string
+      type: datetime
       description: 'Data de vencimento da tarefa'
       example: '2022-01-14 18:05:35'
     idusuario_criou:

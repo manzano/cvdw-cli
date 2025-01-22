@@ -66,7 +66,7 @@ response:
       description: 'Identificador da imobiliaria'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54' 
     ativo:
@@ -82,7 +82,7 @@ response:
       description: 'Identificador da imobiliaria'
       example: 1
     data_cad:
-      type: string
+      type: datetime
       description: 'Data de Cadastro da Imobiliária'
       example: '2024-03-31 09:15:54'
     idestado:
@@ -152,7 +152,7 @@ response:
     avatar_nome:
       type: string
       description: null
-      example: photo
+      example: LOGO.jpg
     avatar_servidor:
       type: string
       description: null
@@ -199,8 +199,8 @@ response:
       example: '123456'
     observacoes:
       type: text
-      description: null
-      example: 'observacao imobiliaria'
+      description: 'Informa se imobiliária é uma microempresa Sim (S) ou Não (N)'
+      example: 'N'
     inscricao_estadual:
       type: string
       description: null
@@ -229,7 +229,7 @@ response:
       type: string
       description: null
       example: "0"
-    numero_conta": 
+    numero_conta: 
       type: string
       description: null
       example: "123456"
@@ -239,7 +239,7 @@ response:
       example: "1"
     nome_favorecido": 
       type: string
-      description: null
+      description: 'Nome do favorecido da conta de banco da imobiliária'
       example: 'José dos Santos Silva'
     cnpj_favorecido: 
       type: string
@@ -247,11 +247,11 @@ response:
       example: '87728824000160'
     alterar_login_corretor": 
       type: string
-      description: null
+      description: 'Informa se a imobiliária pode interferir no login do corretor: Sim (S) ou Não (N)'
       example: 'S'
     escala_plantao: 
       type: string
-      description: null
+      description: 'Informa se a imobiliária pode administrar a escala de plantão: Sim (S) ou Não (N)'
       example: 'S'
     idimobiliaria_nov: 
       type: string
@@ -259,11 +259,11 @@ response:
       example: '123456789'
     bloqueado_recebimento_pagamento_comissao: 
       type: string
-      description: null
+      description: 'Informa se a imobiliária está bloqueada (S) ou não (N) para receber pagamento de comissão'
       example: 'N'
     autocadastro_corretor: 
       type: string
-      description: null
+      description: 'Informa se exibe (S) ou não (N) a imobiliária no Cadastre-se do Painel Corretor.'
       example: 'S'
     diretor_nome: 
       type: string

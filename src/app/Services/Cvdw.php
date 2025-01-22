@@ -109,7 +109,9 @@ class Cvdw
         if (!property_exists($resposta, 'total_de_registros')) { 
             $this->io->warning([
                 'A requisição não retornou os dados esperados!',
-                'Parametros: ' . print_r($parametros, true)
+                'Parametros: ' . print_r($parametros, true),
+                'Está requisição está retornando vazia' 
+                
             ]);
         } else {
             $this->io->text('Registros encontrados: ' . $resposta->total_de_registros);

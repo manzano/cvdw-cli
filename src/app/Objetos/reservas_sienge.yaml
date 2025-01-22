@@ -109,6 +109,10 @@ response:
       type: string
       description: 'Corrigir parcela a partir de'
       example: '2024-03-31 09:15:54'
+    idplano_financeiro:
+      type: integer
+      description: 'Código identificador do plano financeiro'
+      example: 1
     gerar_residuo:
       type: string
       description: 'Informa geração de resíduo'
@@ -137,6 +141,10 @@ response:
       type: string
       description: Indexador
       example: INCC-DI
+    idindexador:
+      type: integer
+      description: 'Código identificador do indexador'
+      example: 5
     codigo_corretor:
       type: integer
       description: 'Código do corretor'

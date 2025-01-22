@@ -371,23 +371,52 @@ response:
       description: null
       example: '2024-03-31 09:15:54'
     condicoes_pagamento:
+      referencia:
+        example: 2288
+        type: integer
+        description: "Código identificador da condição de pagamento"
+      idsimulacoescondicoes:
+        example: 2288
+        type: integer
+        description: "Código identificador da condição de pagamento"
       nome:
+        example: "Ato"
         type: string
+        description: "Nome da série de pagamento"
       idserie:
+        example: 123
+        description: "Código identificador da série de pagamento"
         type: integer
       qtd_parcelas:
+        example: "1"
         type: string
+        description: "Quantidade de parcelas da série de pagamento"
       valor:
+        example: 15000
         type: number
+        description: "Valor da série de pagamento"
       valor_com_juros:
+        example: 17000
         type: number
+        description: "Valor com juros da série de pagamento"
       vencimento:
+        example: "2022-11-30"
         type: string
+        description: "Vencimento da série de pagamento"
       idportador:
+        example: 1
         type: integer
+        description: "Código identificador do portador da série"
       idindexador:
+        example: 1
         type: integer
+        description: "Código identificador do indexador da série"
       data_base_juros_futuro:
-        type: datetime
+        example: "2023-01-01"
+        type: string
+        format: datetime
+        description: "Data base para cálculo do juros futuro"
       juros_futuro:
+        example: 1.00005
         type: number
+        description: "Juros futuro"

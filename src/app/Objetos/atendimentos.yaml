@@ -63,10 +63,11 @@ response:
   dados:
     referencia:
       type: string
-      description: 'Identificador do atendimento'
+      description: 'Código identificador do atendimento'
       example: '193 ou 193_30'
     referencia_data:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -75,15 +76,21 @@ response:
       example: S
     idatendimento:
       type: integer
-      description: 'Identificador do atendimento'
+      description: 'Código identificador do atendimento'
       example: 1070
     protocolo:
       type: string
       description: 'Número do protocolo do atendimento (não é o ID)'
       example: '2205181070'
     data_cad:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de abertura do atendimento'
+      example: '2024-03-31 09:15:54'
+    data_situacao:
+      type: string
+      format: datetime
+      description: 'Data em que passou para a situação atual'
       example: '2024-03-31 09:15:54'
     prioridade:
       type: string
@@ -119,11 +126,11 @@ response:
       example: I
     idcanal:
       type: integer
-      description: 'Identificador do canal de atendimento'
+      description: 'Código identificador do canal de atendimento'
       example: 1
-    idatendimento_vinculo:
+    idatendimento_vinculados:
       type: string
-      description: 'Identificadores dos atendimentos vinculados ao atendimento'
+      description: 'Código identificadores dos atendimentos vinculados ao atendimento'
       example: '1254, 1548'
     previsao_conclusao:
       type: string
@@ -131,7 +138,7 @@ response:
       example: null
     idlead:
       type: integer
-      description: 'Identificador do lead'
+      description: 'Código identificador do lead'
       example: 999
     ativo_painel:
       type: string
@@ -169,6 +176,10 @@ response:
       type: text
       description: 'Unidade do empreendimento do atendimento'
       example: 102-B
+    idunidade:
+      type: string
+      description: 'Código identificadores das unidade(s) do atendimento'
+      example: '4, 5, 29'
     idcliente:
       type: integer
       description: 'Código identificador do cliente'
@@ -227,10 +238,6 @@ response:
       type: string
       description: 'Tipo do atendimento aberto'
       example: 'Aberto pelo gestor'
-    imobiliaria:
-      type: string
-      description: 'Nome da imobiliária vinculada ao atendimento'
-      example: 'Imobiliaria das flores'
     corretor:
       type: string
       description: 'Nome do corretor vinculado ao atendimento'
@@ -241,23 +248,31 @@ response:
       example: 2
     idresponsavel:
       type: integer
-      description: 'Identificador do responsável pelo atendimento'
+      description: 'Código identificador do responsável pelo atendimento'
       example: 34
     responsavel:
       type: string
       description: 'Responsável pelo atendimento'
       example: Henrique
-    idunidade:
-      type: string
-      description: 'Identificadores das unidade(s) do atendimento'
-      example: '4, 5, 29'
     idcorretor:
       type: integer
-      description: 'Identificador do corretor'
+      description: 'Código identificador do corretor'
       example: 98
+    imobiliaria:
+      type: string
+      description: 'Nome da imobiliária vinculada ao atendimento'
+      example: 'Imobiliaria das flores'
     idimobiliaria:
       type: string
-      description: 'Identificador da imobiliária'
+      description: 'Código identificador da imobiliária'
+      example: 2
+    quantidade_mensagens:
+      type: integer
+      description: 'Quantidade das mensagens no atendimento'
+      example: 3
+    quantidade_interacoes:
+      type: integer
+      description: 'Quantidade das interações no atendimento'
       example: 2
     sigla_empreendimento:
       type: string
@@ -273,13 +288,14 @@ response:
       example: pessoal
     times:
       type: string
-      description: 'Time responsável pelo atendimento'
-      example: Palmeiras
+      description: 'Times responsáveis pelo atendimento'
+      example: 'Assistência, Relacionar, SAC'
     origem:
       type: string
       description: 'Origem do atendimento'
       example: GE
     data_modificacao:
-      type: datetime
+      type: string
+      format: datetime
       description: 'Data de modificação do registro'
-      example: '2022-10-10'
+      example: '2022-10-10 15:26:15'

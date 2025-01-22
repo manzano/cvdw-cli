@@ -81,6 +81,7 @@ response:
       example: 100.5
     vencimento:
       type: string
+      format: date
       description: "Data de vencimento da comissão"
       example: "2022-01-14"
     bloco:

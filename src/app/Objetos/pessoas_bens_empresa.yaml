@@ -82,19 +82,41 @@ response:
       description: 'Identificador da pessoa (Código Interno)'
       example: '726'
     bens_empresa:
+      referencia:
+        type: string
+        description: 'Código identificador do bem da empresa'
+        example: 4
       idpessoa_bem_empresa:
         type: string
+        description: 'Código identificador do bem da empresa'
+        example: 4
       data_cad:
         type: string
+        format: datetime
+        description: 'Data de cadastro'
+        example: '2024-01-22 11:14:34'
       idpessoa:
         type: string
+        description: 'Código identificador da pessoa'
+        example: 10034
       tipo:
         type: string
+        description: 'Tipo do bem'
+        example: "Carro"
       valor_atual:
         type: string
+        description: 'Valor atual do bems'
+        example: "150000.00"
       onus:
         type: string
+        description: 'Informa se o bem tem ônus'
+        example: "Sim"
       numero_parcelas:
         type: string
+        description: 'Número de parcelas'
+        example: 12
       valor_parcelas_mensais:
         type: string
+        description: 'Valor mensal da parcela'
+        example: "15000.00"
+      

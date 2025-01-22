@@ -63,7 +63,7 @@ response:
   dados:
     referencia:
       type: string
-      description: 'Identificador da demanda'
+      description: 'Código identificador da demanda'
       example: '193 ou 193_30'
     referencia_data:
       type: datetime
@@ -75,7 +75,7 @@ response:
       example: S
     iddemanda:
       type: integer
-      description: 'Identificador da demanda'
+      description: 'Código identificador da demanda'
       example: 1
     demanda:
       type: string

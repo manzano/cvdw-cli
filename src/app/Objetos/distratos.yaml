@@ -81,7 +81,7 @@ response:
       type: string
       description: 'Informação de aprovação da reserva. (Sim, Não)'
       example: Sim
-    data:
+    data_cad:
       type: datetime
       description: 'Data de cadastro da reserva'
       example: '2024-03-31 09:15:54'
@@ -97,6 +97,10 @@ response:
       type: integer
       description: 'ID da situação'
       example: 3
+    etapa:
+      type: string
+      description: 'Etapa do empreendimento'
+      example: 'Etapa A'
     idempreendimento:
       type: integer
       description: 'Código identificador do empreendimento'
@@ -163,6 +167,10 @@ response:
       type: string
       description: 'Imobiliária da reserva'
       example: 'IMOBILIÁRIA QC'
+    descricao_motivo_distrato:
+      type: string
+      description: 'Descrição do motivo do distrato'
+      example: 'Motivo'
     motivo_distrato:
       type: string
       description: 'Título da razão do distrato'

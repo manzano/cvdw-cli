@@ -77,10 +77,18 @@ response:
       type: integer
       description: 'Identificador do lead'
       example: 168523
+    idlead_reativacao:
+      type: integer
+      description: 'Identificador da reativação'
+      example: 193
     data_ganho:
       type: datetime
       description: 'Data de cadastro'
       example: '2024-03-31 09:15:54'
+    idusuario:
+      type: integer
+      description: 'Código identificador do usuário da reativação.'
+      example: 114
     nome:
       type: string
       description: 'Nome do lead'
@@ -97,7 +105,3 @@ response:
       type: string
       description: 'Painel pelo qual o lead foi ganho'
       example: Gestor
-    idusuario:
-      type: string
-      description: 'Usuário responsável'
-      example: '11212'

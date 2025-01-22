@@ -64,12 +64,18 @@ response:
       type: integer
     referencia_data:
       example: "2023-01-15 15:26:15"
-      type: string
+      type: datetime
     idempreendimento:
       example: 1186
       type: integer
     idempreendimento_int:
       example: "1186"
+      type: string
+    idtipo_empreendimento:
+      example: 1
+      type: integer
+    tipo_empreendimento:
+      example: "Horizontal"
       type: string
     nome_empreendimento:
       example: "Empreendimento X"
@@ -139,16 +145,16 @@ response:
       type: string
     data_bloqueio:
       example: "01/10/2024"
-      type: string
+      type: datetime
     data_entrega:
       example: "01/01/2023"
-      type: string
+      type: datetime
     agendar_a_partir:
       example: "01/01/2023"
-      type: string
+      type: datetime
     liberar_a_partir:
       example: "01/01/2023"
-      type: string
+      type: datetime
     plantas:
       idplanta:
         type: integer
@@ -164,7 +170,7 @@ response:
       type: integer
     situacao_reservada_vencimento:
       example: "2016-05-24 05:05:05"
-      type: string
+      type: datetime
       description: "Data de vencimento da reserva"
     situacao_reservada_idsituacao:
       example: 1

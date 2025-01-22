@@ -71,11 +71,11 @@ response:
       example: '2024-03-31 09:15:54'
     idassistencia:
       type: integer
-      description: 'Identificador da assistência'
+      description: 'Código Identificador da assistência'
       example: 11
     idcliente:
       type: integer
-      description: 'Identificador do cliente vinculado à assistência'
+      description: 'Código Identificador do cliente vinculado à assistência'
       example: 345
     documento_cliente:
       type: string
@@ -101,11 +101,11 @@ response:
       example: '49010020'
     idempreendimento:
       type: integer
-      description: 'Identificador do empreendimento vinculado à assistência'
+      description: 'Código Identificador do empreendimento vinculado à assistência'
       example: 3
     codigointerno_empreendimento:
       type: string
-      description: 'Identificador do empreendimento para integrações'
+      description: 'Código Identificador do empreendimento para integrações'
       example: '222'
     empreendimento:
       type: string
@@ -123,6 +123,10 @@ response:
       type: string
       description: 'Unidade do empreendimento vinculado à assistência'
       example: '103'
+    parecer_tecnico:
+      type: string
+      description: 'Descrição do parecer técnico'
+      example: 'Parecer dado pelo técnico'
     ativo:
       type: string
       description: 'Informa se está ativo ou não'
@@ -130,7 +134,7 @@ response:
     data_cad:
       type: datetime
       description: 'Data de cadastro da assistência'
-      example: '2021-12-20'
+      example: '2021-01-08 14:10:44'
     idsituacao:
       type: integer
       description: 'Identificador da situação da assistência'
@@ -207,6 +211,14 @@ response:
       type: text
       description: 'Descrição da área'
       example: 'Sem descrição'
+    motivo_cancelamento:
+      type: string
+      description: 'O motivo que levou ao cancelamento'
+      example: Aberto por engano
+    descricao_motivo_cancelamento:
+      example: O cliente se enganou
+      type: string
+      description: A descrição do motivo que levou ao cancelamento
     prioridade:
       type: string
       description: 'Prioridade informada'
@@ -214,8 +226,8 @@ response:
     ultima_atualizacao_situacao:
       type: string
       description: 'Data da última atualização da situação da assistência'
-      example: '2022-10-10'
+      example: '2022-10-10 17:00:10'
     data_modificacao:
       type: datetime
       description: 'Data de modificação do registro'
-      example: '2022-10-10'
+      example: '2022-10-10 10:47:40'

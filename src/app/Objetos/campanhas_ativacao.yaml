@@ -65,7 +65,7 @@ response:
       example: "193 ou 193_30"
     referencia_data:
       type: datetime
-      description: "Data de referência"
+      description: "Data de referência."
       example: "2023-01-15 15:26:15"
     ativo:
       type: string
@@ -93,8 +93,8 @@ response:
       example: 1
     imobiliaria:
       type: string
-      description: "Nome da imobiliaria."
-      example: "IMOBILIÁRIA QC" 
+      description: "Nome da imobiliária."
+      example: "Imobiliária A" 
     idcorretor:
       type: integer
       description: "Código identificador do corretor."
@@ -106,7 +106,7 @@ response:
     idusuario:
       type: integer
       description: "Código identificador do gestor."
-      example: 1
+      example: 144
     usuario:
       type: string
       description: "Nome do gestor."

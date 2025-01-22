@@ -62,30 +62,90 @@ response:
     description: 'Total de páginas encontradas'
   dados:
     referencia:
+      example: 193 ou 193_30
       type: string
-      description: 'Código identificador do tempo de workflow'
-      example: '193 ou 193_30'
+      description: "Código identificador do tempo de workflow"
     referencia_data:
+      example: "2023-01-15 15:26:15"
       type: datetime
-      description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
+      description: "Data de referência"
     ativo:
+      example: "S"
       type: string
-      description: 'Informa se está ativo ou não'
-      example: S
+      description: "Informa se está ativo ou não"
     idpesquisa:
-      type: integer
-      description: 'Código identificador da pesquisa'
       example: 5166
-    pesquisa:
-      type: string
-      description: 'Título da pesquisa'
-      example: 'Pesquisa de satisfação de fim de ano'
+      type: integer
+      description: "Código identificador da pesquisa"
     dataInicio:
-      type: datetime
-      description: 'Data inicio da pesquisa'
-      example: '2020-11-20'
+      example: "2020-11-20"
+      type: string
+      description: "Data inicio da pesquisa"
     dataFim:
+      example: "2020-12-20"
+      type: string
+      description: "Data fim da pesquisa"
+    idpergunta:
+      example: 5166
+      type: integer
+      description: "Código identificador da pergunta"
+    perguntas:
+      example: "Qual é a pergunta?"
+      type: string
+      description: "Título da pesquisa"
+    nome:
+      example: "Maria Santos"
+      type: string
+      description: "Nome do cliente"
+    idcliente:
+      example: 1
+      type: integer
+      description: "Código identificador do cliente"
+    documento_cliente:
+      example: "12345678900"
+      type: string
+      description: "CPF do cliente"
+    email:
+      example: "joao@exemple.com"
+      type: string
+      description: "Email do cliente"
+    cep_cliente:
+      example: "49000000"
+      type: string
+      description: "CEP do cliente"
+    idresposta:
+      example: 1
+      type: integer
+      description: "Código identificador da resposta"
+    quem_respondeu:
+      example: 2
+      type: integer
+      description: "Código identificador de quem respondeu"
+    data_referencia:
+      example: "2023-01-15 15:26:15"
+      type: string
+      description: "Data da resposta"
+    tipo_pesquisa:
+      example: "Satisfação"
+      type: string
+      description: "Tipo da pesquisa"
+    idempreendimento:
+      example: 3
+      type: integer
+      description: "Código identificador do empreendimento"
+    codigointerno_empreendimento:
+      example: "1"
+      type: string
+      description: "Código interno do empreendimento"
+    empreendimento:
+      example: "Empreendimento Exemplo"
+      type: string
+      description: "Nome do empreendimento"
+    regiao:
+      example: "Sul"
+      type: string
+      description: "Região do empreendimento da pesquisa"
+    data_sincronizacao:
+      example: "2023-01-15 15:26:15"
       type: datetime
-      description: 'Data fim da pesquisa'
-      example: '2020-12-20'
+      description: "Data de sincronização"

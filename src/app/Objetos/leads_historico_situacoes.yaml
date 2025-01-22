@@ -97,10 +97,18 @@ response:
       type: string
       description: 'Nome da situação atual'
       example: Fim
+    motivo_cancelamento:
+      type: string
+      description: 'Motivo do cancelamento'
+      example: 'Localização'
     telefone:
       type: string
       description: 'Telefone do lead'
       example: '31984658621'
+    data_cancelamento:
+      type: datetime
+      description: 'Data do cancelamento'
+      example: '2024-03-31 09:15:54'
     painel_usuario:
       type: string
       description: 'Painel pelo qual o lead foi ganho'

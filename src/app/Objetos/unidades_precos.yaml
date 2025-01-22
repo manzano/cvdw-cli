@@ -113,12 +113,16 @@ response:
       type: integer
       description: 'Identificador da tabela de preço'
       example: 1234
-    data_vigencia_de:
+    tabela:
       type: string
+      description: 'Nome da tabela de preço'
+      example: 'Tabela de Alto Padrão'
+    data_vigencia_de:
+      type: datetime
       description: 'Data de vigência (De) da tabela associada'
       example: '2021-05-01'
     data_vigencia_ate:
-      type: string
+      type: datetime
       description: 'Data de vigência (Até) da tabela associada'
       example: '2022-05-31'
     valor_avaliacao:
