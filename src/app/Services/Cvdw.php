@@ -79,11 +79,11 @@ class Cvdw
             if($apartir) {
                 $apartir = str_replace('T', ' ', $apartir);
                 $referencia_data = new DateTime($apartir);
-                $parametros['a_partir_data_referencia'] = $apartir;
+                $parametros['a_partir_data_modificacao'] = $apartir;
                 $referencia_data->modify('-0 seconds');
                 $referencia_data_UI = $referencia_data->format('d/m/Y H:i:s');
                 $referencia_data = $referencia_data->format('Y-m-d H:i:s');
-                $parametros['a_partir_data_referencia'] = $referencia_data;
+                $parametros['a_partir_data_modificacao'] = $referencia_data;
                 $this->io->text('Data de referência: ' . $referencia_data_UI);
             } else {
                 $referencia_data = $this->buscaUltimaData($objeto['tabela']);
@@ -92,10 +92,11 @@ class Cvdw
                     $referencia_data->modify('-0 seconds');
                     $referencia_data_UI = $referencia_data->format('d/m/Y H:i:s');
                     $referencia_data = $referencia_data->format('Y-m-d H:i:s');
-                    $parametros['a_partir_data_referencia'] = $referencia_data;
+                    $parametros['a_partir_data_modificacao'] = $referencia_data;
                 } else {
                     $referencia_data_UI = 'Nenhuma data encontrada';
                 }
+                
                 $this->io->text('Data de referência: ' . $referencia_data_UI);
             }
         }
@@ -104,6 +105,7 @@ class Cvdw
         $this->alterados = $this->alteradoserros = 0;
 
         $resposta = $http->requestCVDW($objeto['path'], false, $this, $parametros);
+       
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
         //if (!isset($resposta->total_de_registros)) {
         if (!property_exists($resposta, 'total_de_registros')) { 
