@@ -413,8 +413,7 @@ response:
         description: "Código identificador do indexador da série"
       data_base_juros_futuro:
         example: "2023-01-01"
-        type: string
-        format: datetime
+        type: datetime
         description: "Data base para cálculo do juros futuro"
       juros_futuro:
         example: 1.00005

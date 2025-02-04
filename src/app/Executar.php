@@ -256,8 +256,9 @@ class Executar extends Command
                 $io->section($dados['nome']);
                 $io->text('Executando objeto: ' . $dados['nome'] . '');
                 $this->eventosObj->registrarEvento($this->evento, 'executar', $dados['nome']);
-
+                
                 $cvdw->processar($objeto, $this->qtd, $io, $this->apartir, $inputDataReferencia, $this->logObjeto, $this->maxpag);
+                
             }
         } else {
             $io->error('Objeto não especificado.');

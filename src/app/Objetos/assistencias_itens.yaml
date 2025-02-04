@@ -138,7 +138,6 @@ response:
       description: 'Data da última modificação'
       example: '2021-06-02 10:19:46'
     data_sincronizacao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de sincronização com a base de dados'
       example: '2022-10-15'
