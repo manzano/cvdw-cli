@@ -271,7 +271,6 @@ class Executar extends Command
     {
         $objetos = new Objeto($this->input, $this->output);
         $objetosArray = $objetos->retornarObjetos();
-
         $objetosOpcoes = array();
         foreach ($objetosArray as $objeto => $dados) {
             $objetosOpcoes[] = $dados['nome'];
