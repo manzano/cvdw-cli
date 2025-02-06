@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    image: gabrielmanzano/cvdw-cli:latest
+    container_name: cvdw-cli
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      CV_URL: SEU AMBIENTE
+      CV_EMAIL: SEU EMAIL
+      CV_TOKEN: SEU TOKEN
+      DB_CONNECTION: pdo_mysql
+      DB_PORT: 3306
+      DB_HOST: db
+      DB_DATABASE: cvdw
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_SCHEMA: ""
+      ANONIMIZAR: ""
+      ANONIMIZAR_TIPO: ""
+      CVDW_AMBIENTE: PRD
+
+  db:
+    image: mariadb:latest
+    container_name: mariadb-cvdw
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cvdw
+    ports:
+      - "3308:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:
