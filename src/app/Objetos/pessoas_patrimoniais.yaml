@@ -108,8 +108,7 @@ response:
         description: Código identificador do bem
       data_cad:
         example: '2020-09-30 17:55:19'
-        type: string
-        format: datetime
+        type: datetime
         description: Data de cadastro do bem
       tipo_novo_bem:
         example: Imóveis

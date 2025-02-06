@@ -66,8 +66,7 @@ response:
       description: 'Código identificador do atendimento'
       example: '193 ou 193_30'
     referencia_data:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de referência'
       example: '2024-03-31 09:15:54'
     ativo:
@@ -83,13 +82,11 @@ response:
       description: 'Número do protocolo do atendimento (não é o ID)'
       example: '2205181070'
     data_cad:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de abertura do atendimento'
       example: '2024-03-31 09:15:54'
     data_situacao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data em que passou para a situação atual'
       example: '2024-03-31 09:15:54'
     prioridade:
@@ -295,7 +292,6 @@ response:
       description: 'Origem do atendimento'
       example: GE
     data_modificacao:
-      type: string
-      format: datetime
+      type: datetime
       description: 'Data de modificação do registro'
       example: '2022-10-10 15:26:15'

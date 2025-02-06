@@ -379,8 +379,7 @@ response:
         description: "Código identificador do campo adicional"
         example: 132
       referencia_data:
-        type: string
-        format: datetime
+        type: datetime
         description: "Data de referência"
         example: "2023-12-29 16:12:52"
       idcampo_valores:
@@ -405,8 +404,7 @@ response:
         description: "Código identificador do campo adicional"
         example: 132
       referencia_data:
-        type: string
-        format: datetime
+        type: datetime
         description: "Data de referência"
         example: "2023-12-29 16:12:52"
       idcampo_valores:

@@ -91,8 +91,7 @@ response:
         description: 'Código identificador do bem da empresa'
         example: 4
       data_cad:
-        type: string
-        format: datetime
+        type: datetime
         description: 'Data de cadastro'
         example: '2024-01-22 11:14:34'
       idpessoa:

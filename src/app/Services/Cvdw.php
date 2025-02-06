@@ -98,6 +98,7 @@ class Cvdw
                 } else {
                     $referencia_data_UI = 'Nenhuma data encontrada';
                 }
+                
                 $this->io->text('Data de referência: ' . $referencia_data_UI);
             }
         }
@@ -106,6 +107,7 @@ class Cvdw
         $this->alterados = $this->alteradoserros = 0;
 
         $resposta = $http->requestCVDW($objeto['path'], false, $this, $parametros);
+       
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
         //if (!isset($resposta->total_de_registros)) {
         if (!property_exists($resposta, 'total_de_registros')) { 
