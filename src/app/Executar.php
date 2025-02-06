@@ -20,6 +20,8 @@ use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Manzano\CvdwCli\Services\Monitor\Eventos;
 use Manzano\CvdwCli\Services\Ambientes;
 use Manzano\CvdwCli\Inc\CvdwException;
+use Manzano\CvdwCli\Services\DatabaseSetup;
+use Manzano\CvdwCli\Services\RateLimit;
 
 #[AsCommand(
     name: 'executar',
@@ -179,7 +181,7 @@ class Executar extends Command
             case 'Executar um objeto especifico':
                 $this->executarObjetoOpcoes($io);
                 break;
-            case 'Configurar o CVDW-CLI':                
+            case 'Configurar o CVDW-CLI':
                 if ($io->confirm('Deseja configurar o CVDW-CLI?') == true) {
                            $io->success('Configurando o CVDW-CLI...');
                            $this->getApplication()->find('configurar')->run($input, $output);
@@ -304,18 +306,4 @@ class Executar extends Command
         }
     }
 
-    public function salvarExecucao()
-    {
-        $this->execucoes[] = time();
-    }
-
-    public function retornarExecucoes()
-    {
-        return $this->execucoes;
-    }
-
-    public function removerExecucao($index)
-    {
-        unset($this->execucoes[$index]);
-    }
 }

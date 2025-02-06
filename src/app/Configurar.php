@@ -163,7 +163,7 @@ class Configurar extends Command
             case 'Atualizar o ambiente do CVDW-CLI':
                 $this->atualizarCVDW();
                 break;
-            case 'Executar o CVDW-CLI':                
+            case 'Executar o CVDW-CLI':
                  if ($io->confirm('Deseja executar o CVDW-CLI?') == true) {
                         $io->success('Executando o CVDW-CLI...');
                         $this->getApplication()->find('executar')->run($input, $output);
@@ -537,6 +537,7 @@ class Configurar extends Command
             $io->text(['', 'Agora vamos validar os objetos...', '']);
             $bancoProblemas = false;
             $objetoObj = new Objeto($this->input, $this->output);
+
             $objetos = $objetoObj->retornarObjetos();
             foreach($objetos as $key => $dados) {
                 $existe = $databaseObj->verificarSeTabelaExiste($key);
@@ -593,6 +594,9 @@ class Configurar extends Command
                 }
 
             }
+
+            $databaseObj->verificaTabelaRequisicoes();
+
         }
 
         if($bancoProblemas) {

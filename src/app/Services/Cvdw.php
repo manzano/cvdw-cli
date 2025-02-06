@@ -36,12 +36,14 @@ class Cvdw
     public int $qtd = 500;
 
     public $executarObj;
+    
 
     public function __construct(InputInterface $input, OutputInterface $output, $executarObj)
     {
         $this->input = $input;
         $this->output = $output;
         $this->executarObj = $executarObj;
+        
     }
 
     public function conectar(): void

@@ -7,6 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Manzano\CvdwCli\Services\Monitor\Eventos;
+use Manzano\CvdwCli\Services\RateLimit;
 
 class Http
 {
@@ -18,6 +19,7 @@ class Http
     protected $eventosObj;
     protected $evento = 'Requisição';
     public $executarObj;
+    public $ratelimitObj;
     const HEADER_CONTENT_TYPE = 'Content-Type: application/json';
     const ERRO_REQUISICAO = 'Erro ao tentar fazer a requisição!';
     const PROTOCOLO_HTTP = 'https://';
@@ -37,14 +39,14 @@ class Http
         $this->executarObj = $executarObj;
 
         $this->eventosObj = new Eventos();
+        $this->ratelimitObj = new RateLimit($this->input, $this->output, $this);
 
     }
 
     public function requestCVDW(string $path, $progressBar, $cvdw, array $parametros = [], bool $novaTentativa = true) : object
     {
 
-        $this->executarObj->salvarExecucao();
-        $segundos = $this->gerenciarRateLimit();
+        $segundos = $this->gerenciarRateLimit($cvdw, $progressBar);
 
         if ($segundos > 0 && !$progressBar) {
             $this->aguardarSemProgresso($segundos);
@@ -53,6 +55,8 @@ class Http
         if($progressBar) {
             $this->aguardar($cvdw, $progressBar, $segundos);
         }
+
+        $idrequisicao = $this->ratelimitObj->inserirRequisicao($path);
 
         $this->eventosObj->registrarEvento($this->evento, $path);
         
@@ -101,6 +105,13 @@ class Http
         
         $responseJson = json_decode($response);
 
+        if(isset($responseJson->dados)){
+            $dados_retorno_qtd = count($responseJson->dados);
+        } else {
+            $dados_retorno_qtd = null;
+        }
+        $this->ratelimitObj->concluirRequisicao($idrequisicao, $dados_retorno_qtd, null);
+
         // Se nao for setado $resposta->total_de_registros,
         // imprimir uma mensagem de erro e tentar novamente em 3 segundos
         if(!isset($responseJson->total_de_registros) && $novaTentativa){
@@ -135,47 +146,38 @@ class Http
         }
     }
 
-    protected function gerenciarRateLimit(): int
+    public function gerenciarRateLimit($cvdw, $progressBar): int
     {
-
-        $espacodetempo = 60;
-        $agora = time();
-        $execucoes = $this->executarObj->retornarExecucoes();
-        if(!empty($execucoes)) {
-            foreach($execucoes as $ind => $time) {
-                $tempo_atras = $agora - $execucoes[$ind];
-                if($tempo_atras > $espacodetempo) {
-                    $this->executarObj->removerExecucao($ind);
-                }
-            }
-        } else {
-            return 0;
+        
+        $diferenca = $this->ratelimitObj->getDiferencaSegundosUltimaRequisicao();
+        $requisicoes = $this->ratelimitObj->qtdRequisicoes(59);
+        
+        if ($this->output->isDebug()) {
+            $this->io->info(" LOG: Diferença: $diferenca");
         }
 
+        if($progressBar && $requisicoes > 1){ 
+            $mensagem = null;
+            $mensagem = ' <fg=blue>Você fez ' . $requisicoes .  ' requisições no último minuto... (' . $diferenca . 'seg)...</>';
+            $mensagem .= "\n <fg=gray>Proteção contra o Rate Limit do servidor. (20req/min)</>";
+            $mensagem = $cvdw->getMensagem($mensagem);
+            $progressBar->setMessage($mensagem);
+            $progressBar->display();
+            sleep(2);
+        }
+
+        $segundos = 60;
         $delay = 3;
         $esperar = 0;
-        reset($execucoes);
-        $primeiro = current($execucoes);
-        end($execucoes);
-        $ultimo = current($execucoes);
-        $diferenca = $ultimo - $primeiro;
-        if ($this->output->isDebug()) {
-            $this->io->info(" LOG: primeiro: $primeiro, ultimo: $ultimo, diferença: $diferenca");
-        }
-
-        if(count($execucoes) >= 20) {
-            $esperar = ($espacodetempo - $diferenca) + $delay;
-        }
-
-        if ($diferenca > $espacodetempo) {
-            $esperar = ($espacodetempo - $diferenca) + $delay;
+        if($diferenca < $segundos){
+            $esperar = $segundos - $diferenca + $delay;
         }
 
         return $esperar;
 
     }
 
-    protected function aguardar($cvdw, $progressBar, int $segundos = 3): void
+    public function aguardar($cvdw, $progressBar, int $segundos = 3): void
     {
 
         $mensagem = null;

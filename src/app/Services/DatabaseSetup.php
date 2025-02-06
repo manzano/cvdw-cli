@@ -59,9 +59,13 @@ class DatabaseSetup
         $objetoObj = new Objeto($this->input, $this->output);
         $objetos = $objetoObj->retornarObjetos();
 
+       
+
         $totalObjetos = count($objetos);
         $this->progressBar = new ProgressBar($this->output, $totalObjetos);
         $this->progressBar->start();
+
+        $this->verificaTabelaRequisicoes();
 
         foreach ($objetos as $key => $dados) {
 
@@ -69,6 +73,7 @@ class DatabaseSetup
             if (!$objeto) {
                 $this->io->error("O objeto {$objeto['nome']} não existe.");
             }
+
             $this->criarTabela($key, $objeto["response"]["dados"]);
             // Verificar se há subtabelas no objeto
             foreach ($objeto["response"]["dados"] as $coluna => $valor) {
@@ -197,6 +202,14 @@ class DatabaseSetup
         if (isset($especificacao['description'])) {
             $opcoes["comment"] = $especificacao['description'];
         }
+
+        if (isset($especificacao['autoincrement'])) {
+            $opcoes["autoincrement"] = $especificacao['autoincrement'];
+        }
+        if (isset($especificacao['notnull'])) {
+            $opcoes["notnull"] = $especificacao['notnull'];
+        }
+
         if ($especificacao["type"] == "int") {
             $especificacao["type"] = "integer";
         }
@@ -528,5 +541,61 @@ class DatabaseSetup
         $progressBar->advance();
     }
 
+    public function verificaTabelaRequisicoes()
+    {
+        
+        $tabela = '_requisicoes';
+        $colunas = $this->retornarObjetoRequisicoes();
+        // Se ele existir, apagamos
+        $seExiste = $this->verificarSeTabelaExiste($tabela);
+        if ($seExiste) {
+            $this->conn->executeQuery("DROP TABLE {$tabela}");
+        }
+;
+        $schema = new Schema();
+        $this->criarTabelaSchema($schema, $tabela, $colunas);
+
+        $platform = $this->conn->getDatabasePlatform();
+        $queries = $schema->toSql($platform);
+        foreach ($queries as $query) {
+            try {
+                $this->conn->executeQuery($query);
+            } catch (\Exception $e) {
+                echo $query . "\n\n";
+                echo $e->getMessage();
+            }
+        }
+
+    }
+
+    private function retornarObjetoRequisicoes(): array
+    {
+
+        return  array (
+            'referencia' => array(
+                'type' => 'integer',
+                'notnull' => true,
+                'autoincrement' => true
+            ),
+            'data_inicio' => array(
+                'type' => 'datetime',
+                'notnull' => true
+            ),
+            'objeto' => array(
+                'type' => 'string',
+                'notnull' => true
+            ),
+            'data_fim' => array(
+                'type' => 'datetime',
+            ),
+            'dados_retorno_qtd' => array(
+                'type' => 'integer',
+            ),
+            'header_resultado' => array(
+                'type' => 'integer',
+            )
+        );
+
+    }
 
 }
