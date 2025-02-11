@@ -538,7 +538,7 @@ class Configurar extends Command
             $bancoProblemas = false;
             $objetoObj = new Objeto($this->input, $this->output);
 
-            $objetos = $objetoObj->retornarObjetos();
+            $objetos = $objetoObj->retornarObjetos('all');
             foreach($objetos as $key => $dados) {
                 $existe = $databaseObj->verificarSeTabelaExiste($key);
                 if ($existe) {
@@ -1085,8 +1085,13 @@ class Configurar extends Command
         $io->text('Seu CVDW-CLI está atualizado na versão: ' . $versaoCVDW);
         $io->text('É altamente recomendável você usar a opção 4 das configurações.');
 
-        $this->voltarProMenu = true;
-        $this->voltarProMenu();
+        if ($io->confirm('Podemos verificar o banco de dados?', true)) {
+            $cvdwObj->conectar();
+            $this->verificarInstalacao();
+        } else { 
+            $this->voltarProMenu = true;
+            $this->voltarProMenu();
+        }
 
         return true;
     }

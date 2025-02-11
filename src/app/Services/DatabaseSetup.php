@@ -57,7 +57,7 @@ class DatabaseSetup
         $this->tabelaIO->setHeaders(['Tabela', 'Situação']);
 
         $objetoObj = new Objeto($this->input, $this->output);
-        $objetos = $objetoObj->retornarObjetos();
+        $objetos = $objetoObj->retornarObjetos('all');
 
        
 
@@ -99,7 +99,7 @@ class DatabaseSetup
     {
         $tabelas = array();
         $objetoObj = new Objeto($this->input, $this->output);
-        $objetos = $objetoObj->retornarObjetos();
+        $objetos = $objetoObj->retornarObjetos('all');
         foreach ($objetos as $key => $dados) {
 
             $objeto = $objetoObj->retornarObjeto($key);

@@ -24,14 +24,32 @@ class Objeto
         $this->objetos = $this->retornarConstantesObjetos();
     }
 
-    public function retornarObjetos(string $objeto = null): array
+    public function retornarObjetos(string $objeto): array
     {
-        if ($objeto) {
+
+        // Verificar se $inputObjeto contem |
+        // Se tiver, transformar em array
+        if (strpos($objeto, '+') !== false) {
+            $objeto = explode('+', $objeto);
+        }
+
+        if($objeto != "" && is_array($objeto)){
+            $objetos = [];
+            foreach ($objeto as $obj) {
+                $obj = trim($obj);
+                if (isset($this->objetos[$obj])) {
+                    $objetos[$obj] = $this->objetos[$obj];
+                }
+            }
+            return $objetos;
+
+        } elseif ($objeto != "" && $objeto != "all") {
             if (isset($this->objetos[$objeto])) {
                 return ["$objeto" => $this->objetos[$objeto]];
             } else {
                 return [];
             }
+            
         } else {
             return $this->objetos;
         }

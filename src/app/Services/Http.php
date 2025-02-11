@@ -114,7 +114,7 @@ class Http
 
         // Se nao for setado $resposta->total_de_registros,
         // imprimir uma mensagem de erro e tentar novamente em 3 segundos
-        if(!isset($responseJson->total_de_registros) && $novaTentativa){
+        if(!isset($responseJson->pagina) && $novaTentativa){
             $segundos = 3;
             $this->io->error([
                 $this::ERRO_REQUISICAO,
@@ -169,7 +169,7 @@ class Http
         $segundos = 60;
         $delay = 3;
         $esperar = 0;
-        if($diferenca < $segundos){
+        if($diferenca < $segundos && $requisicoes > 19){
             $esperar = $segundos - $diferenca + $delay;
         }
 

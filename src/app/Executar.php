@@ -211,7 +211,7 @@ class Executar extends Command
     {
 
         $objetos = new Objeto($this->input, $this->output);
-        $objetosArray = $objetos->retornarObjetos();
+        $objetosArray = $objetos->retornarObjetos('all');
         $io->section('Objetos disponíveis: ');
         $table = new Table($this->output);
         $table->setHeaders(['Objeto', 'nome']);
@@ -237,7 +237,7 @@ class Executar extends Command
             if ($inputObjeto == 'all') {
                 $io->text(['Executando todos os objetos...']);
                 $objetos = new Objeto($this->input, $this->output);
-                $objetosArray = $objetos->retornarObjetos();
+                $objetosArray = $objetos->retornarObjetos('all');
             } else {
                 $objetos = new Objeto($this->input, $this->output);
                 $objetosArray = $objetos->retornarObjetos($inputObjeto);
