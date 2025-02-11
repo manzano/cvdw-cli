@@ -70,7 +70,7 @@ cvdw executar [-idr|--ignorar-data-referencia] [-log|--salvarlog] [-env|--set-en
 
 ### Selecionando objetos
 Você pode selecionar quais objetos quer executar.
-Use "/" para informa-los. 
+Use "+" para informa-los. 
 
 ```console
 cvdw executar reservas+leads+atendimentos

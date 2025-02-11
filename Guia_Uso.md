@@ -89,7 +89,7 @@ Redireciona diretamente para a tela de configuração do CVDW-CLI.
 
 ### Selecionando objetos
 Você pode selecionar quais objetos quer executar.
-Use "/" para informa-los. 
+Use "+" para informa-los. 
 
 ```console
 cvdw executar reservas+leads+atendimentos

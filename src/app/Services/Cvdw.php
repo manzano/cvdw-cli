@@ -539,7 +539,7 @@ class Cvdw
             $io->warning('Não consegui acessar o repositório do CV, considere verificar a conexão com a internet.');
         } else {
             if($versaoRepositorio !== $versaoCVDW){
-                $io->warning('Existe uma nova versão disponível: '.$versaoRepositorio."\n".
+                $io->info('Existe uma nova versão disponível: '.$versaoRepositorio."\n".
                 "Acesse https://github.com/manzano/cvdw-cli para mais informações \n".
                 "Ou utilize a opção 8 para atualizar o seu CVDW.");
             }

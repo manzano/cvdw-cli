@@ -44,7 +44,7 @@ class Configurar extends Command
      * @var string[]
      */
     public array $variaveisAmbiente = [];
-    public bool $voltarProMenu = false;
+    public bool $voltarProMenu = true;
     public \Doctrine\DBAL\Connection $conn;
     protected $eventosObj;
     protected $ambientesObj;
@@ -623,7 +623,7 @@ class Configurar extends Command
             ]);
         }
 
-        $this->voltarProMenu = true;
+        //$this->voltarProMenu = true;
         $this->voltarProMenu();
         return true;
     }
@@ -1085,14 +1085,11 @@ class Configurar extends Command
         $io->text('Seu CVDW-CLI está atualizado na versão: ' . $versaoCVDW);
         $io->text('É altamente recomendável você usar a opção 4 das configurações.');
 
+        $this->voltarProMenu = false;
         if ($io->confirm('Podemos verificar o banco de dados?', true)) {
             $cvdwObj->conectar();
             $this->verificarInstalacao();
-        } else { 
-            $this->voltarProMenu = true;
-            $this->voltarProMenu();
-        }
-
+        } 
         return true;
     }
 
