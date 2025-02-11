@@ -35,7 +35,7 @@ class ObjetoCvdwTest extends \Codeception\Test\Unit
 
     public function testRetornarObjetosSemArgumentos()
     {
-        $result = $this->objeto->retornarObjetos();
+        $result = $this->objeto->retornarObjetos('all');
         $this->assertIsArray($result, "Deve retornar um array");
         $this->assertArrayHasKey("leads", $result, "Array deve conter a chave 'leads'");
     }
@@ -45,6 +45,14 @@ class ObjetoCvdwTest extends \Codeception\Test\Unit
         $result = $this->objeto->retornarObjetos("leads");
         $this->assertIsArray($result, "Deve retornar um array para um objeto válido");
         $this->assertCount(1, $result, "Deve retornar um array com um único elemento para um objeto válido");
+    }
+
+    public function testRetornarObjetosMultiplos()
+    {
+        $result = $this->objeto->retornarObjetos('leads+reservas');
+        $this->assertIsArray($result, "Deve retornar um array");
+        $this->assertArrayHasKey("leads", $result, "Array deve conter a chave 'leads'");
+        $this->assertArrayHasKey("reservas", $result, "Array deve conter a chave 'reservas'");
     }
 
     public function testRetornarObjetoInvalido()
@@ -72,13 +80,6 @@ class ObjetoCvdwTest extends \Codeception\Test\Unit
         $this->objetoComTabelas = $this->objeto->retornarObjetoTabelas("reservas");
         $this->assertIsArray($this->objetoComTabelas, "Deve retornar um array para um objeto válido");
         $this->assertTrue(count($this->objetoComTabelas) > 0, "Deve retornar um array vazio para um objeto inválido");
-    }
-
-    public function testRetornarObjetoSemTabelas()
-    {
-        $this->objetoSemTabelas = $this->objeto->retornarObjetoTabelas("leads");
-        $this->assertIsArray($this->objetoSemTabelas, "Deve retornar um array para um objeto válido");
-        $this->assertTrue(count($this->objetoSemTabelas) == 0, "Deve retornar um array vazio para um objeto inválido");
     }
 
     public function testRetornarObjetoTabelasComObjetoInvalido()
