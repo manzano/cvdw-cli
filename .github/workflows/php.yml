@@ -16,12 +16,12 @@ jobs:
       with:
         php-version: '8.2'
         coverage: xdebug
-        extensions: cli xml mbstring curl phar pdo mysql pgsql zip
+        extensions: xml, mbstring, curl, pdo, mysql, pgsql, zip
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -31,18 +31,19 @@ jobs:
       run: composer install --prefer-dist --no-progress
     - name: Criando o .env file
       run: |
-        echo "${{ secrets.ENV }}" >> src/envs/.env
+        mkdir -p src/envs
+        printf "%s" "${{ secrets.ENV }}" > src/envs/.env
     - name: Check .env contents
       run: cat src/envs/.env
     - name: Run test suite
       run: XDEBUG_MODE=coverage php vendor/bin/codecept run Unit --coverage --coverage-xml
       # run: composer run-script test
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4.0.1
+      uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         slug: manzano/cvdw-cli
     - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
+      uses: SonarSource/sonarcloud-github-action@v2
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
