@@ -272,7 +272,7 @@ class Executar extends Command
     public function executarObjetoOpcoes($io)
     {
         $objetos = new Objeto($this->input, $this->output);
-        $objetosArray = $objetos->retornarObjetos();
+        $objetosArray = $objetos->retornarObjetos('all');
         $objetosOpcoes = array();
         foreach ($objetosArray as $objeto => $dados) {
             $objetosOpcoes[] = $dados['nome'];

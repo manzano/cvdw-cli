@@ -541,7 +541,7 @@ class Cvdw
             if($versaoRepositorio !== $versaoCVDW){
                 $io->info('Existe uma nova versão disponível: '.$versaoRepositorio."\n".
                 "Acesse https://github.com/manzano/cvdw-cli para mais informações \n".
-                "Ou utilize a opção 8 para atualizar o seu CVDW.");
+                "Ou utilize a opção 10 para atualizar o seu CVDW.");
             }
         }
     }
