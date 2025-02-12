@@ -8,79 +8,95 @@ use PHPUnit\Framework\Assert;
 
 class DemandasCest extends Common
 {
-    public function getDemandas(ApiTester $i)
-    {
-        sleep(3);
-        $startTime = time();
-        $bodyContent = ['pagina' => 1, 'registros' => 1];
-        $responseContent = [
-            'pagina' => 'integer',
+    protected array $responseContent = [
+        'pagina' => 'integer',
             'registros' => 'integer',
             'total_de_registros' => 'integer',
             'total_de_paginas' => 'integer',
             'dados' => 'array'
-        ];
-        $i->sendGet('/demandas', $bodyContent);
-        $endTime = time();
-        $duration = $endTime - $startTime;
-        if ($duration > 5) {
-            // Adiciona um aviso se a requisição demorar mais de 5 segundos
-            Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
+    ];
+
+    protected int $tempoAceitavel = 5;
+    protected string $formatoDataReferencia = 'Y-m-d H:i:s';
+    public ?string $dataReferenciaTeste = null;
+
+    public function getDemandas(ApiTester $i)
+    {
+        $qtdRegistrosEsperado = 50;
+
+        usleep(3000000); // Aguarda 3 segundos (em microsegundos)
+
+        $startTime = microtime(true);
+
+        $getContent = ['pagina' => 1, 'registros_por_pagina' => $qtdRegistrosEsperado];
+        $i->sendGet('/demandas', $getContent);
+
+        $duration = microtime(true) - $startTime;
+        if ($duration > $this->tempoAceitavel) {
+            Assert::markTestIncomplete("A requisição demorou mais de {$this->tempoAceitavel} segundos.");
         }
+
         $i->seeResponseCodeIs(HttpCode::OK);
         $i->seeResponseIsJson();
-        $i->seeResponseMatchesJsonType($responseContent);
-        $primeiraLinhaDados = $i->grabDataFromResponseByJsonPath('$.dados[0]');
-        codecept_debug("Referência do primeiro item: " . $primeiraLinhaDados[0]['referencia']);
-        if(is_array($primeiraLinhaDados[0])){
-            $referencia_data = $i->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
-            codecept_debug("Data do primeiro item: " . $referencia_data[0]);
-            $i->validarFormatoDaData($referencia_data[0], 'Y-m-d H:i:s');
+        $i->seeResponseMatchesJsonType($this->responseContent);
+
+        $resposta = $i->grabResponse();
+        $data = json_decode($resposta, true);
+
+        if (!isset($data['dados']) || !is_array($data['dados'])) {
+            Assert::fail("O campo 'dados' não foi encontrado ou não é um array.");
+        }
+
+        Assert::assertCount($qtdRegistrosEsperado, $data['dados']);
+
+        $this->dataReferenciaTeste = $data['dados'][0]['referencia_data'] ?? null;
+        if (empty($this->dataReferenciaTeste)) {
+            Assert::fail("Não foi possível definir 'dataReferenciaTeste'.");
         }
     }
 
     public function getDemandasComDataReferencia(ApiTester $i)
     {
-        
-        sleep(3);
-        $startTime = time();
-        $now = new \DateTime();
-        $now->modify('-45 days');
-        $formattedDate = $now->format('Y-m-d');
-        $bodyContent = ['pagina' => 1, 'registros' => 1, 'a_partir_data_referencia' => $formattedDate];
-        codecept_debug("Body: " . $formattedDate);
-        $responseContent = [
-            'pagina' => 'integer',
-            'registros' => 'integer',
-            'total_de_registros' => 'integer',
-            'total_de_paginas' => 'integer',
-            'dados' => 'array'
-        ];
-        $i->sendGet('/demandas', $bodyContent);
-        $endTime = time();
-        $duration = $endTime - $startTime;
-        if ($duration > 5) {
-            // Adiciona um aviso se a requisição demorar mais de 5 segundos
-            Assert::markTestIncomplete('A requisição demorou mais de 5 segundos.');
+        if (empty($this->dataReferenciaTeste)) {
+            Assert::fail("O valor de 'dataReferenciaTeste' não foi definido no teste anterior.");
         }
+
+        $qtdRegistrosEsperado = 5;
+        usleep(3000000);
+
+        $startTime = microtime(true);
+
+        $getContent = [
+            'pagina' => 1,
+            'registros_por_pagina' => $qtdRegistrosEsperado,
+            'a_partir_data_referencia' => urlencode($this->dataReferenciaTeste)
+        ];
+
+        $i->sendGet('/demandas', $getContent);
+
+        $duration = microtime(true) - $startTime;
+        if ($duration > $this->tempoAceitavel) {
+            Assert::markTestIncomplete("A requisição demorou mais de {$this->tempoAceitavel} segundos.");
+        }
+
         $i->seeResponseCodeIs(HttpCode::OK);
         $i->seeResponseIsJson();
-        $i->seeResponseMatchesJsonType($responseContent);
-        $primeiraLinhaDados = $i->grabDataFromResponseByJsonPath('$.dados[0]');
-        if(is_array($primeiraLinhaDados[0])){
-            $referencia_data = $i->grabDataFromResponseByJsonPath('$.dados[0].referencia_data');
-            // verifica se $referencia_data[0] é maior que $formattedDate
-            $timestamp_referencia = strtotime($referencia_data[0]);
-            $timestamp_filtro = strtotime($formattedDate);
-            codecept_debug("Data do primeiro item: " . $referencia_data[0] . " -> $timestamp_referencia");
-            codecept_debug("Data do filtro: " . $formattedDate . " -> $timestamp_filtro");
-            if($timestamp_referencia >= $timestamp_filtro){
-                codecept_debug("Filtro é menor!");
-                Assert::assertTrue(true);
-            } else {
-                codecept_debug("Filtro é maior!");
-                Assert::assertTrue(false);
-            }
+        $i->seeResponseMatchesJsonType($this->responseContent);
+
+        $resposta = $i->grabResponse();
+        $data = json_decode($resposta, true);
+
+        if (!isset($data['dados']) || !is_array($data['dados'])) {
+            Assert::fail("O campo 'dados' não foi encontrado ou não é um array.");
+        }
+
+        Assert::assertCount($qtdRegistrosEsperado, $data['dados']);
+
+        $timestamp_referencia = strtotime($data['dados'][0]['referencia_data']);
+        $timestamp_filtro = strtotime($this->dataReferenciaTeste);
+
+        if ($timestamp_referencia < $timestamp_filtro) {
+            Assert::fail("A data da referência ({$data['dados'][0]['referencia_data']}) é menor que a data do filtro.");
         }
     }
 }
