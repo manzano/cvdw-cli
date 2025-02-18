@@ -60,9 +60,8 @@ cvdw executar [-idr|--ignorar-data-referencia] [-log|--salvarlog] [-env|--set-en
 * `--salvarlog` `-log` — Salvar Log da execução no diretorio de instalação.
 * `--set-env` `-env` — Diz qual ENV usar. Exemplo: dev, homologacao, producao.
 * `--set-qtd` `-qtd` — Quantidade de dados retornada por cada requisicao.
-* `--apartir` `-a` — Consultar a partir de uma data de referencia especifica.
-
-                No formato: Y-m-d\TH:i:s ou Y-m-d.
+* `--apartir` `-a` — Consultar a partir de uma data de referencia especifica. No formato: Y-m-d\TH:i:s ou Y-m-d.
+* `--tempo-execucao` `-t` - Tempo limite de execução em segundos. (Padrão ilimitado)
 * `--max-pag` `-m` — Executa o número máximo de página informado.
 * `<objeto>` Qual objeto deseja executar
 
