@@ -47,6 +47,8 @@ class Executar extends Command
     protected $env = null;
     protected $evento = 'Executar';
     protected $qtd = 500;
+    protected $tempoLimiteExecucao = null;
+    protected $tempoExecucao = null;
     protected $apartir = null;
     protected $maxpag = null;
     public array $execucoes = [];
@@ -91,6 +93,11 @@ class Executar extends Command
                 'm',
                 InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
                 "Executa o número máximo de página informado.",
+            )->addOption(
+                'tempo-execucao',
+                't',
+                InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+                "Tempo limite de execução em segundos. (Padrão ilimitado)",
             );
     }
 
@@ -145,6 +152,13 @@ class Executar extends Command
         $this->input = $input;
         $this->output = $output;
 
+        if($input->getOption('tempo-execucao')){
+            $this->tempoLimiteExecucao = $input->getOption('tempo-execucao');
+            $io->text(['Tempo limite de execução: <fg=red>' . $this->tempoLimiteExecucao . ' segundo(s)</fg=red>']);
+            // Salvar o inicio da execução para calcular os minutos depois
+            $this->tempoExecucao = time();
+        }
+
         $inputObjeto = $input->getArgument('objeto');
         $inputDataReferencia = $input->getOption('ignorar-data-referencia');
         if ($inputObjeto) {
@@ -193,6 +207,21 @@ class Executar extends Command
         }
 
         return Command::SUCCESS;
+    }
+
+    public function tempoDeExecucao(): float
+    {
+        $tempoAtual = time();
+        return $tempoAtual - $this->tempoExecucao;
+    }
+
+    public function validarTempoExecucao(){
+        if($this->tempoLimiteExecucao){
+            $tempoExecucao = $this->tempoDeExecucao();
+            if($tempoExecucao >= $this->tempoLimiteExecucao){
+                throw new CvdwException('Tempo limite de execução atingido.');
+            }
+        }
     }
 
     protected function voltarProMenu($io)

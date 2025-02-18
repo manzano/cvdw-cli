@@ -53,6 +53,7 @@ class Cvdw
 
     public function processar(array $objeto, int $qtd, $io, $apartir = null, $inputDataReferencia = false, $logObjeto = null, $maxpag = null): bool
     {
+                
         if ($this->output->isDebug()) {
             $io->info(" LOG: " . __FUNCTION__);
         }
@@ -108,8 +109,6 @@ class Cvdw
 
         $resposta = $http->requestCVDW($objeto['path'], false, $this, $parametros);
        
-        //print_r($resposta);
-
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
         //if (!isset($resposta->total_de_registros)) {
         if (!property_exists($resposta, 'total_de_registros')) { 
@@ -132,7 +131,9 @@ class Cvdw
                 $progressBar->setFormat('normal'); // debug
                 $progressBar->setBarCharacter('<fg=green>=</>');
                 $progressBar->setProgressCharacter("\xF0\x9F\x9A\x80");
-                $progressBar->setFormat(" Dados processados %current% de %max% [%bar%] %percent:3s%% \n %message%");
+
+
+                $progressBar->setFormat("\n Dados processados %current% de %max% [%bar%] %percent:3s%% \n %message%");
                 $progressBar->setMessage($this->getMensagem());
                 $this->processados = 0;
                 for ($pagina = 1; $pagina <= $paginas; $pagina++) {
@@ -212,7 +213,14 @@ class Cvdw
         
         // Se inseridoserros for maior que 1, imprimir o (s)
         $mensagem = "";
-        $mensagem .= "Inseridos: <fg=green>" . $this->inseridos . " sucesso" . (($this->inseridos > 1) ? 's' : '') . "</fg=green> / ";
+
+        $tempodeexecucao = $this->executarObj->tempoDeExecucao();
+        if($tempodeexecucao){
+            $mensagem .= "Tempo de execução: <fg=green>" . $tempodeexecucao . " segundos.</fg=green> \n";
+            $this->executarObj->validarTempoExecucao();
+        }
+
+        $mensagem .= " Inseridos: <fg=green>" . $this->inseridos . " sucesso" . (($this->inseridos > 1) ? 's' : '') . "</fg=green> / ";
         $mensagem .= "<fg=red>" . $this->inseridoserros . " erro" . (($this->inseridoserros > 1) ? 's' : '') . "</fg=red> \n";
         $mensagem .= " Alterados: <fg=green>" . $this->alterados . " sucesso" . (($this->alterados > 1) ? 's' : '') . "</fg=green> / ";
         $mensagem .= "<fg=red>" . $this->alteradoserros . " erro" . (($this->alteradoserros > 1) ? 's' : '') . "</fg=red> \n";

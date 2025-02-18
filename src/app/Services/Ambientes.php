@@ -82,7 +82,7 @@ class Ambientes
             'CV_URL' => null,
             'CV_EMAIL' => null,
             'CV_TOKEN' => null,
-            'DB_CONNECTION' => null,
+            'DB_CONNECTION' => "pdo_mysql",
             'DB_HOST' => null,
             'DB_PORT' => null,
             'DB_DATABASE' => null,

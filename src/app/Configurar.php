@@ -379,6 +379,12 @@ class Configurar extends Command
 
         // Criar uma conexao com o Doctrine DBAL
         $config = new Configuration();
+
+        // Se nao tiver $this->variaveisAmbiente['banco'], adicionamos o valor pdo_mysql
+        if (!isset($this->variaveisAmbiente['banco'])) {
+            $this->variaveisAmbiente['banco'] = 'pdo_mysql';
+        }
+
         $connectionParams = array(
             'dbname' => $this->variaveisAmbiente['db_database'],
             'user' => $this->variaveisAmbiente['db_username'],
@@ -404,13 +410,13 @@ class Configurar extends Command
                 
                 $io->success('Conexão bem-sucedida!');
             } else {
-                $io->error('Não foi possível conectar ao banco de dados.');
+                $io->error('Não foi possível conectar ao banco de dados (1)');
                 if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
                     return $this->configurarBanco();
                 }
             }
         } catch (\Exception $e) {
-            $io->error('Não foi possível conectar ao banco de dados.');
+            $io->error('Não foi possível conectar ao banco de dados. (2)');
             $io->error('Encontrei esse erro: ' . $e->getMessage());
             if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
                 return $this->configurarBanco();
