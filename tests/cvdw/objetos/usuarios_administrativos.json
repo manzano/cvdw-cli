@@ -1,0 +1,20 @@
+{
+    "path": "\/usuarios_administrativos",
+    "nome": "Usu\u00e1rios Administrativos (usuarios_administrativos)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idusuario": "integer",
+            "ativo_painel": "string",
+            "tipo_login": "string",
+            "usuario": "string",
+            "motivo_bloqueiologin": "string"
+        }
+    }
+}

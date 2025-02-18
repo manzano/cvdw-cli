@@ -1,0 +1,25 @@
+{
+    "path": "\/atendimentos\/times",
+    "nome": "Atendimentos (atendimentos_times)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idtime": "integer",
+            "idgestor": "integer",
+            "gestor": "string",
+            "nome": "string",
+            "descricao": "string",
+            "tempo_redistribuicao": "integer",
+            "direcionar_para": "string",
+            "ativo_painel": "string",
+            "data_cad": "datetime",
+            "data_modificacao": "datetime"
+        }
+    }
+}

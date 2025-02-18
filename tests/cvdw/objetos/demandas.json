@@ -1,0 +1,25 @@
+{
+    "path": "\/demandas",
+    "nome": "Demandas (demandas)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "iddemanda": "integer",
+            "demanda": "string",
+            "data_cad": "datetime",
+            "data_encerramento": "datetime",
+            "data_conclusao": "datetime",
+            "agencia": "string",
+            "data_situacao_finalizada": "datetime",
+            "situacao_demanda": "string",
+            "empreendimento": "string",
+            "data_ult_situacao": "datetime"
+        }
+    }
+}

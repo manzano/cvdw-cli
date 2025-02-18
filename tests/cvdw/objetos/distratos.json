@@ -1,0 +1,42 @@
+{
+    "path": "\/distratos",
+    "nome": "Distratos (distratos)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idreserva": "integer",
+            "aprovada": "string",
+            "data_cad": "datetime",
+            "situacao_data": "datetime",
+            "situacao_atual": "string",
+            "idsituacao": "integer",
+            "etapa": "string",
+            "idempreendimento": "integer",
+            "codigointerno_empreendimento": "string",
+            "empreendimento": "string",
+            "bloco": "string",
+            "idunidade": "integer",
+            "unidade": "string",
+            "regiao": "string",
+            "venda": "string",
+            "idcliente": "integer",
+            "documento": "string",
+            "cliente": "string",
+            "cep_cliente": "string",
+            "idcorretor": "integer",
+            "corretor": "string",
+            "idimobiliaria": "integer",
+            "imobiliaria": "string",
+            "descricao_motivo_distrato": "string",
+            "motivo_distrato": "string",
+            "valor_contrato": "number",
+            "data_sincronizacao": "datetime"
+        }
+    }
+}

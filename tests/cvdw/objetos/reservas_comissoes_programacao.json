@@ -1,0 +1,33 @@
+{
+    "path": "\/reservas\/comissoes\/programacao",
+    "nome": "Reservas (reservas_comissoes_programacao)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idprogramacao": "integer",
+            "idreserva": "integer",
+            "idreservascondicoes": "integer",
+            "idcondicoes_parcelas": "integer",
+            "idregra": "integer",
+            "contrato": "string",
+            "parcela": "integer",
+            "para": "string",
+            "quem": "integer",
+            "valor": "number",
+            "data_previsao": "datetime",
+            "data_previsao_pagadoria": "datetime",
+            "forma_pagamento": "string",
+            "idgestaocontrato_lancamento": "integer",
+            "idreserva_comissao_parcela_lancamento": "integer",
+            "idlancamento": "integer",
+            "idprogramacao_lancamento": "integer",
+            "data_cad": "datetime"
+        }
+    }
+}

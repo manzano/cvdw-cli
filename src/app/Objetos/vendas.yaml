@@ -263,4 +263,4 @@ response:
         type: number
         description: 'Porcentagem de participação do associado'
         example: 43.24
-      
+    

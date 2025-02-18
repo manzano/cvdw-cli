@@ -136,7 +136,53 @@ foreach ($data['paths'] as $path => $dados) {
 echo "✅ Exemplos e descrições removidos com sucesso!\n";
 
 echo "\n";
-
-echo "\n";
 echo "Salvamos JSON com o Yaml convertido...\n";
 file_put_contents(__DIR__ . '/cvdw/cvdw.json', json_encode($data, JSON_PRETTY_PRINT));
+echo "✅ Json do CVDW salvo com sucesso!\n";
+
+echo "\n";
+echo "Lista arquivos de objetos do CLI\n";
+// Lista os arquivos .yaml da pasta ../src/app/Objetos
+$Objetos = __DIR__ . '/../src/app/Objetos';
+$locals = glob($Objetos . '/*.yaml');
+foreach ($locals as $local) {
+    echo "-> " . basename($local) . "\n";
+    $dataLocal = Yaml::parseFile($local);
+    unset($dataLocal['tabela']);
+    unset($dataLocal['metodo']);
+    unset($dataLocal['descricao']);
+    unset($dataLocal['parametros']);
+    unset($dataLocal['schema']);
+    unset($dataLocal['subschema']);
+    unset($dataLocal['body']);
+    $path = $dataLocal['path'];
+    foreach($dataLocal['response'] as $campo => $valor){
+        if($campo <> 'dados'){
+            $dataLocal['response'][$campo] = $valor['type'];
+        }
+    }
+
+
+    foreach($dataLocal['response']['dados'] as $campo => $valor){
+        if(isset($valor['type'])){
+            $dataLocal['response']['dados'][$campo] = $valor['type'];
+        }
+    }
+
+    foreach($dataLocal['response']['dados'] as $campo => $valor){
+        if(is_array($valor)){
+            foreach($dataLocal['response']['dados'][$campo] as $campo2 => $valor2){
+                $dataLocal['response']['dados'][$campo][$campo2] = $valor2['type'];
+            }
+        }
+    }
+
+    echo "\n";
+
+    echo "Salvamos JSON convertido em cvdw/objetos...\n";
+    file_put_contents(__DIR__ . '/cvdw/objetos/' . basename($local, '.yaml') . '.json', json_encode($dataLocal, JSON_PRETTY_PRINT));
+    echo "✅ Json do Objeto salvo com sucesso!\n";
+    echo "\n";
+    echo "\n";
+
+}

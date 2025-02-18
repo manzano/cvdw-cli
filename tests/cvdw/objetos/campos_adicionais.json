@@ -1,0 +1,22 @@
+{
+    "path": "\/campos_adicionais",
+    "nome": "Campos Adicionais (campos_adicionais)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idcampo": "string",
+            "campo_nome": "string",
+            "idfuncionalidade": "string",
+            "funcionalidade": "string",
+            "valor": "text",
+            "data_cad": "datetime",
+            "data_modificacao": "datetime"
+        }
+    }
+}

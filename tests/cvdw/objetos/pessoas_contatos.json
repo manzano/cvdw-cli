@@ -1,0 +1,40 @@
+{
+    "path": "\/pessoas\/contatos",
+    "nome": "Pessoas (pessoas_contatos)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idpessoa_int": "string",
+            "idpessoa": "integer",
+            "email": "string",
+            "telefone": "string",
+            "celular": "string",
+            "referencia_nome": "string",
+            "referencia_telefone": "string",
+            "referencia_parentesco": "string",
+            "cep_contato_relacionamento": "string",
+            "endereco_contato_relacionamento": "string",
+            "bairro_contato_relacionamento": "string",
+            "numero_contato_relacionamento": "string",
+            "complemento_contato_relacionamento": "string",
+            "estado_contato_relacionamento": "string",
+            "cidade_contato_relacionamento": "string",
+            "pais_contato_relacionamento": "string",
+            "telefone_contato_relacionamento": "string",
+            "celular_contato_relacionamento": "string",
+            "email_contato_relacionamento": "string",
+            "nome_representante_pj": "string",
+            "documento_representante_pj": "string",
+            "cargo_pj": "string",
+            "email_relacionamento_pj": "string",
+            "telefone_relacionamento_pj": "string",
+            "genero_representante": "string"
+        }
+    }
+}

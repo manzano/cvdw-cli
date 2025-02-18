@@ -1,0 +1,23 @@
+{
+    "path": "\/leads\/ganhos",
+    "nome": "Leads (leads_ganhos)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idlead": "integer",
+            "idlead_reativacao": "integer",
+            "data_ganho": "datetime",
+            "idusuario": "integer",
+            "nome": "string",
+            "email": "string",
+            "telefone": "string",
+            "painel_usuario": "string"
+        }
+    }
+}

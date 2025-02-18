@@ -1,0 +1,34 @@
+{
+    "path": "\/pesquisas",
+    "nome": "Pesquisas (pesquisas)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idpesquisa": "integer",
+            "dataInicio": "string",
+            "dataFim": "string",
+            "idpergunta": "integer",
+            "perguntas": "string",
+            "nome": "string",
+            "idcliente": "integer",
+            "documento_cliente": "string",
+            "email": "string",
+            "cep_cliente": "string",
+            "idresposta": "integer",
+            "quem_respondeu": "integer",
+            "data_referencia": "string",
+            "tipo_pesquisa": "string",
+            "idempreendimento": "integer",
+            "codigointerno_empreendimento": "string",
+            "empreendimento": "string",
+            "regiao": "string",
+            "data_sincronizacao": "datetime"
+        }
+    }
+}

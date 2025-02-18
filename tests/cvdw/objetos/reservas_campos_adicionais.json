@@ -1,0 +1,22 @@
+{
+    "path": "\/reservas\/campos-adicionais",
+    "nome": "Reservas (reservas_campos_adicionais)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "idcampo": "integer",
+            "idreserva": "integer",
+            "data_cad": "datetime",
+            "nome": "string",
+            "nome_referencia": "string",
+            "valor": "text",
+            "tipo": "string",
+            "funcionalidade": "string"
+        }
+    }
+}

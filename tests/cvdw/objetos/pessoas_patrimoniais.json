@@ -1,0 +1,40 @@
+{
+    "path": "\/pessoas\/patrimoniais",
+    "nome": "Pessoas (pessoas_patrimoniais)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idpessoa": "integer",
+            "idpessoa_int": "string",
+            "possui_bem": "string",
+            "quantidade_imoveis_possui": "integer",
+            "quais_bens": "string",
+            "situacao_do_bem": "string",
+            "valor_do_bem": "string",
+            "novos_bens": {
+                "idpessoa_novo_bem": "string",
+                "data_cad": "datetime",
+                "tipo_novo_bem": "string",
+                "cep_novo_bem": "string",
+                "endereco_novo_bem": "string",
+                "bairro_novo_bem": "string",
+                "valor_onus_mensal_novo_bem": "string",
+                "prazo_meses_novo_bem": "string",
+                "marca_modelo_automovel_novo_bem": "string",
+                "ano_automovel_novo_bem": "string",
+                "placa_renavam_automovel_novo_bem": "string",
+                "situacao_automovel_novo_bem": "string",
+                "quantidade_parcelas_automovel_novo_bem": "string",
+                "valor_parcela_automovel_novo_bem": "string",
+                "estado": "string",
+                "cidade": "string"
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "path": "\/assistencias\/itens",
+    "nome": "Assist\u00eancias (assistencias_itens)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "idassistencia_item": "integer",
+            "idassistencia": "integer",
+            "item": "string",
+            "data_cad": "datetime",
+            "descricao": "text",
+            "idsituacao": "integer",
+            "situacao": "string",
+            "data_conclusao": "datetime",
+            "data_inicio_servico": "datetime",
+            "data_previsao": "datetime",
+            "valor": "number",
+            "contabilizar_valor_total": "string",
+            "coberto": "string",
+            "recorrente": "string",
+            "horas_servico": "integer",
+            "ativo": "string",
+            "data_modificacao": "datetime",
+            "data_sincronizacao": "datetime"
+        }
+    }
+}
