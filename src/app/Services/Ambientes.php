@@ -91,9 +91,6 @@ class Ambientes
             'DB_SCHEMA' => null,
             'ANONIMIZAR' => null,
             'ANONIMIZAR_TIPO' => null,
-            'OPENAI_TOKEN' => null,
-            'OPENAI_PROJ' => null,
-            'OPENAI_ORG' => null,
             'CVDW_AMBIENTE' => 'PRD'
         ];
     }

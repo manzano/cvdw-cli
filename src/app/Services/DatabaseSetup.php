@@ -39,6 +39,11 @@ class DatabaseSetup
         $this->conn = conectarDB($input, $output);
     }
 
+    public function fecharConexao(): void
+    {
+        $this->conn->close();
+    }
+
     public function listarTabelas(): void
     {
         $tabelaIO = new Table($this->output);

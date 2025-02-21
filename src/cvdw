@@ -5,7 +5,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Manzano\CvdwCli\Configurar;
 use Manzano\CvdwCli\Opcoes;
 use Manzano\CvdwCli\Executar;
-use Manzano\CvdwCli\Treinar;
 use Manzano\CvdwCli\Services\Ambientes;
 
 use Symfony\Component\Console\Application;
@@ -17,20 +16,9 @@ if(!$ambienteObj->retornarEnvs()){
     exit;
 }
 
-
-if(isset($_ENV['CVDW_AMBIENTE']) && $_ENV['CVDW_AMBIENTE'] == 'PRD') {
-    \Sentry\init([
-        'dsn' => 'https://5a57b7ef5b7feaaeaca4a1db1c3fda4e@o4506804358414336.ingest.sentry.io/4506804360183808',
-        'traces_sample_rate' => 1.0,
-        'profiles_sample_rate' => 1.0,
-    ]);
-}
-
-
 $app = new Application('Manzano // CVDW-CLI', $ambienteObj->retornarVersao());
 $app->add(new Opcoes());
 $app->add(new Configurar());
 $app->add(new Executar());
-$app->add(new Treinar());
 $app->setDefaultCommand('opcoes', false);
 $app->run();

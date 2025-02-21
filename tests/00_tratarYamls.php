@@ -5,6 +5,7 @@ use Symfony\Component\Yaml\Yaml;
 echo "Comparador de arquivos YAML\n";
 echo "===========================\n\n";
 
+/*
 echo "Baixando arquivo cvdw.yaml do CV...\n";
 $url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
 // Baixamos o conteúdo do arquivo e salvamos em _temp/cvdw.yaml
@@ -15,6 +16,7 @@ if ($down) {
     echo "❌ Erro ao baixar o arquivo!\n";
     exit;
 }
+*/
 
 echo "\n";
 echo "Convertendo arquivo baixado...\n";
@@ -75,7 +77,14 @@ foreach ($data['paths'] as $path => $dados) {
         $ref = explode('/', ltrim($dados['dados']['items']['$ref'], '#/'));
         $data['paths'][$path]['dados'] = $data['components']['schemas'][$ref[2]]['properties'];
     }
+    if (isset($dados['dados']['$ref'])) {
+        $ref = explode('/', ltrim($dados['dados']['$ref'], '#/'));
+        $data['paths'][$path]['dados'] = $data['components']['schemas'][$ref[2]]['items']['properties'];
+    }
 }
+
+
+
 echo "✅ \$Refs varridos com sucesso!\n";
 
 echo "Tratando os dados que contem itens...\n";
@@ -83,15 +92,21 @@ foreach ($data['paths'] as $path => $dados) {
     foreach($data['paths'][$path]['dados'] as $k => $v) {
         if (isset($v['items']['$ref'])) {
             $ref = explode('/', ltrim($v['items']['$ref'], '#/'));
-            $data['paths'][$path]['dados'][$k] = $data['components']['schemas'][$ref[2]]['properties'];
+            //print_r($ref);
+            foreach($data['components']['schemas'][$ref[2]]['properties'] as $key => $value) {
+                //echo $key . " -> ".$value['type']." \n";
+                $data['paths'][$path]['dados'][$k][$key] = $value['type'];
+            }
         }
     }
 }
+
 echo "✅ Exemplos e descrições removidos com sucesso!\n";
 
 echo "\n";
 echo "Limpando exemplos e descrições...\n";
 foreach ($data['paths'] as $path => $dados) {
+
     foreach($dados as $key => $value) {
         if (isset($value['example'])) {
             unset($data['paths'][$path][$key]['example']);
@@ -103,6 +118,7 @@ foreach ($data['paths'] as $path => $dados) {
             $data['paths'][$path][$key] = $value['type'];
         }
         if ($key == 'dados') {
+
             foreach($data['paths'][$path]['dados'] as $k => $v) {
                 if (isset($data['paths'][$path]['dados'][$k]['example'])) {
                     unset($data['paths'][$path]['dados'][$k]['example']);
@@ -111,29 +127,40 @@ foreach ($data['paths'] as $path => $dados) {
                     unset($data['paths'][$path]['dados'][$k]['description']);
                 }
                 if (isset($data['paths'][$path]['dados'][$k]['type'])) {
-                    $data['paths'][$path]['dados'][$k] = $data['paths'][$path]['dados'][$k]['type'];
+                    if($data['paths'][$path]['dados'][$k]['type'] == 'object'){
+                        unset($data['paths'][$path]['dados'][$k]['type']);
+                        if(isset($data['paths'][$path]['dados'][$k]['items']) &&
+                            is_array( $data['paths'][$path]['dados'][$k]['items'])){
+                                foreach($data['paths'][$path]['dados'][$k]['items'] as $key => $value){
+                                    $data['paths'][$path]['dados'][$k][$key] = $value['type'];
+                                }
+                                unset($data['paths'][$path]['dados'][$k]['items']);
+                        }
+                        if(isset($data['paths'][$path]['dados'][$k]['properties']) &&
+                            is_array( $data['paths'][$path]['dados'][$k]['properties'])){
+                                foreach($data['paths'][$path]['dados'][$k]['properties'] as $key => $value){
+                                    $data['paths'][$path]['dados'][$k][$key] = $value['type'];
+                                }
+                            unset($data['paths'][$path]['dados'][$k]['properties']);
+                        }
+                    } else {
+                        $data['paths'][$path]['dados'][$k] = $data['paths'][$path]['dados'][$k]['type'];
+                    }
                 }
+
             }
         } else {
             //$data['paths'][$path] = $data['paths'][$path]['dados'];
         }
     }
+
 }
 echo "✅ Exemplos e descrições removidos com sucesso!\n";
 
 echo "\n";
-echo "Limpando exemplos e descrições dos subdados...\n";
-foreach ($data['paths'] as $path => $dados) {
-    foreach($dados['dados'] as $key => $value) {
-        if(is_array($value)){
-            foreach($value as $key2 => $value2) {
-                $data['paths'][$path]['dados'][$key][$key2] = $value2['type'];
-            }
-            
-        }
-    }
-}
-echo "✅ Exemplos e descrições removidos com sucesso!\n";
+echo "Removendo components...\n";
+unset($data['components']);
+echo "✅ Components removidos com sucesso!\n";
 
 echo "\n";
 echo "Salvamos JSON com o Yaml convertido...\n";
@@ -177,7 +204,7 @@ foreach ($locals as $local) {
         }
     }
 
-    echo "\n";
+    //echo "\n";
 
     echo "Salvamos JSON convertido em cvdw/objetos...\n";
     file_put_contents(__DIR__ . '/cvdw/objetos/' . basename($local, '.yaml') . '.json', json_encode($dataLocal, JSON_PRETTY_PRINT));

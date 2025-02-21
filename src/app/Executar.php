@@ -10,17 +10,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputOption;
 
-use Symfony\Component\Console\Completion\CompletionInput;
-use Symfony\Component\Console\Completion\CompletionSuggestions;
 
 use Manzano\CvdwCli\Services\Objeto;
 use Manzano\CvdwCli\Services\Log;
 use Manzano\CvdwCli\Services\Cvdw;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
-use Manzano\CvdwCli\Services\Monitor\Eventos;
 use Manzano\CvdwCli\Services\Ambientes;
 use Manzano\CvdwCli\Inc\CvdwException;
-use Manzano\CvdwCli\Services\DatabaseSetup;
 use Manzano\CvdwCli\Services\RateLimit;
 
 #[AsCommand(
@@ -42,8 +38,8 @@ class Executar extends Command
      */
     public array $variaveisAmbiente = [];
     public bool $voltarProMenu = false;
-    protected $eventosObj;
     protected $ambientesObj;
+    public $rateLimitObj;
     protected $env = null;
     protected $evento = 'Executar';
     protected $qtd = 500;
@@ -108,7 +104,9 @@ class Executar extends Command
             $this->env = $input->getOption('set-env');
         }
 
-        $this->eventosObj = new Eventos();
+        $this->rateLimitObj = new RateLimit($input, $output, $this);
+        $this->rateLimitObj->iniciarExecucao();
+
         $this->ambientesObj = new Ambientes($this->env);
         $this->ambientesObj->retornarEnvs();
 
@@ -137,7 +135,7 @@ class Executar extends Command
         $io->text('Ambiente ativo: ' . $ambienteAtivo);
 
         // Verificar a versão do repositorio
-        $cvdwObj = new Cvdw($input, $output, $this);
+        $cvdwObj = new Cvdw($input, $output, $this, $this->rateLimitObj);
         $cvdwObj->alertarNovaVersao($versaoCVDW, $io);
 
         if ($input->getOption('salvarlog')) {
@@ -146,7 +144,7 @@ class Executar extends Command
             $this->logObjeto->criarArquivoLog();
         }
         
-        $ignorar = ['DB_SCHEMA', 'ANONIMIZAR', 'ANONIMIZAR_TIPO', 'OPENAI_TOKEN', 'OPENAI_PROJ', 'OPENAI_ORG'];
+        $ignorar = ['DB_SCHEMA', 'ANONIMIZAR', 'ANONIMIZAR_TIPO'];
         $this->ambientesObj->validarConfiguracao($io, $ignorar);
 
         $this->input = $input;
@@ -154,9 +152,8 @@ class Executar extends Command
 
         if($input->getOption('tempo-execucao')){
             $this->tempoLimiteExecucao = $input->getOption('tempo-execucao');
+            $this->rateLimitObj->setTempoLimiteExecucao($this->tempoLimiteExecucao);
             $io->text(['Tempo limite de execução: <fg=red>' . $this->tempoLimiteExecucao . ' segundo(s)</fg=red>']);
-            // Salvar o inicio da execução para calcular os minutos depois
-            $this->tempoExecucao = time();
         }
 
         $inputObjeto = $input->getArgument('objeto');
@@ -165,9 +162,6 @@ class Executar extends Command
             $this->executarObjeto($io, $inputObjeto, $inputDataReferencia);
             return Command::SUCCESS;
         }
-
-
-        $this->eventosObj->registrarEvento($this->evento, 'Início');
 
         $this->variaveisAmbiente['executar'] = $io->choice('O que deseja fazer agora?', [
             'Listar todos os objetos disponíveis no CVDW-CLI',
@@ -182,7 +176,6 @@ class Executar extends Command
             return Command::SUCCESS;
         }
         $io->text(['Você escolheu: ' . $this->variaveisAmbiente['executar'], '']);
-        $this->eventosObj->registrarEvento($this->evento, $this->variaveisAmbiente['executar']);
         $this->voltarProMenu = true;
 
         switch ($this->variaveisAmbiente['executar']) {
@@ -207,21 +200,6 @@ class Executar extends Command
         }
 
         return Command::SUCCESS;
-    }
-
-    public function tempoDeExecucao(): float
-    {
-        $tempoAtual = time();
-        return $tempoAtual - $this->tempoExecucao;
-    }
-
-    public function validarTempoExecucao(){
-        if($this->tempoLimiteExecucao){
-            $tempoExecucao = $this->tempoDeExecucao();
-            if($tempoExecucao >= $this->tempoLimiteExecucao){
-                throw new CvdwException('Tempo limite de execução atingido.');
-            }
-        }
     }
 
     protected function voltarProMenu($io)
@@ -279,14 +257,13 @@ class Executar extends Command
             }
 
             $objetoObj = new Objeto($this->input, $this->output);
-            $cvdw = new Cvdw($this->input, $this->output, $this);
+            $cvdw = new Cvdw($this->input, $this->output, $this, $this->rateLimitObj);
             $cvdw->conectar();
 
             foreach ($objetosArray as $objeto => $dados) {
                 $objeto = $objetoObj->retornarObjeto($objeto);
                 $io->section($dados['nome']);
                 $io->text('Executando objeto: ' . $dados['nome'] . '');
-                $this->eventosObj->registrarEvento($this->evento, 'executar', $dados['nome']);
                 
                 $cvdw->processar($objeto, $this->qtd, $io, $this->apartir, $inputDataReferencia, $this->logObjeto, $this->maxpag);
                 

@@ -23,7 +23,7 @@ class Cvdw
     public \Doctrine\DBAL\Connection $conn;
     public DatabaseSetup $database;
     public object $resposta;
-    public $logObjeto = false;
+    public $logObjeto;
     public array $objeto;
 
     public int $processados;
@@ -32,17 +32,21 @@ class Cvdw
     public int $inseridoserros = 0;
     public int $alterados = 0;
     public int $alteradoserros = 0;
+    public int $paginasExecutadas = 0;
+    public int $paginasEncontradas = 0;
     
     public int $qtd = 500;
 
     public $executarObj;
+    public RateLimit $rateLimitObj;
     
 
-    public function __construct(InputInterface $input, OutputInterface $output, $executarObj)
+    public function __construct(InputInterface $input, OutputInterface $output, $executarObj, $rateLimitObj)
     {
         $this->input = $input;
         $this->output = $output;
         $this->executarObj = $executarObj;
+        $this->rateLimitObj = $rateLimitObj;
         
     }
 
@@ -70,13 +74,14 @@ class Cvdw
             $this->logObjeto = $logObjeto;
         }
         $this->database = new DatabaseSetup($this->input, $this->output, $this);
-        $http = new Http($this->input, $this->output, $io, $this->executarObj, $this->logObjeto );
+        $http = new Http($this->input, $this->output, $io, $this->executarObj, $this->logObjeto, rateLimitObj: $this->rateLimitObj);
+        $this->paginasExecutadas = 1;
         $parametros = array(
-            'pagina' => 1,
+            'pagina' => $this->paginasExecutadas,
             'registros_por_pagina' => $this->qtd
         );
         if ($inputDataReferencia) {
-            $this->io->text('Data de referência: <fg=yellow>Ignorada</>');
+            $this->io->text('Data de referência: <fg=red>Ignorada</>');
         } else {
             
             if($apartir) {
@@ -87,7 +92,7 @@ class Cvdw
                 $referencia_data_UI = $referencia_data->format('d/m/Y H:i:s');
                 $referencia_data = $referencia_data->format('Y-m-d H:i:s');
                 $parametros['a_partir_data_referencia'] = $referencia_data;
-                $this->io->text('Data de referência: ' . $referencia_data_UI);
+                $this->io->text('Data de referência: <fg=yellow>' . $referencia_data_UI.'</fg=yellow>');
             } else {
                 $referencia_data = $this->buscaUltimaData($objeto['tabela']);
                 if ($referencia_data) {
@@ -100,7 +105,7 @@ class Cvdw
                     $referencia_data_UI = 'Nenhuma data encontrada';
                 }
                 
-                $this->io->text('Data de referência: ' . $referencia_data_UI);
+                $this->io->text('Data de referência: <fg=yellow>' . $referencia_data_UI.'</fg=yellow>');
             }
         }
         $this->processados = $this->erros = 0;
@@ -115,12 +120,13 @@ class Cvdw
             $this->io->info([
                 'A requisição não retornou os dados esperados!',
                 'Parametros: ' . print_r($parametros, true),
-                'Está requisição está retornando vazia' 
+                'Está requisição está retornando vazia'
                 
             ]);
         } else {
             $this->io->text('Registros encontrados: ' . $resposta->total_de_registros);
             $totaldepaginas = 'Total de páginas: ' . $resposta->total_de_paginas;
+            $this->paginasEncontradas = $resposta->total_de_paginas;
             if(isset($maxpag)) {
                 $totaldepaginas .= '  <fg=yellow>(Será executado '.$maxpag.' página(s))</>';
             }
@@ -133,10 +139,11 @@ class Cvdw
                 $progressBar->setProgressCharacter("\xF0\x9F\x9A\x80");
 
 
-                $progressBar->setFormat("\n Dados processados %current% de %max% [%bar%] %percent:3s%% \n %message%");
+                $progressBar->setFormat("\n  \_ Dados processados %current% de %max% [%bar%] %percent:3s%% \n %message%");
                 $progressBar->setMessage($this->getMensagem());
                 $this->processados = 0;
                 for ($pagina = 1; $pagina <= $paginas; $pagina++) {
+                    
                     if ($this->getLimiteErros()) {
                         break;
                     }
@@ -151,6 +158,8 @@ class Cvdw
                             $parametros['a_partir_data_referencia'] = $referencia_data;
                         }
                         $resposta = $http->requestCVDW($objeto['path'], $progressBar, $this, $parametros, $inputDataReferencia);
+                        $this->paginasEncontradas = $resposta->total_de_paginas;
+                        $this->paginasExecutadas = $pagina;
                     }
                     $progressBar->setMessage($this->getMensagem());
                     $progressBar->display();
@@ -214,16 +223,16 @@ class Cvdw
         // Se inseridoserros for maior que 1, imprimir o (s)
         $mensagem = "";
 
-        $tempodeexecucao = $this->executarObj->tempoDeExecucao();
+        $tempodeexecucao = $this->rateLimitObj->tempoDeExecucao();
         if($tempodeexecucao){
-            $mensagem .= "Tempo de execução: <fg=green>" . $tempodeexecucao . " segundos.</fg=green> \n";
-            $this->executarObj->validarTempoExecucao();
+            $mensagem .= "    Página ".$this->paginasExecutadas." de ".$this->paginasEncontradas." \n";
+            $this->rateLimitObj->validarTempoExecucao();
         }
 
-        $mensagem .= " Inseridos: <fg=green>" . $this->inseridos . " sucesso" . (($this->inseridos > 1) ? 's' : '') . "</fg=green> / ";
-        $mensagem .= "<fg=red>" . $this->inseridoserros . " erro" . (($this->inseridoserros > 1) ? 's' : '') . "</fg=red> \n";
-        $mensagem .= " Alterados: <fg=green>" . $this->alterados . " sucesso" . (($this->alterados > 1) ? 's' : '') . "</fg=green> / ";
-        $mensagem .= "<fg=red>" . $this->alteradoserros . " erro" . (($this->alteradoserros > 1) ? 's' : '') . "</fg=red> \n";
+        $mensagem .= "     Inseridos: <fg=green>" . $this->inseridos . " sucesso" . (($this->inseridos > 1) ? 's' : '') . "</fg=green> / ";
+        $mensagem .= "  <fg=red>" . $this->inseridoserros . " erro" . (($this->inseridoserros > 1) ? 's' : '') . "</fg=red> \n";
+        $mensagem .= "     Alterados: <fg=green>" . $this->alterados . " sucesso" . (($this->alterados > 1) ? 's' : '') . "</fg=green> / ";
+        $mensagem .= "  <fg=red>" . $this->alteradoserros . " erro" . (($this->alteradoserros > 1) ? 's' : '') . "</fg=red> \n";
 
         if ($info) {
             $mensagem .= "\n";
@@ -535,7 +544,7 @@ class Cvdw
 
     public function verificarNovaVersao($io): string
     {
-        $http = new Http($this->input, $this->output, $io, $this);
+        $http = new Http($this->input, $this->output, $io, $this, null,rateLimitObj: $this->rateLimitObj);
         return $http->buscarVersaoRepositorio();
     }
 

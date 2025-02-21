@@ -13,11 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Completion\CompletionInput;
 use Symfony\Component\Console\Completion\CompletionSuggestions;
 
-use Manzano\CvdwCli\Services\Brain;
 use Manzano\CvdwCli\Services\Log;
 use Manzano\CvdwCli\Services\Cvdw;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
-use Manzano\CvdwCli\Services\Monitor\Eventos;
 use Manzano\CvdwCli\Services\Ambientes;
 use Manzano\CvdwCli\Inc\CvdwException;
 
@@ -40,7 +38,6 @@ class Treinar extends Command
      */
     public array $variaveisAmbiente = [];
     public bool $voltarProMenu = false;
-    protected $eventosObj;
     protected $ambientesObj;
     protected $env = null;
     protected $evento = 'Treinar';
@@ -70,7 +67,6 @@ class Treinar extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $this->eventosObj = new Eventos();
         $this->ambientesObj = new Ambientes($this->env);
         $this->ambientesObj->retornarEnvs();
 
@@ -115,8 +111,6 @@ class Treinar extends Command
         $ambienteAtivo = $this->ambientesObj->ambienteAtivo();
         $io->text('Ambiente ativo: ' . $ambienteAtivo);
 
-        $this->eventosObj->registrarEvento($this->evento, 'Início');
-
         $this->variaveisAmbiente['executar'] = $io->choice('O que deseja fazer agora?', [
             'Listar todos os objetos disponíveis para o treinamento',
             'Executar todos os objetos',
@@ -129,7 +123,6 @@ class Treinar extends Command
             return Command::SUCCESS;
         }
         $io->text(['Você escolheu: ' . $this->variaveisAmbiente['executar'], '']);
-        $this->eventosObj->registrarEvento($this->evento, $this->variaveisAmbiente['executar']);
         $this->voltarProMenu = true;
 
         switch ($this->variaveisAmbiente['executar']) {
@@ -212,7 +205,6 @@ class Treinar extends Command
                 $brain = $brainObj->retornarBrain($brain);
                 $io->section($dados['nome']);
                 $io->text('Executando objeto: ' . $dados['nome'] . '');
-                $this->eventosObj->registrarEvento($this->evento, 'treinar', $dados['nome']);
 
                 $brainObj->processar($brain, $io);
             }
