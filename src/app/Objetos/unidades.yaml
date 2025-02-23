@@ -103,7 +103,7 @@ response:
       type: string
     area_privativa:
       example: "122.00"
-      type: string
+      type: number
     idunidade:
       example: "12345"
       type: string
@@ -149,6 +149,9 @@ response:
     data_entrega:
       example: "01/01/2023"
       type: datetime
+    data_entrega_chaves:
+      example: "01/01/2023"
+      type: string
     agendar_a_partir:
       example: "01/01/2023"
       type: datetime

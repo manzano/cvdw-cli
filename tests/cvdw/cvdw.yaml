@@ -4825,6 +4825,18 @@ components:
             example: "Empreendimento 10"
             type: string
             description: "Nome do empreemdimento da visita."
+        motivo_cancelamento:
+            example: "Corretor Inativo."
+            type: string
+            description: "Motivo de cancelamento da tarefa."
+        motivo_concluido:
+            example: "Visita realizada."
+            type: string
+            description: "Motivo de conclusão da tarefa."
+        descricao:
+            example: "Visita agendada lead #123"
+            type: string
+            description: "Descrição da tarefa."
     RetornarLeadsVisitas:
       description: "Retorna os dados das visitas do lead."
       type: object

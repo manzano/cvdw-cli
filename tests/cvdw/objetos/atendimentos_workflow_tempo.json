@@ -13,7 +13,6 @@
             "ativo": "string",
             "idtempo": "integer",
             "idatendimento": "integer",
-            "idassistencia": "integer",
             "idsituacao": "integer",
             "situacao": "string",
             "sigla": "string",

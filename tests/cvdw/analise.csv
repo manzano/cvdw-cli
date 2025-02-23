@@ -13,14 +13,16 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /agendamentos/vistorias,igual,cliente,"string = string"
 /agendamentos/vistorias,igual,idcliente,"integer = integer"
 /agendamentos/vistorias,igual,cep_cliente,"string = string"
-/agendamentos/vistorias,igual,data_agendamento,"string = string"
+/agendamentos/vistorias,igual,data_agendamento,"string = datetime"
 /agendamentos/vistorias,igual,horario,"string = string"
 /agendamentos/vistorias,igual,vistoriador,"string = string"
 /agendamentos/vistorias,igual,tipo,"string = string"
 /agendamentos/vistorias,igual,situacao,"string = string"
+/agendamentos/vistorias,igual,desmarcado,"string = string"
 /agendamentos/vistorias,igual,quitado,"string = string"
 /agendamentos/vistorias,igual,chave_liberada,"string = string"
 /agendamentos/vistorias,igual,chave_entregue,"string = string"
+/agendamentos/vistorias,igual,data_entrega_de_chave,"string = datetime"
 /agendamentos/vistorias,igual,idreserva,"integer = integer"
 /agendamentos/vistorias,igual,numero,"integer = integer"
 /assistencias,igual,referencia,"string = string"
@@ -163,6 +165,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /atendimentos,igual,responsavel,"string = string"
 /atendimentos,igual,idunidade,"string = string"
 /atendimentos,igual,idcorretor,"integer = integer"
+/atendimentos,igual,idimobiliaria,"integer = integer"
 /atendimentos,igual,sigla_empreendimento,"string = string"
 /atendimentos,igual,codigointerno_cliente,"string = string"
 /atendimentos,igual,quantidade_mensagens,"integer = integer"
@@ -254,6 +257,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /atendimentos/times/integrantes,igual,idintegrante,"integer = integer"
 /atendimentos/times/integrantes,igual,idtime,"integer = integer"
 /atendimentos/times/integrantes,igual,time,"string = string"
+/atendimentos/times/integrantes,igual,idusuario,"integer = integer"
 /atendimentos/times/integrantes,igual,usuario,"string = string"
 /atendimentos/times/integrantes,igual,data_cad,"string = datetime"
 /atendimentos/times/integrantes,igual,data_modificacao,"string = datetime"
@@ -300,9 +304,11 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /campanhas_ativacao,igual,data_ultima_alteracao,"string = datetime"
 /campos_adicionais,igual,referencia_data,"string = datetime"
 /campos_adicionais,igual,ativo,"string = string"
+/campos_adicionais,igual,idcampo,"integer = integer"
 /campos_adicionais,igual,campo_nome,"string = string"
+/campos_adicionais,igual,idfuncionalidade,"integer = integer"
 /campos_adicionais,igual,funcionalidade,"string = string"
-/campos_adicionais,igual,valor,"string = text"
+/campos_adicionais,igual,valor,"string = string"
 /campos_adicionais,igual,data_cad,"string = datetime"
 /campos_adicionais,igual,data_modificacao,"string = datetime"
 /comissoes,igual,referencia,"string = string"
@@ -332,6 +338,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /comissoes/pagamentos,igual,referencia_data,"string = datetime"
 /comissoes/pagamentos,igual,idcomissao,"integer = integer"
 /comissoes/pagamentos,igual,idpagamento,"integer = integer"
+/comissoes/pagamentos,igual,valor,"number = number"
 /comissoes/pagamentos,igual,vencimento,"string = string"
 /comissoes/pagamentos,igual,bloco,"string = string"
 /comissoes/pagamentos,igual,unidade,"string = string"
@@ -451,14 +458,14 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /demandas,igual,ativo,"string = string"
 /demandas,igual,iddemanda,"integer = integer"
 /demandas,igual,demanda,"string = string"
-/demandas,igual,data_cad,"string = datetime"
-/demandas,igual,data_encerramento,"string = datetime"
-/demandas,igual,data_conclusao,"string = datetime"
+/demandas,igual,data_cad,"string = string"
+/demandas,igual,data_encerramento,"string = string"
+/demandas,igual,data_conclusao,"string = string"
 /demandas,igual,agencia,"string = string"
-/demandas,igual,data_situacao_finalizada,"string = datetime"
+/demandas,igual,data_situacao_finalizada,"string = string"
 /demandas,igual,situacao_demanda,"string = string"
 /demandas,igual,empreendimento,"string = string"
-/demandas,igual,data_ult_situacao,"string = datetime"
+/demandas,igual,data_ult_situacao,"string = string"
 /distratos,igual,referencia,"string = string"
 /distratos,igual,referencia_data,"string = datetime"
 /distratos,igual,ativo,"string = string"
@@ -524,6 +531,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /imobiliarias,igual,sigla,"string = string"
 /imobiliarias,igual,codigointerno,"string = string"
 /imobiliarias,igual,observacoes,"string = text"
+/imobiliarias,igual,micro_empresa,"string = string"
 /imobiliarias,igual,inscricao_estadual,"string = string"
 /imobiliarias,igual,inscricao_municipal,"string = string"
 /imobiliarias,igual,tipo_conta,"string = string"
@@ -533,7 +541,9 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /imobiliarias,igual,digito_agencia,"string = string"
 /imobiliarias,igual,numero_conta,"string = string"
 /imobiliarias,igual,digito_conta,"string = string"
+/imobiliarias,igual,nome_favorecido,"string = string"
 /imobiliarias,igual,cnpj_favorecido,"string = string"
+/imobiliarias,igual,alterar_login_corretor,"string = string"
 /imobiliarias,igual,escala_plantao,"string = string"
 /imobiliarias,igual,idimobiliaria_nov,"string = string"
 /imobiliarias,igual,bloqueado_recebimento_pagamento_comissao,"string = string"
@@ -598,6 +608,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /leads,igual,idcorretor_ultimo,"integer = integer"
 /leads,igual,corretor_ultimo,"string = string"
 /leads,igual,idcorretor_penultimo,"integer = integer"
+/leads,igual,idimobiliaria_ultimo,"integer = integer"
 /leads,igual,corretor_penultimo,"string = string"
 /leads,igual,nome_momento_lead,"string = string"
 /leads,igual,novo,"string = string"
@@ -658,13 +669,17 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /leads/historico/situacoes,igual,referencia,"string = string"
 /leads/historico/situacoes,igual,referencia_data,"string = datetime"
 /leads/historico/situacoes,igual,ativo,"string = string"
+/leads/historico/situacoes,igual,idhistorico,"integer = integer"
 /leads/historico/situacoes,igual,idlead,"integer = integer"
 /leads/historico/situacoes,igual,data_cad,"string = datetime"
+/leads/historico/situacoes,igual,de,"string = string"
+/leads/historico/situacoes,igual,para,"string = string"
 /leads/historico/situacoes,igual,de_nome,"string = string"
 /leads/historico/situacoes,igual,para_nome,"string = string"
 /leads/historico/situacoes,igual,motivo_cancelamento,"string = string"
 /leads/historico/situacoes,igual,data_cancelamento,"string = datetime"
 /leads/historico/situacoes,igual,painel_usuario,"string = string"
+/leads/historico/situacoes,igual,idusuario,"integer = integer"
 /leads/infos,igual,referencia,"string = string"
 /leads/infos,igual,referencia_data,"string = datetime"
 /leads/infos,igual,ativo,"string = string"
@@ -749,6 +764,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /leads/visitas,igual,idinteracao,"integer = integer"
 /leads/visitas,igual,tipo_interacao,"string = string"
 /leads/visitas,igual,data_conclusao,"string = datetime"
+/leads/visitas,igual,idtipo_visita,"integer = integer"
 /leads/visitas,igual,visita_virtual,"string = string"
 /leads/visitas,igual,pdv,"string = string"
 /leads/visitas,igual,nome_tipo_visita,"string = string"
@@ -773,8 +789,11 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /pesquisas,igual,idpesquisa,"integer = integer"
 /pesquisas,igual,dataInicio,"string = string"
 /pesquisas,igual,dataFim,"string = string"
+/pesquisas,igual,pesquisa,"string = string"
+/pesquisas,igual,situacao,"string = string"
 /pesquisas,igual,data_referencia,"string = string"
 /pesquisas,igual,tipo_pesquisa,"string = string"
+/pesquisas,igual,ids_perguntas,"string = string"
 /pesquisas/perguntas,igual,referencia_data,"string = datetime"
 /pesquisas/perguntas,igual,ativo,"string = string"
 /pesquisas/perguntas,igual,idpesquisa_pergunta,"integer = integer"
@@ -884,6 +903,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /pessoas/bancarios,igual,referencia,"string = string"
 /pessoas/bancarios,igual,referencia_data,"string = datetime"
 /pessoas/bancarios,igual,ativo,"string = string"
+/pessoas/bancarios,igual,idpessoa,"integer = integer"
 /pessoas/bancarios,igual,idpessoa_int,"string = string"
 /pessoas/bancarios,igual,banco,"string = string"
 /pessoas/bancarios,igual,banco_nome,"string = string"
@@ -899,10 +919,13 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /pessoas/bens-empresa,igual,ativo,"string = string"
 /pessoas/bens-empresa,igual,idpessoa,"integer = integer"
 /pessoas/bens-empresa,igual,idpessoa_int,"string = string"
+/pessoas/bens-empresa,igual,bens_empresa->idpessoa_bem_empresa,"integer = integer"
 /pessoas/bens-empresa,igual,bens_empresa->data_cad,"string = datetime"
+/pessoas/bens-empresa,igual,bens_empresa->idpessoa,"integer = integer"
 /pessoas/bens-empresa,igual,bens_empresa->tipo,"string = string"
 /pessoas/bens-empresa,igual,bens_empresa->valor_atual,"string = string"
 /pessoas/bens-empresa,igual,bens_empresa->onus,"string = string"
+/pessoas/bens-empresa,igual,bens_empresa->numero_parcelas,"integer = integer"
 /pessoas/bens-empresa,igual,bens_empresa->valor_parcelas_mensais,"string = string"
 /pessoas/contatos,igual,referencia,"string = string"
 /pessoas/contatos,igual,referencia_data,"string = datetime"
@@ -911,6 +934,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /pessoas/contatos,igual,idpessoa,"integer = integer"
 /pessoas/contatos,igual,email,"string = string"
 /pessoas/contatos,igual,telefone,"string = string"
+/pessoas/contatos,igual,ramal,"integer = integer"
 /pessoas/contatos,igual,celular,"string = string"
 /pessoas/contatos,igual,referencia_nome,"string = string"
 /pessoas/contatos,igual,referencia_telefone,"string = string"
@@ -949,18 +973,12 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /pessoas/financeiros,igual,valor_capital_registrado_atual_pj,"string = string"
 /pessoas/financeiros,igual,valor_capital_integralizado_pj,"string = string"
 /pessoas/financeiros,igual,reservas_pj,"string = string"
-/pessoas/financeiros,igual,valor_total_vendas_ultimo_exercicio_pj,"string = string"
-/pessoas/financeiros,igual,porcentagem_a_vista_vendas_ultimo_exercicio_pj,"string = string"
-/pessoas/financeiros,igual,valor_media_mensal_vendas_pj,"string = string"
-/pessoas/financeiros,igual,porcentagem_a_vista_media_mensal_vendas_pj,"string = string"
-/pessoas/financeiros,igual,valor_media_mensal_compras_pj,"string = string"
-/pessoas/financeiros,igual,porcentagem_a_vista_media_mensal_compras_pj,"string = string"
+/pessoas/financeiros,igual,medio_prazo_dias_vendas_ultimo_exercicio_pj,"integer = integer"
 /pessoas/financeiros,igual,principais_clientes_pj,"string = string"
 /pessoas/financeiros,igual,concorrentes_diretos_pj,"string = string"
 /pessoas/financeiros,igual,despesas_fixas_mensais_pj,"string = string"
 /pessoas/financeiros,igual,predio_proprio_pj,"string = string"
-/pessoas/financeiros,igual,valor_aluguel_mes_pj,"string = string"
-/pessoas/financeiros,igual,data_vigencia_aluguel_pj,"string = datetime"
+/pessoas/financeiros,igual,data_vigencia_aluguel_pj,"string = string"
 /pessoas/patrimoniais,igual,referencia,"string = string"
 /pessoas/patrimoniais,igual,referencia_data,"string = datetime"
 /pessoas/patrimoniais,igual,ativo,"string = string"
@@ -971,6 +989,8 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /pessoas/patrimoniais,igual,quais_bens,"string = string"
 /pessoas/patrimoniais,igual,situacao_do_bem,"string = string"
 /pessoas/patrimoniais,igual,valor_do_bem,"string = string"
+/pessoas/patrimoniais,igual,novos_bens->referencia,"string = string"
+/pessoas/patrimoniais,igual,novos_bens->idpessoa_novo_bem,"integer = integer"
 /pessoas/patrimoniais,igual,novos_bens->data_cad,"string = datetime"
 /pessoas/patrimoniais,igual,novos_bens->tipo_novo_bem,"string = string"
 /pessoas/patrimoniais,igual,novos_bens->cep_novo_bem,"string = string"
@@ -989,6 +1009,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /pessoas/profissional,igual,referencia,"string = string"
 /pessoas/profissional,igual,referencia_data,"string = datetime"
 /pessoas/profissional,igual,ativo,"string = string"
+/pessoas/profissional,igual,idpessoa,"integer = integer"
 /pessoas/profissional,igual,idpessoa_int,"string = string"
 /pessoas/profissional,igual,trabalho_nome_empresa,"string = string"
 /pessoas/profissional,igual,trabalho_cnpj,"string = string"
@@ -1153,7 +1174,6 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /repasses,igual,cliente,"string = string"
 /repasses,igual,cep_cliente,"string = string"
 /repasses,igual,parcela,"string = string"
-/repasses,igual,idcontrato,"string = string"
 /repasses,igual,contrato,"string = string"
 /repasses,igual,valor_previsto,"number = number"
 /repasses,igual,parcela_conclusao,"number = number"
@@ -1175,6 +1195,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /repasses,igual,data_recurso_liberado,"string = datetime"
 /repasses,igual,data_sincronizacao,"string = datetime"
 /repasses,igual,data_cadastro,"string = datetime"
+/repasses,igual,idunidade,"integer = integer"
 /repasses,igual,data_modificacao,"string = datetime"
 /repasses/historico/situacoes,igual,referencia,"string = string"
 /repasses/historico/situacoes,igual,referencia_data,"string = datetime"
@@ -1191,11 +1212,13 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /repasses/historico/situacoes,igual,de_nome,"string = string"
 /repasses/historico/situacoes,igual,para_nome,"string = string"
 /repasses/workflow/tempo,igual,referencia,"string = string"
-/repasses/workflow/tempo,igual,referencia_data,"string = datetime"
+/repasses/workflow/tempo,igual,referencia_data,"string = string"
+/repasses/workflow/tempo,igual,data_cad,"string = string"
 /repasses/workflow/tempo,igual,ativo,"string = string"
 /repasses/workflow/tempo,igual,idtempo,"integer = integer"
 /repasses/workflow/tempo,igual,idrepasse,"integer = integer"
 /repasses/workflow/tempo,igual,idsituacao,"integer = integer"
+/repasses/workflow/tempo,igual,situacao,"string = string"
 /repasses/workflow/tempo,igual,sigla,"string = string"
 /repasses/workflow/tempo,igual,tempo,"integer = integer"
 /reservas,igual,referencia,"string = string"
@@ -1290,12 +1313,13 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /reservas/associados,igual,tipo_associacao,"string = string"
 /reservas/campos-adicionais,igual,referencia,"string = string"
 /reservas/campos-adicionais,igual,referencia_data,"string = datetime"
+/reservas/campos-adicionais,igual,ativo,"string = string"
 /reservas/campos-adicionais,igual,idreserva,"integer = integer"
 /reservas/campos-adicionais,igual,idcampo,"integer = integer"
-/reservas/campos-adicionais,igual,data_cad,"string = datetime"
+/reservas/campos-adicionais,igual,data_cad,"string = string"
 /reservas/campos-adicionais,igual,nome,"string = string"
 /reservas/campos-adicionais,igual,nome_referencia,"string = string"
-/reservas/campos-adicionais,igual,valor,"string = text"
+/reservas/campos-adicionais,igual,valor,"string = string"
 /reservas/campos-adicionais,igual,tipo,"string = string"
 /reservas/campos-adicionais,igual,funcionalidade,"string = string"
 /reservas/comissoes,igual,referencia,"string = string"
@@ -1662,6 +1686,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /unidades,igual,idbloco_int,"string = string"
 /unidades,igual,bloco,"string = string"
 /unidades,igual,nome,"string = string"
+/unidades,igual,area_privativa,"number = number"
 /unidades,igual,idunidade,"string = string"
 /unidades,igual,idunidade_int,"string = string"
 /unidades,igual,vagas_garagem,"string = string"
@@ -1677,6 +1702,7 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /unidades,igual,valor_avaliacao,"string = string"
 /unidades,igual,data_bloqueio,"string = datetime"
 /unidades,igual,data_entrega,"string = datetime"
+/unidades,igual,data_entrega_chaves,"string = string"
 /unidades,igual,agendar_a_partir,"string = datetime"
 /unidades,igual,liberar_a_partir,"string = datetime"
 /unidades,igual,situacao_reservada,"integer = integer"
@@ -1771,94 +1797,26 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /vendas,igual,tipovenda,"string = string"
 /vendas,igual,idlead,"string = text"
 /agendamentos/vistorias,alterar,idunidade,"integer para string"
-/atendimentos,alterar,idimobiliaria,"integer para string"
-/atendimentos/times/integrantes,alterar,idusuario,"integer para string"
 /campos_adicionais,alterar,referencia,"integer para string"
-/campos_adicionais,alterar,idcampo,"integer para string"
-/campos_adicionais,alterar,idfuncionalidade,"integer para string"
 /comissoes,alterar,valor_contrato,"number para string"
-/comissoes/pagamentos,alterar,valor,"number para float"
 /corretores,alterar,ano_conclusao,"integer para string"
 /leads,alterar,renda_familiar,"string para number"
-/leads/historico/situacoes,alterar,de,"string para integer"
-/leads/historico/situacoes,alterar,para,"string para integer"
-/leads/historico/situacoes,alterar,idusuario,"integer para string"
-/leads/visitas,alterar,idtipo_visita,"integer para string"
 /pesquisas/perguntas,alterar,referencia,"integer para string"
 /pesquisas/respostas,alterar,referencia,"integer para string"
 /pessoas,alterar,idpessoa_legado,"integer para string"
-/pessoas/bancarios,alterar,idpessoa,"integer para string"
 /pessoas/bens-empresa,alterar,referencia,"integer para string"
 /pessoas/bens-empresa,alterar,bens_empresa->referencia,"integer para string"
-/pessoas/bens-empresa,alterar,bens_empresa->idpessoa_bem_empresa,"integer para string"
-/pessoas/bens-empresa,alterar,bens_empresa->idpessoa,"integer para string"
-/pessoas/bens-empresa,alterar,bens_empresa->numero_parcelas,"integer para string"
-/pessoas/financeiros,alterar,medio_prazo_dias_vendas_ultimo_exercicio_pj,"integer para string"
-/pessoas/financeiros,alterar,preco_medio_dias_media_mensal_vendas_pj,"integer para string"
-/pessoas/financeiros,alterar,preco_medio_dias_media_mensal_compras_pj,"integer para string"
-/pessoas/patrimoniais,alterar,novos_bens->idpessoa_novo_bem,"integer para string"
-/pessoas/profissional,alterar,idpessoa,"integer para string"
-/precadastros,alterar,renda_cliente_principal,"string para float"
-/repasses,alterar,idunidade,"integer para string"
-/unidades,alterar,area_privativa,"number para string"
-/agendamentos/vistorias,adicionar,desmarcado,string
-/agendamentos/vistorias,adicionar,data_entrega_de_chave,string
-/corretores,adicionar,profissional_experiencia_ramo_imobiliario,string
-/corretores,adicionar,profissional_quanto_tempo,string
-/corretores,adicionar,profissional_ultima_atual_empresa,string
-/corretores,adicionar,profissional_segmento,string
-/corretores,adicionar,profissional_data_inicio,string
-/corretores,adicionar,profissional_data_fim,string
-/corretores,adicionar,profissional_motivo_saida,string
-/corretores,adicionar,profissional_superior_imediato,string
-/corretores,adicionar,profissional_telefone,string
-/corretores,adicionar,profissional_cargo_inicial,string
-/corretores,adicionar,profissional_cargo_final,string
-/corretores,adicionar,profissional_descricao_atividades,string
-/corretores,adicionar,profissional_ultimos_atuais_ganhos,string
-/corretores,adicionar,profissional_expectativa_ganhos,string
-/corretores,adicionar,tipo_creci,string
-/corretores,adicionar,creci,string
-/corretores,adicionar,situacao_creci,string
-/corretores,adicionar,estado_creci,string
-/corretores,adicionar,cidade_creci,string
-/corretores,adicionar,vencimento_creci,string
-/corretores,adicionar,tipo_conta,string
-/corretores,adicionar,banco,string
-/corretores,adicionar,nome_agencia,string
-/corretores,adicionar,numero_agencia,string
-/corretores,adicionar,digito_agencia,string
-/corretores,adicionar,numero_conta,string
-/corretores,adicionar,digito_conta,string
-/corretores,adicionar,cpf_favorecido,string
-/corretores,adicionar,nome_favorecido,string
-/corretores,adicionar,cnpj,string
-/corretores,adicionar,inscricao_municipal,string
-/corretores,adicionar,ju_cep,string
-/corretores,adicionar,ju_logradouro,string
-/corretores,adicionar,ju_endereco,string
-/corretores,adicionar,ju_bairro,string
-/corretores,adicionar,ju_numero,string
-/corretores,adicionar,ju_complemento,string
-/corretores,adicionar,ju_estado,string
-/corretores,adicionar,ju_cidade,string
-/corretores,adicionar,cnpj_faturamento,string
-/corretores,adicionar,razaosocial_faturamento,string
-/corretores,adicionar,nomefantasia_faturamento,string
-/corretores,adicionar,representante_nome,string
-/corretores,adicionar,representante_telefone,string
-/corretores,adicionar,representante_celular,string
-/corretores,adicionar,representante_email,string
-/corretores,adicionar,representante_rg,string
-/corretores,adicionar,representante_documento,string
-/corretores,adicionar,representante_creci,string
-/corretores,adicionar,representante_vencimento_creci,string
-/corretores,adicionar,representante_data_nasc,string
-/corretores,adicionar,representante_quantidade_filhos,string
-/corretores,adicionar,banco_tipo_doc,string
-/corretores,adicionar,banco_cpf_titular,string
-/corretores,adicionar,banco_cnpj_titular,string
-/corretores,adicionar,data_ult_hist,string
+/pessoas/financeiros,alterar,valor_total_vendas_ultimo_exercicio_pj,"string para number"
+/pessoas/financeiros,alterar,porcentagem_a_vista_vendas_ultimo_exercicio_pj,"string para number"
+/pessoas/financeiros,alterar,valor_media_mensal_vendas_pj,"string para number"
+/pessoas/financeiros,alterar,porcentagem_a_vista_media_mensal_vendas_pj,"string para number"
+/pessoas/financeiros,alterar,preco_medio_dias_media_mensal_vendas_pj,"integer para number"
+/pessoas/financeiros,alterar,valor_media_mensal_compras_pj,"string para number"
+/pessoas/financeiros,alterar,porcentagem_a_vista_media_mensal_compras_pj,"string para number"
+/pessoas/financeiros,alterar,preco_medio_dias_media_mensal_compras_pj,"integer para number"
+/pessoas/financeiros,alterar,valor_aluguel_mes_pj,"string para number"
+/precadastros,alterar,renda_cliente_principal,"string para number"
+/repasses,alterar,idcontrato,"string para integer"
 /corretores,adicionar,ativo_login,string
 /corretores,adicionar,idimobiliaria,integer
 /corretores,adicionar,data_cad,string
@@ -1900,16 +1858,9 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /corretores,adicionar,classificacao,string
 /corretores,adicionar,codigointerno,string
 /corretores,adicionar,identificador,string
-/imobiliarias,adicionar,micro_empresa,string
-/imobiliarias,adicionar,nome_favorecido,string
-/imobiliarias,adicionar,alterar_login_corretor,string
-/leads,adicionar,idimobiliaria_ultimo,integer
-/leads/historico/situacoes,adicionar,idhistorico,integer
-/pesquisas,adicionar,pesquisa,string
-/pesquisas,adicionar,situacao,string
-/pesquisas,adicionar,ids_perguntas,string
-/pessoas/contatos,adicionar,ramal,integer
-/pessoas/patrimoniais,adicionar,novos_bens->referencia,string
+/leads/tarefas,adicionar,motivo_cancelamento,string
+/leads/tarefas,adicionar,motivo_concluido,string
+/leads/tarefas,adicionar,descricao,string
 /repasses,adicionar,contrato_quitado,string
 /repasses,adicionar,contrato_liquidado,string
 /repasses,adicionar,valor_registro,number
@@ -1925,38 +1876,8 @@ Path,Situação,Campo,"Tipo CVDW","Tipo Objeto"
 /repasses,adicionar,laudemio_pago,string
 /repasses,adicionar,data_unidade_liberada,string
 /repasses,adicionar,data_laudo_liberado,string
-/repasses/workflow/tempo,adicionar,data_cad,string
-/repasses/workflow/tempo,adicionar,situacao,string
-/reservas/campos-adicionais,adicionar,ativo,string
-/unidades,adicionar,data_entrega_chaves,string
 /vendas,adicionar,RetornarAssociados,array
-/agendamentos/vistorias,remover,data_modificacao,datetime
-/assistencias/itens,remover,data_sincronizacao,datetime
-/atendimentos/workflow/tempo,remover,idassistencia,integer
-/comissoes,remover,numero,integer
-/imobiliarias,remover,"nome_favorecido""",string
-/imobiliarias,remover,"alterar_login_corretor""",string
-/leads,remover,data_sincronizacao,datetime
-/leads/historico/situacoes,remover,telefone,string
-/leads/momentos,remover,nome_usuario,string
-/pesquisas,remover,idpergunta,integer
-/pesquisas,remover,perguntas,string
-/pesquisas,remover,nome,string
-/pesquisas,remover,idcliente,integer
-/pesquisas,remover,documento_cliente,string
-/pesquisas,remover,email,string
-/pesquisas,remover,cep_cliente,string
-/pesquisas,remover,idresposta,integer
-/pesquisas,remover,quem_respondeu,integer
-/pesquisas,remover,idempreendimento,integer
-/pesquisas,remover,codigointerno_empreendimento,string
-/pesquisas,remover,empreendimento,string
-/pesquisas,remover,regiao,string
-/pesquisas,remover,data_sincronizacao,datetime
-/pessoas/patrimoniais,remover,novos_bens->referencia,string
 /repasses,remover,idreserva,integer
-/repasses/workflow/tempo,remover,nome,string
-/reservas/registros/flags,remover,data_sincronizacao,datetime
 /vendas,remover,associados->idpessoa_cv,integer
 /vendas,remover,associados->idtipo_associacao,integer
 /vendas,remover,associados->tipo_associacao,string

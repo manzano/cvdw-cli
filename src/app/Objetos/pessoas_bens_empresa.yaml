@@ -87,7 +87,7 @@ response:
         description: 'Código identificador do bem da empresa'
         example: 4
       idpessoa_bem_empresa:
-        type: string
+        type: integer
         description: 'Código identificador do bem da empresa'
         example: 4
       data_cad:
@@ -95,7 +95,7 @@ response:
         description: 'Data de cadastro'
         example: '2024-01-22 11:14:34'
       idpessoa:
-        type: string
+        type: integer
         description: 'Código identificador da pessoa'
         example: 10034
       tipo:
@@ -111,7 +111,7 @@ response:
         description: 'Informa se o bem tem ônus'
         example: "Sim"
       numero_parcelas:
-        type: string
+        type: integer
         description: 'Número de parcelas'
         example: 12
       valor_parcelas_mensais:

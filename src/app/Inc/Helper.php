@@ -18,26 +18,6 @@ function validarData($dataInput)
     return false;
 }
 
-function salvarEventoErro($e, $objeto, $metadata = array(), $mensagem = null, $info_adicionais = []){
-    
-    if ($_ENV['CVDW_AMBIENTE'] <> 'DEV') {
-        // Define o contexto com informações adicionais
-        \Sentry\configureScope(function (\Sentry\State\Scope $scope) use ($info_adicionais) {
-            $scope->setContext('informacoes_adicionais', $info_adicionais);
-        });
-        \Sentry\addBreadcrumb(
-            category: $objeto,
-            metadata: $metadata
-        );
-        if($mensagem <> null){
-            \Sentry\captureMessage($mensagem);
-        }
-        if($e instanceof Exception){
-            \Sentry\captureException($e);
-        }
-    }
-    
-}
 
 function substituirPorAsteriscos($texto)
 {

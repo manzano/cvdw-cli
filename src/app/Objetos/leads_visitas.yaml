@@ -112,7 +112,7 @@ response:
       description: "Tipo da interação"
       example: Visita
     idtipo_visita:
-      type: string
+      type: integer
       description: "Identificador do tipo da visita"
       example: "5"
     nome_tipo_visita:

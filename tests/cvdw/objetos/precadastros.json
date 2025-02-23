@@ -27,7 +27,7 @@
             "empresa": "string",
             "pessoa": "string",
             "cep_cliente": "string",
-            "renda_cliente_principal": "float",
+            "renda_cliente_principal": "number",
             "idusuario_correspondente": "integer",
             "usuario_correspondente": "string",
             "idpessoa": "integer",

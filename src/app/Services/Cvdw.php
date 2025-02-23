@@ -113,7 +113,8 @@ class Cvdw
         $this->alterados = $this->alteradoserros = 0;
 
         $resposta = $http->requestCVDW($objeto['path'], false, $this, $parametros);
-       
+        $resposta = $this->corrigeRetornoJson($resposta);
+
         // Se não existir $resposta->total_de_registros, imprimir uma mensagem de erro;
         //if (!isset($resposta->total_de_registros)) {
         if (!property_exists($resposta, 'total_de_registros')) { 
@@ -158,7 +159,12 @@ class Cvdw
                             $parametros['a_partir_data_referencia'] = $referencia_data;
                         }
                         $resposta = $http->requestCVDW($objeto['path'], $progressBar, $this, $parametros, $inputDataReferencia);
-                        $this->paginasEncontradas = $resposta->total_de_paginas;
+                        if(isset($resposta->total_de_paginas)) {
+                            $this->paginasEncontradas = $resposta->total_de_paginas;
+                        }
+                        if($resposta->total_de_registros == 0) {
+                            continue;
+                        }
                         $this->paginasExecutadas = $pagina;
                     }
                     $progressBar->setMessage($this->getMensagem());
@@ -175,17 +181,6 @@ class Cvdw
                             $this->io->warning([
                                 $mensagem,
                             ]);
-                            $metadata = [
-                                'acao' => 'executar',
-                                'cv_url' => $_ENV['CV_URL'],
-                                'path' => $objeto['path'],
-                                'tabela' => $objeto['tabela'],
-                                'referencia' => null
-                            ];
-                            $info_adicionais = [
-                                'resposta' => $resposta
-                            ];
-                            salvarEventoErro(null, 'CVDW', $metadata, $mensagem, $info_adicionais);
                             break;
                         }
                         foreach ($resposta->dados as $linha) {
@@ -210,6 +205,37 @@ class Cvdw
         }
         $this->io->newLine();
         return true;
+    }
+
+    protected function corrigeRetornoJson($resposta): object
+    {
+
+        // Se resposta não for um objeto, retornar um objeto vazio
+        if (!is_object($resposta)) {
+            $resposta = (object) [];
+        }
+
+        // Se nao tiver a chave página, adicionar
+        if (!isset($resposta->pagina)) {
+            $resposta->pagina = 1;
+        }
+        // Se nao tiver a chave registros, adicionar
+        if (!isset($resposta->registros)) {
+            $resposta->registros = 500;
+        }
+        // Se nao tiver a chave total_de_registros, adicionar
+        if (!isset($resposta->total_de_registros)) {
+            $resposta->total_de_registros = 0;
+        }
+        // Se nao tiver a chave total_de_paginas, adicionar
+        if (!isset($resposta->total_de_paginas)) {
+            $resposta->total_de_paginas = 0;
+        }
+        // Se nao tiver a chave dados, adicionar
+        if (!isset($resposta->dados)) {
+            $resposta->dados = [];
+        }
+        return $resposta;
     }
 
     protected function getLimiteErros(): bool
@@ -421,7 +447,6 @@ class Cvdw
                 'tabela' => $objeto['tabela'],
                 'referencia' => $linha->referencia
             ];
-            salvarEventoErro($e, $objeto, $metadata, $erroMsg);
             $retorno = false;
         }
         return $retorno;
@@ -475,7 +500,6 @@ class Cvdw
                 'tabela' => $objeto['tabela'],
                 'referencia' => $linha->referencia
             ];
-            salvarEventoErro($e, $objeto, $metadata, $erroMsg);
 
             $retorno = true;
         }
@@ -551,7 +575,6 @@ class Cvdw
     public function alertarNovaVersao($versaoCVDW, $io): void
     {
         $versaoRepositorio = $this->verificarNovaVersao($io);
-
         if($versaoRepositorio == 'OFF'){
             $io->warning('Não consegui acessar o repositório do CV, considere verificar a conexão com a internet.');
         } else {

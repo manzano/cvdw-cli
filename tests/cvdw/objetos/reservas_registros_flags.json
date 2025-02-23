@@ -24,7 +24,6 @@
             "idcliente": "integer",
             "corretor": "string",
             "idcorretor": "integer",
-            "data_sincronizacao": "datetime",
             "flag_inicio": "string",
             "data_flag_inicio": "datetime",
             "flag_inicio_semproposta": "string",

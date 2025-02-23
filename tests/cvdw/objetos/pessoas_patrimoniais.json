@@ -18,7 +18,8 @@
             "situacao_do_bem": "string",
             "valor_do_bem": "string",
             "novos_bens": {
-                "idpessoa_novo_bem": "string",
+                "referencia": "string",
+                "idpessoa_novo_bem": "integer",
                 "data_cad": "datetime",
                 "tipo_novo_bem": "string",
                 "cep_novo_bem": "string",

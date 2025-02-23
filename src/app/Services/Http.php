@@ -39,7 +39,7 @@ class Http
 
     }
 
-    public function requestCVDW(string $path, $progressBar, $cvdw, array $parametros = [], bool $novaTentativa = true) : object
+    public function requestCVDW(string $path, $progressBar, $cvdw, array $parametros = [], bool $novaTentativa = true)
     {
 
         $this->ratelimitObj->validarTempoExecucao();
@@ -85,6 +85,17 @@ class Http
         );
         $response = curl_exec($curl);
 
+        $responseJson = json_decode($response);
+
+        // verifica se o cabecalho da requisicao esta entre 200 e 299
+        if (!curl_errno($curl)) {
+            $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            $http_code = intval($http_code);
+            if ($http_code >= 200 && $http_code <= 299) {
+                return $responseJson;
+            }
+        }
+
         if ($this->output->isDebug()) {
             rewind($verbose);
             $verboseLog = stream_get_contents($verbose);
@@ -98,8 +109,6 @@ class Http
         }
 
         curl_close($curl);
-        
-        $responseJson = json_decode($response);
 
         if(isset($responseJson->dados)){
             $dados_retorno_qtd = count($responseJson->dados);
@@ -107,6 +116,7 @@ class Http
             $dados_retorno_qtd = null;
         }
         $this->ratelimitObj->concluirRequisicao($idrequisicao, $dados_retorno_qtd, null);
+
 
         // Se nao for setado $resposta->total_de_registros,
         // imprimir uma mensagem de erro e tentar novamente em 3 segundos

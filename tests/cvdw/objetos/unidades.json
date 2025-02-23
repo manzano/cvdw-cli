@@ -21,7 +21,7 @@
             "idbloco_int": "string",
             "bloco": "string",
             "nome": "string",
-            "area_privativa": "string",
+            "area_privativa": "number",
             "idunidade": "string",
             "idunidade_int": "string",
             "vagas_garagem": "string",
@@ -37,6 +37,7 @@
             "valor_avaliacao": "string",
             "data_bloqueio": "datetime",
             "data_entrega": "datetime",
+            "data_entrega_chaves": "string",
             "agendar_a_partir": "datetime",
             "liberar_a_partir": "datetime",
             "plantas": {

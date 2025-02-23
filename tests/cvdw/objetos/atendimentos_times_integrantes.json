@@ -12,7 +12,7 @@
             "idintegrante": "integer",
             "idtime": "integer",
             "time": "string",
-            "idusuario": "string",
+            "idusuario": "integer",
             "usuario": "string",
             "ativo": "string",
             "data_cad": "datetime",

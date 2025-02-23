@@ -11,7 +11,6 @@
             "referencia_data": "datetime",
             "ativo": "string",
             "idcomissao": "integer",
-            "numero": "integer",
             "situacao": "string",
             "idsituacao": "integer",
             "idreserva": "integer",

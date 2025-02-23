@@ -12,6 +12,7 @@ RUN apk add --no-cache \
     curl \
     zip \
     vim \
+    envsubst \
     && docker-php-ext-install pdo pdo_mysql zip
 
 # Instalando o Composer antes de clonar o repositório
@@ -42,7 +43,6 @@ RUN echo "alias cvdw='php /app/src/cvdw'" >> /root/.bashrc && \
 # Criar um link simbólico para permitir rodar `cvdw` diretamente
 RUN ln -s /app/src/cvdw /usr/local/bin/cvdw
 
-RUN apk add envsubst
 COPY env.tmpl.ini /app/src/envs/env.tmpl.ini
 
 # Adicionando o crontab

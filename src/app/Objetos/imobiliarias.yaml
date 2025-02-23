@@ -201,6 +201,10 @@ response:
       type: text
       description: 'Informa se imobiliária é uma microempresa Sim (S) ou Não (N)'
       example: 'N'
+    micro_empresa:
+        example: "N"
+        type: string
+        description: "Informa se imobiliária é uma microempresa Sim (S) ou Não (N)"
     inscricao_estadual:
       type: string
       description: null
@@ -237,7 +241,7 @@ response:
       type: string
       description: null
       example: "1"
-    nome_favorecido": 
+    nome_favorecido: 
       type: string
       description: 'Nome do favorecido da conta de banco da imobiliária'
       example: 'José dos Santos Silva'
@@ -245,10 +249,10 @@ response:
       type: string
       description: null
       example: '87728824000160'
-    alterar_login_corretor": 
+    alterar_login_corretor:
+      example: "S"
       type: string
-      description: 'Informa se a imobiliária pode interferir no login do corretor: Sim (S) ou Não (N)'
-      example: 'S'
+      description: "Informa se a imobiliária pode interferir no login do corretor: Sim (S) ou Não (N)"
     escala_plantao: 
       type: string
       description: 'Informa se a imobiliária pode administrar a escala de plantão: Sim (S) ou Não (N)'

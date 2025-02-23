@@ -89,6 +89,10 @@ response:
       type: string
       description: 'Telefone de contato'
       example: '(25) 99988-7766'
+    ramal:
+      example: 22
+      type: integer
+      description: "Ramal"
     celular:
       type: string
       description: 'Celular de contato'

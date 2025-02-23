@@ -9,12 +9,13 @@
         "dados": {
             "referencia": "string",
             "referencia_data": "datetime",
-            "idcampo": "integer",
+            "ativo": "string",
             "idreserva": "integer",
-            "data_cad": "datetime",
+            "idcampo": "integer",
+            "data_cad": "string",
             "nome": "string",
             "nome_referencia": "string",
-            "valor": "text",
+            "valor": "string",
             "tipo": "string",
             "funcionalidade": "string"
         }

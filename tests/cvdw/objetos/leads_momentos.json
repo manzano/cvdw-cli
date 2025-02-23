@@ -13,7 +13,6 @@
             "idmomento_lead": "integer",
             "idlead": "integer",
             "idusuario": "integer",
-            "nome_usuario": "string",
             "painel_usuario": "string",
             "momentos_lead": "string",
             "data_cad": "datetime",

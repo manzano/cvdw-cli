@@ -22,17 +22,18 @@
             "cliente": "string",
             "idcliente": "integer",
             "cep_cliente": "string",
-            "data_agendamento": "string",
+            "data_agendamento": "datetime",
             "horario": "string",
             "vistoriador": "string",
             "tipo": "string",
             "situacao": "string",
+            "desmarcado": "string",
             "quitado": "string",
             "chave_liberada": "string",
             "chave_entregue": "string",
+            "data_entrega_de_chave": "datetime",
             "idreserva": "integer",
-            "numero": "integer",
-            "data_modificacao": "datetime"
+            "numero": "integer"
         }
     }
 }

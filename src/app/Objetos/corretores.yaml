@@ -73,6 +73,7 @@ response:
       type: string
       description: 'Informa se está ativo ou não'
       example: S
+      tamanho: 1
     idcorretor:
       type: integer
       description: 'Identificador da corretor'
@@ -86,22 +87,27 @@ response:
       description: 'Número do documento (CPF/CNPJ) do corretor'
       example: '04461372197'
       sensivel: true
+      tamanho: 14
     nome:
       type: string
       description: 'Nome do corretor'
       example: 'Corretor TK'
+      tamanho: 100
     apelido:
       type: string
       description: 'Apelido do corretor'
       example: Corretor
+      tamanho: 100
     sexo:
       type: string
       description: 'Sexo do Corretor'
       example: Feminino
+      tamanho: 10
     ativo_login:
       type: string
       description: 'Indica se está ativo no login'
       example: Sim
+      tamanho: 1
     data_cad:
       type: datetime
       description: 'Data de Cadastro do Corretor'
@@ -110,6 +116,7 @@ response:
       type: string
       description: 'Estado Civil do Corretor'
       example: Casado
+      tamanho: 50
     data_nasc:
       type: datetime
       description: 'Data de nascimento do Corretor'
@@ -118,30 +125,37 @@ response:
       type: string
       description: 'Telefone do Corretor'
       example: '7934421055'
+      tamanho: 50
     celular:
       type: string
       description: 'Celular do Corretor'
       example: '079999715866'
+      tamanho: 50
     rg:
       type: string
       description: 'Numero do rg do corretor'
       example: 14.802.150-5
+      tamanho: 50
     rg_orgao_expedidor:
       type: string
       description: 'Orgão Expedidor'
       example: SSP
+      tamanho: 50
     numero_pis:
       type: string
       description: 'Numero do Pis'
       example: '32014525254'
+      tamanho: 50
     naturalidade:
       type: string
       description: 'Naturalidade do Corretor'
       example: brasileiro
+      tamanho: 50
     pais:
       type: string
       description: 'País do Corretor'
       example: brasil
+      tamanho: 50
     possui_filhos:
       type: integer
       description: 'Quantidade de filhos'
@@ -154,92 +168,335 @@ response:
       type: string
       description: null
       example: M
+      tamanho: 3
     razao_social:
       type: string
       description: null
       example: 'd fadsfadsf'
+      tamanho: 150
     contrato_social_nire:
       type: string
       description: null
       example: null
+      tamanho: 50
     inscricao_estadual:
       type: string
       description: null
       example: null
+      tamanho: 50
     cep:
       type: string
       description: null
       example: '49015110'
+      tamanho: 10
     logradouro:
       type: string
       description: null
       example: Rua
+      tamanho: 15
     endereco:
       type: string
       description: null
       example: 'Rua Itabaiana'
+      tamanho: 80
     bairro:
       type: string
       description: null
       example: 'São José'
+      tamanho: 50
     numero:
       type: string
       description: null
       example: '123'
+      tamanho: 10
     complemento:
       type: string
       description: null
       example: Apartamento
+      tamanho: 20
     estado:
       type: string
       description: null
       example: SE
+      tamanho: 50
     cidade:
       type: string
       description: null
       example: Aracaju
+      tamanho: 50
     grau_instrucao:
       type: string
       description: null
       example: 'Ensino médio completo'
+      tamanho: 50
     curso:
       type: string
       description: null
       example: Direito
+      tamanho: 50
     ano_conclusao:
       type: string
       description: null
       example: 3121
+      tamanho: 5
     email:
       type: string
       description: null
       example: teste@cvcrm.com.br
+      tamanho: 50
     imobiliaria:
       type: string
       description: null
       example: 'Imobiliária Qualidade'
+      tamanho: 50
     categoria:
       type: string
       description: null
       example: Ouro
+      tamanho: 50
     nivel:
       type: string
       description: null
       example: 'Corretor Externo'
+      tamanho: 50
     participa_roleta_online:
       type: string
       description: null
       example: Não
+      tamanho: 5
     classificacao:
       type: string
       description: null
       example: Vip
+      tamanho: 50
     codigointerno:
       type: string
       description: null
       example: '215'
+      tamanho: 10
     identificador:
       type: string
       description: null
       example: '123'
+      tamanho: 50
+    profissional_experiencia_ramo_imobiliario:
+      example: "Sim"
+      type: string
+      tamanho: 5
+    profissional_quanto_tempo:
+      example: "1"
+      type: string
+      tamanho: 50
+    profissional_ultima_atual_empresa:
+      example: "Empresa Antiga"
+      type: string
+      tamanho: 50
+    profissional_segmento:
+      example: "Construção Civil"
+      type: string
+      tamanho: 50
+    profissional_data_inicio:
+      example: "1983-10-01"
+      type: datetime
+    profissional_data_fim:
+      example: "1982-01-01"
+      type: datetime
+    profissional_motivo_saida:
+      example: "Busca de novos caminhos"
+      type: string
+      tamanho: 50
+    profissional_superior_imediato:
+      example: "José Silva"
+      type: string
+      tamanho: 50
+    profissional_telefone:
+      example: "(98) 78977-8979"
+      type: string
+      tamanho: 50
+    profissional_cargo_inicial:
+      example: "Secretario"
+      type: string
+      tamanho: 50
+    profissional_cargo_final:
+      example: "Vice-diretor"
+      type: string
+      tamanho: 50
+    profissional_descricao_atividades:
+      example: "Atividades realizadas"
+      type: string
+      tamanho: 50
+    profissional_ultimos_atuais_ganhos:
+      example: "R$ 2000.00"
+      type: string
+      tamanho: 50
+    profissional_expectativa_ganhos:
+      example: "R$ 2970.00"
+      type: string
+      tamanho: 50
+    tipo_creci:
+      example: "Definitivo"
+      type: string
+      tamanho: 50
+    creci:
+      example: "1312"
+      type: string
+      tamanho: 50
+    situacao_creci:
+      example: "Ativo"
+      type: string
+      tamanho: 50
+    estado_creci:
+      example: "AC"
+      type: string
+      tamanho: 50
+    cidade_creci:
+      example: "Manoel Urbano"
+      type: string
+      tamanho: 50
+    vencimento_creci:
+      example: "1982-01-01"
+      type: datetime
+    tipo_conta:
+      example: "Conta corrente"
+      type: string
+      tamanho: 50
+    banco:
+      example: "Banco do Brasil S.A."
+      type: string
+      tamanho: 50
+    nome_agencia:
+      example: "Jardins"
+      type: string
+      tamanho: 50
+    numero_agencia:
+      example: "232"
+      type: string
+      tamanho: 50
+    digito_agencia:
+      example: "32"
+      type: string
+      tamanho: 5
+    numero_conta:
+      example: "3232"
+      type: string
+      tamanho: 10
+    digito_conta:
+      example: "32"
+      type: string
+      tamanho: 5
+    cpf_favorecido:
+      example: null
+      type: string
+      tamanho: 14
+    nome_favorecido:
+      example: "José Silva"
+      type: string
+      tamanho: 50
+    cnpj:
+      example: "04767675000111"
+      type: string
+      tamanho: 50
+    inscricao_municipal:
+      example: "12154-45"
+      type: string
+      tamanho: 50
+    ju_cep:
+      example: "49015110"
+      type: string
+      tamanho: 50
+    ju_logradouro:
+      example: "Rua"
+      type: string
+      tamanho: 50
+    ju_endereco:
+      example: "Rua Itabaiana"
+      type: string
+      tamanho: 50
+    ju_bairro:
+      example: "São José"
+      type: string
+    ju_numero:
+      example: "110"
+      type: string
+    ju_complemento:
+      example: "sdfasdf"
+      type: string
+      tamanho: 50
+    ju_estado:
+      example: "SE"
+      type: string
+      tamanho: 15
+    ju_cidade:
+      example: "Aracaju"
+      type: string
+      tamanho: 50
+    cnpj_faturamento:
+      example: null
+      type: string
+      tamanho: 50
+    razaosocial_faturamento:
+      example: null
+      type: string
+      tamanho: 50
+    nomefantasia_faturamento:
+      example: null
+      type: string
+      tamanho: 50
+    representante_nome:
+      example: null
+      type: string
+      tamanho: 50
+    representante_telefone:
+      example: null
+      type: string
+      tamanho: 50
+    representante_celular:
+      example: null
+      type: string
+      tamanho: 50
+    representante_email:
+      example: null
+      type: string
+      tamanho: 50
+    representante_rg:
+      example: null
+      type: string
+      tamanho: 50
+    representante_documento:
+      example: null
+      type: string
+      tamanho: 50
+    representante_creci:
+      example: null
+      type: string
+      tamanho: 50
+    representante_vencimento_creci:
+      example: null
+      type: string
+      tamanho: 50
+    representante_data_nasc:
+      example: null
+      type: string
+      tamanho: 50
+    representante_quantidade_filhos:
+      example: null
+      type: string
+      tamanho: 50
+    banco_tipo_doc:
+      example: "CPF"
+      type: string
+      tamanho: 15
+    banco_cpf_titular:
+      example: "04286482073"
+      type: string
+      tamanho: 15
+    banco_cnpj_titular:
+      example: null
+      type: string
+      tamanho: 15
+    data_ult_hist:
+      example: "2024-02-21 16:02:56"
+      type: string
+      description: "Data da último historico"
+      tamanho: 20
     

@@ -14,6 +14,7 @@
             "idpessoa": "integer",
             "email": "string",
             "telefone": "string",
+            "ramal": "integer",
             "celular": "string",
             "referencia_nome": "string",
             "referencia_telefone": "string",

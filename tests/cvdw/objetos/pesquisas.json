@@ -13,22 +13,11 @@
             "idpesquisa": "integer",
             "dataInicio": "string",
             "dataFim": "string",
-            "idpergunta": "integer",
-            "perguntas": "string",
-            "nome": "string",
-            "idcliente": "integer",
-            "documento_cliente": "string",
-            "email": "string",
-            "cep_cliente": "string",
-            "idresposta": "integer",
-            "quem_respondeu": "integer",
+            "pesquisa": "string",
+            "situacao": "string",
             "data_referencia": "string",
             "tipo_pesquisa": "string",
-            "idempreendimento": "integer",
-            "codigointerno_empreendimento": "string",
-            "empreendimento": "string",
-            "regiao": "string",
-            "data_sincronizacao": "datetime"
+            "ids_perguntas": "string"
         }
     }
 }

@@ -12,14 +12,14 @@
             "ativo": "string",
             "iddemanda": "integer",
             "demanda": "string",
-            "data_cad": "datetime",
-            "data_encerramento": "datetime",
-            "data_conclusao": "datetime",
+            "data_cad": "string",
+            "data_encerramento": "string",
+            "data_conclusao": "string",
             "agencia": "string",
-            "data_situacao_finalizada": "datetime",
+            "data_situacao_finalizada": "string",
             "situacao_demanda": "string",
             "empreendimento": "string",
-            "data_ult_situacao": "datetime"
+            "data_ult_situacao": "string"
         }
     }
 }

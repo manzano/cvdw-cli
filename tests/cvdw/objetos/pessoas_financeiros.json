@@ -24,21 +24,21 @@
             "valor_capital_registrado_atual_pj": "string",
             "valor_capital_integralizado_pj": "string",
             "reservas_pj": "string",
-            "valor_total_vendas_ultimo_exercicio_pj": "string",
-            "porcentagem_a_vista_vendas_ultimo_exercicio_pj": "string",
-            "medio_prazo_dias_vendas_ultimo_exercicio_pj": "string",
-            "valor_media_mensal_vendas_pj": "string",
-            "porcentagem_a_vista_media_mensal_vendas_pj": "string",
-            "preco_medio_dias_media_mensal_vendas_pj": "string",
-            "valor_media_mensal_compras_pj": "string",
-            "porcentagem_a_vista_media_mensal_compras_pj": "string",
-            "preco_medio_dias_media_mensal_compras_pj": "string",
+            "valor_total_vendas_ultimo_exercicio_pj": "number",
+            "porcentagem_a_vista_vendas_ultimo_exercicio_pj": "number",
+            "medio_prazo_dias_vendas_ultimo_exercicio_pj": "integer",
+            "valor_media_mensal_vendas_pj": "number",
+            "porcentagem_a_vista_media_mensal_vendas_pj": "number",
+            "preco_medio_dias_media_mensal_vendas_pj": "number",
+            "valor_media_mensal_compras_pj": "number",
+            "porcentagem_a_vista_media_mensal_compras_pj": "number",
+            "preco_medio_dias_media_mensal_compras_pj": "number",
             "principais_clientes_pj": "string",
             "concorrentes_diretos_pj": "string",
             "despesas_fixas_mensais_pj": "string",
             "predio_proprio_pj": "string",
-            "valor_aluguel_mes_pj": "string",
-            "data_vigencia_aluguel_pj": "datetime"
+            "valor_aluguel_mes_pj": "number",
+            "data_vigencia_aluguel_pj": "string"
         }
     }
 }

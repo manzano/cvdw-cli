@@ -11,7 +11,7 @@
             "referencia_data": "datetime",
             "idcomissao": "integer",
             "idpagamento": "integer",
-            "valor": "float",
+            "valor": "number",
             "vencimento": "string",
             "bloco": "string",
             "unidade": "string",

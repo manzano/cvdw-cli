@@ -139,7 +139,7 @@ class Configurar extends Command
                 $this->configurarAnonimizacao();
                 break;
             case 'Verificar/Atualizar meu ambiente':
-                $cvdwObj->conectar();
+                $this->cvdwObj->conectar();
                 $this->verificarInstalacao();
                 break;
             case 'Limpar datas de referências das tabelas':
@@ -863,14 +863,15 @@ class Configurar extends Command
             $progressBar->start();
 
             $database->executarApagarTabelas($tabelasApagar, $table, $progressBar);
-        
+            $database->fecharConexao();
+            
             $progressBar->finish();
             $table->render();
 
             $io->text([ '', 'Pronto!' ]);
         }
 
-        $database->fecharConexao();
+        
         $this->voltarProMenu = true;
         $this->voltarProMenu();
 

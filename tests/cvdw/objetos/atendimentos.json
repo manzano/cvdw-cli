@@ -56,7 +56,7 @@
             "responsavel": "string",
             "idcorretor": "integer",
             "imobiliaria": "string",
-            "idimobiliaria": "string",
+            "idimobiliaria": "integer",
             "quantidade_mensagens": "integer",
             "quantidade_interacoes": "integer",
             "sigla_empreendimento": "string",

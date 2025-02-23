@@ -14,13 +14,13 @@
             "idpessoa_int": "string",
             "bens_empresa": {
                 "referencia": "string",
-                "idpessoa_bem_empresa": "string",
+                "idpessoa_bem_empresa": "integer",
                 "data_cad": "datetime",
-                "idpessoa": "string",
+                "idpessoa": "integer",
                 "tipo": "string",
                 "valor_atual": "string",
                 "onus": "string",
-                "numero_parcelas": "string",
+                "numero_parcelas": "integer",
                 "valor_parcelas_mensais": "string"
             }
         }

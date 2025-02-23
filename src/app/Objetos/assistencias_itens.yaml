@@ -41,7 +41,7 @@ body:
     description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
     example: '2022-05-18 10:15:26'
-    type: string
+    type: datetime
     description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
@@ -137,7 +137,3 @@ response:
       type: datetime
       description: 'Data da última modificação'
       example: '2021-06-02 10:19:46'
-    data_sincronizacao:
-      type: datetime
-      description: 'Data de sincronização com a base de dados'
-      example: '2022-10-15'

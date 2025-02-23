@@ -140,7 +140,7 @@ response:
       description: "CEP do cliente"
       example: "08223000"
     renda_cliente_principal:
-      type: float
+      type: number
       description: "Renda do cliente"
       example: 2300.00
     idusuario_correspondente:

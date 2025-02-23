@@ -16,6 +16,7 @@ use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\ColumnDiff;
 use Doctrine\DBAL\Schema\TableDiff;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 class DatabaseSetup
 {
@@ -23,6 +24,7 @@ class DatabaseSetup
     public InputInterface $input;
     public OutputInterface $output;
     public \Doctrine\DBAL\Connection $conn;
+    public $campos_data_ignorados = array('data_base_calculo_pv_alterada', 'usuario_preencheu_data_contrato');
 
     public Table $tabelaIO;
     public ProgressBar $progressBar;
@@ -37,6 +39,7 @@ class DatabaseSetup
         $this->input = $input;
         $this->output = $output;
         $this->conn = conectarDB($input, $output);
+
     }
 
     public function fecharConexao(): void
@@ -163,15 +166,18 @@ class DatabaseSetup
     {
         $objetoObj = new Objeto($this->input, $this->output);
         $tabelaObj = $schema->createTable("{$tabela}");
+        $tabelaObj->addOption('engine', 'MyISAM');
+
         foreach ($colunas as $coluna => $especificacao) {
             $tipoDeDados = $objetoObj->identificarTipoDeDados($especificacao);
             if ($tipoDeDados == "TABELA") {
                 continue;
             }
 
-            $colunaTratada = $this->tratarEspecificacao($especificacao);
+            $colunaTratada = $this->tratarEspecificacao($coluna, $especificacao);
             $especificacao = $colunaTratada[0];
             $opcoes = $colunaTratada[1];
+
             $nomeColuna = $this->tratarNomeColuna($coluna, $especificacao);
             $tabelaObj->addColumn("{$nomeColuna}", $especificacao["type"], $opcoes);
             if (
@@ -197,7 +203,7 @@ class DatabaseSetup
         return $nomeTruncado . '_' . $hashUnico;
     }
 
-    public function tratarEspecificacao(array $especificacao): array
+    public function tratarEspecificacao(string $coluna, array $especificacao): array
     {
 
         $opcoes = array();
@@ -207,7 +213,6 @@ class DatabaseSetup
         if (isset($especificacao['description'])) {
             $opcoes["comment"] = $especificacao['description'];
         }
-
         if (isset($especificacao['autoincrement'])) {
             $opcoes["autoincrement"] = $especificacao['autoincrement'];
         }
@@ -220,12 +225,25 @@ class DatabaseSetup
         }
         if ($especificacao["type"] == "string") {
             $opcoes["length"] = 255;
+            if (isset($especificacao['tamanho'])) {
+                $opcoes["length"] = $especificacao['tamanho'];
+            }
+            //$especificacao["type"] = "text";
         }
         if ($especificacao["type"] == "number") {
             $especificacao["type"] = "decimal";
             $opcoes["precision"] = 14;
             $opcoes["scale"] = 2;
         }
+
+        
+        if ($coluna == "referencia"){
+            $especificacao["type"] = "string";
+            $opcoes["length"] = 50;
+            $opcoes["autoincrement"] = true;
+            $opcoes["notnull"] = true;
+        }
+
         return array($especificacao, $opcoes);
     }
 
@@ -322,13 +340,14 @@ class DatabaseSetup
                 $logs[] = "A coluna {$especificacao['nomeTratado']} não existe na tabela";
             } else {
 
-                $especificacaoAux = $this->tratarEspecificacao($especificacao);
+                $especificacaoAux = $this->tratarEspecificacao($coluna, $especificacao);
                 $especificacao = $especificacaoAux[0];
                 $especificacao['opcoes'] = $especificacaoAux[1];
 
                 // Verificar se a coluna tem o mesmo tipo
                 $tipoBanco = $colunasTabela[$colunaBanco]->getType()->getName();
                 $tipoObjeto = $especificacao['type'];
+
                 if ($tipoBanco != $tipoObjeto) {
                     $logs[] = "A coluna {$especificacao['nomeTratado']} tem tipo diferente ($tipoObjeto > $tipoBanco)";
                     $diferencas['change'][] = $especificacao;
@@ -375,7 +394,7 @@ class DatabaseSetup
 
     public function inserirColuna(string $tabela, string $coluna, array $especificacao): bool
     {
-        $especificacao = $this->tratarEspecificacao($especificacao);
+        $especificacao = $this->tratarEspecificacao($coluna, $especificacao);
         $schemaManager = $this->conn->createSchemaManager();
         $newColumnType = Type::getType($especificacao[0]['type']); // ou use o tipo de dado desejado, e.g., 'integer'
         $newColumnOptions = $especificacao[1];
@@ -467,11 +486,10 @@ class DatabaseSetup
         }
     }
 
-
-
-
     public function executarCorrecoes($diferencasBanco)
     {
+
+        $this->verificarEngines();
 
         if(is_null($diferencasBanco)){
             $io->text([
@@ -526,6 +544,27 @@ class DatabaseSetup
         }
     }
 
+    public function verificarEngines(){
+
+        $tabelaIO = new Table($this->output);
+        $tabelaIO->setHeaders(['Tabela', 'Descrição']);
+
+        $schemaManager = $this->conn->createSchemaManager();
+        $tables = $schemaManager->listTableNames();
+        foreach ($tables as $tableName) {
+            $table = $schemaManager->listTableDetails($tableName);
+            $engine = $table->getOption('engine');
+            if ($engine == 'MyISAM') {
+                $tabelaIO->addRow([$tableName, '' . $tableName . ' já é MyISAM']);
+                continue;
+            }
+            $tabelaIO->addRow([$tableName, '' . $tableName . ' convertida para MyISAM']);
+            $this->conn->executeStatement("ALTER TABLE {$tableName} ENGINE=MyISAM;");
+        }
+
+        $tabelaIO->render();
+    }
+
     public function retornarTabelaNaoEncontrada($table, $tabela, $progressBar): void
     {
         $table->addRow([$tabela, '<error>Não encontrada!</error>']);
@@ -577,7 +616,7 @@ class DatabaseSetup
     {
 
         return  array (
-            'referencia' => array(
+            'idrequisicao' => array(
                 'type' => 'integer',
                 'notnull' => true,
                 'autoincrement' => true

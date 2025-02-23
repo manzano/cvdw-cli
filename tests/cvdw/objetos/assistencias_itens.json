@@ -25,8 +25,7 @@
             "recorrente": "string",
             "horas_servico": "integer",
             "ativo": "string",
-            "data_modificacao": "datetime",
-            "data_sincronizacao": "datetime"
+            "data_modificacao": "datetime"
         }
     }
 }

@@ -10,11 +10,11 @@
             "referencia": "string",
             "referencia_data": "datetime",
             "ativo": "string",
-            "idcampo": "string",
+            "idcampo": "integer",
             "campo_nome": "string",
-            "idfuncionalidade": "string",
+            "idfuncionalidade": "integer",
             "funcionalidade": "string",
-            "valor": "text",
+            "valor": "string",
             "data_cad": "datetime",
             "data_modificacao": "datetime"
         }

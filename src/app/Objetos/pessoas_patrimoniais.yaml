@@ -102,9 +102,13 @@ response:
       description: 'Identificador'
       example: '16151.15'
     novos_bens:
+      referencia:
+        example: 5
+        type: string
+        description: "Código identificador do bem"
       idpessoa_novo_bem:
         example: '5'
-        type: string
+        type: integer
         description: Código identificador do bem
       data_cad:
         example: '2020-09-30 17:55:19'

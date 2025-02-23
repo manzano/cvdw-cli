@@ -45,7 +45,6 @@ class RateLimit
                 'objeto' => ':objeto',
             ])
             ->setParameter('objeto', $objeto);
-        
         $queryBuilder->executeStatement();
         $this->idrequisicao = $this->conn->lastInsertId();
         return $this->idrequisicao;
@@ -60,10 +59,10 @@ class RateLimit
             ->set('data_fim', 'NOW()')
             ->set('dados_retorno_qtd', ':dados_retorno_qtd')
             ->set('header_resultado', ':header_resultado')
-            ->where('referencia = :referencia')
+            ->where('idrequisicao = :idrequisicao')
             ->setParameter('dados_retorno_qtd', $dados_retorno_qtd)
             ->setParameter('header_resultado', $header_resultado)
-            ->setParameter('referencia', $idrequisicao);
+            ->setParameter('idrequisicao', $idrequisicao);
         $queryBuilder->executeStatement();
     }
 

@@ -66,40 +66,44 @@ response:
     referencia:
       example: 193 ou 193_30
       type: string
-      description: "Identificador do campo"
+      description: "Código identificador do campo"
     referencia_data:
-      example: "2024-03-31 09:15:44"
+      example: "2023-01-15 15:26:15"
       type: datetime
-      description: Data de referência
-    idcampo:
-      example: 132023
-      type: integer
-      description: "Identificador do campo"
+      description: "Data de referência"
+    ativo:
+      example: "S"
+      type: string
+      description: "Informa se está ativo ou não"
     idreserva:
       example: 12414
       type: integer
-      description: "Identificador"
+      description: "Código identificador da reserva"
+    idcampo:
+      example: 132023
+      type: integer
+      description: "Código identificador do campo"
     data_cad:
-      example: "2024-03-31 09:15:44"
-      type: datetime
-      description: Data de cadastro do valor do campo
+      example: "2022-02-23 13:20:05"
+      type: string
+      description: "Data de cadastro do valor do campo"
     nome:
-      example: Nome do Campo
+      example: "Nome do Campo"
       type: string
-      description: Título(nome) do nome do campo
+      description: "Título(nome) do nome do campo"
     nome_referencia:
-      example: campo_nome
+      example: "campo_nome"
       type: string
-      description: Nome de referência do campo
+      description: "Nome de referência do campo"
     valor:
-      example: valor
-      type: text
-      description: Valor do campo
+      example: "valor"
+      type: string
+      description: "Valor do campo"
     tipo:
-      example: texto
+      example: "texto"
       type: string
-      description: Tipo do campo
+      description: "Tipo do campo"
     funcionalidade:
-      example: reserva_contrato
+      example: "reserva_contrato"
       type: string
-      description: Tipo da funcionalidade do campo
+      description: "Tipo da funcionalidade do campo"

@@ -20,7 +20,7 @@
             "tipo_responsavel": "string",
             "situacao": "string",
             "tipo_interacao": "string",
-            "idtipo_visita": "string",
+            "idtipo_visita": "integer",
             "nome_tipo_visita": "string",
             "idresponsavel_por_criar_visita": "integer",
             "responsavel_por_criar_visita": "string",

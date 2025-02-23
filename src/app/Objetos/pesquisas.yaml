@@ -85,42 +85,14 @@ response:
       example: "2020-12-20"
       type: string
       description: "Data fim da pesquisa"
-    idpergunta:
-      example: 5166
-      type: integer
-      description: "Código identificador da pergunta"
-    perguntas:
-      example: "Qual é a pergunta?"
+    pesquisa:
+      example: "Pesquisa de satisfação"
       type: string
       description: "Título da pesquisa"
-    nome:
-      example: "Maria Santos"
+    situacao:
+      example: "Enviada"
       type: string
-      description: "Nome do cliente"
-    idcliente:
-      example: 1
-      type: integer
-      description: "Código identificador do cliente"
-    documento_cliente:
-      example: "12345678900"
-      type: string
-      description: "CPF do cliente"
-    email:
-      example: "joao@exemple.com"
-      type: string
-      description: "Email do cliente"
-    cep_cliente:
-      example: "49000000"
-      type: string
-      description: "CEP do cliente"
-    idresposta:
-      example: 1
-      type: integer
-      description: "Código identificador da resposta"
-    quem_respondeu:
-      example: 2
-      type: integer
-      description: "Código identificador de quem respondeu"
+      description: "Situação da pesquisa"
     data_referencia:
       example: "2023-01-15 15:26:15"
       type: string
@@ -129,23 +101,7 @@ response:
       example: "Satisfação"
       type: string
       description: "Tipo da pesquisa"
-    idempreendimento:
-      example: 3
-      type: integer
-      description: "Código identificador do empreendimento"
-    codigointerno_empreendimento:
-      example: "1"
+    ids_perguntas:
+      example: "3,4,5,6,7"
       type: string
-      description: "Código interno do empreendimento"
-    empreendimento:
-      example: "Empreendimento Exemplo"
-      type: string
-      description: "Nome do empreendimento"
-    regiao:
-      example: "Sul"
-      type: string
-      description: "Região do empreendimento da pesquisa"
-    data_sincronizacao:
-      example: "2023-01-15 15:26:15"
-      type: datetime
-      description: "Data de sincronização"
+      description: "Lista de ids das perguntas desta pesquisa"

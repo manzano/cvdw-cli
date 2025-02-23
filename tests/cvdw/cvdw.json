@@ -718,7 +718,10 @@
                 "idusuario": "integer",
                 "tipo_usuario": "string",
                 "idempreendimento": "integer",
-                "nome_empreendimento": "string"
+                "nome_empreendimento": "string",
+                "motivo_cancelamento": "string",
+                "motivo_concluido": "string",
+                "descricao": "string"
             }
         },
         "\/leads\/visitas": {

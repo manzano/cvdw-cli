@@ -8,12 +8,13 @@
         "total_de_paginas": "integer",
         "dados": {
             "referencia": "string",
-            "referencia_data": "datetime",
+            "referencia_data": "string",
+            "data_cad": "string",
             "ativo": "string",
             "idtempo": "integer",
             "idrepasse": "integer",
             "idsituacao": "integer",
-            "nome": "string",
+            "situacao": "string",
             "sigla": "string",
             "tempo": "integer"
         }

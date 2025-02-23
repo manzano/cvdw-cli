@@ -5,7 +5,7 @@ use Symfony\Component\Yaml\Yaml;
 echo "Comparador de arquivos YAML\n";
 echo "===========================\n\n";
 
-/*
+
 echo "Baixando arquivo cvdw.yaml do CV...\n";
 $url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
 // Baixamos o conteúdo do arquivo e salvamos em _temp/cvdw.yaml
@@ -16,7 +16,6 @@ if ($down) {
     echo "❌ Erro ao baixar o arquivo!\n";
     exit;
 }
-*/
 
 echo "\n";
 echo "Convertendo arquivo baixado...\n";

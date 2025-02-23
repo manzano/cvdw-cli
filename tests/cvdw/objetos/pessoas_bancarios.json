@@ -10,7 +10,7 @@
             "referencia": "string",
             "referencia_data": "datetime",
             "ativo": "string",
-            "idpessoa": "string",
+            "idpessoa": "integer",
             "idpessoa_int": "string",
             "banco": "string",
             "banco_nome": "string",
