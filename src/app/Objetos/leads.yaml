@@ -231,10 +231,6 @@ response:
       type: datetime
       description: "Data de cancelamento do lead"
       example: "2022-06-21"
-    data_sincronizacao:
-      type: datetime
-      description: "Data de sincronização"
-      example: "2024-03-31 09:15:54"
     data_ultima_interacao:
       type: datetime
       description: "Data da última interação do lead"
@@ -323,6 +319,10 @@ response:
       type: integer
       description: "Identificador do penúltimo corretor do lead"
       example: 2
+    idimobiliaria_ultimo:
+      example: 3
+      type: integer
+      description: "Código identificador da ultima imobiliária vinculada ao lead."
     corretor_penultimo:
       type: string
       description: "Penúltimo corretor do lead"

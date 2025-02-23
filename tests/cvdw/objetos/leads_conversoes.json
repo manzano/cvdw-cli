@@ -1,0 +1,33 @@
+{
+    "path": "\/leads\/conversoes",
+    "nome": "Leads (leads_conversoes)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idlead_conversao": "integer",
+            "idlead": "integer",
+            "data_cad": "datetime",
+            "nome": "string",
+            "email": "string",
+            "telefone": "string",
+            "origem_conversao": "string",
+            "conversao": "string",
+            "origem": "string",
+            "midia": "string",
+            "midia_conversao": "string",
+            "gestor": "integer",
+            "gestor_ultimo": "integer",
+            "empreendimento_ultimo": "integer",
+            "corretor": "integer",
+            "corretor_ultimo": "integer",
+            "imobiliaria": "integer",
+            "imobiliaria_ultima": "integer"
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "path": "\/atendimentos\/interacoes",
+    "nome": "Atendimentos (atendimentos_interacoes)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "idinteracao": "integer",
+            "idatendimento": "integer",
+            "idusuario": "integer",
+            "usuario": "string",
+            "data_cad": "datetime",
+            "ativo": "string",
+            "descricao": "text",
+            "idcanal": "integer",
+            "canal": "string",
+            "data_modificacao": "datetime"
+        }
+    }
+}

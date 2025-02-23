@@ -130,39 +130,39 @@ response:
       description: Reservas
       example: 'Reservas feitas'
     valor_total_vendas_ultimo_exercicio_pj:
-      type: string
+      type: number
       description: 'Total de Vendas no Último Exercício R$'
       example: '123.12'
     porcentagem_a_vista_vendas_ultimo_exercicio_pj:
-      type: string
+      type: number
       description: '% À Vista'
       example: '0.21'
     medio_prazo_dias_vendas_ultimo_exercicio_pj:
-      type: string
+      type: integer
       description: 'À Médio Prazo (Dias)'
       example: 12
     valor_media_mensal_vendas_pj:
-      type: string
+      type: number
       description: 'Média Mensal de Vendas R$'
       example: '0.12'
     porcentagem_a_vista_media_mensal_vendas_pj:
-      type: string
+      type: number
       description: '% À Vista'
       example: '0.12'
     preco_medio_dias_media_mensal_vendas_pj:
-      type: string
+      type: number
       description: '% Ao Preço Médio (Dias)'
       example: 12
     valor_media_mensal_compras_pj:
-      type: string
+      type: number
       description: 'Média Mensal de Compras R$'
       example: '0.12'
     porcentagem_a_vista_media_mensal_compras_pj:
-      type: string
+      type: number
       description: '% À Vista'
       example: '0.12'
     preco_medio_dias_media_mensal_compras_pj:
-      type: string
+      type: number
       description: '% Ao Preço Médio (Dias)'
       example: 12
     principais_clientes_pj:
@@ -182,10 +182,10 @@ response:
       description: 'Prédio Próprio'
       example: Sim
     valor_aluguel_mes_pj:
-      type: string
+      type: number
       description: 'Aluguel/Mês R$'
       example: '2323.23'
     data_vigencia_aluguel_pj:
-      type: datetime
+      type: string
       description: Vigência
       example: '2024-01-19'

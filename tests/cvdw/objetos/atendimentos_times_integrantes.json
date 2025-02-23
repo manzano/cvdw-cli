@@ -1,0 +1,22 @@
+{
+    "path": "\/atendimentos\/times\/integrantes",
+    "nome": "Atendimentos (atendimentos_times_integrantes)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "idintegrante": "integer",
+            "idtime": "integer",
+            "time": "string",
+            "idusuario": "integer",
+            "usuario": "string",
+            "ativo": "string",
+            "data_cad": "datetime",
+            "data_modificacao": "datetime"
+        }
+    }
+}

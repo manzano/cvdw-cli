@@ -1,0 +1,21 @@
+{
+    "path": "\/pesquisas\/perguntas",
+    "nome": "Perguntas das Pesquisas (pesquisas_perguntas)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idpesquisa_pergunta": "integer",
+            "idpergunta": "integer",
+            "nome_pergunta": "string",
+            "idpesquisa": "integer",
+            "nome_pesquisa": "string",
+            "tipo_pesquisa": "string"
+        }
+    }
+}

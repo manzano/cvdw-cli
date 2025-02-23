@@ -1,0 +1,32 @@
+{
+    "path": "\/atendimentos\/respostas",
+    "nome": "Atendimentos (atendimentos_respostas)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "idresposta": "integer",
+            "idatendimento": "integer",
+            "idusuario": "integer",
+            "usuario": "string",
+            "idpessoa": "integer",
+            "pessoa": "string",
+            "idusuario_imobiliaria": "integer",
+            "usuario_imobiliaria": "string",
+            "idcorretor": "integer",
+            "corretor": "string",
+            "idresposta_automatica": "integer",
+            "ativo": "string",
+            "data_cad": "datetime",
+            "resposta": "text",
+            "publica": "string",
+            "tempo_resposta": "integer",
+            "origem": "string",
+            "data_modificacao": "datetime"
+        }
+    }
+}

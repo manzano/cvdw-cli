@@ -41,7 +41,7 @@ body:
     description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
     example: '2022-05-18 10:15:26'
-    type: string
+    type: datetime
     description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:
@@ -122,7 +122,7 @@ response:
       description: 'CEP do endereço do cliente'
       example: '49010020'
     data_agendamento:
-      type: string
+      type: datetime
       format: date
       description: 'Data de cadastro do agendamento da vistoria'
       example: '2022-05-18'
@@ -142,6 +142,10 @@ response:
       type: string
       description: 'Situação do agendamento'
       example: 'Aguardando liberação'
+    desmarcado:
+      type: string
+      example: "N"
+      description: "Informa se foi desmarcado"
     quitado:
       type: string
       description: 'Pagamento total da unidade (Sim; Não)'
@@ -154,6 +158,10 @@ response:
       type: string
       description: 'Chave da unidade entregue para o cliente (Sim; Não)'
       example: Não
+    data_entrega_de_chave:
+      type: datetime
+      example: "2023-01-15 15:26:15"
+      description: "Data da entrega de chaves"
     idreserva:
       type: integer
       description: 'Código identificador da reserva da unidade'
@@ -162,7 +170,3 @@ response:
       type: integer
       description: "Número"
       example: 0
-    data_modificacao:
-      type: datetime
-      description: 'Data da última modificação'
-      example: '2024-03-31 09:15:54'

@@ -1,0 +1,42 @@
+{
+    "path": "\/processos",
+    "nome": "Processos (processos)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idprocesso": "integer",
+            "tipo_processo": "string",
+            "idempreendimento_avulso": "integer",
+            "nome_empreendimento_avulso": "string",
+            "numero": "string",
+            "valor_causa": "string",
+            "valor_pago": "string",
+            "forma_pagamento": "string",
+            "data_atualizacao_processos": "datetime",
+            "data_cad": "datetime",
+            "data_pagamento": "datetime",
+            "data_citacao": "datetime",
+            "idempreendimento": "integer",
+            "codigointerno_empreendimento": "string",
+            "empreendimento": "string",
+            "idcliente": "integer",
+            "documento_cliente": "string",
+            "cliente": "string",
+            "cep_cliente": "string",
+            "idsituacao": "integer",
+            "situacao": "string",
+            "unidade": "string",
+            "etapa": "string",
+            "bloco": "string",
+            "idcausa": "integer",
+            "causa": "string",
+            "data_ult_hist": "datetime"
+        }
+    }
+}

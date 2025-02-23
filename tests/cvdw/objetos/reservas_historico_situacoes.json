@@ -1,0 +1,24 @@
+{
+    "path": "\/reservas\/historico\/situacoes",
+    "nome": "Reservas (reservas_historico_situacoes)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idhistorico": "integer",
+            "idreserva": "integer",
+            "de": "integer",
+            "para": "integer",
+            "de_nome": "string",
+            "para_nome": "string",
+            "data_cad": "datetime",
+            "usuario": "string",
+            "idusuario": "integer"
+        }
+    }
+}

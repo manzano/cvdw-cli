@@ -21,8 +21,7 @@ use Manzano\CvdwCli\Services\Executar;
 use Manzano\CvdwCli\Services\Ambientes;
 use Manzano\CvdwCli\Services\Cvdw;
 use Manzano\CvdwCli\Inc\CvdwException;
-
-use Manzano\CvdwCli\Services\Monitor\Eventos;
+use Manzano\CvdwCli\Services\RateLimit;
 
 use Symfony\Component\Process\Process;
 
@@ -46,9 +45,9 @@ class Configurar extends Command
     public array $variaveisAmbiente = [];
     public bool $voltarProMenu = true;
     public \Doctrine\DBAL\Connection $conn;
-    protected $eventosObj;
     protected $ambientesObj;
     protected $databaseObj;
+    public $rateLimitObj;
     protected $cvdwObj;
     protected $env = null;
     protected $evento = 'Configurar';
@@ -76,7 +75,9 @@ class Configurar extends Command
     {
 
         $this->limparTela();
-        $this->eventosObj = new Eventos();
+
+        $this->rateLimitObj = new RateLimit($input, $output, $this);
+        $this->rateLimitObj->iniciarExecucao();
         
         if ($input->getOption('set-env')) {
             $this->env = $input->getOption('set-env');
@@ -84,7 +85,7 @@ class Configurar extends Command
         $this->ambientesObj = new Ambientes($this->env, $this);
         $this->ambientesObj->retornarEnvs();
 
-        $this->cvdwObj = new Cvdw($input, $output, $this);
+        $this->cvdwObj = new Cvdw($input, $output, $this, rateLimitObj: $this->rateLimitObj);
 
         $io = new CvdwSymfonyStyle($input, $output);
 
@@ -99,11 +100,8 @@ class Configurar extends Command
         $ambienteAtivo = $this->ambientesObj->ambienteAtivo();
         $io->text('Ambiente ativo: ' . $ambienteAtivo);
 
-        // Verificar a versão do repositorio
-        $cvdwObj = new Cvdw($input, $output, $this);
-        $cvdwObj->alertarNovaVersao($versaoCVDW, $io);
+        $this->cvdwObj->alertarNovaVersao($versaoCVDW, $io);
         
-        $this->eventosObj->registrarEvento($this->evento, 'Início');
 
         $this->variaveisAmbiente['configurar'] = $io->choice('O que deseja configurar agora?', [
             'Acesso ao CVDW API',
@@ -126,7 +124,6 @@ class Configurar extends Command
             return Command::SUCCESS;
         }
         $io->text(['Você escolheu: ' . $this->variaveisAmbiente['configurar'], '']);
-        $this->eventosObj->registrarEvento($this->evento, $this->variaveisAmbiente['configurar']);
 
         switch ($this->variaveisAmbiente['configurar']) {
             case 'Acesso ao CVDW API':
@@ -142,7 +139,7 @@ class Configurar extends Command
                 $this->configurarAnonimizacao();
                 break;
             case 'Verificar/Atualizar meu ambiente':
-                $cvdwObj->conectar();
+                $this->cvdwObj->conectar();
                 $this->verificarInstalacao();
                 break;
             case 'Limpar datas de referências das tabelas':
@@ -197,7 +194,7 @@ class Configurar extends Command
 
             $io = new CvdwSymfonyStyle($this->input, $this->output);
 
-            $http = new Http($this->input, $this->output, $io, $this);
+            $http = new Http($this->input, $this->output, $io, $this, null, rateLimitObj: $this->rateLimitObj);
             $response = $http->pingAmbienteCVDW($endereco_cv);
 
             if ($response['nome'] !== null) {
@@ -245,7 +242,7 @@ class Configurar extends Command
             'Ok! Agora vou tentar fazer uma requisição para tentar validar os dados...'
         ]);
 
-        $http = new Http($this->input, $this->output, $io, $this);
+        $http = new Http($this->input, $this->output, $io, $this, null, rateLimitObj: $this->rateLimitObj);
         $response = $http->pingAmbienteAutenticadoCVDW(
             $this->variaveisAmbiente['endereco_cv'],
             "/imobiliarias",
@@ -379,6 +376,12 @@ class Configurar extends Command
 
         // Criar uma conexao com o Doctrine DBAL
         $config = new Configuration();
+
+        // Se nao tiver $this->variaveisAmbiente['banco'], adicionamos o valor pdo_mysql
+        if (!isset($this->variaveisAmbiente['banco'])) {
+            $this->variaveisAmbiente['banco'] = 'pdo_mysql';
+        }
+
         $connectionParams = array(
             'dbname' => $this->variaveisAmbiente['db_database'],
             'user' => $this->variaveisAmbiente['db_username'],
@@ -404,13 +407,13 @@ class Configurar extends Command
                 
                 $io->success('Conexão bem-sucedida!');
             } else {
-                $io->error('Não foi possível conectar ao banco de dados.');
+                $io->error('Não foi possível conectar ao banco de dados (1)');
                 if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
                     return $this->configurarBanco();
                 }
             }
         } catch (\Exception $e) {
-            $io->error('Não foi possível conectar ao banco de dados.');
+            $io->error('Não foi possível conectar ao banco de dados. (2)');
             $io->error('Encontrei esse erro: ' . $e->getMessage());
             if ($io->confirm($this::QUER_TENTAR_NOVAMENTE, true)) {
                 return $this->configurarBanco();
@@ -448,6 +451,8 @@ class Configurar extends Command
             $io->text('Ok, vamos parar por aqui...');
             $io->text('');
         }
+
+        $database->fecharConexao();
 
         $this->voltarProMenu = true;
         $this->voltarProMenu();
@@ -508,7 +513,7 @@ class Configurar extends Command
     {
         
         $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $http = new Http($this->input, $this->output, $io, $this);
+        $http = new Http($this->input, $this->output, $io, $this, null, rateLimitObj: $this->rateLimitObj);
         $diferencasBanco = array();
 
         $io->text([$this::VAMOS_LA, 'Validando a instalação...', '' ]);
@@ -623,6 +628,7 @@ class Configurar extends Command
             ]);
         }
 
+        $databaseObj->fecharConexao();
         //$this->voltarProMenu = true;
         $this->voltarProMenu();
         return true;
@@ -686,7 +692,7 @@ class Configurar extends Command
             $progressBar->setFormat('normal'); // debug
             $progressBar->setBarCharacter('<fg=green>=</>');
             $progressBar->setProgressCharacter("\xF0\x9F\x9A\x80");
-            $progressBar->setFormat(" Dados processados %current% de %max% [%bar%] %percent:3s%% \n %message%");
+            $progressBar->setFormat("  \_ Dados processados %current% de %max% [%bar%] %percent:3s%% \n %message%");
             $progressBar->start();
             foreach ($tabelasLimpar as $tabela => $valor) {
 
@@ -695,19 +701,19 @@ class Configurar extends Command
                 $tabelaExiste = $database->verificarSeTabelaExiste($tabela);
                 if (!$tabelaExiste) {
                     $table->addRow([$tabela, '<error>Não encontrada!</error>']);
-                    $progressBar->setMessage("A tabela {$tabela} não existe");
-                    $progressBar->setMessage("Tabela {$tabela} não encontrada.");
+                    $progressBar->setMessage(" A tabela {$tabela} não existe");
+                    $progressBar->setMessage(" Tabela {$tabela} não encontrada.");
                     $progressBar->advance();
                     continue;
                 }
-                $progressBar->setMessage("Tabela {$tabela} encontrada.");
+                $progressBar->setMessage(" Tabela {$tabela} encontrada.");
                 $dataReferenciaNull  = $database->limparDataReferenciaTabela($tabela);
                 if ($dataReferenciaNull) {
-                    $table->addRow([$tabela, '<info>Data de Referencia limpa!</info>']);
-                    $progressBar->setMessage("A tabela {$tabela} teve sua data de referencia apagada.");
+                    $table->addRow([$tabela, ' <info>Data de Referencia limpa!</info>']);
+                    $progressBar->setMessage(" A tabela {$tabela} teve sua data de referencia apagada.");
                     $progressBar->advance();
                 } else {
-                    $table->addRow([$tabela, '<error>Ocorreu algum erro!</error>']);
+                    $table->addRow([$tabela, ' <error>Ocorreu algum erro!</error>']);
                     $progressBar->setMessage("A tabela {$tabela} não pode ter a data apagada!");
                     $progressBar->advance();
                 }
@@ -720,6 +726,8 @@ class Configurar extends Command
                 'Pronto!'
             ]);
         }
+
+        $database->fecharConexao();
         $this->voltarProMenu = true;
         $this->voltarProMenu();
 
@@ -809,6 +817,8 @@ class Configurar extends Command
                 'Pronto!'
             ]);
         }
+
+        $database->fecharConexao();
         $this->voltarProMenu = true;
         $this->voltarProMenu();
 
@@ -853,117 +863,20 @@ class Configurar extends Command
             $progressBar->start();
 
             $database->executarApagarTabelas($tabelasApagar, $table, $progressBar);
-        
+            $database->fecharConexao();
+            
             $progressBar->finish();
             $table->render();
 
             $io->text([ '', 'Pronto!' ]);
         }
 
+        
         $this->voltarProMenu = true;
         $this->voltarProMenu();
 
         return true;
 
-    }
-
-    private function configurarOpenAI(){
-
-        $io = new CvdwSymfonyStyle($this->input, $this->output);
-        $io->text([
-            $this::VAMOS_LA,
-            'Agora vamos configurar a integração do CVDW-CLI com o OpenAI...'
-        ]);
-
-        $io->note([
-            'Para isso você precisa ter um cadastrdo na plataforma: https://platform.openai.com/',
-            'Acesse de configurações: https://platform.openai.com/settings/organization/general',
-            'Busque por Organization ID...',
-        ]);
-
-        $io->ask(
-            'Id da Organização:',
-            $_ENV['OPENAI_ORG'],
-            function (string $openai_org): string {
-                // Verificar se a string começa com 'org-'
-                if (substr($openai_org, 0, 4) !== 'org-') {
-                    throw new CvdwException('Id da Organização inválido, vamos tentar de novo?');
-                }
-                $this->variaveisAmbiente['openai_org'] = $openai_org;
-                putenv('OPENAI_ORG=' . $openai_org);
-                return $openai_org;
-            }
-        );
-
-        $io->note([
-            'Agora vamos precisar do ID do seu projeto.',
-            'Acesse de configurações: https://platform.openai.com/settings/organization/general',
-            'Acesse: Project >> General e encontre Project ID',
-        ]);
-
-        $io->ask(
-            'Id do Projeto:',
-            $_ENV['OPENAI_PROJ'],
-            function (string $openai_proj): string {
-                // Verificar se a string começa com 'org-'
-                if (substr($openai_proj, 0, 5) !== 'proj_') {
-                    throw new CvdwException('Id do projeto inválido, vamos tentar de novo?');
-                }
-                $this->variaveisAmbiente['openai_proj'] = $openai_proj;
-                putenv('OPENAI_PROJ=' . $openai_proj);
-                return $openai_proj;
-            }
-        );
-
-        $io->note([
-            'Agora vamos precisar de um token de acesso.',
-            'Acesse a opção Api Keys: https://platform.openai.com/api-keys',
-            'Gere um Token para o CVDW-CLI e cole aqui.',
-        ]);
-
-        $io->ask('Informe o token da plataforma:',
-        $_ENV['OPENAI_TOKEN'],
-        function (string $openai_token): string {
-            // Verificar se a string começa com 'org-'
-            if (substr($openai_token, 0, 8) !== 'sk-proj-') {
-                throw new CvdwException('Token inválido, vamos tentar de novo?');
-            }
-            $this->variaveisAmbiente['openai_token'] = $openai_token;
-            putenv('OPENAI_TOKEN=' . $openai_token);
-            return $openai_token;
-        });
-
-        $openaiObj = new \Manzano\CvdwCli\Services\OpenAi($this->input, $this->output, $io, $this);
-        $response = $openaiObj->validarToken($this->variaveisAmbiente['openai_token'], $this->variaveisAmbiente['openai_org'], $this->variaveisAmbiente['openai_proj']);
-
-        if(isset($response['object']) && $response['object'] == 'list') {
-            $io->text([
-                'Legal, conseguimos conectar ao OpenAI!',
-                ''
-            ]);
-        }else {
-            $io->error('Não conseguimos validar a conexão, vamos tentar de novo?');
-            $this->configurarOpenAI();
-        }
-
-        $io->text([
-            'Deixar eu salvar essas informações...'
-        ]);
-
-        $newEnv = [
-            'OPENAI_TOKEN' => $this->variaveisAmbiente['openai_token'],
-            'OPENAI_ORG' => $this->variaveisAmbiente['openai_org'],
-            'OPENAI_PROJ' => $this->variaveisAmbiente['openai_proj']
-        ];
-    
-        $this->ambientesObj->salvarEnv($newEnv);
-
-        $io->text('Salvo!');
-
-        $this->voltarProMenu = true;
-        $this->voltarProMenu();
-
-        return true;
     }
     private function cadastarAmbiente()
     {
@@ -1095,6 +1008,7 @@ class Configurar extends Command
 
     protected function voltarProMenu()
     {
+        
         $io = new CvdwSymfonyStyle($this->input, $this->output);
         
         if ($this->voltarProMenu) {

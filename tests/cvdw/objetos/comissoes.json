@@ -1,0 +1,36 @@
+{
+    "path": "\/comissoes",
+    "nome": "Comiss\u00f5es (comissoes)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idcomissao": "integer",
+            "situacao": "string",
+            "idsituacao": "integer",
+            "idreserva": "integer",
+            "corretor": "string",
+            "imobiliaria": "string",
+            "empreendimento": "string",
+            "bloco": "string",
+            "etapa": "string",
+            "unidade": "string",
+            "regiao": "string",
+            "cliente": "string",
+            "cep_cliente": "string",
+            "valor_contrato": "string",
+            "porcentagem_comissao": "number",
+            "valor_comissao": "number",
+            "valor_comissao_apagar": "number",
+            "valor_pagamento": "number",
+            "nota_fiscal": "string",
+            "data_pagamento": "datetime",
+            "data_cad": "datetime"
+        }
+    }
+}

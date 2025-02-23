@@ -73,6 +73,10 @@ response:
       type: string
       description: 'Informa se está ativo ou não'
       example: S
+    idhistorico:
+      example: 193
+      type: integer
+      description: "Código identificador do histórico."
     idlead:
       type: integer
       description: 'Identificador do lead'
@@ -82,11 +86,11 @@ response:
       description: 'Data de cadastro'
       example: '2024-03-31 09:15:54'
     de:
-      type: integer
+      type: string
       description: 'Situação anterior'
       example: 3
     para:
-      type: integer
+      type: string
       description: 'Situação atual'
       example: 5
     de_nome:
@@ -101,10 +105,6 @@ response:
       type: string
       description: 'Motivo do cancelamento'
       example: 'Localização'
-    telefone:
-      type: string
-      description: 'Telefone do lead'
-      example: '31984658621'
     data_cancelamento:
       type: datetime
       description: 'Data do cancelamento'
@@ -114,6 +114,6 @@ response:
       description: 'Painel pelo qual o lead foi ganho'
       example: Gestor
     idusuario:
-      type: string
+      type: integer
       description: 'Usuário responsável'
       example: '11212'

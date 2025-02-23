@@ -1,0 +1,26 @@
+{
+    "path": "\/leads\/historico\/situacoes",
+    "nome": "Leads (leads_historico_situacoes)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idhistorico": "integer",
+            "idlead": "integer",
+            "data_cad": "datetime",
+            "de": "string",
+            "para": "string",
+            "de_nome": "string",
+            "para_nome": "string",
+            "motivo_cancelamento": "string",
+            "data_cancelamento": "datetime",
+            "painel_usuario": "string",
+            "idusuario": "integer"
+        }
+    }
+}

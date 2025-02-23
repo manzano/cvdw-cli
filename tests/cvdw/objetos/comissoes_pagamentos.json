@@ -1,0 +1,21 @@
+{
+    "path": "\/comissoes\/pagamentos",
+    "nome": "Comiss\u00f5es (comissoes_pagamentos)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "idcomissao": "integer",
+            "idpagamento": "integer",
+            "valor": "number",
+            "vencimento": "string",
+            "bloco": "string",
+            "unidade": "string",
+            "situacao": "string"
+        }
+    }
+}

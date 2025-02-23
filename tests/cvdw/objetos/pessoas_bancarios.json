@@ -1,0 +1,27 @@
+{
+    "path": "\/pessoas\/bancarios",
+    "nome": "Pessoas (pessoas_bancarios)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idpessoa": "integer",
+            "idpessoa_int": "string",
+            "banco": "string",
+            "banco_nome": "string",
+            "banco_agencia": "string",
+            "banco_conta": "string",
+            "banco_nome_titular": "string",
+            "banco_tipo_doc": "string",
+            "banco_cpf_titular": "string",
+            "banco_cnpj_titular": "string",
+            "banco_chave_pix": "string",
+            "banco_observacoes": "text"
+        }
+    }
+}

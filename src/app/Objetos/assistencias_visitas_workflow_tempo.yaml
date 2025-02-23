@@ -41,7 +41,7 @@ body:
     description: 'Retornará os dados a partir deste id, lembrando que está ordenado em ordem decrescente'
   a_partir_data_referencia:
     example: '2022-05-18 10:15:26'
-    type: string
+    type: datetime
     description: 'Retornará os dados criadas criados ou alterados a partir da data informada'
 response:
   pagina:

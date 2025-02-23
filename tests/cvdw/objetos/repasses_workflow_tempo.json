@@ -1,0 +1,22 @@
+{
+    "path": "\/repasses\/workflow\/tempo",
+    "nome": "Repasses (repasses_workflow_tempo)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "string",
+            "data_cad": "string",
+            "ativo": "string",
+            "idtempo": "integer",
+            "idrepasse": "integer",
+            "idsituacao": "integer",
+            "situacao": "string",
+            "sigla": "string",
+            "tempo": "integer"
+        }
+    }
+}

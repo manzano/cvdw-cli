@@ -1,0 +1,29 @@
+{
+    "path": "\/unidades\/precos",
+    "nome": "Unidades (unidades_precos)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idunidade": "integer",
+            "unidade": "string",
+            "empreendimento": "string",
+            "idempreendimento": "integer",
+            "etapa": "string",
+            "idetapa": "integer",
+            "bloco": "string",
+            "idbloco": "integer",
+            "valor": "text",
+            "idtabela": "integer",
+            "tabela": "string",
+            "data_vigencia_de": "datetime",
+            "data_vigencia_ate": "datetime",
+            "valor_avaliacao": "string"
+        }
+    }
+}

@@ -72,7 +72,7 @@ response:
       description: "Informa se está ativo ou não"
       example: S
     idcampo:
-      type: string
+      type: integer
       description: "Identificador do campo"
       example: "CONTRATO - USO"
     campo_nome:
@@ -80,7 +80,7 @@ response:
       description: "Nome do campo"
       example: "valor informado pelo usuário"
     idfuncionalidade:
-      type: string
+      type: integer
       description: "Identificador da funcionalidade do campo"
       example: USO_CONTRATO
     funcionalidade:
@@ -88,7 +88,7 @@ response:
       description: "Funcionalidade do campo"
       example: USO_CONTRATO
     valor:
-      type: text
+      type: string
       description: "Valor do campo"
       example: USO_CONTRATO
     data_cad:

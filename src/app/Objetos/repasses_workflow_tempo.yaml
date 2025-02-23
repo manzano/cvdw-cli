@@ -62,38 +62,42 @@ response:
     description: 'Total de páginas encontradas'
   dados:
     referencia:
+      example: 193 ou 193_30
       type: string
-      description: 'Identificador do tempo'
-      example: '193 ou 193_30'
+      description: "Código identificador do tempo"
     referencia_data:
-      type: datetime
-      description: 'Data de referência'
-      example: '2024-03-31 09:15:54'
+      example: "2023-01-15 15:26:15"
+      type: string
+      description: "Data de referência"
+    data_cad:
+      example: "2023-01-15 15:26:15"
+      type: string
+      description: "Data de cadastro"
     ativo:
+      example: "S"
       type: string
-      description: 'Informa se está ativo ou não'
-      example: S
+      description: "Informa se está ativo ou não"
     idtempo:
-      type: integer
-      description: 'Identificador do tempo'
       example: 168523
+      type: integer
+      description: "Código identificador do tempo"
     idrepasse:
-      type: integer
-      description: 'Identificador do repasse'
       example: 4
+      type: integer
+      description: "Código identificador do repasse"
     idsituacao:
-      type: integer
-      description: 'Identificador da situação'
       example: 56
-    nome:
-      type: string
-      description: 'Nome da Situação'
-      example: 'situação teste'
-    sigla:
-      type: string
-      description: 'Nome da Sigla'
-      example: SD
-    tempo:
       type: integer
-      description: 'Tempo que o repasse ficou na situação'
+      description: "Código identificador da situação"
+    situacao:
+      example: "situação teste"
+      type: string
+      description: "Nome da Situação"
+    sigla:
+      example: "SD"
+      type: string
+      description: "Nome da Sigla"
+    tempo:
       example: 25
+      type: integer
+      description: "Tempo que o repasse ficou na situação"

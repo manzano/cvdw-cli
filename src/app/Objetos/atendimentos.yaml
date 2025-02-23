@@ -260,7 +260,7 @@ response:
       description: 'Nome da imobiliária vinculada ao atendimento'
       example: 'Imobiliaria das flores'
     idimobiliaria:
-      type: string
+      type: integer
       description: 'Código identificador da imobiliária'
       example: 2
     quantidade_mensagens:

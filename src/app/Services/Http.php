@@ -4,9 +4,7 @@ namespace Manzano\CvdwCli\Services;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
-use Manzano\CvdwCli\Services\Monitor\Eventos;
 use Manzano\CvdwCli\Services\RateLimit;
 
 class Http
@@ -16,10 +14,10 @@ class Http
     public InputInterface $input;
     public OutputInterface $output;
     public $logObjeto;
-    protected $eventosObj;
     protected $evento = 'Requisição';
     public $executarObj;
     public $ratelimitObj;
+    public $tempodeexecucao = 0;
     const HEADER_CONTENT_TYPE = 'Content-Type: application/json';
     const ERRO_REQUISICAO = 'Erro ao tentar fazer a requisição!';
     const PROTOCOLO_HTTP = 'https://';
@@ -28,7 +26,7 @@ class Http
     const TENTAR_NOVAMENTE = 'Você pode tentar novamente dentro de um minuto...';
 
     public function __construct(InputInterface $input, OutputInterface $output,
-                                    CvdwSymfonyStyle $io, $executarObj, $logObjeto = false)
+                                    CvdwSymfonyStyle $io, $executarObj, $logObjeto, RateLimit $rateLimitObj)
     {
         if(is_object($logObjeto)) {
             $this->logObjeto = $logObjeto;
@@ -37,28 +35,26 @@ class Http
         $this->input = $input;
         $this->output = $output;
         $this->executarObj = $executarObj;
-
-        $this->eventosObj = new Eventos();
-        $this->ratelimitObj = new RateLimit($this->input, $this->output, $this);
+        $this->ratelimitObj = $rateLimitObj;
 
     }
 
-    public function requestCVDW(string $path, $progressBar, $cvdw, array $parametros = [], bool $novaTentativa = true) : object
+    public function requestCVDW(string $path, $progressBar, $cvdw, array $parametros = [], bool $novaTentativa = true)
     {
 
-        $segundos = $this->gerenciarRateLimit($cvdw, $progressBar);
+        $this->ratelimitObj->validarTempoExecucao();
 
+        $segundos = $this->gerenciarRateLimit($cvdw, $progressBar);
         if ($segundos > 0 && !$progressBar) {
             $this->aguardarSemProgresso($segundos);
         }
+
 
         if($progressBar) {
             $this->aguardar($cvdw, $progressBar, $segundos);
         }
 
         $idrequisicao = $this->ratelimitObj->inserirRequisicao($path);
-
-        $this->eventosObj->registrarEvento($this->evento, $path);
         
         $cabecalho = array(
             'email: '. $_ENV['CV_EMAIL'] .'',
@@ -89,6 +85,17 @@ class Http
         );
         $response = curl_exec($curl);
 
+        $responseJson = json_decode($response);
+
+        // verifica se o cabecalho da requisicao esta entre 200 e 299
+        if (!curl_errno($curl)) {
+            $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            $http_code = intval($http_code);
+            if ($http_code >= 200 && $http_code <= 299) {
+                return $responseJson;
+            }
+        }
+
         if ($this->output->isDebug()) {
             rewind($verbose);
             $verboseLog = stream_get_contents($verbose);
@@ -102,8 +109,6 @@ class Http
         }
 
         curl_close($curl);
-        
-        $responseJson = json_decode($response);
 
         if(isset($responseJson->dados)){
             $dados_retorno_qtd = count($responseJson->dados);
@@ -111,6 +116,7 @@ class Http
             $dados_retorno_qtd = null;
         }
         $this->ratelimitObj->concluirRequisicao($idrequisicao, $dados_retorno_qtd, null);
+
 
         // Se nao for setado $resposta->total_de_registros,
         // imprimir uma mensagem de erro e tentar novamente em 3 segundos
@@ -150,15 +156,18 @@ class Http
     {
         
         $diferenca = $this->ratelimitObj->getDiferencaSegundosUltimaRequisicao();
-        $requisicoes = $this->ratelimitObj->qtdRequisicoes(59);
+        $requisicoes = $this->ratelimitObj->qtdRequisicoes(60);
         
         if ($this->output->isDebug()) {
             $this->io->info(" LOG: Diferença: $diferenca");
         }
 
+        $this->tempodeexecucao = $this->ratelimitObj->tempoDeExecucao();
+
         if($progressBar && $requisicoes > 1){ 
             $mensagem = null;
-            $mensagem = ' <fg=blue>Você fez ' . $requisicoes .  ' requisições no último minuto... (' . $diferenca . 'seg)...</>';
+            $mensagem = "\n <fg=blue>Tempo de execução: ".$this->tempodeexecucao." segundos</>";
+            $mensagem .= "\n <fg=blue>Você fez " . $requisicoes .  " requisições no último minuto...</>";
             $mensagem .= "\n <fg=gray>Proteção contra o Rate Limit do servidor. (20req/min)</>";
             $mensagem = $cvdw->getMensagem($mensagem);
             $progressBar->setMessage($mensagem);

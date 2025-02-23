@@ -30,6 +30,14 @@ function conectarDB(InputInterface $input, OutputInterface $output, $showExcepti
         );
     }
 
+    // Se connectionParams tiver algum dado vazio, retorna o objecto \Doctrine\DBAL\Connection
+    foreach ($connectionParams as $key => $value) {
+        if ($value == null) {
+            return DriverManager::getConnection($connectionParams, $config);
+        }
+    }
+
+    // Se connectionParams tiver algum dado vasío, com excecao de driver, na
     $conn = DriverManager::getConnection($connectionParams, $config);
     
     if (!$conn->isConnected()) {
@@ -48,7 +56,7 @@ function conectarDB(InputInterface $input, OutputInterface $output, $showExcepti
 
         } catch (\Exception $e) {
             if($showException){
-                $io->error('Não foi possível conectar ao banco de dados.');
+                $io->error('Não foi possível conectar ao banco de dados. (3)');
                 $io->error('Encontrei esse erro: ' . $e->getMessage());
             }
         }

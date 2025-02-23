@@ -1,0 +1,30 @@
+{
+    "path": "\/leads\/interacoes",
+    "nome": "Leads (leads_interacoes)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idinteracao": "integer",
+            "idlead": "integer",
+            "data_cad": "datetime",
+            "idcorretor": "integer",
+            "corretor": "string",
+            "idimobiliaria": "integer",
+            "imobiliaria": "string",
+            "tipo": "string",
+            "situacao": "string",
+            "descricao": "text",
+            "enviar_corretor": "string",
+            "enviar_imobiliaria": "string",
+            "enviar_cliente": "string",
+            "idgestor": "integer",
+            "gestor_interacao": "string"
+        }
+    }
+}

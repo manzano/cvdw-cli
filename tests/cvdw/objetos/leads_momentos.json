@@ -1,0 +1,25 @@
+{
+    "path": "\/leads\/momentos",
+    "nome": "Leads (leads_momentos)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idmomento_lead": "integer",
+            "idlead": "integer",
+            "idusuario": "integer",
+            "painel_usuario": "string",
+            "momentos_lead": "string",
+            "data_cad": "datetime",
+            "nome_lead": "string",
+            "email_lead": "string",
+            "telefone_lead": "string",
+            "idsituacao_lead": "integer"
+        }
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "path": "\/leads\/tarefas",
+    "nome": "Leads (leads_tarefas)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idtarefa": "integer",
+            "idinteracao": "integer",
+            "idlead": "integer",
+            "data_cad": "datetime",
+            "data": "datetime",
+            "idresponsavel": "integer",
+            "responsavel": "string",
+            "tipo_responsavel": "string",
+            "situacao": "string",
+            "tipo_interacao": "string",
+            "funcionalidade": "string",
+            "idusuario": "integer",
+            "tipo_usuario": "string",
+            "idempreendimento": "integer",
+            "nome_empreendimento": "string"
+        }
+    }
+}

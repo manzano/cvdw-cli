@@ -77,10 +77,6 @@ response:
       type: integer
       description: 'Código identificador da comissão'
       example: 5166
-    numero:
-      type: integer
-      description: 'Número identificador da comissão'
-      example: 5166
     situacao:
       type: string
       description: 'Nome da situação da comissão'

@@ -6,13 +6,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-use Doctrine\DBAL\Exception;
-
-use DateTime;
-
-use Manzano\CvdwCli\Services\Http;
+use Manzano\CvdwCli\Inc\CvdwException;
 use Manzano\CvdwCli\Services\DatabaseSetup;
-use Manzano\CvdwCli\Services\Objeto;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 
 class RateLimit
@@ -27,6 +22,9 @@ class RateLimit
     public array $objeto;
     public $executarObj;
     public $idrequisicao;
+
+    public $inicioExecucao;
+    public $tempoLimiteExecucao;
 
     public function __construct(InputInterface $input, OutputInterface $output, $executarObj)
     {
@@ -47,7 +45,6 @@ class RateLimit
                 'objeto' => ':objeto',
             ])
             ->setParameter('objeto', $objeto);
-        
         $queryBuilder->executeStatement();
         $this->idrequisicao = $this->conn->lastInsertId();
         return $this->idrequisicao;
@@ -62,10 +59,10 @@ class RateLimit
             ->set('data_fim', 'NOW()')
             ->set('dados_retorno_qtd', ':dados_retorno_qtd')
             ->set('header_resultado', ':header_resultado')
-            ->where('referencia = :referencia')
+            ->where('idrequisicao = :idrequisicao')
             ->setParameter('dados_retorno_qtd', $dados_retorno_qtd)
             ->setParameter('header_resultado', $header_resultado)
-            ->setParameter('referencia', $idrequisicao);
+            ->setParameter('idrequisicao', $idrequisicao);
         $queryBuilder->executeStatement();
     }
 
@@ -106,7 +103,34 @@ class RateLimit
     
         return $result !== false ? (int) $result : null;
     }
+
+    public function iniciarExecucao(): float
+    {
+        $this->inicioExecucao = time();
+        return $this->inicioExecucao;
+    }
     
+    public function tempoDeExecucao(): float
+    {
+        $tempoAtual = time();
+        return $tempoAtual - $this->inicioExecucao;
+    }
+
+    public function validarTempoExecucao(){
+        if($this->tempoLimiteExecucao){
+            $tempoExecucao = $this->tempoDeExecucao();
+            if($tempoExecucao >= $this->tempoLimiteExecucao){
+
+                $this->io = new CvdwSymfonyStyle($this->input, $this->output, $this->logObjeto);
+                $this->io->error("Tempo de execução excedido! Limite: {$this->tempoLimiteExecucao} segundos.");
+                exit;
+            }
+        }
+    }
+
+    public function setTempoLimiteExecucao($tempoLimiteExecucao){
+        $this->tempoLimiteExecucao = $tempoLimiteExecucao;
+    }
 
 
 }

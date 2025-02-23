@@ -1,0 +1,39 @@
+{
+    "path": "\/agendamentos\/vistorias",
+    "nome": "Agendamentos (agendamentos_vistorias)",
+    "response": {
+        "pagina": "integer",
+        "registros": "integer",
+        "total_de_registros": "integer",
+        "total_de_paginas": "integer",
+        "dados": {
+            "referencia": "string",
+            "referencia_data": "datetime",
+            "ativo": "string",
+            "idvistoria": "integer",
+            "idvistoria_pai": "integer",
+            "idempreendimento": "integer",
+            "empreendimento": "string",
+            "codigointerno_empreendimento": "string",
+            "etapa": "string",
+            "bloco": "string",
+            "unidade": "string",
+            "idunidade": "string",
+            "cliente": "string",
+            "idcliente": "integer",
+            "cep_cliente": "string",
+            "data_agendamento": "datetime",
+            "horario": "string",
+            "vistoriador": "string",
+            "tipo": "string",
+            "situacao": "string",
+            "desmarcado": "string",
+            "quitado": "string",
+            "chave_liberada": "string",
+            "chave_entregue": "string",
+            "data_entrega_de_chave": "datetime",
+            "idreserva": "integer",
+            "numero": "integer"
+        }
+    }
+}

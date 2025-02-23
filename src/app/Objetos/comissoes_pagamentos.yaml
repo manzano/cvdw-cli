@@ -76,7 +76,7 @@ response:
       description: "Numero identificador do pagamento"
       example: 51
     valor:
-      type: float
+      type: number
       description: "Valor da comissão"
       example: 100.5
     vencimento:

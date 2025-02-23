@@ -24,23 +24,60 @@ tags:
     description: "Endpoints relacionadas a venda"
   - name: Unidades
     description: "Endpoints relacionadas a unidade"
+  - name: Agendamentos
+    description: "Endpoints relacionadas a agendamento"
+  - name: Assistências
+    description: "Endpoints relacionadas a assistência"
+  - name: Atendimentos
+    description: "Endpoints relacionadas a atendimento"
+  - name: Leads
+    description: "Endpoints relacionadas a lead"
+  - name: Usuários Administrativos
+    description: "Endpoints relacionadas a usuários administrativos"
+  - name: Demandas
+    description: "Endpoints relacionadas a demandas"
+  - name: Processos
+    description: "Endpoints relacionadas a processos"
+  - name: Pre-cadastro
+    description: "Endpoints relacionadas a pré-cadastro"
+  - name: Imobiliarias
+    description: "Endpoints relacionadas a imobiliarias"
+  - name: Corretores
+    description: "Endpoints relacionadas a corretores"
+  - name: Empreendimentos
+    description: "Endpoints relacionadas a empreendimentos"
+  - name: Compradores
+    description: "Endpoints relacionadas a compradores"
+  - name: Pesquisas
+    description: "Endpoints relacionadas a pesquisas"
+  - name: Repasses
+    description: "Endpoints relacionadas a repasses"
+  - name: Campanhas de Ativação
+    description: "Endpoints relacionadas a campanhas de ativação"
+  - name: Campos Adicionais
+    description: "Endpoints relacionadas a campos adicionais"
+  - name: Pessoas
+    description: "Endpoints relacionadas a pessoas"
 paths:
   "/agendamentos/vistorias":
     get:
       tags:
         - Agendamentos
       description: "Esta api retorna os dados das vistorias a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: agendamentosVistorias
+      summary: "Retorna os dados das vistorias"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de vistorias
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: "Assistencias"
+          description: "Corpo get Assistencias"
           content:
             application/json:
               schema:
@@ -52,10 +89,13 @@ paths:
       tags:
         - Assistências
       description: "Esta api retorna os dados das assistências a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: assistencias
+      summary: "Retorna os dados das assistências"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de assistências
         content:
           application/json:
             schema:
@@ -74,10 +114,13 @@ paths:
       tags:
         - Assistências
       description: "Esta api retorna o tempo que a assistência passou em cada situação."
+      operationId: assistenciasWorkflowTempo
+      summary: "Retorna o tempo que a assistência passou em cada situação."
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de assistências workflow tempo
         content:
           application/json:
             schema:
@@ -96,10 +139,13 @@ paths:
       tags:
         - Assistências
       description: "Esta api retorna os dados dos itens das assistências a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: assistenciasItens
+      summary: "Retorna os dados dos itens das assistências"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de assistências itens
         content:
           application/json:
             schema:
@@ -118,10 +164,13 @@ paths:
       tags:
         - Assistências
       description: "Esta api retorna o tempo que o item da assistência passou em cada situação."
+      operationId: assistenciasItensWorkflowTempo
+      summary: "Retorna o tempo que o item da assistência passou em cada situação."
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de assistências itens workflow tempo
         content:
           application/json:
             schema:
@@ -140,10 +189,13 @@ paths:
       tags:
         - Assistências
       description: "Esta api retorna o tempo que a visita da assistência passou em cada situação."
+      operationId: assistenciasVisitasWorkflowTempo
+      summary: "Retorna o tempo que a visita da assistência passou em cada situação."
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de assistências visitas workflow tempo
         content:
           application/json:
             schema:
@@ -162,10 +214,13 @@ paths:
       tags:
         - Atendimentos
       description: "Esta api retorna os dados dos atendimentos a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: atendimentos
+      summary: "Retorna os dados dos atendimentos"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de atendimentos
         content:
           application/json:
             schema:
@@ -184,17 +239,20 @@ paths:
       tags:
         - Atendimentos
       description: "Esta api retorna o tempo que o atendimento passou em cada situação."
+      operationId: atendimentosWorkflowTempo
+      summary: "Retorna o tempo que o atendimento passou em cada situação."
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de atendimentos workflow tempo
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: "Atendimentos Workflow Tempo"
+          description: "Corpo get Atendimentos Workflow Tempo"
           content:
             application/json:
               schema:
@@ -206,10 +264,13 @@ paths:
       tags:
         - Atendimentos
       description: "Esta api retorna as interações dos atendimentos."
+      operationId: atendimentosInteracoes
+      summary: "Retorna as interações dos atendimentos"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de atendimentos interações
         content:
           application/json:
             schema:
@@ -228,17 +289,20 @@ paths:
       tags:
         - Atendimentos
       description: "Esta api retorna as respostas dos atendimentos."
+      operationId: atendimentosRespostas
+      summary: "Retorna as respostas dos atendimentos"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de atendimentos respostas
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: "Atendimentos Workflow Tempo"
+          description: "Corpo get Atendimentos Respostas"
           content:
             application/json:
               schema:
@@ -250,10 +314,13 @@ paths:
       tags:
         - Atendimentos
       description: "Esta api retorna as tarefas dos atendimentos."
+      operationId: atendimentosTarefas
+      summary: "Retorna as tarefas dos atendimentos"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de atendimentos tarefas
         content:
           application/json:
             schema:
@@ -272,17 +339,20 @@ paths:
       tags:
         - Atendimentos
       description: "Esta api retorna os times de atendimentos."
+      operationId: atendimentosTimes
+      summary: "Retorna os times de atendimentos"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de atendimentos times
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: "Atendimentos Workflow Tempo"
+          description: "get Atendimentos Times"
           content:
             application/json:
               schema:
@@ -294,10 +364,13 @@ paths:
       tags:
         - Atendimentos
       description: "Esta api retorna os integrantes dos times de atendimentos."
+      operationId: atendimentosTimesIntegrantes
+      summary: "Retorna os integrantes dos times de atendimentos"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de atendimentos times integrantes
         content:
           application/json:
             schema:
@@ -594,11 +667,14 @@ paths:
     get:
       tags:
         - Leads
-      description: "Esta api retorna os dados do corretor do lead."
+      description: "Esta api retorna os dados dos corretores que atenderam o lead."
+      operationId: leadsCorretores
+      summary: "Retorna os dados do corretor do lead"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads corretores
         content:
           application/json:
             schema:
@@ -617,10 +693,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna os dados dos leads a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: leads
+      summary: "Retorna os dados dos leads"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads
         content:
           application/json:
             schema:
@@ -639,10 +718,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna os dados das conversões dos leads. A data de referência é equivalente a data de cadastro da conversão"
+      operationId: leadsConversoes
+      summary: "Retorna os dados das conversões dos leads"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads conversões
         content:
           application/json:
             schema:
@@ -661,10 +743,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna os dados dos leads ganhos."
+      operationId: leadsGanhos
+      summary: "Retorna os dados dos leads ganhos"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads ganhos
         content:
           application/json:
             schema:
@@ -683,10 +768,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna o histórico das situações dos leads."
+      operationId: leadsHistoricoSituacoes
+      summary: "Retorna o histórico das situações dos leads"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads histórico situações
         content:
           application/json:
             schema:
@@ -705,10 +793,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna alguns dados dos leads."
+      operationId: leadsInfos
+      summary: "Retorna alguns dados dos leads"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads infos
         content:
           application/json:
             schema:
@@ -727,10 +818,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna a listagem de interações dos leads."
+      operationId: leadsInteracoes
+      summary: "Retorna a listagem de interações dos leads."
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads interações
         content:
           application/json:
             schema:
@@ -749,10 +843,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna os dados dos momentos dos leads a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: leadsMomentos
+      summary: "Retorna os dados dos momentos dos leads"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads momentos
         content:
           application/json:
             schema:
@@ -771,10 +868,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna as informações de perda do leads."
+      operationId: leadsPerdas
+      summary: "Retorna as informações de perda do leads"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads perdas
         content:
           application/json:
             schema:
@@ -793,10 +893,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna a listagem as tarefas dos leads."
+      operationId: leadsTarefas
+      summary: "Retorna as tarefas dos leads"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads tarefas
         content:
           application/json:
             schema:
@@ -815,10 +918,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna a listagem de interações de visitas de leads."
+      operationId: leadsVisitas
+      summary: "Retorna a listagem de interações de visitas de leads."
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads visitas
         content:
           application/json:
             schema:
@@ -837,10 +943,13 @@ paths:
       tags:
         - Leads
       description: "Esta api retorna o tempo em que o lead passou em determinada situação."
+      operationId: leadsWorkflowTempo
+      summary: "Retorna o tempo em que o lead passou em determinada situação."
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de leads workflow tempo
         content:
           application/json:
             schema:
@@ -858,11 +967,14 @@ paths:
     get:
       tags:
         - Usuários Administrativos
+      operationId: getUsuariosAdministrativos
       description: "Esta api retorna os dados dos usuários administativos a partir dos filtros solicitados"
+      summary: "Retorna os dados dos usuários administrativos"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de usuários administrativos
         content:
           application/json:
             schema:
@@ -881,10 +993,13 @@ paths:
         tags:
           - Demandas
         description: "Esta api retorna os dados  das demandas"
+        operationId: demandas
+        summary: "Retorna os dados das demandas"
         parameters:
           - $ref: '#/components/parameters/HeaderEmail'
           - $ref: '#/components/parameters/HeaderToken'
         requestBody:
+          description: Filtros que podem ser usados na API de demandas
           content:
             application/json:
               schema:
@@ -902,19 +1017,18 @@ paths:
       get:
         tags:
           - Processos
-        description: "Esta api retorna os dados dos demandas"
+        description: "Esta api retorna os dados dos processos a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+        operationId: processos
+        summary: "Retorna os dados dos processos"
         parameters:
           - $ref: '#/components/parameters/HeaderEmail'
           - $ref: '#/components/parameters/HeaderToken'
-          - $ref: '#/components/parameters/QueryPagina'
-          - $ref: '#/components/parameters/QueryId'
-          - $ref: '#/components/parameters/QueryRegistrosPorPagina'
-          - $ref: '#/components/parameters/QueryAPartirId'
-          - $ref: '#/components/parameters/QueryAPartirReferencia'
-          - $ref: '#/components/parameters/QueryAPartirDataCad'
-          - $ref: '#/components/parameters/QueryAPartirDataReferencia'
-          - $ref: '#/components/parameters/QueryAteDataReferencia'
-          - $ref: '#/components/parameters/QueryAPartirDataModificacao'
+        requestBody:
+          description: Filtros que podem ser usados na API de processos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BodyCvdw"
         responses:
           "200":
             description: "Processos"
@@ -930,10 +1044,13 @@ paths:
         - Pre-cadastro
       description: "Esta api
        os dados dos pré-cadastros a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: precadastros
+      summary: "Retorna os dados dos pré-cadastros"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pré-cadastros
         content:
           application/json:
             schema:
@@ -952,10 +1069,13 @@ paths:
       tags:
         - Imobiliarias
       description: "Esta api retorna os dados das imobiliarias a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: imobiliarias
+      summary: "Retorna os dados das imobiliarias"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de imobiliarias
         content:
           application/json:
             schema:
@@ -974,10 +1094,13 @@ paths:
       tags:
         - Corretores
       description: "Esta api retorna os dados dos Corretores a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: corretores
+      summary: "Retorna os dados dos corretores"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de corretores
         content:
           application/json:
             schema:
@@ -996,10 +1119,13 @@ paths:
       tags:
         - Pre-cadastro
       description: "Esta api retorna o tempo que o pré-cadastro ficou em uma determinada situação."
+      operationId: precadastroWorkflowTempo
+      summary: "Retorna o tempo do pré-cadastro em cada situação"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pré-cadastro workflow tempo
         content:
           application/json:
             schema:
@@ -1018,10 +1144,13 @@ paths:
       tags:
         - Pre-cadastro
       description: "Esta api retorna o histórico de situações do pré-cadastro."
+      operationId: precadastroHistoricoSituacoes
+      summary: "Retorna o histórico de situações do pré-cadastro"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pré-cadastro histórico situações
         content:
           application/json:
             schema:
@@ -1040,10 +1169,13 @@ paths:
       tags:
         - Campanhas de Ativação
       description: "Esta api retorna os dados de campanhas de ativação ativas."
+      operationId: campanhasAtivacao
+      summary: "Retorna as campanhas de ativação"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de campanhas de ativação
         content:
           application/json:
             schema:
@@ -1062,10 +1194,13 @@ paths:
       tags:
         - Repasses
       description: "Esta api retorna os dados dos repasses a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: repasses
+      summary: "Retorna os dados dos repasses"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de repasses
         content:
           application/json:
             schema:
@@ -1084,10 +1219,13 @@ paths:
       tags:
         - Repasses
       description: "Esta api retorna o tempo que o repasse ficou em uma determinada situação."
+      operationId: repassesWorkflowTempo
+      summary: "Retorna o tempo que o repasse ficou em uma determinada situação."
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de repasses workflow tempo
         content:
           application/json:
             schema:
@@ -1106,10 +1244,13 @@ paths:
       tags:
         - Repasses
       description: "Esta api retorna o historico das situações do repasse."
+      operationId: repassesHistoricoSituacoes
+      summary: "Retorna o histórico das situações do repasse"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de repasses
         content:
           application/json:
             schema:
@@ -1636,10 +1777,10 @@ paths:
               schema:
                 allOf:
                   - $ref: "#/components/schemas/RetornoCVDW"
-                  - $ref: "#/components/schemas/ReservasCamposAdicionais"
+                  - $ref: "#/components/schemas/RetornarReservasCamposAdicionais"
               examples:
                 1:
-                  $ref: "#/components/examples/ReservasCamposAdicionais"
+                  $ref: "#/components/examples/RetornarReservasCamposAdicionais"
         "204":
           description: "Nenhum registro encontrado na API de reservas campos adicionais."
   "/vendas":
@@ -1858,14 +1999,17 @@ paths:
         tags:
           - Unidades
         description: "Esta Api retorna os dados das unidades"
+        operationId: unidades
+        summary: "Retorna os dados das unidades"
         parameters:
           - $ref: '#/components/parameters/HeaderEmail'
           - $ref: '#/components/parameters/HeaderToken'
         requestBody:
-         content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/BodyCvdw"
+          description: Filtros que podem ser usados na API de unidades
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BodyCvdw"
         responses:
           "200":
             description: "Unidade"
@@ -1880,17 +2024,20 @@ paths:
       tags:
         - Campos Adicionais
       description: "Esta api retorna os valores dos Campos Adicionais a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: camposAdicionais
+      summary: "Retorna os campos adicionais"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de campos adicionais
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: ""
+          description: "Corpo de resposta dos campos adicionais"
           content:
             application/json:
               schema:
@@ -1902,17 +2049,20 @@ paths:
       tags:
         - Pessoas
       description: "Esta api retorna os valores das pessoas a partir dos filtros solicitados, caso deseje saber o que cada campo representa basta ir no schema."
+      operationId: pessoas
+      summary: "Retorna os dados das pessoas"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pessoas
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: ""
+          description: "Corpo de resposta dos dados das pessoas"
           content:
             application/json:
               schema:
@@ -1924,17 +2074,20 @@ paths:
       tags:
         - Pessoas
       description: "Esta api retorna os valores dos dados de contatos das pessoas a partir dos filtros solicitados."
+      operationId: pessoasContatos
+      summary: "Retorna os dados de contatos das pessoas"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pessoas contatos
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: ""
+          description: "Corpo de resposta dos dados de contatos das pessoas"
           content:
             application/json:
               schema:
@@ -1946,17 +2099,20 @@ paths:
       tags:
         - Pessoas
       description: "Esta api retorna os valores dos dados profissionais e outras rendas das pessoas a partir dos filtros solicitados."
+      operationId: pessoasProfissional
+      summary: "Retorna os dados profissionais e outras rendas das pessoas"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pessoas profissional
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: ""
+          description: "Corpo de resposta dos dados profissionais e outras rendas das pessoas"
           content:
             application/json:
               schema:
@@ -1968,17 +2124,20 @@ paths:
       tags:
         - Pessoas
       description: "Esta api retorna os valores dos dados patrimoniais das pessoas a partir dos filtros solicitados."
+      operationId: pessoasPatrimoniais
+      summary: "Retorna os dados patrimoniais das pessoas"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pessoas patrimoniais
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: ""
+          description: "Corpo de resposta dos dados patrimoniais das pessoas"
           content:
             application/json:
               schema:
@@ -1990,17 +2149,20 @@ paths:
       tags:
         - Pessoas
       description: "Esta api retorna os valores dos dados bancários das pessoas a partir dos filtros solicitados."
+      operationId: pessoasBancarios
+      summary: "Retorna os dados bancários das pessoas"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pessoas bancários
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: ""
+          description: "Corpo de resposta dos dados bancários das pessoas"
           content:
             application/json:
               schema:
@@ -2012,17 +2174,20 @@ paths:
       tags:
         - Pessoas
       description: "Esta api retorna os valores dos bens da empresa das pessoas (PJ) a partir dos filtros solicitados."
+      operationId: pessoasBensEmpresa
+      summary: "Retorna os bens da empresa das pessoas"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pessoas bens empresa
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: ""
+          description: "Corpo de resposta dos bens da empresa das pessoas"
           content:
             application/json:
               schema:
@@ -2034,17 +2199,20 @@ paths:
       tags:
         - Pessoas
       description: "Esta api retorna os valores dos dados financeiros das pessoas (PJ) a partir dos filtros solicitados."
+      operationId: getPessoas
+      summary: "Retorna os dados financeiros das pessoas"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pessoas financeiros
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/BodyCvdw"
       responses:
         "200":
-          description: ""
+          description: "Resposta do get de pessoas"
           content:
             application/json:
               schema:
@@ -2086,10 +2254,13 @@ paths:
       tags:
         - Pesquisas
       description: "Lista as pesquisas ativas"
+      operationId: getPesquisas
+      summary: "Retorna as pesquisas ativas"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pesquisas
         content:
           application/json:
             schema:
@@ -2108,10 +2279,13 @@ paths:
       tags:
         - Pesquisas
       description: "Lista as perguntas das pesquisas"
+      operationId: getPesquisasPerguntas
+      summary: "Retorna as perguntas das pesquisas"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pesquisas perguntas
         content:
           application/json:
             schema:
@@ -2130,10 +2304,13 @@ paths:
       tags:
         - Pesquisas
       description: "Lista as respostas das pesquisas"
+      operationId: getPesquisasRespostas
+      summary: "Retorna as respostas das pesquisas"
       parameters:
         - $ref: '#/components/parameters/HeaderEmail'
         - $ref: '#/components/parameters/HeaderToken'
       requestBody:
+        description: Filtros que podem ser usados na API de pesquisas respostas
         content:
           application/json:
             schema:
@@ -2173,28 +2350,12 @@ components:
       example: 1
       schema:
         type: integer
-    QueryId:
-      name: id
-      in: query
-      required: false
-      description: Retornará o registro do id específico indicado. Não se aplica para todas APIs.
-      example: 1000
-      schema:
-        type: integer
     QueryRegistrosPorPagina:
       name: registros_por_pagina
       in: query
       required: false
       description: Quantidade de registro por página, máximo 500 registros
       example: 30
-      schema:
-        type: integer
-    QueryAPartirId:
-      name: a_partir_id
-      in: query
-      required: false
-      description: Retornará os registros a partir deste id, lembrando que está ordenado por referencia_data.
-      example: 1000
       schema:
         type: integer
     QueryAPartirReferencia:
@@ -2205,14 +2366,6 @@ components:
       example: 1000
       schema:
         type: integer
-    QueryAPartirDataCad:
-      name: a_partir_data_cad
-      in: query
-      required: false
-      description: Retornará os registros criados a partir da data informada
-      example: "2022-05-18 10:15:26"
-      schema:
-        type: string
     QueryAPartirDataReferencia:
       name: a_partir_data_referencia
       in: query
@@ -2229,14 +2382,6 @@ components:
       example: "2022-06-18 10:15:26"
       schema:
         type: string
-    QueryAPartirDataModificacao:
-      name: a_partir_data_modificacao
-      in: query
-      description: Retornará os registros modificados a partir da data informada. Não se aplica para todas APIs
-      required: false
-      example: "2022-06-18 10:15:26"
-      schema:
-        type: string
   schemas:
     BodyCvdw:
       description: Filtro padrão
@@ -2245,26 +2390,14 @@ components:
           example: 1
           type: integer
           description: "Página que deseja visualizar os registros"
-        id:
-          example: 1640
-          type: integer
-          description: "Retornará o registro do id específico indicado. Não se aplica para todas APIs."
         registros_por_pagina:
           example: 30
           type: integer
           description: "Quantidade de registro por página, máximo 500 registros"
-        a_partir_id:
-          example: 1640
-          type: integer
-          description: "Retornará os registros a partir deste id, lembrando que está ordenado por referencia_data."
         a_partir_referencia:
           example: 1640
           type: integer
           description: "Retornará os registros a partir deste id, lembrando que está ordenado por referencia_data."
-        a_partir_data_cad:
-          example: "2022-05-18 10:15:26"
-          type: string
-          description: "Retornará os registros criados a partir da data informada"
         a_partir_data_referencia:
           example: "2022-05-18 10:15:26"
           type: string
@@ -2273,10 +2406,6 @@ components:
           example: "2022-06-18 10:15:26"
           type: string
           description: "Retornará os registros com data referência até a data informada"
-        a_partir_data_modificacao:
-          example: "2022-05-18 10:15:26"
-          type: string
-          description: "Retornará os registros modificados a partir da data informada. Não se aplica para todas APIs."
     RetornoCVDW:
       type: object
       description: Dados retorno padrão
@@ -2573,6 +2702,7 @@ components:
         tempo: 60
         data_cad: "2022-01-14 18:05:35"
     RetornarAtendimentos:
+      description: Dados de atendimentos
       type: object
       properties:
         dados:
@@ -2580,6 +2710,7 @@ components:
           items:
             $ref: "#/components/schemas/Atendimento"
     Atendimento:
+      description: Dados do atendimento
       type: object
       properties:
         referencia:
@@ -2780,7 +2911,7 @@ components:
           description: "Código identificador do corretor"
         idimobiliaria:
           example: 2
-          type: string
+          type: integer
           description: "Código identificador da imobiliária"
         sigla_empreendimento:
           example: "VAR"
@@ -2815,6 +2946,7 @@ components:
           type: string
           description: "Data de modificação do registro"
     RetornarVistorias:
+      description: Dados de vistorias
       type: object
       properties:
         dados:
@@ -2822,6 +2954,7 @@ components:
           items:
             $ref: "#/components/schemas/Vistorias"
     Vistorias:
+      description: Dados de vistorias
       type: object
       properties:
         referencia:
@@ -2870,7 +3003,7 @@ components:
           description: "	Unidade do empreendimento"
         idunidade:
           example: 28
-          type: string
+          type: integer
           description: "Código identificador da unidade"
         cliente:
           example: "João da silva"
@@ -2904,6 +3037,10 @@ components:
           example: "Aguardando liberação"
           type: string
           description: "Situação do agendamento"
+        desmarcado:
+          example: "N"
+          type: string
+          description: "Informa se foi desmarcado"
         quitado:
           example: "Sim"
           type: string
@@ -2916,6 +3053,10 @@ components:
           example: "Não"
           type: string
           description: "Chave da unidade entregue para o cliente (Sim; Não)"
+        data_entrega_de_chave:
+          example: "2023-01-15 15:26:15"
+          type: string
+          description: "Data da entrega de chaves"
         idreserva:
           example: 13014
           type: integer
@@ -2925,6 +3066,7 @@ components:
           type: integer
           description: "Número"
     RetornarAssistenciaWorkflowTempo:
+      description: "Dados de workflow"
       type: object
       properties:
         dados:
@@ -2932,6 +3074,7 @@ components:
           items:
             $ref: "#/components/schemas/AssistenciaWorkflowTempo"
     AssistenciaWorkflowTempo:
+      description: "Dados de workflow"
       type: object
       properties:
         referencia:
@@ -2975,6 +3118,7 @@ components:
           type: string
           description: "Data de cadastro desse tempo de workflow"
     RetornarAssistenciaItensWorkflowTempo:
+      description: "Dados de itens de workflow"
       type: object
       properties:
         dados:
@@ -2982,6 +3126,7 @@ components:
           items:
             $ref: "#/components/schemas/AssistenciaItensWorkflowTempo"
     AssistenciaItensWorkflowTempo:
+      description: "Dados de itens de workflow"
       type: object
       properties:
         referencia:
@@ -3025,6 +3170,7 @@ components:
           type: string
           description: "Data de cadastro desse tempo de workflow"
     PesquisasAtivas:
+      description: "Dados de pesquisas ativas"
       type: object
       properties:
         referencia:
@@ -3051,42 +3197,14 @@ components:
           example: "2020-12-20"
           type: string
           description: "Data fim da pesquisa"
-        idpergunta:
-          example: 5166
-          type: integer
-          description: "Código identificador da pergunta"
-        perguntas:
-          example: "Qual é a pergunta?"
+        pesquisa:
+          example: "Pesquisa de satisfação"
           type: string
           description: "Título da pesquisa"
-        nome:
-          example: "Maria Santos"
+        situacao:
+          example: "Enviada"
           type: string
-          description: "Nome do cliente"
-        idcliente:
-          example: 1
-          type: integer
-          description: "Código identificador do cliente"
-        documento_cliente:
-          example: "12345678900"
-          type: string
-          description: "CPF do cliente"
-        email:
-          example: "joao@exemple.com"
-          type: string
-          description: "Email do cliente"
-        cep_cliente:
-          example: "49000000"
-          type: string
-          description: "CEP do cliente"
-        idresposta:
-          example: 1
-          type: integer
-          description: "Código identificador da resposta"
-        quem_respondeu:
-          example: 2
-          type: integer
-          description: "Código identificador de quem respondeu"
+          description: "Situação da pesquisa"
         data_referencia:
           example: "2023-01-15 15:26:15"
           type: string
@@ -3095,25 +3213,12 @@ components:
           example: "Satisfação"
           type: string
           description: "Tipo da pesquisa"
-        idempreendimento:
-          example: 3
-          type: integer
-          description: "Código identificador do empreendimento"
-        codigointerno_empreendimento:
-          example: "1"
+        ids_perguntas:
+          example: "3,4,5,6,7"
           type: string
-          description: "Código interno do empreendimento"
-        empreendimento:
-          example: "Empreendimento Exemplo"
-          type: string
-          description: "Nome do empreendimento"
-        regiao:
-          example: "Sul"
-          type: string
-          description: "Região do empreendimento da pesquisa"
-        data_sincronizacao:
-          example: "2023-01-15 15:26:15"
+          description: "Lista de ids das perguntas desta pesquisa"
     PesquisasPerguntas:
+      description: "Dados de perguntas"
       type: object
       properties:
         referencia:
@@ -3124,6 +3229,10 @@ components:
           example: "2023-01-15 15:26:15"
           type: string
           description: "Data de referência"
+        ativo:
+          example: "S"
+          type: string
+          description: "Informa se está ativo ou não"
         idpesquisa_pergunta:
           example: 193
           type: integer
@@ -3149,6 +3258,7 @@ components:
           type: string
           description: "Tipo da pesquisa"
     PesquisasRespostas:
+      description: "Dados de respostas"
       type: object
       properties:
         referencia:
@@ -3159,6 +3269,10 @@ components:
           example: "2023-01-15 15:26:15"
           type: string
           description: "Data de referência"
+        ativo:
+          example: "S"
+          type: string
+          description: "Informa se está ativo ou não"
         idpesquisa:
           example: 5166
           type: integer
@@ -3180,6 +3294,7 @@ components:
           type: string
           description: "Resposta da pergunta"
     RetornarAssistenciaVisitasWorkflowTempo:
+      description: "Dados de tempo de workflow"
       type: object
       properties:
         dados:
@@ -3187,6 +3302,7 @@ components:
           items:
             $ref: "#/components/schemas/AssistenciaVisitasWorkflowTempo"
     AssistenciaVisitasWorkflowTempo:
+      description: "Dados de tempo de workflow"
       type: object
       properties:
         referencia:
@@ -3230,6 +3346,7 @@ components:
           type: string
           description: "Data de cadastro desse tempo de workflow"
     RetornarAtendimentosInteracao:
+      description: "Dados de interações"
       type: object
       properties:
         dados:
@@ -3237,6 +3354,7 @@ components:
           items:
             $ref: "#/components/schemas/AtendimentosInteracao"
     AtendimentosInteracao:
+      description: "Dados de interações"
       type: object
       properties:
         referencia:
@@ -3288,6 +3406,7 @@ components:
           type: string
           description: "Data de modificação do item"
     RetornarAtendimentosRespostas:
+      description: "Dados de respostas"
       type: object
       properties:
         dados:
@@ -3295,6 +3414,7 @@ components:
           items:
             $ref: "#/components/schemas/AtendimentosRespostas"
     AtendimentosRespostas:
+      description: "Dados de respostas"
       type: object
       properties:
         referencia:
@@ -3378,6 +3498,7 @@ components:
           type: string
           description: "Data de modificação do item"
     RetornarAtendimentosTimes:
+      description: "Dados de times"
       type: object
       properties:
         dados:
@@ -3385,6 +3506,7 @@ components:
           items:
             $ref: "#/components/schemas/AtendimentosTimes"
     RetornarAtendimentosTarefas:
+      description: "Dados de tarefas"
       type: object
       properties:
         dados:
@@ -3392,6 +3514,7 @@ components:
           items:
             $ref: "#/components/schemas/AtendimentosTarefas"
     AtendimentosTimes:
+      description: "Dados de times"
       type: object
       properties:
         referencia:
@@ -3447,6 +3570,7 @@ components:
           type: string
           description: "Data de modificação do item"
     AtendimentosTarefas:
+      description: "Dados de tarefas"
       type: object
       properties:
         referencia:
@@ -3578,6 +3702,7 @@ components:
           type: integer
           description: "Identificador da tarefa que originou a tarefa"
     RetornarAtendimentosTimesIntegrantes:
+      description: "Retorna os integrantes dos times de atendimento"
       type: object
       properties:
         dados:
@@ -3585,6 +3710,7 @@ components:
           items:
             $ref: "#/components/schemas/AtendimentosTimesIntegrantes"
     AtendimentosTimesIntegrantes:
+      description: "AtendimentosTimesIntegrantes"
       type: object
       properties:
         referencia:
@@ -3613,7 +3739,7 @@ components:
           description: "Nome do time"
         idusuario:
           example: 13
-          type: string
+          type: integer
           description: "Código identificador do usuário"
         usuario:
           example: "Fátima Barreto"
@@ -3628,6 +3754,7 @@ components:
           type: string
           description: "Data de modificação do item"
     RetornarAtendimentoWorkflowTempo:
+      description: "Retorna os tempos de workflow do atendimento"
       type: object
       properties:
         dados:
@@ -3635,6 +3762,7 @@ components:
           items:
             $ref: "#/components/schemas/AtendimentoWorkflowTempo"
     AtendimentoWorkflowTempo:
+      description: "AtendimentoWorkflowTempo"
       type: object
       properties:
         referencia:
@@ -3678,6 +3806,7 @@ components:
           type: string
           description: "Data de cadastro desse tempo de workflow"
     RetornarAssistencias:
+      description: "Retorna as assistências"
       type: object
       properties:
         dados:
@@ -3685,6 +3814,7 @@ components:
           items:
             $ref: "#/components/schemas/Assistencia"
     Assistencia:
+      description: "Assistência"
       type: object
       properties:
         referencia:
@@ -3808,7 +3938,7 @@ components:
           type: string
           description: "Seleção feita na criação da assistência"
         unidade_area:
-          example: 1070
+          example: "unidade_area"
           type: string
           description: "Tipo do espaço"
         idlocalidade:
@@ -3856,6 +3986,7 @@ components:
           type: string
           description: "Data de modificação do registro"
     RetornarItensAssistencias:
+      description: "Objeto que representa uma lista de itens da assistência."
       type: object
       properties:
         pagina:
@@ -3875,6 +4006,7 @@ components:
           items:
             $ref: "#/components/schemas/ItensAssistencias"
     ItensAssistencias:
+      description: "Objeto que representa um item da assistência."
       type: object
       properties:
         referencia:
@@ -3954,6 +4086,7 @@ components:
           type: string
           description: "Data da última modificação"
     RetornarLeads:
+      description: "Objeto que representa um lead."
       type: object
       properties:
         dados:
@@ -3961,6 +4094,7 @@ components:
           items:
             $ref: "#/components/schemas/Leads"
     Leads:
+      description: "Objeto que representa um lead."
       type: object
       properties:
         referencia:
@@ -4256,6 +4390,7 @@ components:
           items:
             $ref: "#/components/schemas/CamposAdicionais"
     RetornarLeadsInfos:
+      description: "Retorna os dados do lead."
       type: object
       properties:
         dados:
@@ -4263,6 +4398,7 @@ components:
           items:
             $ref: "#/components/schemas/LeadsInfos"
     LeadsInfos:
+      description: "Retorna os dados do lead."
       type: object
       properties:
         referencia:
@@ -4302,6 +4438,7 @@ components:
           type: string
           description: "Nome do atendente do lead. Priorizando corretor, gestor e imobiliária, nessa ordem."
     RetornarLeadsConversoes:
+      description: "Retorna os dados das conversões do lead."
       type: object
       properties:
         dados:
@@ -4309,6 +4446,7 @@ components:
           items:
             $ref: "#/components/schemas/LeadsConversoes"
     LeadsConversoes:
+      description: "Retorna os dados das conversões do lead."
       type: object
       properties:
         referencia:
@@ -4396,6 +4534,7 @@ components:
           type: integer
           description: "Código identificador da última imobiliária vinculada ao lead."
     RetornarLeadsGanhos:
+      description: "Retorna os dados dos ganhos do lead."
       type: object
       properties:
         dados:
@@ -4403,6 +4542,7 @@ components:
           items:
             $ref: "#/components/schemas/LeadsGanhos"
     LeadsGanhos:
+      description: "Retorna os dados dos ganhos do lead."
       type: object
       properties:
         referencia:
@@ -4450,6 +4590,7 @@ components:
           type: string
           description: "Painel da reativação."
     RetornarLeadsHistoricosSituacoes:
+      description: "Retorna os dados dos históricos de situações do lead."
       type: object
       properties:
         dados:
@@ -4457,6 +4598,7 @@ components:
           items:
             $ref: "#/components/schemas/LeadsHistoricosSituacoes"
     LeadsHistoricosSituacoes:
+      description: "Retorna os dados dos históricos de situações do lead."
       type: object
       properties:
         referencia:
@@ -4516,6 +4658,7 @@ components:
           type: integer
           description: "Código identificador do usuário responsável."
     RetornarLeadsInteracoes:
+      description: "Retorna os dados das interações do lead."
       type: object
       properties:
         dados:
@@ -4523,6 +4666,7 @@ components:
           items:
             $ref: "#/components/schemas/LeadsInteracoes"
     LeadsInteracoes:
+      description: "Retorna os dados das interações do lead."
       type: object
       properties:
         referencia:
@@ -4598,6 +4742,7 @@ components:
           type: string
           description: "Nome do gestor da interação."
     RetornarLeadsTarefas:
+      description: "Retorna os dados das tarefas do lead."
       type: object
       properties:
         dados:
@@ -4605,6 +4750,7 @@ components:
           items:
             $ref: "#/components/schemas/LeadsTarefas"
     LeadsTarefas:
+      description: "Retorna os dados das tarefas do lead."
       type: object
       properties:
         referencia:
@@ -4679,7 +4825,20 @@ components:
             example: "Empreendimento 10"
             type: string
             description: "Nome do empreemdimento da visita."
+        motivo_cancelamento:
+            example: "Corretor Inativo."
+            type: string
+            description: "Motivo de cancelamento da tarefa."
+        motivo_concluido:
+            example: "Visita realizada."
+            type: string
+            description: "Motivo de conclusão da tarefa."
+        descricao:
+            example: "Visita agendada lead #123"
+            type: string
+            description: "Descrição da tarefa."
     RetornarLeadsVisitas:
+      description: "Retorna os dados das visitas do lead."
       type: object
       properties:
         dados:
@@ -4687,6 +4846,7 @@ components:
           items:
             $ref: "#/components/schemas/LeadsVisitas"
     LeadsVisitas:
+      description: "Retorna os dados das visitas do lead."
       type: object
       properties:
         referencia:
@@ -4786,6 +4946,7 @@ components:
           type: string
           description: "Nome do empreemdimento."
     RetornarLeadsWorkflowTempo:
+      description: "Retorna os dados do tempo que o lead ficou em uma situação."
       type: object
       properties:
         dados:
@@ -4793,6 +4954,7 @@ components:
           items:
             $ref: "#/components/schemas/LeadsWorkflowTempo"
     LeadsWorkflowTempo:
+      description: "Retorna os dados do tempo que o lead ficou em uma situação."
       type: object
       properties:
         referencia:
@@ -4836,6 +4998,7 @@ components:
           type: string
           description: "Sigla da situação."
     RetornarLeadsPerdas:
+      description: "Retorna os dados das perdas do lead."
       type: object
       properties:
         dados:
@@ -4843,6 +5006,7 @@ components:
           items:
             $ref: "#/components/schemas/LeadsPerdas"
     LeadsPerdas:
+      description: "Retorna os dados das perdas do lead."
       type: object
       properties:
         referencia:
@@ -4890,6 +5054,7 @@ components:
             type: string
             description: "Painel em que o lead foi perdido."
     RetornarDadosLeadsCorretores:
+      description: "Retorna os dados dos leads vinculados ao corretor."
       type: object
       properties:
         dados:
@@ -4897,6 +5062,7 @@ components:
           items:
             $ref: "#/components/schemas/DadosLeadsCorretores"
     DadosLeadsCorretores:
+      description: "Retorna os dados dos leads vinculados ao corretor."
       type: object
       properties:
         referencia:
@@ -4936,6 +5102,7 @@ components:
           type: string
           description: "Nome da imobiliária vinculada ao lead."
     RetornarLeadsMomentos:
+      description: "Retorna os dados dos momentos do lead."
       type: object
       properties:
         dados:
@@ -4943,6 +5110,7 @@ components:
           items:
             $ref: "#/components/schemas/LeadsMomentos"
     LeadsMomentos:
+      description: "Retorna os dados dos momentos do lead."
       type: object
       properties:
         referencia:
@@ -4998,27 +5166,31 @@ components:
           type: integer
           description: "Código identificador da situação vinculada ao lead."
     RetornarUsuariosAdministrativos:
-       type: object
-       properties:
+      description: "Retorna os dados dos usuários administrativos."
+      type: object
+      properties:
         dados:
           type: array
           items:
             $ref: "#/components/schemas/UsuariosAdminstrativos"
     RetornarDemandas:
-       type: object
-       properties:
+      description: "Retorna os dados das demandas."
+      type: object
+      properties:
         dados:
           type: array
           items:
             $ref: "#/components/schemas/schemaDemandas"
     RetornarProcessos:
-       type: object
-       properties:
+      description: "Retorna os dados dos processos."
+      type: object
+      properties:
         dados:
           type: array
           items:
             $ref: "#/components/schemas/schemaProcessos"
     UsuariosAdminstrativos:
+      description: "Retorna os dados dos usuários administrativos."
       type: object
       properties:
         referencia:
@@ -5054,6 +5226,7 @@ components:
           type: string
           description: "Informa o motivo do bloqueio"
     schemaDemandas:
+      description: "Retorna os dados das demandas."
       type: object
       properties:
         referencia:
@@ -5109,6 +5282,7 @@ components:
           type: string
           description: "Data da Ultima Situação"
     schemaProcessos:
+      description: "Retorna os dados dos processos."
       type: object
       properties:
         referencia:
@@ -5232,6 +5406,7 @@ components:
           type: string
           description: "Data da Ultima Situação"
     RetornarPrecadastro:
+      description: "Retorna os dados dos pré-cadastros."
       type: object
       properties:
         dados:
@@ -5239,6 +5414,7 @@ components:
           items:
             $ref: "#/components/schemas/Precadastro"
     RetornarImobiliarias:
+      description: "Retorna os dados das imobiliárias."
       type: object
       properties:
         dados:
@@ -5246,6 +5422,7 @@ components:
           items:
             $ref: "#/components/schemas/Imobiliaria"
     RetornarCorretores:
+      description: "Retorna os dados dos corretores."
       type: object
       properties:
         dados:
@@ -5253,6 +5430,7 @@ components:
           items:
             $ref: "#/components/schemas/Corretor"
     Precadastro:
+      description: "Retorna os dados do pré-cadastro."
       type: object
       properties:
         referencia:
@@ -5456,6 +5634,7 @@ components:
           items:
             $ref: "#/components/schemas/CamposAdicionais"
     Imobiliaria:
+      description: "Imobiliária"
       type: object
       properties:
         referencia:
@@ -5691,6 +5870,7 @@ components:
           type: string
           description: "Data de modificação da imobiliária"
     Corretor:
+      description: "Corretor"
       type: object
       properties:
         referencia:
@@ -5824,7 +6004,7 @@ components:
           type: string
         ano_conclusao:
           example: 3121
-          type: string
+          type: integer
         email:
           example: "teste@cvcrm.com.br"
           type: string
@@ -6019,6 +6199,7 @@ components:
           type: string
           description: "Data da último historico"
     RetornarPrecadastroWorkflowTempo:
+      description: "Retorna o tempo de workflow do pré-cadastro"
       type: object
       properties:
         dados:
@@ -6026,6 +6207,7 @@ components:
           items:
             $ref: "#/components/schemas/PrecadastroWorkflowTempo"
     PrecadastroWorkflowTempo:
+      description: "Tempo de workflow do pré-cadastro"
       type: object
       properties:
         referencia:
@@ -6069,6 +6251,7 @@ components:
           type: string
           description: "Data de cadastro desse tempo de workflow"
     RetornarPrecadastroHistoricoSituacoes:
+      description: "Retorna o histórico de situações do pré-cadastro"
       type: object
       properties:
         dados:
@@ -6076,6 +6259,7 @@ components:
           items:
             $ref: "#/components/schemas/PrecadastroHistoricoSituacoes"
     PrecadastroHistoricoSituacoes:
+      description: "Histórico de situações do pré-cadastro"
       type: object
       properties:
         referencia:
@@ -6119,6 +6303,7 @@ components:
           type: string
           description: "Nome da situação do pré-cadastro após a alteração."
     RetornarCampanhasAtivacao:
+      description: "Retorna as campanhas de ativação"
       type: object
       properties:
         dados:
@@ -6126,6 +6311,7 @@ components:
           items:
             $ref: "#/components/schemas/CampanhasAtivacao"
     CampanhasAtivacao:
+      description: "Campanhas de Ativação"
       type: object
       properties:
         referencia:
@@ -6253,6 +6439,7 @@ components:
           type: string
           description: "Data da última alteração do registro."
     RetornarRepasses:
+      description: "Retorna os repasses"
       type: object
       properties:
         dados:
@@ -6260,6 +6447,7 @@ components:
           items:
             $ref: "#/components/schemas/Repasses"
     Repasses:
+      description: "Repasses"
       type: object
       properties:
         referencia:
@@ -6346,6 +6534,14 @@ components:
           example: "Adimplente"
           type: string
           description: "Situação do contrato do repasse (Adimplente; Inadimplente)"
+        contrato_quitado:
+          example: "S"
+          type: string
+          description: "Informa se o contrato está quitado (S; N)"
+        contrato_liquidado:
+          example: "S"
+          type: string
+          description: "Informa se o contrato está liquidado (S; N)"
         valor_previsto:
           example: 340000.00
           type: number
@@ -6370,10 +6566,26 @@ components:
           example: 76000.00
           type: number
           description: "Valor do fundo de garantia"
+        valor_registro:
+          example: 50000.00
+          type: number
+          description: "Valor do registro do contrato"
         valor_financiado:
           example: 536200.00
           type: number
           description: "Somatório dos valores de dívida, subsídio e FGTS"
+        data_status_financiamento:
+          example: "2022-05-18"
+          type: string
+          description: "Data do status do financiamento"
+        registro_pago:
+          example: "S"
+          type: string
+          description: "Informa se o registro do contrato foi pago (S; N)"
+        valor_contrato:
+          example: 536200.00
+          type: number
+          description: "Valor do contrato do repasse"
         numero_contrato:
           example: "154457"
           type: string
@@ -6405,15 +6617,51 @@ components:
         data_contrato_contabilizado:
           example: "2022-03-01"
           type: string
+          description: "Data do contrato liberado para repasse"
+        data_contrato_liberado:
+          example: "2022-03-01"
+          type: string
           description: "Data do contrato do repasse"
         data_assinatura_de_contrato:
           example: "2022-03-03"
           type: string
           description: "Data da assinatura do contrato do repasse"
+        liberar_assinatura:
+          example: "S"
+          type: string
+          description: "Informa se a assinatura do contrato foi liberada (S; N)"
+        proxima_acao:
+          example: "2022-03-03"
+          type: string
+          description: "Data da próxima ação do repasse"
+        num_matricula:
+          example: "4"
+          type: string
+          description: "Número da matrícula do repasse"
+        recebendo_financiamento:
+          example: "S"
+          type: string
+          description: "Informa se o repasse está recebendo financiamento (S; N)"
+        itbi_pago:
+          example: "S"
+          type: string
+          description: "Informa se o ITBI foi pago (S; N)"
+        laudemio_pago:
+          example: "S"
+          type: string
+          description: "Informa se o Laudêmio foi pago (S; N)"
         idlead:
           example: "166902,164524"
           type: string
           description: "Código identificador dos leads vinculados separados por vírgula"
+        data_unidade_liberada:
+          example: "2022-04-01"
+          type: string
+          description: "Data de liberação da unidade do repasse"
+        data_laudo_liberado:
+          example: "2022-04-01"
+          type: string
+          description: "Data de liberação do laudo do repasse"
         data_recurso_liberado:
           example: "2022-04-01"
           type: string
@@ -6428,7 +6676,7 @@ components:
           description: "Data de cadastro do repasse"
         idunidade:
           example: 28
-          type: string
+          type: integer
           description: "Código identificador da unidade da unidade"
         data_modificacao:
           example: "2022-04-01 08:16:45"
@@ -6438,26 +6686,8 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/CamposAdicionais"
-    CamposAdicionaisRepasses:
-      type: object
-      properties:
-        idcampo_adicional:
-          example: 12414
-          type: integer
-          description: "Código identificador do campo adicional"
-        nome:
-          example: "CONTRATO - USO"
-          type: string
-          description: "Data de cadastro"
-        valor:
-          example: "valor informado pelo usuário"
-          type: string
-          description: "Dado que foi inserido pelo usuário na reserva"
-        nome_referencia:
-          example: "USO_CONTRATO"
-          type: string
-          description: "campo nome referência do campo adicional"
     RetornarRepassesWorkflowTempo:
+      description: "Dados do tempo do repasse"
       type: object
       properties:
         dados:
@@ -6465,6 +6695,7 @@ components:
           items:
             $ref: "#/components/schemas/RepassesWorkflowTempo"
     RepassesWorkflowTempo:
+      description: "Dados do tempo do repasse"
       type: object
       properties:
         referencia:
@@ -6475,6 +6706,10 @@ components:
           example: "2023-01-15 15:26:15"
           type: string
           description: "Data de referência"
+        data_cad:
+          example: "2023-01-15 15:26:15"
+          type: string
+          description: "Data de cadastro"
         ativo:
           example: "S"
           type: string
@@ -6491,7 +6726,7 @@ components:
           example: 56
           type: integer
           description: "Código identificador da situação"
-        nome:
+        situacao:
           example: "situação teste"
           type: string
           description: "Nome da Situação"
@@ -6504,6 +6739,7 @@ components:
           type: integer
           description: "Tempo que o repasse ficou na situação"
     RetornarHistoricoSituacaoRepasses:
+      description: "Dados do histórico de situações do repasse"
       type: object
       properties:
         dados:
@@ -6511,6 +6747,7 @@ components:
           items:
             $ref: "#/components/schemas/HistoricoSituacoesRepasses"
     HistoricoSituacoesRepasses:
+      description: "Dados do histórico de situações do repasse"
       type: object
       properties:
         referencia:
@@ -7062,6 +7299,7 @@ components:
         valor: "valor informado pelo usuário"
         tipo: "texto"
     CamposAdicionaisRetorno:
+      description: Dados do campo adicional
       type: object
       properties:
         referencia:
@@ -7105,6 +7343,7 @@ components:
           type: string
           description: "Data de modificação"
     PessoasRetorno:
+      description: Dados da pessoa
       type: object
       properties:
         referencia:
@@ -7124,12 +7363,12 @@ components:
           type: integer
           description: "Código identificador da pessoa"
         idpessoa_int:
-          example: 1
+          example: "1"
           type: string
           description: "Código identificador da pessoa (Código Interno)"
         idpessoa_legado:
           example: 1
-          type: string
+          type: integer
           description: "Código identificador da pessoa (legado)"
         data_cad:
           example: "2017-12-18 15:20:45"
@@ -7476,6 +7715,7 @@ components:
           type: string
           description: "Observações"
     PessoasContatosRetorno:
+      description: Dados de contato da pessoa
       type: object
       properties:
         referencia:
@@ -7506,6 +7746,10 @@ components:
           example: "(25) 99988-7766"
           type: string
           description: "Telefone de contato"
+        ramal:
+          example: 22
+          type: integer
+          description: "Ramal"
         celular:
           example: "(79) 99988-7766"
           type: string
@@ -7591,6 +7835,7 @@ components:
           type: string
           description: "Gênero do representante PJ"
     PessoasProfissionalRetorno:
+      description: Dados profissionais da pessoa
       type: object
       properties:
         referencia:
@@ -7607,7 +7852,7 @@ components:
           description: "Informa se está ativo ou não"
         idpessoa:
           example: 269
-          type: string
+          type: integer
           description: "Código identificador da pessoa"
         idpessoa_int:
           example: "726"
@@ -7798,6 +8043,7 @@ components:
           type: string
           description: "País do imóvel que possui"
     PessoasPatrimoniaisRetorno:
+      description: Dados financeiros da pessoa
       type: object
       properties:
         referencia:
@@ -7843,9 +8089,13 @@ components:
         novos_bens:
           type: object
           properties:
-            idpessoa_novo_bem:
+            referencia:
               example: 5
               type: string
+              description: "Código identificador do bem"
+            idpessoa_novo_bem:
+              example: 5
+              type: integer
               description: "Código identificador do bem"
             data_cad:
               example: "2020-09-30 17:55:19"
@@ -7908,6 +8158,7 @@ components:
               type: string
               description: "Cidade do bem"
     PessoasBancariosRetorno:
+      description: Dados financeiros da pessoa
       type: object
       properties:
         referencia:
@@ -7924,7 +8175,7 @@ components:
           description: "Informa se está ativo ou não"
         idpessoa:
           example: 269
-          type: string
+          type: integer
           description: "Código identificador da pessoa"
         idpessoa_int:
           example: "726"
@@ -7971,8 +8222,9 @@ components:
           type: string
           description: "Código identificador do banco"
     PessoasBensEmpresaRetorno:
-        type: object
-        properties:
+      description: Dados financeiros da pessoa
+      type: object
+      properties:
           referencia:
             example: 269
             type: integer
@@ -7998,11 +8250,11 @@ components:
             properties:
               referencia:
                 example: 4
-                type: string
+                type: integer
                 description: "Código identificador do bem da empresa"
               idpessoa_bem_empresa:
                 example: 4
-                type: string
+                type: integer
                 description: "Código identificador do bem da empresa"
               data_cad:
                 example: "2024-01-22 11:14:34"
@@ -8010,7 +8262,7 @@ components:
                 description: "Data de cadastro"
               idpessoa:
                 example: 10034
-                type: string
+                type: integer
                 description: "Código identificador da pessoa"
               tipo:
                 example: "Carro"
@@ -8026,13 +8278,14 @@ components:
                 description: "Informa se possui ônus"
               numero_parcelas:
                 example: 12
-                type: string
+                type: integer
                 description: "Número de parcelas"
               valor_parcelas_mensais:
                 example: "350.00"
                 type: string
                 description: "Valor mensal da parcela"
     PessoasFinanceirosRetorno:
+      description: Dados financeiros da pessoa
       type: object
       properties:
         referencia:
@@ -8113,7 +8366,7 @@ components:
           description: "% À Vista"
         medio_prazo_dias_vendas_ultimo_exercicio_pj:
           example: 12
-          type: string
+          type: integer
           description: "À Médio Prazo (Dias)"
         valor_media_mensal_vendas_pj:
           example: "0.12"
@@ -8125,7 +8378,7 @@ components:
           description: "% À Vista"
         preco_medio_dias_media_mensal_vendas_pj:
           example: 12
-          type: string
+          type: integer
           description: "% Ao Preço Médio (Dias)"
         valor_media_mensal_compras_pj:
           example: "0.12"
@@ -8137,7 +8390,7 @@ components:
           description: "% À Vista"
         preco_medio_dias_media_mensal_compras_pj:
           example: 12
-          type: string
+          type: integer
           description: "% Ao Preço Médio (Dias)"
         principais_clientes_pj:
           example: "Empresa X"
@@ -8344,6 +8597,7 @@ components:
         idreserva_comissao_lancamento: 1
         valor_porcentagem_premiacao: 1000.01
     RetornarPesquisasAtivas:
+      description: Retornar pesquisas ativas
       type: object
       properties:
         dados:
@@ -8351,6 +8605,7 @@ components:
           items:
             $ref: "#/components/schemas/PesquisasAtivas"
     RetornarRespostas:
+      description: Retornar respostas
       type: object
       properties:
         dados:
@@ -8358,6 +8613,7 @@ components:
           items:
             $ref: "#/components/schemas/PesquisasRespostas"
     RetornarPerguntas:
+      description: Retornar perguntas
       type: object
       properties:
         dados:
@@ -8605,9 +8861,10 @@ components:
         valor_com_comissao_fora_do_contrato: 12.21
         valor_sem_comissao: 12.21
         vencimento: "2022-02-23"
-        portador: "2022-02-23"
-        indexador: "2022-02-23"
+        portador: "Carteira"
+        indexador: "REAL"
         data_reservas_condicoes: "2022-02-23 13:20:05"
+        data_modificacao: "2022-02-23 13:20:05"
     ReservasAssociados:
       type: object
       description: Dados do associado
@@ -8667,6 +8924,7 @@ components:
         idassociado: 12414
         idreserva: 12414
         idpessoa: 12414
+        idconjuge: 10
         data_cad: "2022-02-23 13:20:05"
         nome: "Anna Luiza"
         documento: "12345678925"
@@ -8727,6 +8985,21 @@ components:
         sigla: "NR"
         tempo: 288
         data_cad: "2022-02-23 13:20:05"
+    RetornarReservasCamposAdicionais:
+      type: object
+      description: "Exemplo de campo adicional da reserva"
+      properties:
+        dados:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReservasCamposAdicionais"
+          example: [
+            $ref: "#/components/examples/ReservasCamposAdicionais"
+          ]
+      example:
+        dados: [
+          $ref: "#/components/examples/ReservasCamposAdicionais"
+        ]
     ReservasCamposAdicionais:
       type: object
       description: Dados campo adicional
@@ -8776,10 +9049,6 @@ components:
           type: string
           description: "Tipo da funcionalidade do campo"
       example:
-        pagina: 1
-        registros: 30
-        total_de_registros: 1054
-        total_de_paginas: 36
         referencia: "193 ou 193_30"
         referencia_data: "2023-01-15 15:26:15"
         ativo: "S"
@@ -8859,8 +9128,8 @@ components:
           type: integer
           description: "Código identificador da pessoa"
         idpessoa_int:
-          example: 193
-          type: integer
+          example: "193"
+          type: string
           description: "Código interno da pessoa"
         cliente:
           example: "Pessoa de teste"
@@ -8955,7 +9224,7 @@ components:
           type: string
           description: "Unidade do empreendimento"
         area_privativa:
-          example: "10.02"
+          example: 10.02
           type: number
           description: "Tamanho da área privativa"
         campanha:
@@ -9013,6 +9282,8 @@ components:
         aprovada: "Sim"
         data_reserva: "2021-01-01 00:00:00"
         data_venda: "2021-01-01 00:00:00"
+        idhistorico: 254
+        data_historico: "2023-01-15 15:26:15"
         empreendimento: "Retiro Teixeira"
         idempreendimento: 589
         codigointerno_empreendimento: "58934"
@@ -9021,6 +9292,7 @@ components:
         planta: "Planta 01"
         bloco: "Bloco E06"
         unidade: "3"
+        idunidade: 288
         area_privativa: 10.02
         cliente: "Pessoa de teste"
         idcliente: 30491
@@ -9038,6 +9310,9 @@ components:
         imobiliaria: "IMOBILIÁRIA QC"
         campanha: "Campanha"
         valor_contrato: 150000
+        contrato_interno: "150000"
+        idpessoa_cv: 193
+        idpessoa_int: "193"
         idmidia: 2
         midia: "Midia"
         idtabela: integer
@@ -9051,6 +9326,7 @@ components:
             tipo_associacao: "Cônjuge"
             percentagem_participacao: 43.24
     Associado:
+      description: Dados do associado
       type: object
       properties:
         idpessoa_cv:
@@ -9728,6 +10004,7 @@ components:
           type: number
           description: "Valor do contrato"
         condicoes_pagamento:
+          description: "Condições de pagamento da simulação"
           type: object
           properties:
             referencia:
@@ -9747,7 +10024,7 @@ components:
               description: "Código identificador da série de pagamento"
               type: integer
             qtd_parcelas:
-              example: "1"
+              example: 1
               type: string
               description: "Quantidade de parcelas da série de pagamento"
             valor:
@@ -9783,7 +10060,7 @@ components:
             idsimulacoescondicoes: 2288
             nome: "Ato"
             idserie: 123
-            qtd_parcelas: "1"
+            qtd_parcelas: 1
             valor: 15000
             valor_com_juros: 17000
             vencimento: "2022-11-30"
@@ -9819,6 +10096,7 @@ components:
         solicitacao_aprovacao: "Não"
         condicao_aprovada: "Sim"
         data_primeira_aprovacao: "2022-11-17 12:24:30"
+        previsao_entrega: "2022-11-17 12:24:30"
         data_entrega: "2024-08-01"
         data_base_calculo_juros: "2024-08-01"
         descricao_motivo_reprovacao: ""
@@ -9865,10 +10143,24 @@ components:
         pagamento_total_fora_contrato: "VGV"
         idtipovenda: 1
         data_modificacao: "2024-02-14 16:41:57"
+        simulacaov2: "N"
         idprecadastro: 123
         idlead: 244
         valor_contrato: 130995.95
         valor_presente: 101834.95
+        condicoes_pagamento:
+          referencia: 2288
+          idsimulacoescondicoes: 2288
+          nome: "Ato"
+          idserie: 123
+          qtd_parcelas: 1
+          valor: 15000
+          valor_com_juros: 17000
+          vencimento: "2022-11-30"
+          idportador: 1
+          idindexador: 1
+          data_base_juros_futuro: "2023-01-01"
+          juros_futuro: 1.00005
     RetornarSiengeReservas:
       type: object
       description: Dados reserva Sienge
@@ -10055,7 +10347,9 @@ components:
         corrigir_parcela_a_cada: 2
         tipo_juros: "Price"
         percentual_juros: 1.210000
+        idplano_financeiro: 2
         plano_financeiro: "Receita de Incorporação de Imóveis"
+        idindexador: 1
         indexador: "INCC-DI"
         codigo_corretor: 2
         data_base: "2021-01-01 00:00:00"
@@ -10094,18 +10388,19 @@ components:
         dados:
           $ref: "#/components/schemas/UnidadesNova"
     UnidadesNova:
-        type: array
-        items:
+      description: Dados da unidade
+      type: array
+      items:
           type: object
           properties:
             referencia:
-               example: 1186,
+               example: 1186
                type: integer
             referencia_data:
               example: "2023-01-15 15:26:15"
               type: string
             idempreendimento:
-               example: 1186,
+               example: 1186
                type: integer
             idempreendimento_int:
                example: "ABC-123"
@@ -10113,12 +10408,18 @@ components:
             nome_empreendimento:
               example: "Empreendimento X"
               type: string
+            idtipo_empreendimento:
+              example: 1
+              type: integer
+            tipo_empreendimento:
+              example: "Horizontal"
+              type: string
             idetapa:
               example: 1186
               type: integer
             idetapa_int:
-              example: 1186
-              type: integer
+              example: "1186"
+              type: string
             etapa:
               example: "1ª ETAPA"
               type: string
@@ -10126,8 +10427,8 @@ components:
               example: 1186
               type: integer
             idbloco_int:
-              example: 1186
-              type: integer
+              example: "1186"
+              type: string
             bloco:
               example: "BLOCO 01"
               type: string
@@ -10135,8 +10436,8 @@ components:
               example: "001"
               type: string
             area_privativa:
-              example: "122.00"
-              type: string
+              example: 122.00
+              type: number
             idunidade:
               example: "12345"
               type: string
@@ -10180,6 +10481,9 @@ components:
               example: "01/10/2024"
               type: string
             data_entrega:
+              example: "01/01/2023"
+              type: string
+            data_entrega_chaves:
               example: "01/01/2023"
               type: string
             agendar_a_partir:
@@ -10280,6 +10584,7 @@ components:
               example: "N"
               type: string
     RetornarCamposAdicionais:
+      description: Dados de campos adicionais
       type: object
       properties:
         dados:
@@ -10287,6 +10592,7 @@ components:
           items:
             $ref: "#/components/schemas/CamposAdicionaisRetorno"
     RetornarPessoas:
+      description: Dados de pessoas
       type: object
       properties:
         dados:
@@ -10294,6 +10600,7 @@ components:
           items:
             $ref: "#/components/schemas/PessoasRetorno"
     RetornarPessoasContatos:
+      description: Dados de pessoas contatos
       type: object
       properties:
         dados:
@@ -10301,6 +10608,7 @@ components:
           items:
             $ref: "#/components/schemas/PessoasContatosRetorno"
     RetornarPessoasProfissional:
+      description: Dados de pessoas profissional
       type: object
       properties:
         dados:
@@ -10308,6 +10616,7 @@ components:
           items:
             $ref: "#/components/schemas/PessoasProfissionalRetorno"
     RetornarPessoasPatrimoniais:
+      description: Dados de pessoas patrimoniais
       type: object
       properties:
         dados:
@@ -10315,6 +10624,7 @@ components:
           items:
             $ref: "#/components/schemas/PessoasPatrimoniaisRetorno"
     RetornarPessoasBancarios:
+      description: Dados de pessoas bancários
       type: object
       properties:
         dados:
@@ -10322,6 +10632,7 @@ components:
           items:
             $ref: "#/components/schemas/PessoasBancariosRetorno"
     RetornarPessoasBensEmpresa:
+      description: Dados de pessoas bens empresa
       type: object
       properties:
          dados:
@@ -10329,6 +10640,7 @@ components:
           items:
             $ref: "#/components/schemas/PessoasBensEmpresaRetorno"
     RetornarPessoasFinanceiros:
+      description: Dados de pessoas financeiros
       type: object
       properties:
         dados:
@@ -10947,51 +11259,51 @@ components:
         corretor: "Corretor CV"
         idcorretor: 123
         flag_inicio: "Sim"
-        data_entrada_flag_inicio: "2022-12-27 16:05:36"
+        data_flag_inicio: "2022-12-27 16:05:36"
         flag_inicio_semproposta: "Sim"
-        data_entrada_flag_inicio_semproposta: "2022-12-27 16:05:36"
+        data_flag_inicio_semproposta: "2022-12-27 16:05:36"
         flag_vencida: "Sim"
-        data_entrada_flag_vencida: "2022-12-27 16:05:36"
+        data_flag_vencida: "2022-12-27 16:05:36"
         flag_vendida: "Sim"
-        data_entrada_flag_vendida: "2022-12-27 16:05:36"
+        data_flag_vendida: "2022-12-27 16:05:36"
         flag_distrato: "Sim"
-        data_entrada_flag_distrato: "2022-12-27 16:05:36"
+        data_flag_distrato: "2022-12-27 16:05:36"
         flag_analisada: "Sim"
-        data_entrada_flag_analisada: "2022-12-27 16:05:36"
+        data_flag_analisada: "2022-12-27 16:05:36"
         flag_aprovada: "Sim"
-        data_entrada_flag_aprovada: "2022-12-27 16:05:36"
+        data_flag_aprovada: "2022-12-27 16:05:36"
         flag_aprovada_comercial: "Sim"
-        data_entrada_flag_aprovada_comercial: "2022-12-27 16:05:36"
+        data_flag_aprovada_comercial: "2022-12-27 16:05:36"
         flag_vender_sienge: "Sim"
-        data_entrada_flag_vender_sienge: "2022-12-27 16:05:36"
+        data_flag_vender_sienge: "2022-12-27 16:05:36"
         flag_cancelada_sienge: "Sim"
-        data_entrada_flag_cancelada_sienge: "2022-12-27 16:05:36"
+        data_flag_cancelada_sienge: "2022-12-27 16:05:36"
         flag_cancelada: "Sim"
-        data_entrada_flag_cancelada: "2022-12-27 16:05:36"
+        data_flag_cancelada: "2022-12-27 16:05:36"
         flag_pode_faturar: "Sim"
-        data_entrada_flag_pode_faturar: "2022-12-27 16:05:36"
+        data_flag_pode_faturar: "2022-12-27 16:05:36"
         flag_documentos: "Sim"
-        data_entrada_flag_documentos: "2022-12-27 16:05:36"
+        data_flag_documentos: "2022-12-27 16:05:36"
         flag_contrato: "Sim"
-        data_entrada_flag_contrato: "2022-12-27 16:05:36"
+        data_flag_contrato: "2022-12-27 16:05:36"
         flag_aguardando_faturamento: "Sim"
-        data_entrada_flag_aguardando_faturamento: "2022-12-27 16:05:36"
+        data_flag_aguardando_faturamento: "2022-12-27 16:05:36"
         flag_faturada: "Sim"
-        data_entrada_flag_faturada: "2022-12-27 16:05:36"
+        data_flag_faturada: "2022-12-27 16:05:36"
         flag_pendente_assinatura_eletronica: "Sim"
-        data_entrada_flag_pendente_assinatura_eletronica: "2022-12-27 16:05:36"
+        data_flag_pendente_assinatura_eletronica: "2022-12-27 16:05:36"
         flag_pendente_assinatura_eletronica_segundo_envelope: "Sim"
-        data_entrada_flag_pendente_assinatura_eletronica_segundo_envelope: "2022-12-27 16:05:36"
+        data_flag_pendente_assinatura_eletronica_segundo_envelope: "2022-12-27 16:05:36"
         flag_assinatura_clientes_associados: "Sim"
-        data_entrada_flag_assinatura_clientes_associados: "2022-12-27 16:05:36"
+        data_flag_assinatura_clientes_associados: "2022-12-27 16:05:36"
         flag_assinatura_todas_partes: "Sim"
-        data_entrada_flag_assinatura_todas_partes: "2022-12-27 16:05:36"
+        data_flag_assinatura_todas_partes: "2022-12-27 16:05:36"
         flag_reprovada_comercial: "Sim"
-        data_entrada_flag_reprovada_comercial: "2022-12-27 16:05:36"
+        data_flag_reprovada_comercial: "2022-12-27 16:05:36"
         flag_pendente_comercial: "Sim"
-        data_entrada_flag_pendente_comercial: "2022-12-27 16:05:36"
+        data_flag_pendente_comercial: "2022-12-27 16:05:36"
         flag_devolucao_erp: "Sim"
-        data_entrada_flag_devolucao_erp: "2022-12-27 16:05:36"
+        data_flag_devolucao_erp: "2022-12-27 16:05:36"
   examples:
     CamposAdicionais:
       description: "Exemplo de campo adicional"
@@ -11034,6 +11346,9 @@ components:
         empreendimento: "Empreendimento CV"
         idempreendimento: 123
         bloco: "003"
+        idbloco: 1
+        etapa: "Etapa 1"
+        idetapa: 1
         unidade: "202"
         idunidade: 123
         cliente: "Cliente CV"
@@ -11041,51 +11356,51 @@ components:
         corretor: "Corretor CV"
         idcorretor: 123
         flag_inicio: "Sim"
-        data_entrada_flag_inicio: "2022-12-27 16:05:36"
+        data_flag_inicio: "2022-12-27 16:05:36"
         flag_inicio_semproposta: "Sim"
-        data_entrada_flag_inicio_semproposta: "2022-12-27 16:05:36"
+        data_flag_inicio_semproposta: "2022-12-27 16:05:36"
         flag_vencida: "Sim"
-        data_entrada_flag_vencida: "2022-12-27 16:05:36"
+        data_flag_vencida: "2022-12-27 16:05:36"
         flag_vendida: "Sim"
-        data_entrada_flag_vendida: "2022-12-27 16:05:36"
+        data_flag_vendida: "2022-12-27 16:05:36"
         flag_distrato: "Sim"
-        data_entrada_flag_distrato: "2022-12-27 16:05:36"
+        data_flag_distrato: "2022-12-27 16:05:36"
         flag_analisada: "Sim"
-        data_entrada_flag_analisada: "2022-12-27 16:05:36"
+        data_flag_analisada: "2022-12-27 16:05:36"
         flag_aprovada: "Sim"
-        data_entrada_flag_aprovada: "2022-12-27 16:05:36"
+        data_flag_aprovada: "2022-12-27 16:05:36"
         flag_aprovada_comercial: "Sim"
-        data_entrada_flag_aprovada_comercial: "2022-12-27 16:05:36"
+        data_flag_aprovada_comercial: "2022-12-27 16:05:36"
         flag_vender_sienge: "Sim"
-        data_entrada_flag_vender_sienge: "2022-12-27 16:05:36"
+        data_flag_vender_sienge: "2022-12-27 16:05:36"
         flag_cancelada_sienge: "Sim"
-        data_entrada_flag_cancelada_sienge: "2022-12-27 16:05:36"
+        data_flag_cancelada_sienge: "2022-12-27 16:05:36"
         flag_cancelada: "Sim"
-        data_entrada_flag_cancelada: "2022-12-27 16:05:36"
+        data_flag_cancelada: "2022-12-27 16:05:36"
         flag_pode_faturar: "Sim"
-        data_entrada_flag_pode_faturar: "2022-12-27 16:05:36"
+        data_flag_pode_faturar: "2022-12-27 16:05:36"
         flag_documentos: "Sim"
-        data_entrada_flag_documentos: "2022-12-27 16:05:36"
+        data_flag_documentos: "2022-12-27 16:05:36"
         flag_contrato: "Sim"
-        data_entrada_flag_contrato: "2022-12-27 16:05:36"
+        data_flag_contrato: "2022-12-27 16:05:36"
         flag_aguardando_faturamento: "Sim"
-        data_entrada_flag_aguardando_faturamento: "2022-12-27 16:05:36"
+        data_flag_aguardando_faturamento: "2022-12-27 16:05:36"
         flag_faturada: "Sim"
-        data_entrada_flag_faturada: "2022-12-27 16:05:36"
+        data_flag_faturada: "2022-12-27 16:05:36"
         flag_pendente_assinatura_eletronica: "Sim"
-        data_entrada_flag_pendente_assinatura_eletronica: "2022-12-27 16:05:36"
+        data_flag_pendente_assinatura_eletronica: "2022-12-27 16:05:36"
         flag_pendente_assinatura_eletronica_segundo_envelope: "Sim"
-        data_entrada_flag_pendente_assinatura_eletronica_segundo_envelope: "2022-12-27 16:05:36"
+        data_flag_pendente_assinatura_eletronica_segundo_envelope: "2022-12-27 16:05:36"
         flag_assinatura_clientes_associados: "Sim"
-        data_entrada_flag_assinatura_clientes_associados: "2022-12-27 16:05:36"
+        data_flag_assinatura_clientes_associados: "2022-12-27 16:05:36"
         flag_assinatura_todas_partes: "Sim"
-        data_entrada_flag_assinatura_todas_partes: "2022-12-27 16:05:36"
+        data_flag_assinatura_todas_partes: "2022-12-27 16:05:36"
         flag_reprovada_comercial: "Sim"
-        data_entrada_flag_reprovada_comercial: "2022-12-27 16:05:36"
+        data_flag_reprovada_comercial: "2022-12-27 16:05:36"
         flag_pendente_comercial: "Sim"
-        data_entrada_flag_pendente_comercial: "2022-12-27 16:05:36"
+        data_flag_pendente_comercial: "2022-12-27 16:05:36"
         flag_devolucao_erp: "Sim"
-        data_entrada_flag_devolucao_erp: "2022-12-27 16:05:36"
+        data_flag_devolucao_erp: "2022-12-27 16:05:36"
     ReservasContratos:
       description: "Exemplo de contratos na reserva"
       value:
@@ -11143,13 +11458,14 @@ components:
         ativo: "S"
         idreserva: 12414
         aprovada: "Sim"
-        data: "2021-01-01 00:00:00"
+        data_cad: "2021-01-01 00:00:00"
         situacao_data: "2021-01-01 00:00:00"
         situacao_atual: "2021-01-01 00:00:00"
         idsituacao: 3
         idempreendimento: 3
         codigointerno_empreendimento: "1"
         empreendimento: "Retiro Teixeira"
+        etapa: "Etapa 1"
         bloco: "Bloco E06"
         idunidade: 47
         unidade: "3"
@@ -11164,12 +11480,13 @@ components:
         idimobiliaria: 274
         imobiliaria: "IMOBILIÁRIA QC"
         motivo_distrato: "Motivo"
+        descricao_motivo_distrato: "Motivo descrição"
         valor_contrato: 150000.54
         data_sincronizacao: "2022-05-18 13:02:37"
     Simulacoes:
       description: "Exemplo de dados de simulação"
       value:
-        referencia: "193 ou 193_30"
+        referencia: 193 ou 193_30
         referencia_data: "2023-01-15 15:26:15"
         ativo: "S"
         idsimulacao: 12414
@@ -11181,9 +11498,9 @@ components:
         idusuario: 1
         idusuario_imobiliaria: 589
         idreserva: 123
-        idcorretor: 14,
+        idcorretor: 14
         corretor: "Corretor CV"
-        idimobiliaria: 14,
+        idimobiliaria: 14
         imobiliaria: "Imob CV"
         lead: "Lead CV"
         empreendimento: "Empreendimento CV"
@@ -11196,6 +11513,7 @@ components:
         solicitacao_aprovacao: "Não"
         condicao_aprovada: "Sim"
         data_primeira_aprovacao: "2022-11-17 12:24:30"
+        previsao_entrega: "2022-11-17 12:24:30"
         data_entrega: "2024-08-01"
         data_base_calculo_juros: "2024-08-01"
         descricao_motivo_reprovacao: ""
@@ -11242,10 +11560,24 @@ components:
         pagamento_total_fora_contrato: "VGV"
         idtipovenda: 1
         data_modificacao: "2024-02-14 16:41:57"
+        simulacaov2: "S"
         idprecadastro: 123
         idlead: 244
         valor_contrato: 130995.95
         valor_presente: 101834.95
+        condicoes_pagamento:
+          referencia: 2288
+          idsimulacoescondicoes: 2288
+          nome: "Ato"
+          idserie: 123
+          qtd_parcelas: 1
+          valor: 15000
+          valor_com_juros: 17000
+          vencimento: "2022-11-30"
+          idportador: 1
+          idindexador: 1
+          data_base_juros_futuro: "2023-01-01"
+          juros_futuro: 1.00005
     Vendas:
       description: "Exemplo de dados de venda"
       value:
@@ -11255,16 +11587,19 @@ components:
         idreserva: 12414
         idlead: "168523,4322 (TEXT)"
         aprovada: "Sim"
-        data: "2021-01-01 00:00:00"
+        data_reserva: "2021-01-01 00:00:00"
         data_venda: "2021-01-01 00:00:00"
+        idhistorico: 254
+        data_historico: "2023-01-15 15:26:15"
         empreendimento: "Retiro Teixeira"
         idempreendimento: 589
         codigointerno_empreendimento: "58934"
         regiao: "Sul"
+        etapa: "Etapa A"
         planta: "Planta 01"
         bloco: "Bloco E06"
-        idunidade: 288
         unidade: "3"
+        idunidade: 288
         area_privativa: 10.02
         cliente: "Pessoa de teste"
         idcliente: 30491
@@ -11282,6 +11617,9 @@ components:
         imobiliaria: "IMOBILIÁRIA QC"
         campanha: "Campanha"
         valor_contrato: 150000
+        contrato_interno: "150000"
+        idpessoa_cv: 193
+        idpessoa_int: "193"
         idmidia: 2
         midia: "Midia"
         idtabela: integer
@@ -11297,10 +11635,6 @@ components:
     ReservasCamposAdicionais:
       description: "Exemplo de campo adicional da reserva"
       value:
-        pagina: 1
-        registros: 30
-        total_de_registros: 1054
-        total_de_paginas: 36
         referencia: "193 ou 193_30"
         referencia_data: "2023-01-15 15:26:15"
         ativo: "S"
@@ -11334,6 +11668,7 @@ components:
         idassociado: 12414
         idreserva: 12414
         idpessoa: 12414
+        idconjuge: 10
         data_cad: "2022-02-23 13:20:05"
         nome: "Anna Luiza"
         documento: "12345678925"
@@ -11354,9 +11689,10 @@ components:
         valor_com_comissao_fora_do_contrato: 12.21
         valor_sem_comissao: 12.21
         vencimento: "2022-02-23"
-        portador: "2022-02-23"
-        indexador: "2022-02-23"
+        portador: "Carteira"
+        indexador: "REAL"
         data_reservas_condicoes: "2022-02-23 13:20:05"
+        data_modificacao: "2022-02-23 13:20:05"
     ReservasCoordenadorProduto:
       description: "Exemplo de coordenador do produto"
       value:
@@ -11482,7 +11818,9 @@ components:
         corrigir_parcela_a_cada: 2
         tipo_juros: "Price"
         percentual_juros: 1.210000
+        idplano_financeiro: 2
         plano_financeiro: "Receita de Incorporação de Imóveis"
+        idindexador: 1
         indexador: "INCC-DI"
         codigo_corretor: 2
         data_base: "2021-01-01 00:00:00"
@@ -11502,7 +11840,7 @@ components:
     Reservas:
       description: "Exemplo de reserva"
       value:
-        referencia: 193 ou 193_30
+        referencia: "193 ou 193_30"
         referencia_data: "2023-12-29 16:12:52"
         ativo: "S"
         idreserva: 12414
@@ -11518,6 +11856,7 @@ components:
         codigointerno_empreendimento: "58934"
         empreendimento: "Retiro Teixeira"
         data_entrega_chaves_contrato_cliente: "2023-01-01"
+        etapa: "Etapa 1"
         bloco: "Bloco E06"
         unidade: "3"
         regiao: "Sul"
@@ -11541,6 +11880,7 @@ components:
         campanha: "Campanha"
         cessao: "Não"
         motivo_cancelamento: "Motivo"
+        data_cancelamento: "2022-02-23 13:20:05"
         espacos_complementares: "Espaços"
         idlead: "168523,4322"
         data_ultima_alteracao_situacao: "2022-02-23 13:20:05"
@@ -11590,7 +11930,7 @@ components:
         campos_adicionais_contrato: [{
           referencia: 193,
           referencia_data: "2023-12-29 16:12:52",
-          idcampo_valores: 12414,
+          idreservacontratocampoadicional: 12414,
           idcampo: 312,
           nome: "CONTRATO - USO",
           valor: "valor informado pelo usuário",
@@ -11651,6 +11991,9 @@ components:
           empreendimento: "Empreendimento CV",
           idempreendimento: 123,
           bloco: "003",
+          idbloco: 1,
+          etapa: "Etapa 1",
+          idetapa: 1,
           unidade: "202",
           idunidade: 123,
           cliente: "Cliente CV",
@@ -11658,51 +12001,51 @@ components:
           corretor: "Corretor CV",
           idcorretor: 123,
           flag_inicio: "Sim",
-          data_entrada_flag_inicio: "2022-12-27 16:05:36",
+          data_flag_inicio: "2022-12-27 16:05:36",
           flag_inicio_semproposta: "Sim",
-          data_entrada_flag_inicio_semproposta: "2022-12-27 16:05:36",
+          data_flag_inicio_semproposta: "2022-12-27 16:05:36",
           flag_vencida: "Sim",
-          data_entrada_flag_vencida: "2022-12-27 16:05:36",
+          data_flag_vencida: "2022-12-27 16:05:36",
           flag_vendida: "Sim",
-          data_entrada_flag_vendida: "2022-12-27 16:05:36",
+          data_flag_vendida: "2022-12-27 16:05:36",
           flag_distrato: "Sim",
-          data_entrada_flag_distrato: "2022-12-27 16:05:36",
+          data_flag_distrato: "2022-12-27 16:05:36",
           flag_analisada: "Sim",
-          data_entrada_flag_analisada: "2022-12-27 16:05:36",
+          data_flag_analisada: "2022-12-27 16:05:36",
           flag_aprovada: "Sim",
-          data_entrada_flag_aprovada: "2022-12-27 16:05:36",
+          data_flag_aprovada: "2022-12-27 16:05:36",
           flag_aprovada_comercial: "Sim",
-          data_entrada_flag_aprovada_comercial: "2022-12-27 16:05:36",
+          data_flag_aprovada_comercial: "2022-12-27 16:05:36",
           flag_vender_sienge: "Sim",
-          data_entrada_flag_vender_sienge: "2022-12-27 16:05:36",
+          data_flag_vender_sienge: "2022-12-27 16:05:36",
           flag_cancelada_sienge: "Sim",
-          data_entrada_flag_cancelada_sienge: "2022-12-27 16:05:36",
+          data_flag_cancelada_sienge: "2022-12-27 16:05:36",
           flag_cancelada: "Sim",
-          data_entrada_flag_cancelada: "2022-12-27 16:05:36",
+          data_flag_cancelada: "2022-12-27 16:05:36",
           flag_pode_faturar: "Sim",
-          data_entrada_flag_pode_faturar: "2022-12-27 16:05:36",
+          data_flag_pode_faturar: "2022-12-27 16:05:36",
           flag_documentos: "Sim",
-          data_entrada_flag_documentos: "2022-12-27 16:05:36",
+          data_flag_documentos: "2022-12-27 16:05:36",
           flag_contrato: "Sim",
-          data_entrada_flag_contrato: "2022-12-27 16:05:36",
+          data_flag_contrato: "2022-12-27 16:05:36",
           flag_aguardando_faturamento: "Sim",
-          data_entrada_flag_aguardando_faturamento: "2022-12-27 16:05:36",
+          data_flag_aguardando_faturamento: "2022-12-27 16:05:36",
           flag_faturada: "Sim",
-          data_entrada_flag_faturada: "2022-12-27 16:05:36",
+          data_flag_faturada: "2022-12-27 16:05:36",
           flag_pendente_assinatura_eletronica: "Sim",
-          data_entrada_flag_pendente_assinatura_eletronica: "2022-12-27 16:05:36",
+          data_flag_pendente_assinatura_eletronica: "2022-12-27 16:05:36",
           flag_pendente_assinatura_eletronica_segundo_envelope: "Sim",
-          data_entrada_flag_pendente_assinatura_eletronica_segundo_envelope: "2022-12-27 16:05:36",
+          data_flag_pendente_assinatura_eletronica_segundo_envelope: "2022-12-27 16:05:36",
           flag_assinatura_clientes_associados: "Sim",
-          data_entrada_flag_assinatura_clientes_associados: "2022-12-27 16:05:36",
+          data_flag_assinatura_clientes_associados: "2022-12-27 16:05:36",
           flag_assinatura_todas_partes: "Sim",
-          data_entrada_flag_assinatura_todas_partes: "2022-12-27 16:05:36",
+          data_flag_assinatura_todas_partes: "2022-12-27 16:05:36",
           flag_reprovada_comercial: "Sim",
-          data_entrada_flag_reprovada_comercial: "2022-12-27 16:05:36",
+          data_flag_reprovada_comercial: "2022-12-27 16:05:36",
           flag_pendente_comercial: "Sim",
-          data_entrada_flag_pendente_comercial: "2022-12-27 16:05:36",
+          data_flag_pendente_comercial: "2022-12-27 16:05:36",
           flag_devolucao_erp: "Sim",
-          data_entrada_flag_devolucao_erp: "2022-12-27 16:05:36"
+          data_flag_devolucao_erp: "2022-12-27 16:05:36"
         }]
     RetornarReservasComissoes:
       description: "Exemplo de retorno reservas comissões"
@@ -11761,14 +12104,16 @@ components:
           ativo: "S",
           idreserva: 12414,
           aprovada: "Sim",
-          data: "2021-01-01 00:00:00",
+          data_cad: "2021-01-01 00:00:00",
           situacao_data: "2021-01-01 00:00:00",
           situacao_atual: "2021-01-01 00:00:00",
           idsituacao: 3,
           idempreendimento: 3,
           codigointerno_empreendimento: "1",
           empreendimento: "Retiro Teixeira",
+          etapa: "Etapa 1",
           bloco: "Bloco E06",
+          idunidade: 47,
           unidade: "3",
           regiao: "Sul",
           venda: "Sim",
@@ -11781,8 +12126,29 @@ components:
           idimobiliaria: 274,
           imobiliaria: "IMOBILIÁRIA QC",
           motivo_distrato: "Motivo",
+          descricao_motivo_distrato: "Motivo descrição",
           valor_contrato: 150000.54,
           data_sincronizacao: "2022-05-18 13:02:37"
+        }]
+    CamposAdicionaisRetorno:
+      description: "Exemplo de campo adicional da reserva"
+      value:
+        pagina: 1
+        registros: 30
+        total_de_registros: 1054
+        total_de_paginas: 36
+        dados: [{
+          referencia: "193 ou 193_30",
+          referencia_data: "2023-01-15 15:26:15",
+          ativo: "S",
+          idreserva: 12414,
+          idcampo: 132023,
+          data_cad: "2022-02-23 13:20:05",
+          nome: "Nome do Campo",
+          nome_referencia: "campo_nome",
+          valor: "valor",
+          tipo: "texto",
+          funcionalidade: "reserva_contrato"
         }]
     RetornarSiengeReservas:
       description: "Exemplo de retorno de reservas Sienge"
@@ -11810,7 +12176,9 @@ components:
           corrigir_parcela_a_cada: 2,
           tipo_juros: "Price",
           percentual_juros: 1.210000,
+          idplano_financeiro: 2,
           plano_financeiro: "Receita de Incorporação de Imóveis",
+          idindexador: 1,
           indexador: "INCC-DI",
           codigo_corretor: 2,
           data_base: "2021-01-01 00:00:00",
@@ -11863,6 +12231,7 @@ components:
           solicitacao_aprovacao: "Não",
           condicao_aprovada: "Sim",
           data_primeira_aprovacao: "2022-11-17 12:24:30",
+          previsao_entrega: "2022-11-17 12:24:30",
           data_entrega: "2024-08-01",
           data_base_calculo_juros: "2024-08-01",
           descricao_motivo_reprovacao: "",
@@ -11909,10 +12278,26 @@ components:
           pagamento_total_fora_contrato: "VGV",
           idtipovenda: 1,
           data_modificacao: "2024-02-14 16:41:57",
+          simulacaov2: "S",
           idprecadastro: 123,
           idlead: 244,
           valor_contrato: 130995.95,
-          valor_presente: 101834.95
+          valor_presente: 101834.95,
+          condicoes_pagamento: [
+          {
+            referencia: 2288,
+            idsimulacoescondicoes: 2288,
+            nome: "Ato",
+            idserie: 123,
+            qtd_parcelas: 1,
+            valor: 15000,
+            valor_com_juros: 17000,
+            vencimento: "2022-11-30",
+            idportador: 1,
+            idindexador: 1,
+            data_base_juros_futuro: "2023-01-01",
+            juros_futuro: 1.00005,
+          }]
         }]
     RetornarVendas:
       description: "Exemplo de retorno reservas contratos"
@@ -11928,15 +12313,19 @@ components:
           idreserva: 12414,
           idlead: "168523,4322 (TEXT)",
           aprovada: "Sim",
-          data: "2021-01-01 00:00:00",
+          data_reserva: "2021-01-01 00:00:00",
           data_venda: "2021-01-01 00:00:00",
+          idhistorico: 254,
+          data_historico: "2023-01-15 15:26:15",
           empreendimento: "Retiro Teixeira",
           idempreendimento: 589,
           codigointerno_empreendimento: "58934",
           regiao: "Sul",
+          etapa: "Etapa A",
           planta: "Planta 01",
           bloco: "Bloco E06",
           unidade: "3",
+          idunidade: 288,
           area_privativa: 10.02,
           cliente: "Pessoa de teste",
           idcliente: 30491,
@@ -11954,6 +12343,9 @@ components:
           imobiliaria: "IMOBILIÁRIA QC",
           campanha: "Campanha",
           valor_contrato: 150000,
+          contrato_interno: "150000",
+          idpessoa_cv: 193,
+          idpessoa_int: "193",
           idmidia: 2,
           midia: "Midia",
           idtabela: integer,
@@ -12058,6 +12450,7 @@ components:
           idassociado: 12414,
           idreserva: 12414,
           idpessoa: 12414,
+          idconjuge: 10,
           data_cad: "2022-02-23 13:20:05",
           nome: "Anna Luiza",
           documento: "12345678925",
@@ -12084,9 +12477,10 @@ components:
           valor_com_comissao_fora_do_contrato: 12.21,
           valor_sem_comissao: 12.21,
           vencimento: "2022-02-23",
-          portador: "2022-02-23",
-          indexador: "2022-02-23",
-          data_reservas_condicoes: "2022-02-23 13:20:05"
+          portador: "Carteira",
+          indexador: "REAL",
+          data_reservas_condicoes: "2022-02-23 13:20:05",
+          data_modificacao: "2022-02-23 13:20:05"
         }]
     RetornarReservasHistoricos:
       description: "Exemplo de retorno reservas histórico"
@@ -12202,6 +12596,7 @@ components:
           codigointerno_empreendimento: "58934",
           empreendimento: "Retiro Teixeira",
           data_entrega_chaves_contrato_cliente: "2023-01-01",
+          etapa: "Etapa 1",
           bloco: "Bloco E06",
           unidade: "3",
           regiao: "Sul",
@@ -12225,6 +12620,7 @@ components:
           campanha: "Campanha",
           cessao: "Não",
           motivo_cancelamento: "Motivo",
+          data_cancelamento: "2022-02-23 13:20:05",
           espacos_complementares: "Espaços",
           idlead: "168523,4322",
           data_ultima_alteracao_situacao: "2022-02-23 13:20:05",
@@ -12274,7 +12670,7 @@ components:
           campos_adicionais_contrato: [{
             referencia: 193,
             referencia_data: "2023-12-29 16:12:52",
-            idcampo_valores: 12414,
+            idreservacontratocampoadicional: 12414,
             idcampo: 312,
             nome: "CONTRATO - USO",
             valor: "valor informado pelo usuário",
@@ -12299,6 +12695,26 @@ components:
           idtempo: 40,
           tempo: 60,
           data_cad: "2022-01-14 18:05:35"
+        }]
+    RetornarReservasCamposAdicionais:
+      description: "Exemplo de retorno comissões workflow tempo"
+      value:
+        pagina: 1
+        registros: 30
+        total_de_registros: 1054
+        total_de_paginas: 36
+        dados: [{
+          referencia: 193,
+          referencia_data: "2023-01-15 15:26:15",
+          ativo: "S",
+          idreserva: 12414,
+          idcampo: 132023,
+          data_cad: "2022-02-23 13:20:05",
+          nome: "Nome do Campo",
+          nome_referencia: "campo_nome",
+          valor: "valor",
+          tipo: "texto",
+          funcionalidade: "reserva_contrato"
         }]
     RetornarComissoes:
       description: "Exemplo de retorno comissões"

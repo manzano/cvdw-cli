@@ -129,10 +129,6 @@ response:
       type: integer
       description: 'Identificador do corretor'
       example: 123
-    data_sincronizacao:
-      type: datetime
-      description: 'Data de sincronização'
-      example: '2024-03-31 09:15:54'
     flag_inicio:
       type: string
       description: 'Informa se a reserva está na situação com flag início'

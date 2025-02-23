@@ -82,7 +82,7 @@ response:
       description: 'Nome do time'
       example: 'Time Atendimento'
     idusuario:
-      type: string
+      type: integer
       description: 'Identificador do usuário'
       example: 13
     usuario:

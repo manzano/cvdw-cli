@@ -85,10 +85,6 @@ response:
       type: integer
       description: 'Identificador do ID do usuario que vinculou o momento ao lead'
       example: 2
-    nome_usuario:
-      type: string
-      description: 'Nome do usuário que vinculou o momento ao lead'
-      example: 'Marcelo da Silva'
     painel_usuario:
       type: string
       description: 'Painel pelo qual o usuario estava logado qunando vinculou o momento ao lead'

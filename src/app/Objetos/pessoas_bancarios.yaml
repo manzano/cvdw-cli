@@ -74,7 +74,7 @@ response:
       description: 'Informa se está ativo ou não'
       example: S
     idpessoa:
-      type: string
+      type: integer
       description: 'Identificador da pessoa'
       example: 269
     idpessoa_int:
