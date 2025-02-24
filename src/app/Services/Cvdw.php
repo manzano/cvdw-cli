@@ -162,7 +162,7 @@ class Cvdw
                         if(isset($resposta->total_de_paginas)) {
                             $this->paginasEncontradas = $resposta->total_de_paginas;
                         }
-                        if($resposta->total_de_registros == 0) {
+                        if(isset($resposta->total_de_registros) && $resposta->total_de_registros == 0) {
                             continue;
                         }
                         $this->paginasExecutadas = $pagina;
