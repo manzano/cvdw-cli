@@ -964,7 +964,8 @@ class Configurar extends Command
         $this->ambientesObj = new Ambientes($this->env);
         $versaoCVDW = $this->ambientesObj->retornarVersao();
 
-        $cvdwObj = new Cvdw($this->input, $this->output, $this);
+    
+        $cvdwObj = new Cvdw($this->input, $this->output, $this, $this->rateLimitObj);
         $novaVersaoCVDW = $cvdwObj->verificarNovaVersao($io);
         
         $io->text([
