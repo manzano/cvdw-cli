@@ -493,7 +493,7 @@ response:
           description: "Descrição do campo adicional"
         valor:
           example: "valor informado pelo usuário"
-          type: string
+          type: text
           description: "Dado que foi inserido pelo usuário na funcionalidade"
         tipo:
           example: "texto"

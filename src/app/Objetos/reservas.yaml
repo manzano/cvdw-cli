@@ -375,7 +375,7 @@ response:
       example: "2022-12-07"
     campos_adicionais:
       referencia:
-        type: integer
+        type: string
         description: "Código identificador do campo adicional"
         example: 132
       referencia_data:
@@ -400,7 +400,7 @@ response:
         example: texto
     campos_adicionais_contrato:
       referencia:
-        type: integer
+        type: string
         description: "Código identificador do campo adicional"
         example: 132
       referencia_data:
@@ -420,7 +420,7 @@ response:
         description: "Descrição do campo adicional"
         example: "CONTRATO - USO"
       valor:
-        type: string
+        type: text
         description: "Dado que foi inserido pelo usuário na funcionalidade"
         example: valor informado pelo usuário
       tipo:

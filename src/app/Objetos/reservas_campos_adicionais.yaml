@@ -97,7 +97,7 @@ response:
       description: "Nome de referência do campo"
     valor:
       example: "valor"
-      type: string
+      type: text
       description: "Valor do campo"
     tipo:
       example: "texto"
