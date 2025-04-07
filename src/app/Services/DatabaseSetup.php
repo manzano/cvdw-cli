@@ -486,7 +486,7 @@ class DatabaseSetup
         }
     }
 
-    public function executarCorrecoes($diferencasBanco)
+    public function executarCorrecoes($diferencasBanco, $apagarDados = true): void
     {
 
         $this->verificarEngines();
@@ -515,12 +515,20 @@ class DatabaseSetup
                 $io->text('');
             }
 
-            if ($io->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
-                $tabelasLimpar = array();
-                foreach ($diferencasBanco as $tabela => $diferencas) {
-                    $tabelasLimpar[$tabela] = [];
+            if($apagarDados) {
+                if ($io->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
+                    $tabelasLimpar = array();
+                    foreach ($diferencasBanco as $tabela => $diferencas) {
+                        $tabelasLimpar[$tabela] = [];
+                    }
+                    $this->parent->limparTabelas($tabelasLimpar);
+                } else {
+                    $io->text([
+                        '',
+                        'Tubo bem! Finalizamos...',
+                        ''
+                    ]);
                 }
-                $this->parent->limparTabelas($tabelasLimpar);
             } else {
                 $io->text([
                     '',

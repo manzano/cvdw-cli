@@ -2,21 +2,24 @@ version: '3.8'
 
 services:
   app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: gabrielmanzano/cvdw-cli:latest
     container_name: cvdw-cli
     restart: unless-stopped
     depends_on:
       - db
     environment:
-      CV_URL: SEU AMBIENTE
-      CV_EMAIL: SEU EMAIL
-      CV_TOKEN: SEU TOKEN
+      CV_URL: _SEU_AMBIENTE_
+      CV_EMAIL: _SEU_EMAIL_
+      CV_TOKEN: _SEU_TOKEN_
       DB_CONNECTION: pdo_mysql
       DB_PORT: 3306
       DB_HOST: db
       DB_DATABASE: cvdw
       DB_USERNAME: root
-      DB_PASSWORD: root
+      DB_PASSWORD: _SUA_SENHA_PARA_O_MYSQL_
       DB_SCHEMA: ""
       ANONIMIZAR: ""
       ANONIMIZAR_TIPO: ""
@@ -27,7 +30,7 @@ services:
     container_name: mariadb-cvdw
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: _SUA_SENHA_PARA_O_MYSQL_
       MYSQL_DATABASE: cvdw
     ports:
       - "3308:3306"

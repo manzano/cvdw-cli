@@ -1,38 +1,28 @@
 # Docker cvdw-cli
 
-## Criar imagem
-
-```bash
-docker build -t gabrielmanzano/cvdw-cli:latest .
-```
-
 ## Ajustes no docker-compose
 
 Modifique o docker-compose.yaml com os seus dados.
 
 ```yaml
     environment:
-      CV_URL: SEU AMBIENTE
-      CV_EMAIL: SEU EMAIL
-      CV_TOKEN: SEU TOKEN
+      CV_URL: _SEU_AMBIENTE_
+      CV_EMAIL: _SEU_EMAIL_
+      CV_TOKEN: _SEU_TOKEN_
+      DB_PASSWORD: _SUA_SENHA_PARA_O_MYSQL_
+      MYSQL_ROOT_PASSWORD: _SUA_SENHA_PARA_O_MYSQL_
 ```
 
-## Executar Container
+## Criar imagem e rodar container via compose
 
 ```bash
-docker run --rm -ti gabriel/cvdw-cli:0.42.0 ash
+docker compose up -d --build
 ```
 
-## Rodando via compose
+## Misc
+
+### Executar Container
 
 ```bash
-docker compose up -d
-```
-
-## Miscs
-
-### Subindo pro Registry
-
-```bash
-docker push gabrielmanzano/cvdw-cli:latest
+docker run --rm -ti gabrielmanzano/cvdw-cli:latest ash
 ```

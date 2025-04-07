@@ -4,6 +4,7 @@ namespace Manzano\CvdwCli;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
@@ -50,6 +51,7 @@ class Configurar extends Command
     public $rateLimitObj;
     protected $cvdwObj;
     protected $env = null;
+    protected $force = false;
     protected $evento = 'Configurar';
     const VAMOS_LA = 'Vamos Lá!';
     const QUER_TENTAR_NOVAMENTE = 'Quer tentar novamente?';
@@ -57,7 +59,8 @@ class Configurar extends Command
     protected function configure()
     {
         $this->setName('configurar')
-            ->setDescription('Configurações do aplicativo')
+        ->setDescription('Configurações do aplicativo')
+        ->addArgument('opcao', InputArgument::OPTIONAL, 'Atalhos para a configuração')
         ->addOption(
             'set-env',
             'env',
@@ -68,6 +71,11 @@ class Configurar extends Command
             'env',
             InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
             'Diz qual ENV usar. Exemplo: dev, homologacao, producao.',
+        )->addOption(
+            'force',
+            'f',
+            InputOption::VALUE_OPTIONAL, // Modo: VALUE_REQUIRED, VALUE_OPTIONAL, VALUE_NONE
+            'Força positivo nas confirmações do terminal.',
         );
     }
 
@@ -82,6 +90,11 @@ class Configurar extends Command
         if ($input->getOption('set-env')) {
             $this->env = $input->getOption('set-env');
         }
+
+        if ($input->getOption('force')) {
+            $this->force = true;
+        }
+
         $this->ambientesObj = new Ambientes($this->env, $this);
         $this->ambientesObj->retornarEnvs();
 
@@ -100,8 +113,19 @@ class Configurar extends Command
         $ambienteAtivo = $this->ambientesObj->ambienteAtivo();
         $io->text('Ambiente ativo: ' . $ambienteAtivo);
 
-        $this->cvdwObj->alertarNovaVersao($versaoCVDW, $io);
         
+        $inputOpcao = $input->getArgument('opcao');
+        if ($inputOpcao == 'autoupdate') {
+            $io = new CvdwSymfonyStyle($this->input, $this->output);
+            $database = new DatabaseSetup($this->input, $this->output, $this);
+            $database->executarCriarTabelas();
+            $this->verificarInstalacao();
+            return Command::SUCCESS;
+        }
+
+        $this->cvdwObj->alertarNovaVersao($versaoCVDW, $io);
+       
+
 
         $this->variaveisAmbiente['configurar'] = $io->choice('O que deseja configurar agora?', [
             'Acesso ao CVDW API',
@@ -610,9 +634,17 @@ class Configurar extends Command
                 'Encontrei problemas no banco de dados, vamos tentar corrigir?',
                 ''
             ]);
+
+            if($this->force){
+                $databaseObj->executarCorrecoes($diferencasBanco, false);
+                $io->text('Concluindo operação...');
+                $databaseObj->fecharConexao();
+                exit;
+            }
             
             if ($io->confirm('Quer tentar corrigir?', true)) {
-                $databaseObj->executarCorrecoes($diferencasBanco);
+                $databaseObj->executarCorrecoes($diferencasBanco, true);
+
             } else {
                 $io->text([
                     '',
@@ -626,9 +658,15 @@ class Configurar extends Command
                 'Parece que esta tudo ok!',
                 ''
             ]);
+            if($this->force){
+                $io->text('Concluindo operação...');
+                $databaseObj->fecharConexao();
+                exit;
+            }
         }
 
         $databaseObj->fecharConexao();
+
         //$this->voltarProMenu = true;
         $this->voltarProMenu();
         return true;
