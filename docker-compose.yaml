@@ -16,7 +16,7 @@ services:
       CV_TOKEN: _SEU_TOKEN_
       DB_CONNECTION: pdo_mysql
       DB_PORT: 3306
-      DB_HOST: db
+      DB_HOST: cvdw-cli-mysql
       DB_DATABASE: cvdw
       DB_USERNAME: cvdw_user
       DB_PASSWORD: cvdw_pwd
@@ -37,7 +37,7 @@ services:
     volumes:
       - cvdw-cli-db_data:/var/lib/mysql
     ports:
-      - "3308:3306"
+      - "3306:3306"
 
 volumes:
   cvdw-cli-db_data:
