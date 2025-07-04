@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Manzano\CvdwCli\Inc\Conexao;
 use Manzano\CvdwCli\Services\EnvironmentManager;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -17,7 +18,7 @@ class ConexaoRefatoradoTest extends TestCase
     {
         $this->backupEnvironmentVariables();
         $this->setTestEnvironmentVariables();
-        
+
         $this->input = new ArrayInput([]);
         $this->output = new NullOutput();
     }
@@ -58,7 +59,7 @@ class ConexaoRefatoradoTest extends TestCase
     public function testConectarDBComEnvironmentManager(): void
     {
         $environmentManager = new EnvironmentManager();
-        
+
         // Configurar valores de teste no EnvironmentManager
         $environmentManager->setDbHost('127.0.0.1');
         $environmentManager->setDbPort('3306');
@@ -66,24 +67,24 @@ class ConexaoRefatoradoTest extends TestCase
         $environmentManager->setDbUsername('usuario_teste');
         $environmentManager->setDbPassword('senha_teste');
         $environmentManager->setDbConnection('pdo_mysql');
-        
-        $connection = \conectarDB($this->input, $this->output, false, $environmentManager);
-        
+
+        $connection = Conexao::conectarDB($this->input, $this->output, false, $environmentManager);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
 
     public function testConectarDBSemEnvironmentManager(): void
     {
         // A função deve criar um EnvironmentManager automaticamente
-        $connection = \conectarDB($this->input, $this->output, false);
-        
+        $connection = Conexao::conectarDB($this->input, $this->output, false);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
 
     public function testConectarDBComPostgreSQL(): void
     {
         $environmentManager = new EnvironmentManager();
-        
+
         // Configurar para PostgreSQL
         $environmentManager->setDbConnection('pdo_pgsql');
         $environmentManager->setDbHost('127.0.0.1');
@@ -92,16 +93,16 @@ class ConexaoRefatoradoTest extends TestCase
         $environmentManager->setDbUsername('usuario_teste');
         $environmentManager->setDbPassword('senha_teste');
         $environmentManager->setDbSchema('schema_teste');
-        
-        $connection = \conectarDB($this->input, $this->output, false, $environmentManager);
-        
+
+        $connection = Conexao::conectarDB($this->input, $this->output, false, $environmentManager);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
 
     public function testConectarDBComPostgreSQLSchemaVazio(): void
     {
         $environmentManager = new EnvironmentManager();
-        
+
         // Configurar para PostgreSQL sem schema
         $environmentManager->setDbConnection('pdo_pgsql');
         $environmentManager->setDbHost('127.0.0.1');
@@ -110,16 +111,16 @@ class ConexaoRefatoradoTest extends TestCase
         $environmentManager->setDbUsername('usuario_teste');
         $environmentManager->setDbPassword('senha_teste');
         $environmentManager->setDbSchema(''); // Schema vazio
-        
-        $connection = \conectarDB($this->input, $this->output, false, $environmentManager);
-        
+
+        $connection = Conexao::conectarDB($this->input, $this->output, false, $environmentManager);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
 
     public function testConectarDBComValoresVazios(): void
     {
         $environmentManager = new EnvironmentManager();
-        
+
         // Configurar com valores vazios
         $environmentManager->setDbHost('');
         $environmentManager->setDbPort('');
@@ -127,16 +128,16 @@ class ConexaoRefatoradoTest extends TestCase
         $environmentManager->setDbUsername('');
         $environmentManager->setDbPassword('');
         $environmentManager->setDbConnection('pdo_mysql');
-        
-        $connection = \conectarDB($this->input, $this->output, false, $environmentManager);
-        
+
+        $connection = Conexao::conectarDB($this->input, $this->output, false, $environmentManager);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
 
     public function testConectarDBComSQLServer(): void
     {
         $environmentManager = new EnvironmentManager();
-        
+
         // Configurar para SQL Server
         $environmentManager->setDbConnection('pdo_sqlsrv');
         $environmentManager->setDbHost('127.0.0.1');
@@ -144,16 +145,16 @@ class ConexaoRefatoradoTest extends TestCase
         $environmentManager->setDbDatabase('teste_db');
         $environmentManager->setDbUsername('usuario_teste');
         $environmentManager->setDbPassword('senha_teste');
-        
-        $connection = \conectarDB($this->input, $this->output, false, $environmentManager);
-        
+
+        $connection = Conexao::conectarDB($this->input, $this->output, false, $environmentManager);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
 
     public function testConectarDBComShowExceptionTrue(): void
     {
         $environmentManager = new EnvironmentManager();
-        
+
         // Configurar com valores inválidos para forçar erro
         $environmentManager->setDbHost('host_invalido');
         $environmentManager->setDbPort('9999');
@@ -161,17 +162,17 @@ class ConexaoRefatoradoTest extends TestCase
         $environmentManager->setDbUsername('usuario_invalido');
         $environmentManager->setDbPassword('senha_invalida');
         $environmentManager->setDbConnection('pdo_mysql');
-        
+
         // Deve retornar uma conexão mesmo com erro (devido ao showException = true)
-        $connection = \conectarDB($this->input, $this->output, true, $environmentManager);
-        
+        $connection = Conexao::conectarDB($this->input, $this->output, true, $environmentManager);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
 
     public function testConectarDBComShowExceptionFalse(): void
     {
         $environmentManager = new EnvironmentManager();
-        
+
         // Configurar com valores inválidos para forçar erro
         $environmentManager->setDbHost('host_invalido');
         $environmentManager->setDbPort('9999');
@@ -179,40 +180,40 @@ class ConexaoRefatoradoTest extends TestCase
         $environmentManager->setDbUsername('usuario_invalido');
         $environmentManager->setDbPassword('senha_invalida');
         $environmentManager->setDbConnection('pdo_mysql');
-        
+
         // Deve retornar uma conexão mesmo com erro (devido ao showException = false)
-        $connection = \conectarDB($this->input, $this->output, false, $environmentManager);
-        
+        $connection = Conexao::conectarDB($this->input, $this->output, false, $environmentManager);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
 
     public function testConectarDBComEnvironmentManagerNull(): void
     {
         // Testar passando null explicitamente
-        $connection = \conectarDB($this->input, $this->output, false, null);
-        
+        $connection = Conexao::conectarDB($this->input, $this->output, false, null);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
 
     public function testConectarDBComDiferentesTiposDeInput(): void
     {
         $environmentManager = new EnvironmentManager();
-        
+
         // Testar com diferentes tipos de input
         $arrayInput = new ArrayInput(['--test' => 'value']);
-        $connection = \conectarDB($arrayInput, $this->output, false, $environmentManager);
-        
+        $connection = Conexao::conectarDB($arrayInput, $this->output, false, $environmentManager);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
 
     public function testConectarDBComDiferentesTiposDeOutput(): void
     {
         $environmentManager = new EnvironmentManager();
-        
+
         // Testar com diferentes tipos de output
         $bufferedOutput = new \Symfony\Component\Console\Output\BufferedOutput();
-        $connection = \conectarDB($this->input, $bufferedOutput, false, $environmentManager);
-        
+        $connection = Conexao::conectarDB($this->input, $bufferedOutput, false, $environmentManager);
+
         $this->assertInstanceOf(\Doctrine\DBAL\Connection::class, $connection);
     }
-} 
+}

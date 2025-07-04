@@ -29,13 +29,13 @@ class EnvironmentManager
             'ANONIMIZAR_TIPO' => $_ENV['ANONIMIZAR_TIPO'] ?? 'Asteriscos',
             'CVDW_AMBIENTE' => $_ENV['CVDW_AMBIENTE'] ?? 'PRD',
         ];
-        
+
         // Se as variáveis estão vazias, tentar carregar do arquivo .env diretamente
         if (empty($this->envVars['DB_HOST'])) {
             $this->loadFromEnvFile();
         }
     }
-    
+
     private function loadFromEnvFile(): void
     {
         $envFile = __DIR__ . '/../../envs/.env';
@@ -46,13 +46,13 @@ class EnvironmentManager
                     list($key, $value) = explode('=', $line, 2);
                     $key = trim($key);
                     $value = trim($value);
-                    
+
                     // Remover aspas se existirem
                     if ((substr($value, 0, 1) === '"' && substr($value, -1) === '"') ||
                         (substr($value, 0, 1) === "'" && substr($value, -1) === "'")) {
                         $value = substr($value, 1, -1);
                     }
-                    
+
                     if (isset($this->envVars[$key])) {
                         $this->envVars[$key] = $value;
                     }
@@ -137,6 +137,7 @@ class EnvironmentManager
         if ($value === 'false') {
             return false;
         }
+
         return (bool) $value;
     }
 
@@ -226,4 +227,4 @@ class EnvironmentManager
             $this->set($key, $value);
         }
     }
-} 
+}

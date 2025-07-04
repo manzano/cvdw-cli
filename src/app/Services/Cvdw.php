@@ -510,7 +510,7 @@ class Cvdw
             $tipoLinha = $objetoObj->identificarTipoDeDados($valor);
 
             if (isset($linha->$coluna) && $tipoLinha !== "TABELA") {
-                $linha->$coluna = trim($linha->$coluna);  
+                $linha->$coluna = trim($linha->$coluna);
                 if (strpos($coluna, "data") !== false) {
                     if ($linha->$coluna == "0000-00-00 00:00:00") {
                         $linha->$coluna = null;
@@ -528,7 +528,7 @@ class Cvdw
                     $linha->$coluna = intval($linha->$coluna);
                 } elseif ($valor["type"] == "number" && $linha->$coluna != null) {
                     if (is_numeric($linha->$coluna)) {
-                        $linha->$coluna = number_format($linha->$coluna, 2, '.', '');
+                        $linha->$coluna = number_format((float)$linha->$coluna, 2, '.', '');
                     }
                 }
 
@@ -544,11 +544,11 @@ class Cvdw
                 // Se valor tiver tamanho, verificar se o tamanho é maior que o tamanho da coluna
                 if (isset($valor['tamanho']) && $linha->$coluna != null && $valor['type'] != 'string') {
                     if (strlen($linha->$coluna) > $valor['tamanho']) {
-                        
+
                         // exibir uma mensagem de erro
                         // O valor do campo e maior que o tamanho da coluna, ele foi truncado
                         $this->console->error("O valor do campo " . $coluna . " e maior que o tamanho da coluna (" . $valor['tamanho'] . " > " . strlen($linha->$coluna) . "), ele foi truncado");
-                        $linha->$coluna = substr($linha->$coluna, 0, $valor['tamanho']);                    
+                        $linha->$coluna = substr($linha->$coluna, 0, $valor['tamanho']);
                     }
                 }
 

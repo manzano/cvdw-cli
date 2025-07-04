@@ -9,10 +9,10 @@ use Manzano\CvdwCli\Services\Ambientes;
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Manzano\CvdwCli\Services\Cvdw;
 use Manzano\CvdwCli\Services\DatabaseSetup;
+use Manzano\CvdwCli\Services\EnvironmentManager;
 use Manzano\CvdwCli\Services\Http;
 use Manzano\CvdwCli\Services\Objeto;
 use Manzano\CvdwCli\Services\RateLimit;
-use Manzano\CvdwCli\Services\EnvironmentManager;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -96,7 +96,7 @@ class Configurar extends Command
 
         $this->input = $input;
         $this->output = $output;
-        
+
         $console = new CvdwSymfonyStyle($input, $output);
 
         $console->title('Configurando o CVDW-CLI');
@@ -141,6 +141,7 @@ class Configurar extends Command
         if ($this->variaveisAmbiente['configurar'] === 'Sair (CTRL+C)') {
             $console->text(['Até mais!', '']);
             exit;
+
             return Command::SUCCESS;
 
         }
@@ -518,7 +519,7 @@ class Configurar extends Command
             $this->environmentManager->setAnonimizar(false);
             $this->environmentManager->setAnonimizarTipo('Asteriscos');
         }
-        
+
         $anonimizar = $console->confirm('Você deseja anonimizar os dados sensíveis?', $this->environmentManager->getAnonimizar());
         $this->environmentManager->setAnonimizar($anonimizar);
 

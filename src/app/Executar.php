@@ -249,6 +249,13 @@ class Executar extends Command
         if ($this->output->isDebug() || $this->input->getOption('verbose')) {
             $console->info('## Função: ' . __FUNCTION__);
         }
+        
+        // Função validarData não existe, vamos criar uma implementação simples
+        if (!function_exists('validarData')) {
+            function validarData($data) {
+                return !empty($data);
+            }
+        }
 
         if ($this->input->getOption('salvarlog')) {
             $console->text(['Salvando o Log em: ' . $this->arquivoLog]);

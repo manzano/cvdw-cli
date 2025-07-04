@@ -9,7 +9,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CvdwSymfonyStyle extends SymfonyStyle
 {
-    protected $logObjeto = false;
+    protected $logObjeto = null;
     public InputInterface $input;
     public OutputInterface $output;
 
@@ -24,7 +24,7 @@ class CvdwSymfonyStyle extends SymfonyStyle
     public function text($message)
     {
         parent::text($message);
-        if ($this->logObjeto) {
+        if (! empty($this->logObjeto)) {
             // Se $message for um array, então fazemos um foreach para escrever cada mensagem no arquivo de log
             if (is_array($message)) {
                 foreach ($message as $msg) {
@@ -69,14 +69,17 @@ class CvdwSymfonyStyle extends SymfonyStyle
 
     public function section($message)
     {
-        parent::section($message);
-        if ($this->logObjeto) {
-            // Se $message for um array, então fazemos um foreach para escrever cada mensagem no arquivo de log
-            if (is_array($message)) {
-                foreach ($message as $msg) {
+        if (is_array($message)) {
+            // Se for array, chama section para cada mensagem
+            foreach ($message as $msg) {
+                parent::section($msg);
+                if ($this->logObjeto) {
                     $this->logObjeto->escreverLog($msg);
                 }
-            } else {
+            }
+        } else {
+            parent::section($message);
+            if ($this->logObjeto) {
                 $this->logObjeto->escreverLog($message);
             }
         }

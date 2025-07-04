@@ -15,11 +15,11 @@ class Conexao
     {
         $console = new CvdwSymfonyStyle($input, $output);
         $config = new Configuration();
-        
+
         if ($environmentManager === null) {
             $environmentManager = new EnvironmentManager();
         }
-        
+
         $connectionParams = [
             'dbname' => $environmentManager->getDbDatabase(),
             'user' => $environmentManager->getDbUsername(),
@@ -73,7 +73,7 @@ class Conexao
 }
 
 // Função global para compatibilidade
-if (!function_exists('conectarDB')) {
+if (! function_exists('conectarDB')) {
     function conectarDB(InputInterface $input, OutputInterface $output, bool $showException = true, ?EnvironmentManager $environmentManager = null): \Doctrine\DBAL\Connection
     {
         return \Manzano\CvdwCli\Inc\Conexao::conectarDB($input, $output, $showException, $environmentManager);

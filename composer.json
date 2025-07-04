@@ -1,6 +1,5 @@
 {
   "name": "manzano/cvdw-cli",
-  "version": "2.0.0",
   "description": "Suite para buscar dados da API do CV CVDW para um banco de dados",
   "homepage": "https://manzano.me",
   "license": "MIT",

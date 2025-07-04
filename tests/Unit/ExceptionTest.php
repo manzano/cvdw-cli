@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Manzano\CvdwCli\Inc\CvdwException;
+use PHPUnit\Framework\TestCase;
 
 class ExceptionTest extends TestCase
 {
@@ -20,7 +20,7 @@ class ExceptionTest extends TestCase
     {
         $message = "Erro customizado do CVDW";
         $exception = new CvdwException($message);
-        
+
         $this->assertEquals($message, $exception->getMessage());
         $this->assertEquals(0, $exception->getCode());
     }
@@ -30,7 +30,7 @@ class ExceptionTest extends TestCase
         $message = "Erro com código";
         $code = 500;
         $exception = new CvdwException($message, $code);
-        
+
         $this->assertEquals($message, $exception->getMessage());
         $this->assertEquals($code, $exception->getCode());
     }
@@ -40,9 +40,9 @@ class ExceptionTest extends TestCase
         $previousException = new \Exception("Erro anterior");
         $message = "Erro com exceção anterior";
         $code = 404;
-        
+
         $exception = new CvdwException($message, $code, $previousException);
-        
+
         $this->assertEquals($message, $exception->getMessage());
         $this->assertEquals($code, $exception->getCode());
         $this->assertSame($previousException, $exception->getPrevious());
@@ -52,7 +52,7 @@ class ExceptionTest extends TestCase
     {
         $this->expectException(CvdwException::class);
         $this->expectExceptionMessage("Exceção lançada");
-        
+
         throw new CvdwException("Exceção lançada");
     }
 
@@ -66,4 +66,4 @@ class ExceptionTest extends TestCase
             $this->assertEquals(0, $e->getCode());
         }
     }
-} 
+}

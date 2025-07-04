@@ -1,80 +1,14 @@
 {
     "installed": [
         {
-            "name": "codeception/codeception",
-            "direct-dependency": true,
-            "homepage": "https://codeception.com/",
-            "source": "https://github.com/Codeception/Codeception/tree/5.1.2",
-            "version": "5.1.2",
-            "latest": "5.3.2",
-            "latest-status": "semver-safe-update",
-            "description": "BDD-style testing framework",
-            "abandoned": false
-        },
-        {
-            "name": "codeception/module-asserts",
-            "direct-dependency": true,
-            "homepage": "https://codeception.com/",
-            "source": "https://github.com/Codeception/module-asserts/tree/3.0.0",
-            "version": "3.0.0",
-            "latest": "3.2.0",
-            "latest-status": "semver-safe-update",
-            "description": "Codeception module containing various assertions",
-            "abandoned": false
-        },
-        {
-            "name": "codeception/module-rest",
-            "direct-dependency": true,
-            "homepage": "https://codeception.com/",
-            "source": "https://github.com/Codeception/module-rest/tree/3.4.0",
-            "version": "3.4.0",
-            "latest": "3.4.1",
-            "latest-status": "semver-safe-update",
-            "description": "REST module for Codeception",
-            "abandoned": false
-        },
-        {
-            "name": "codeception/module-symfony",
-            "direct-dependency": true,
-            "homepage": "https://codeception.com/",
-            "source": "https://github.com/Codeception/module-symfony/tree/3.5.0",
-            "version": "3.5.0",
-            "latest": "3.6.0",
-            "latest-status": "semver-safe-update",
-            "description": "Codeception module for Symfony framework",
-            "abandoned": false
-        },
-        {
             "name": "doctrine/dbal",
             "direct-dependency": true,
             "homepage": "https://www.doctrine-project.org/projects/dbal.html",
-            "source": "https://github.com/doctrine/dbal/tree/3.9.4",
-            "version": "3.9.4",
+            "source": "https://github.com/doctrine/dbal/tree/3.9.5",
+            "version": "3.9.5",
             "latest": "4.2.4",
             "latest-status": "update-possible",
             "description": "Powerful PHP database abstraction layer (DBAL) with many features for database schema introspection and management.",
-            "abandoned": false
-        },
-        {
-            "name": "doctrine/doctrine-migrations-bundle",
-            "direct-dependency": true,
-            "homepage": "https://www.doctrine-project.org",
-            "source": "https://github.com/doctrine/DoctrineMigrationsBundle/tree/3.4.1",
-            "version": "3.4.1",
-            "latest": "3.4.2",
-            "latest-status": "semver-safe-update",
-            "description": "Symfony DoctrineMigrationsBundle",
-            "abandoned": false
-        },
-        {
-            "name": "doctrine/migrations",
-            "direct-dependency": true,
-            "homepage": "https://www.doctrine-project.org/projects/migrations.html",
-            "source": "https://github.com/doctrine/migrations/tree/3.8.2",
-            "version": "3.8.2",
-            "latest": "3.9.1",
-            "latest-status": "semver-safe-update",
-            "description": "PHP Doctrine Migrations project offer additional functionality on top of the database abstraction layer (DBAL) for versioning your database schema and easily deploying changes to it. It is a very easy to use and a powerful tool.",
             "abandoned": false
         },
         {
@@ -89,33 +23,11 @@
             "abandoned": false
         },
         {
-            "name": "friendsofphp/php-cs-fixer",
-            "direct-dependency": true,
-            "homepage": null,
-            "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.75.0",
-            "version": "v3.75.0",
-            "latest": "v3.76.0",
-            "latest-status": "semver-safe-update",
-            "description": "A tool to automatically fix PHP code style",
-            "abandoned": false
-        },
-        {
-            "name": "monolog/monolog",
-            "direct-dependency": true,
-            "homepage": "https://github.com/Seldaek/monolog",
-            "source": "https://github.com/Seldaek/monolog/tree/3.8.1",
-            "version": "3.8.1",
-            "latest": "3.9.0",
-            "latest-status": "semver-safe-update",
-            "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
-            "abandoned": false
-        },
-        {
             "name": "phpstan/phpstan",
             "direct-dependency": true,
             "homepage": null,
             "source": "https://github.com/phpstan/phpstan-src",
-            "version": "1.12.17",
+            "version": "1.12.27",
             "latest": "2.1.17",
             "latest-status": "update-possible",
             "description": "PHPStan - PHP Static Analysis Tool",
@@ -136,30 +48,19 @@
             "name": "phpunit/phpunit",
             "direct-dependency": true,
             "homepage": "https://phpunit.de/",
-            "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.7",
-            "version": "11.5.7",
+            "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.25",
+            "version": "11.5.25",
             "latest": "12.2.5",
             "latest-status": "update-possible",
             "description": "The PHP Unit Testing framework.",
             "abandoned": false
         },
         {
-            "name": "sentry/sentry",
-            "direct-dependency": true,
-            "homepage": "http://sentry.io",
-            "source": "https://github.com/getsentry/sentry-php/tree/4.10.0",
-            "version": "4.10.0",
-            "latest": "4.14.1",
-            "latest-status": "semver-safe-update",
-            "description": "PHP SDK for Sentry (http://sentry.io)",
-            "abandoned": false
-        },
-        {
             "name": "symfony/console",
             "direct-dependency": true,
             "homepage": "https://symfony.com",
-            "source": "https://github.com/symfony/console/tree/v6.4.17",
-            "version": "v6.4.17",
+            "source": "https://github.com/symfony/console/tree/v6.4.23",
+            "version": "v6.4.23",
             "latest": "v7.3.1",
             "latest-status": "update-possible",
             "description": "Eases the creation of beautiful and testable command line interfaces",
@@ -188,22 +89,11 @@
             "abandoned": false
         },
         {
-            "name": "symfony/process",
-            "direct-dependency": true,
-            "homepage": "https://symfony.com",
-            "source": "https://github.com/symfony/process/tree/v7.2.0",
-            "version": "v7.2.0",
-            "latest": "v7.3.0",
-            "latest-status": "semver-safe-update",
-            "description": "Executes commands in sub-processes",
-            "abandoned": false
-        },
-        {
             "name": "symfony/yaml",
             "direct-dependency": true,
             "homepage": "https://symfony.com",
-            "source": "https://github.com/symfony/yaml/tree/v6.4.18",
-            "version": "v6.4.18",
+            "source": "https://github.com/symfony/yaml/tree/v6.4.23",
+            "version": "v6.4.23",
             "latest": "v7.3.1",
             "latest-status": "update-possible",
             "description": "Loads and dumps YAML files",

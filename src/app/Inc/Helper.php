@@ -4,10 +4,10 @@ namespace Manzano\CvdwCli\Inc;
 
 class Helper
 {
-    const ANO_MINIMO = 1900;
-    const ANO_MAXIMO = 2100;
-    const FORMATO_DATA_HORA = 'Y-m-d\TH:i:s';
-    const FORMATO_DATA = 'Y-m-d';
+    public const ANO_MINIMO = 1900;
+    public const ANO_MAXIMO = 2100;
+    public const FORMATO_DATA_HORA = 'Y-m-d\TH:i:s';
+    public const FORMATO_DATA = 'Y-m-d';
 
     public static function validarData($dataInput): bool
     {
@@ -75,21 +75,21 @@ class Helper
 }
 
 // Manter compatibilidade com código existente
-if (!function_exists('validarData')) {
+if (! function_exists('validarData')) {
     function validarData($dataInput): bool
     {
         return \Manzano\CvdwCli\Inc\Helper::validarData($dataInput);
     }
 }
 
-if (!function_exists('substituirPorAsteriscos')) {
+if (! function_exists('substituirPorAsteriscos')) {
     function substituirPorAsteriscos($texto): ?string
     {
         return \Manzano\CvdwCli\Inc\Helper::substituirPorAsteriscos($texto);
     }
 }
 
-if (!function_exists('substituirPorHash')) {
+if (! function_exists('substituirPorHash')) {
     function substituirPorHash($texto, int $caracteres = 32): ?string
     {
         return \Manzano\CvdwCli\Inc\Helper::substituirPorHash($texto, $caracteres);

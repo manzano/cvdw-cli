@@ -58,7 +58,7 @@ class LogCvdwTest extends TestCase
     public function testLogComMensagemSimples(): void
     {
         $mensagem = "Teste de log simples";
-        
+
         // Testar se não há exceção ao escrever log
         $this->expectNotToPerformAssertions();
         $this->log->escreverLog($mensagem);
@@ -67,7 +67,7 @@ class LogCvdwTest extends TestCase
     public function testLogComMensagemComplexa(): void
     {
         $mensagem = "Teste de log com dados: " . json_encode(['teste' => 'valor']);
-        
+
         // Testar se não há exceção ao escrever log complexo
         $this->expectNotToPerformAssertions();
         $this->log->escreverLog($mensagem);

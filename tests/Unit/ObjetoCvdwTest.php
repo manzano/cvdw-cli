@@ -117,14 +117,14 @@ class ObjetoCvdwTest extends TestCase
     {
         $dadosTabela = [
             'coluna1' => ['valor1', 'valor2'],
-            'coluna2' => ['valor3', 'valor4']
+            'coluna2' => ['valor3', 'valor4'],
         ];
         $tipo = $this->objeto->identificarTipoDeDados($dadosTabela);
         $this->assertEquals('TABELA', $tipo, "Deve identificar como TABELA");
 
         $dadosComponente = [
             'nome' => 'Teste',
-            'valor' => '123'
+            'valor' => '123',
         ];
         $tipo = $this->objeto->identificarTipoDeDados($dadosComponente);
         $this->assertEquals('COMPONENTE', $tipo, "Deve identificar como COMPONENTE");

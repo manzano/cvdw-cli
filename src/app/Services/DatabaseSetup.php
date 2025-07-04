@@ -360,8 +360,8 @@ class DatabaseSetup
                 }
 
                 // Verificar se tem o mesmo tamanho
-                if(isset($especificacao['tamanho'])){
-                    if($colunasTabela[$colunaBanco]->getLength() < $especificacao['tamanho']){
+                if (isset($especificacao['tamanho'])) {
+                    if ($colunasTabela[$colunaBanco]->getLength() < $especificacao['tamanho']) {
                         $logs[] = "A coluna {$especificacao['nomeTratado']} tem tamanho diferente (" . $especificacao['tamanho'] . " > " . $colunasTabela[$colunaBanco]->getLength() . ")";
                         $diferencas['change'][] = $especificacao;
                     }
