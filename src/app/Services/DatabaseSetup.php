@@ -517,10 +517,6 @@ class DatabaseSetup
 
         $this->verificarEngines();
 
-        // ATENÇÃO: O PHPStan acusa 'if condition is always true' aqui, mas é falso positivo.
-        // Isso ocorre porque a função pode ser chamada tanto de modo interativo (array vazio) quanto automático (array preenchido).
-        // O código está correto e funcional, o aviso pode ser ignorado.
-        /** @phpstan-ignore-next-line */
         if ($diferencasBanco === null || empty($diferencasBanco)) {
             $console = new CvdwSymfonyStyle($this->input, $this->output);
             $console->text([
@@ -546,7 +542,6 @@ class DatabaseSetup
                 $console->text('');
             }
 
-            /** @phpstan-ignore-next-line */
             if ($apagarDados) {
                 if ($console->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
                     $tabelasLimpar = array_fill_keys(array_keys($diferencasBanco), []);
@@ -633,7 +628,6 @@ class DatabaseSetup
         $colunas = $this->retornarObjetoRequisicoes();
         // Se ele existir, apagamos
         $seExiste = $this->verificarSeTabelaExiste($tabela);
-        /** @phpstan-ignore-next-line */
         if ($seExiste) {
             $this->conn->executeQuery("DROP TABLE {$tabela}");
         }
