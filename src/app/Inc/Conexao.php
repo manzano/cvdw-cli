@@ -25,7 +25,7 @@ class Conexao
             'user' => $environmentManager->getDbUsername(),
             'password' => $environmentManager->getDbPassword(),
             'host' => $environmentManager->getDbHost(),
-            'port' => $environmentManager->getDbPort(),
+            'port' => (int) $environmentManager->getDbPort(),
             'driver' => $environmentManager->getDbConnection(),
         ];
 

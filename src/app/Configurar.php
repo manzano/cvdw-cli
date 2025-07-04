@@ -141,9 +141,6 @@ class Configurar extends Command
         if ($this->variaveisAmbiente['configurar'] === 'Sair (CTRL+C)') {
             $console->text(['Até mais!', '']);
             exit;
-
-            return Command::SUCCESS;
-
         }
         $console->text(['Você escolheu: ' . $this->variaveisAmbiente['configurar'], '']);
 
@@ -433,7 +430,7 @@ class Configurar extends Command
             'user' => $this->variaveisAmbiente['db_username'],
             'password' => $this->variaveisAmbiente['db_password'],
             'host' => $this->variaveisAmbiente['db_host'],
-            'port' => $this->variaveisAmbiente['db_port'],
+            'port' => (int) $this->variaveisAmbiente['db_port'],
             'driver' => $this->variaveisAmbiente['banco'],
         ];
 
@@ -582,7 +579,7 @@ class Configurar extends Command
         }
 
         if (! $validarObjetos) {
-            $console->note('Como o Banco ou Api não está acessível, não posso validar os objetos.');
+            $console->note('Como Banco ou Api não está acessível, não posso validar os objetos.');
         } else {
 
             $console->text(['', 'Agora vamos validar os objetos...', '']);

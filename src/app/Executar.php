@@ -117,12 +117,6 @@ class Executar extends Command
             if (empty($this->apartir)) {
                 throw new CvdwException('Data de referência não pode estar vazia.');
             }
-            if (! validarData($this->apartir)) {
-                throw new CvdwException(
-                    'Data de referência informada (' . $this->apartir . ') é inválida. ' .
-                    'Use o formato Y-m-d ou Y-m-d\TH:i:s'
-                );
-            }
         }
 
         if ($input->getOption('max-pag')) {
@@ -131,6 +125,13 @@ class Executar extends Command
 
         $console = new CvdwSymfonyStyle($input, $output, $this->logObjeto);
         $console->title('Executando o CVDW-CLI');
+
+        if ($input->getOption('apartir')) {
+            if (! \Manzano\CvdwCli\Inc\Helper::validarData($this->apartir)) {
+                $console->error('Data de início inválida!');
+                return Command::FAILURE;
+            }
+        }
 
         $versaoCVDW = $this->ambientesObj->retornarVersao();
         $console->text('Versão: ' . $versaoCVDW);
@@ -250,13 +251,6 @@ class Executar extends Command
             $console->info('## Função: ' . __FUNCTION__);
         }
         
-        // Função validarData não existe, vamos criar uma implementação simples
-        if (!function_exists('validarData')) {
-            function validarData($data) {
-                return !empty($data);
-            }
-        }
-
         if ($this->input->getOption('salvarlog')) {
             $console->text(['Salvando o Log em: ' . $this->arquivoLog]);
             $console->text(['']);
