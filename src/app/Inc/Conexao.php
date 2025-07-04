@@ -1,65 +1,81 @@
 <?php
 
+namespace Manzano\CvdwCli\Inc;
+
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
-
 use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
+use Manzano\CvdwCli\Services\EnvironmentManager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-function conectarDB(InputInterface $input, OutputInterface $output, $showException = true) : \Doctrine\DBAL\Connection
+class Conexao
 {
-    $io = new CvdwSymfonyStyle($input, $output);
-    $config = new Configuration();
-    $connectionParams = array(
-        'dbname' => $_ENV['DB_DATABASE'],
-        'user' => $_ENV['DB_USERNAME'],
-        'password' => $_ENV['DB_PASSWORD'],
-        'host' => $_ENV['DB_HOST'],
-        'port' => $_ENV['DB_PORT'],
-        'driver' => $_ENV['DB_CONNECTION'],
-    );
-
-
-    if ($_ENV['DB_CONNECTION'] == 'pdo_pgsql') {
-        $connectionParams['driverOptions'] = array(
-            \PDO::ATTR_PERSISTENT => true,
-        );
-        $connectionParams['options'] = array(
-            'search_path' => $_ENV['DB_SCHEMA']
-        );
-    }
-
-    // Se connectionParams tiver algum dado vazio, retorna o objecto \Doctrine\DBAL\Connection
-    foreach ($connectionParams as $key => $value) {
-        if ($value == null) {
-            return DriverManager::getConnection($connectionParams, $config);
+    public static function conectarDB(InputInterface $input, OutputInterface $output, bool $showException = true, ?EnvironmentManager $environmentManager = null): \Doctrine\DBAL\Connection
+    {
+        $console = new CvdwSymfonyStyle($input, $output);
+        $config = new Configuration();
+        
+        if ($environmentManager === null) {
+            $environmentManager = new EnvironmentManager();
         }
-    }
+        
+        $connectionParams = [
+            'dbname' => $environmentManager->getDbDatabase(),
+            'user' => $environmentManager->getDbUsername(),
+            'password' => $environmentManager->getDbPassword(),
+            'host' => $environmentManager->getDbHost(),
+            'port' => $environmentManager->getDbPort(),
+            'driver' => $environmentManager->getDbConnection(),
+        ];
 
-    // Se connectionParams tiver algum dado vasío, com excecao de driver, na
-    $conn = DriverManager::getConnection($connectionParams, $config);
-    
-    if (!$conn->isConnected()) {
-        try {
-            $conn->connect();
+        if ($environmentManager->getDbConnection() == 'pdo_pgsql') {
+            $connectionParams['driverOptions'] = [
+                \PDO::ATTR_PERSISTENT => true,
+            ];
+            $connectionParams['options'] = [
+                'search_path' => $environmentManager->getDbSchema(),
+            ];
+        }
 
-            if($_ENV['DB_CONNECTION'] == 'pdo_pgsql'){
-                if(isset($_ENV['DB_SCHEMA']) && $_ENV['DB_SCHEMA'] <> ""){
-                    $schema = $_ENV['DB_SCHEMA'];
-                } else {
-                    $schema = 'public';
+        foreach ($connectionParams as $_ => $value) {
+            if ($value == null) {
+                return DriverManager::getConnection($connectionParams, $config);
+            }
+        }
+
+        $conn = DriverManager::getConnection($connectionParams, $config);
+
+        if (! $conn->isConnected()) {
+            try {
+                $conn->connect();
+
+                if ($environmentManager->getDbConnection() == 'pdo_pgsql') {
+                    if ($environmentManager->has('DB_SCHEMA') && $environmentManager->getDbSchema() <> "") {
+                        $schema = $environmentManager->getDbSchema();
+                    } else {
+                        $schema = 'public';
+                    }
+                    $conn->executeQuery("CREATE SCHEMA IF NOT EXISTS $schema");
+                    $conn->executeQuery("SET search_path TO $schema");
                 }
-                $conn->executeQuery("CREATE SCHEMA IF NOT EXISTS $schema");
-                $conn->executeQuery("SET search_path TO $schema");
-            }
 
-        } catch (\Exception $e) {
-            if($showException){
-                $io->error('Não foi possível conectar ao banco de dados. (3)');
-                $io->error('Encontrei esse erro: ' . $e->getMessage());
+            } catch (\Exception $e) {
+                if ($showException) {
+                    $console->error('Não foi possível conectar ao banco de dados. (3)');
+                    $console->error('Encontrei esse erro: ' . $e->getMessage());
+                }
             }
         }
+
+        return $conn;
     }
-    return $conn;
+}
+
+// Função global para compatibilidade
+if (!function_exists('conectarDB')) {
+    function conectarDB(InputInterface $input, OutputInterface $output, bool $showException = true, ?EnvironmentManager $environmentManager = null): \Doctrine\DBAL\Connection
+    {
+        return \Manzano\CvdwCli\Inc\Conexao::conectarDB($input, $output, $showException, $environmentManager);
+    }
 }

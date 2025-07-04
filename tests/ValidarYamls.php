@@ -1,10 +1,11 @@
 <?php
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Yaml\Exception\ParseException;
-use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Yaml;
 
 // Configuração do logger
 $log = new Logger('cvdw');
@@ -27,7 +28,7 @@ function printWarning($message)
 }
 
 // URLs e arquivos locais
-// Arquivo remoto 
+// Arquivo remoto
 $url = 'https://docs-dev.cvcrm.com.br/yaml-files/cvdw.yaml';
 // Arquivo local atualizado
 $local = __DIR__ . '/../src/app/Brain/cvdw2.yaml';
@@ -35,13 +36,13 @@ $local = __DIR__ . '/../src/app/Brain/cvdw2.yaml';
 $local2 = __DIR__ . '/../src/app/Brain/cvdw.yaml';
 
 try {
-    // Baixa o arquivo remoto 
+    // Baixa o arquivo remoto
     $down = file_put_contents($local, file_get_contents($url));
     if ($down) {
         printSuccess("✅ Arquivo baixado com sucesso!");
         $log->info("Arquivo baixado com sucesso: $local");
     } elseif (file_exists($local) && file_get_contents($local) === file_get_contents($url)) {
-        printSuccess("✅ Arquivo já baixado com sucesso!");    
+        printSuccess("✅ Arquivo já baixado com sucesso!");
         $log->info("Arquivo já baixado com sucesso: $local");
     } else {
         $message = "Erro ao baixar o arquivo!";
@@ -74,11 +75,11 @@ function array_diff_recursive($array1, $array2)
     $difference = [];
 
     foreach ($array1 as $key => $value) {
-        if (!array_key_exists($key, $array2)) {
+        if (! array_key_exists($key, $array2)) {
             $difference[$key] = $value;
         } elseif (is_array($value)) {
             $new_diff = array_diff_recursive($value, $array2[$key]);
-            if (!empty($new_diff)) {
+            if (! empty($new_diff)) {
                 $difference[$key] = $new_diff;
             }
         } elseif ($value !== $array2[$key]) {
@@ -90,7 +91,8 @@ function array_diff_recursive($array1, $array2)
 }
 
 // Função para exibir as diferenças
-function displayDifferences($differences) {
+function displayDifferences($differences)
+{
     foreach ($differences as $key => $value) {
         if (is_array($value)) {
             echo "\033[33m$key:\033[0m\n"; // Amarelo

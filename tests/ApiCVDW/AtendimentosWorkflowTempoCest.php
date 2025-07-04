@@ -1,10 +1,10 @@
 <?php
+
 namespace Tests\ApiCVDW;
 
-use Tests\Support\ApiTester;
-use Tests\ApiCVDW\Common;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Assert;
+use Tests\Support\ApiTester;
 
 class AtendimentosWorkflowTempoCest extends Common
 {
@@ -14,7 +14,7 @@ class AtendimentosWorkflowTempoCest extends Common
             'ativo' => 'string',
             'total_de_registros' => 'integer',
             'total_de_paginas' => 'integer',
-            'dados' => 'array'
+            'dados' => 'array',
     ];
 
     protected int $tempoAceitavel = 5;
@@ -44,7 +44,7 @@ class AtendimentosWorkflowTempoCest extends Common
         $resposta = $i->grabResponse();
         $data = json_decode($resposta, true);
 
-        if (!isset($data['dados']) || !is_array($data['dados'])) {
+        if (! isset($data['dados']) || ! is_array($data['dados'])) {
             Assert::fail("O campo 'dados' não foi encontrado ou não é um array.");
         }
 
@@ -70,7 +70,7 @@ class AtendimentosWorkflowTempoCest extends Common
         $getContent = [
             'pagina' => 1,
             'registros_por_pagina' => $qtdRegistrosEsperado,
-            'a_partir_data_referencia' => urlencode($this->dataReferenciaTeste)
+            'a_partir_data_referencia' => urlencode($this->dataReferenciaTeste),
         ];
 
         $i->sendGet('/atendimentos/workflow/tempo', $getContent);
@@ -87,7 +87,7 @@ class AtendimentosWorkflowTempoCest extends Common
         $resposta = $i->grabResponse();
         $data = json_decode($resposta, true);
 
-        if (!isset($data['dados']) || !is_array($data['dados'])) {
+        if (! isset($data['dados']) || ! is_array($data['dados'])) {
             Assert::fail("O campo 'dados' não foi encontrado ou não é um array.");
         }
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/app/Inc/Conexao.php';
 
 use Manzano\CvdwCli\Configurar;
 use Manzano\CvdwCli\Opcoes;

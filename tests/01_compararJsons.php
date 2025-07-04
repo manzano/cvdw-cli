@@ -81,21 +81,23 @@ foreach ($files as $file) {
     */
 
     foreach ($dadosCVDW as $keyDW => $tipoDW) {
-        
+
         // Se for um array (Subtabela)
-        if(is_array($tipoDW)){
-            
+        if (is_array($tipoDW)) {
+
             $subDadosCVDW = $tipoDW;
-            foreach($subDadosCVDW as $subKeyDW => $subTipoDW) {
+            foreach ($subDadosCVDW as $subKeyDW => $subTipoDW) {
                 // Verifica se a chave do DW existe em objeto
                 if (isset($dadosObjeto[$keyDW][$subKeyDW])) {
                     if ($dadosObjeto[$keyDW][$subKeyDW] != $subTipoDW) {
-                        if($dadosObjeto[$keyDW][$subKeyDW] == 'datetime' && $subTipoDW == 'string'){
+                        if ($dadosObjeto[$keyDW][$subKeyDW] == 'datetime' && $subTipoDW == 'string') {
                             $report['igual'][$path][$keyDW][$subKeyDW] = $subTipoDW." = ".$dadosObjeto[$keyDW][$subKeyDW];
+
                             continue;
                         }
-                        if($dadosObjeto[$keyDW][$subKeyDW] == 'text' && $tipoDW == 'string'){
+                        if ($dadosObjeto[$keyDW][$subKeyDW] == 'text' && $tipoDW == 'string') {
                             $report['igual'][$path][$keyDW][$subKeyDW] = $subTipoDW." = ".$dadosObjeto[$keyDW][$subKeyDW];
+
                             continue;
                         }
                         $report['alterar'][$path][$keyDW][$subKeyDW] = $subTipoDW." para ".$dadosObjeto[$keyDW][$subKeyDW];
@@ -106,23 +108,26 @@ foreach ($files as $file) {
                     $report['adicionar'][$path][$keyDW][$subKeyDW] = $subTipoDW;
                 }
             }
+
             continue;
         }
         // Verifica se a chave do DW existe em objeto
         if (isset($dadosObjeto[$keyDW])) {
             if ($dadosObjeto[$keyDW] != $tipoDW) {
-                if($dadosObjeto[$keyDW] == 'datetime' && $tipoDW == 'string'){
+                if ($dadosObjeto[$keyDW] == 'datetime' && $tipoDW == 'string') {
                     $report['igual'][$path][$keyDW] = $tipoDW." = ".$dadosObjeto[$keyDW];
+
                     continue;
                 }
-                if($dadosObjeto[$keyDW] == 'text' && $tipoDW == 'string'){
+                if ($dadosObjeto[$keyDW] == 'text' && $tipoDW == 'string') {
                     $report['igual'][$path][$keyDW] = $tipoDW." = ".$dadosObjeto[$keyDW];
+
                     continue;
                 }
-                if(!is_array($dadosObjeto[$keyDW])){
+                if (! is_array($dadosObjeto[$keyDW])) {
                     $report['alterar'][$path][$keyDW] = $tipoDW." para ".$dadosObjeto[$keyDW];
                 }
-                
+
             } else {
                 $report['igual'][$path][$keyDW] = $tipoDW." = ".$dadosObjeto[$keyDW];
             }
@@ -133,13 +138,13 @@ foreach ($files as $file) {
     }
 
     foreach ($dadosObjeto as $keyObjeto => $tipoObjeto) {
-        if (!isset($dadosCVDW[$keyObjeto])) {
+        if (! isset($dadosCVDW[$keyObjeto])) {
             $report['remover'][$path][$keyObjeto] = $tipoObjeto;
         }
 
-        if(isset($dadosCVDW[$keyObjeto]) && is_array($dadosCVDW[$keyObjeto])){
-            foreach($dadosCVDW[$keyObjeto] as $keyObjeto2 => $tipoObjeto2){
-                if (!isset($dadosObjeto[$keyObjeto][$keyObjeto2])) {
+        if (isset($dadosCVDW[$keyObjeto]) && is_array($dadosCVDW[$keyObjeto])) {
+            foreach ($dadosCVDW[$keyObjeto] as $keyObjeto2 => $tipoObjeto2) {
+                if (! isset($dadosObjeto[$keyObjeto][$keyObjeto2])) {
                     $report['remover'][$path][$keyObjeto][$keyObjeto2] = $tipoObjeto2;
                 }
             }
@@ -158,11 +163,11 @@ $filename = "tests/cvdw/analise.csv";
 $output = fopen($filename, 'w');
 fputcsv($output, ['Path', 'Situação', 'Campo', 'Tipo CVDW', 'Tipo Objeto']);
 
-foreach($report as $situacao => $paths) {
-    foreach($paths as $path => $campos) {
-        foreach($campos as $campo => $tipos) {
-            if(is_array($tipos)){
-                foreach($tipos as $campo2 => $tipo) {
+foreach ($report as $situacao => $paths) {
+    foreach ($paths as $path => $campos) {
+        foreach ($campos as $campo => $tipos) {
+            if (is_array($tipos)) {
+                foreach ($tipos as $campo2 => $tipo) {
                     fputcsv($output, [$path, $situacao, $campo."->".$campo2, $tipo]);
                 }
             } else {

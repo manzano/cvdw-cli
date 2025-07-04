@@ -36,20 +36,27 @@ echo "✅ Composer encontrado."
 echo ""
 echo "🚀 Iniciando a instalação do CVDW-CLI."
 
-REPO_DIR="$HOME/cvdw-cli"
-
-# Verificar se o repositório já existe
-if [ -d "$REPO_DIR" ]; then
-  echo "🔄 O CVDW-CLI já está instalado em $REPO_DIR - Iniciando o Update."
+# Verificar se já estamos dentro do repositório CVDW-CLI
+if [ -f "src/cvdw" ] && [ -f "composer.json" ]; then
+  echo "🔄 Executando update do CVDW-CLI no diretório atual."
   echo ""
-  cd "$REPO_DIR"
-  execute "git checkout main"
-  execute "git pull"
+  REPO_DIR="$(pwd)"
 else
-  echo "📦 Clonando o repositório para $REPO_DIR..."
-  execute "git clone https://github.com/manzano/cvdw-cli.git $REPO_DIR"
-  cd "$REPO_DIR"
-  execute "git checkout main"
+  REPO_DIR="$HOME/cvdw-cli"
+  
+  # Verificar se o repositório já existe
+  if [ -d "$REPO_DIR" ]; then
+    echo "🔄 O CVDW-CLI já está instalado em $REPO_DIR - Iniciando o Update."
+    echo ""
+    cd "$REPO_DIR"
+    execute "git checkout main"
+    execute "git pull"
+  else
+    echo "📦 Clonando o repositório para $REPO_DIR..."
+    execute "git clone https://github.com/manzano/cvdw-cli.git $REPO_DIR"
+    cd "$REPO_DIR"
+    execute "git checkout main"
+  fi
 fi
 
 chmod u+w $REPO_DIR

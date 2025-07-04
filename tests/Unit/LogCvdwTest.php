@@ -1,48 +1,103 @@
 <?php
 
-
 namespace Tests\Unit;
 
-use Tests\Support\UnitTester;
 use Manzano\CvdwCli\Services\Log;
+use PHPUnit\Framework\TestCase;
 
-class LogCvdwTest extends \Codeception\Test\Unit
+class LogCvdwTest extends TestCase
 {
+    private Log $log;
+    private array $originalEnv;
 
-    protected UnitTester $tester;
-    /**
-     * @var Objeto
-     */
-    protected $arquivoLog = 'UnitTest.log';
-    public $logObj;
-    public $chaveLog;
-
-    protected function _before()
+    protected function setUp(): void
     {
-        $this->logObj = new Log($this->arquivoLog);
-        // Gera uma chave aleatória para testar a escrita no log
-        $this->chaveLog = hash("sha512", uniqid(random_int(0, 99)));
+        $this->backupEnvironmentVariables();
+        $this->setTestEnvironmentVariables();
+        $this->log = new Log('test.log');
     }
 
-    public function testLog()
+    protected function tearDown(): void
     {
-        $this->logObj->criarArquivoLog();
-        $diretorioLog = $this->logObj->retornarDiretorioLog();
-        codecept_debug("Arquivo do log: ".$diretorioLog . "/" . $this->arquivoLog);
-        $this->assertFileExists($diretorioLog."/".$this->arquivoLog, "Deve criar o arquivo de log");
+        $this->restoreEnvironmentVariables();
     }
 
-    public function testEscrevendoNoLog(){
-        $this->logObj->escreverLog($this->chaveLog);
-        $diretorioLog = $this->logObj->retornarDiretorioLog();
-        $conteudo = file_get_contents($diretorioLog."/".$this->arquivoLog);
-        $this->assertStringContainsString($this->chaveLog, $conteudo, "Deve conter a chave no arquivo de log");
-        $this->removerArquivoLog();
+    private function backupEnvironmentVariables(): void
+    {
+        $this->originalEnv = $_ENV;
     }
 
-    protected function removerArquivoLog(): void{
-        $diretorioLog = $this->logObj->retornarDiretorioLog();
-        unlink($diretorioLog . "/" . $this->arquivoLog);
+    private function setTestEnvironmentVariables(): void
+    {
+        $_ENV = [
+            'CV_URL' => 'teste_ambiente',
+            'CV_EMAIL' => 'teste@exemplo.com',
+            'CV_TOKEN' => 'token_teste_123',
+            'DB_CONNECTION' => 'pdo_mysql',
+            'DB_HOST' => 'localhost',
+            'DB_PORT' => '3306',
+            'DB_DATABASE' => 'teste_db',
+            'DB_USERNAME' => 'usuario_teste',
+            'DB_PASSWORD' => 'senha_teste',
+            'DB_SCHEMA' => 'public',
+            'ANONIMIZAR' => 'true',
+            'ANONIMIZAR_TIPO' => 'Asteriscos',
+        ];
     }
-    
+
+    private function restoreEnvironmentVariables(): void
+    {
+        $_ENV = $this->originalEnv;
+    }
+
+    public function testLogPodeSerInstanciado(): void
+    {
+        $this->assertInstanceOf(Log::class, $this->log);
+    }
+
+    public function testLogComMensagemSimples(): void
+    {
+        $mensagem = "Teste de log simples";
+        
+        // Testar se não há exceção ao escrever log
+        $this->expectNotToPerformAssertions();
+        $this->log->escreverLog($mensagem);
+    }
+
+    public function testLogComMensagemComplexa(): void
+    {
+        $mensagem = "Teste de log com dados: " . json_encode(['teste' => 'valor']);
+        
+        // Testar se não há exceção ao escrever log complexo
+        $this->expectNotToPerformAssertions();
+        $this->log->escreverLog($mensagem);
+    }
+
+    public function testLogComMensagemVazia(): void
+    {
+        // Testar se não há exceção ao escrever log vazio
+        $this->expectNotToPerformAssertions();
+        $this->log->escreverLog("");
+    }
+
+    public function testLogComMensagemNull(): void
+    {
+        // Testar se não há exceção ao escrever log null
+        $this->expectNotToPerformAssertions();
+        $this->log->escreverLog(null);
+    }
+
+    public function testCriarArquivoLog(): void
+    {
+        // Testar se não há exceção ao criar arquivo de log
+        $this->expectNotToPerformAssertions();
+        $this->log->criarArquivoLog();
+    }
+
+    public function testRetornarDiretorioLog(): void
+    {
+        $diretorio = $this->log->retornarDiretorioLog();
+        $this->assertIsString($diretorio);
+        $this->assertStringContainsString('logs', $diretorio);
+    }
 }

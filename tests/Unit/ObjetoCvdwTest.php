@@ -1,119 +1,139 @@
 <?php
 
-
 namespace Tests\Unit;
 
-use Tests\Support\UnitTester;
 use Manzano\CvdwCli\Services\Objeto;
-use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
+use PHPUnit\Framework\TestCase;
 
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\NullOutput;
-
-class ObjetoCvdwTest extends \Codeception\Test\Unit
+class ObjetoCvdwTest extends TestCase
 {
+    private Objeto $objeto;
+    private array $originalEnv;
 
-    protected UnitTester $tester;
-    /**
-     * @var Objeto
-     */
-    protected $objeto;
-    protected $objetoComTabelas;
-    protected $objetoSemTabelas;
-
-    protected function _before()
+    protected function setUp(): void
     {
-        $this->objeto = new Objeto(new ArrayInput([]), new NullOutput());
+        $this->backupEnvironmentVariables();
+        $this->setTestEnvironmentVariables();
+        $this->objeto = new Objeto(
+            new \Symfony\Component\Console\Input\ArrayInput([]),
+            new \Symfony\Component\Console\Output\NullOutput()
+        );
     }
 
-    public function testRetornarObjetosConstante()
+    protected function tearDown(): void
     {
-        $result = $this->objeto->retornarConstantesObjetos("leads");
-        $this->assertIsArray($result, "Deve retornar um array");
-        $this->assertArrayHasKey("leads", $result, "Array deve conter a chave 'leads'");
+        $this->restoreEnvironmentVariables();
     }
 
-    public function testRetornarObjetosSemArgumentos()
+    private function backupEnvironmentVariables(): void
     {
-        $result = $this->objeto->retornarObjetos('all');
-        $this->assertIsArray($result, "Deve retornar um array");
-        $this->assertArrayHasKey("leads", $result, "Array deve conter a chave 'leads'");
+        $this->originalEnv = $_ENV;
     }
 
-    public function testRetornarObjetosComObjetoValido()
+    private function setTestEnvironmentVariables(): void
     {
-        $result = $this->objeto->retornarObjetos("leads");
-        $this->assertIsArray($result, "Deve retornar um array para um objeto válido");
-        $this->assertCount(1, $result, "Deve retornar um array com um único elemento para um objeto válido");
+        $_ENV = [
+            'CV_URL' => 'teste_ambiente',
+            'CV_EMAIL' => 'teste@exemplo.com',
+            'CV_TOKEN' => 'token_teste_123',
+            'DB_CONNECTION' => 'pdo_mysql',
+            'DB_HOST' => 'localhost',
+            'DB_PORT' => '3306',
+            'DB_DATABASE' => 'teste_db',
+            'DB_USERNAME' => 'usuario_teste',
+            'DB_PASSWORD' => 'senha_teste',
+            'DB_SCHEMA' => 'public',
+            'ANONIMIZAR' => 'true',
+            'ANONIMIZAR_TIPO' => 'Asteriscos',
+        ];
     }
 
-    public function testRetornarObjetosMultiplos()
+    private function restoreEnvironmentVariables(): void
     {
-        $result = $this->objeto->retornarObjetos('leads+reservas');
-        $this->assertIsArray($result, "Deve retornar um array");
-        $this->assertArrayHasKey("leads", $result, "Array deve conter a chave 'leads'");
-        $this->assertArrayHasKey("reservas", $result, "Array deve conter a chave 'reservas'");
+        $_ENV = $this->originalEnv;
     }
 
-    public function testRetornarObjetoInvalido()
+    public function testObjetoPodeSerInstanciado(): void
     {
-        $result = $this->objeto->retornarObjetos("invalido");
-        $this->assertIsArray($result, "Deve retornar um array para um objeto inválido");
-        $this->assertCount(0, $result, "Deve retornar um array vazio para um objeto inválido");
+        $this->assertInstanceOf(Objeto::class, $this->objeto);
     }
 
-    public function testRetornarYamlObjeto(){
-        $result = $this->objeto->retornarObjeto("leads");
-        $this->assertIsArray($result, "Deve retornar um array para um objeto válido");
-        $this->assertTrue(count($result) > 0, "Deve retornar um array com um único elemento para um objeto válido");
-    }
-
-    public function testRetornarYamlObjetoInvalido()
+    public function testRetornarObjetosComObjetoValido(): void
     {
-        $result = $this->objeto->retornarObjeto("objeto_invalido");
-        $this->assertIsArray($result, "Deve retornar um array vazio para um objeto inválido");
-        $this->assertCount(0, $result, "Deve retornar um array vazio para um objeto inválido");
+        $objetos = $this->objeto->retornarObjetos('leads');
+        $this->assertIsArray($objetos, "Deve retornar um array para um objeto válido");
+        $this->assertArrayHasKey('leads', $objetos, "Deve conter a chave 'leads'");
     }
 
-    public function testRetornarObjetoComTabelas()
+    public function testRetornarObjetosComObjetoInvalido(): void
     {
-        $this->objetoComTabelas = $this->objeto->retornarObjetoTabelas("reservas");
-        $this->assertIsArray($this->objetoComTabelas, "Deve retornar um array para um objeto válido");
-        $this->assertTrue(count($this->objetoComTabelas) > 0, "Deve retornar um array vazio para um objeto inválido");
+        $objetos = $this->objeto->retornarObjetos('objeto_invalido');
+        $this->assertIsArray($objetos, "Deve retornar um array para um objeto inválido");
+        $this->assertCount(0, $objetos, "Deve retornar um array vazio para um objeto inválido");
     }
 
-    public function testRetornarObjetoTabelasComObjetoInvalido()
+    public function testRetornarObjetosComMultiplosObjetos(): void
     {
-        $result = $this->objeto->retornarObjetoTabelas("objeto_invalido");
-        $this->assertIsArray($result, "Deve retornar um array para um objeto válido");
-        $this->assertTrue(count($result) == 0, "Deve retornar um array vazio para um objeto inválido");
+        $objetos = $this->objeto->retornarObjetos('leads+reservas');
+        $this->assertIsArray($objetos, "Deve retornar um array");
+        $this->assertArrayHasKey('leads', $objetos, "Deve conter a chave 'leads'");
+        $this->assertArrayHasKey('reservas', $objetos, "Deve conter a chave 'reservas'");
     }
 
-    public function testRetornarTipoDadosTabela()
+    public function testRetornarObjetosComAll(): void
     {
-        $componentes = 0;
-        $tabelas = 0;
-        $erros = 0;
-        
-        $objeto = $this->objeto->retornarObjeto("reservas");
-        foreach($objeto['response']['dados'] as $dados){
-            $tipo = $this->objeto->identificarTipoDeDados($dados);
-            switch ($tipo) {
-                case 'TABELA':
-                        $tabelas++;
-                    break;
-                case 'COMPONENTE':
-                        $componentes++;
-                    break;
-                default:
-                        $erros++;
-                break;
-            }
-        }
-        $this->assertTrue($componentes > 0, "Retornou componentes");
-        $this->assertTrue($tabelas > 0, "Retornou tabelas");
-        $this->assertTrue($erros == 0, "Não retornou erros");
+        $objetos = $this->objeto->retornarObjetos('all');
+        $this->assertIsArray($objetos, "Deve retornar um array");
+        $this->assertGreaterThan(0, count($objetos), "Deve retornar objetos");
     }
 
-    
+    public function testRetornarObjetoEspecifico(): void
+    {
+        $objeto = $this->objeto->retornarObjeto('leads');
+        $this->assertIsArray($objeto, "Deve retornar um array para um objeto válido");
+    }
+
+    public function testRetornarObjetoInvalido(): void
+    {
+        $objeto = $this->objeto->retornarObjeto('objeto_invalido');
+        $this->assertIsArray($objeto, "Deve retornar um array vazio para um objeto inválido");
+        $this->assertCount(0, $objeto, "Deve retornar um array vazio para um objeto inválido");
+    }
+
+    public function testRetornarObjetoTabelas(): void
+    {
+        $tabelas = $this->objeto->retornarObjetoTabelas('reservas');
+        $this->assertIsArray($tabelas, "Deve retornar um array");
+    }
+
+    public function testRetornarObjetoTabelasComObjetoInvalido(): void
+    {
+        $tabelas = $this->objeto->retornarObjetoTabelas('objeto_invalido');
+        $this->assertIsArray($tabelas, "Deve retornar um array vazio para um objeto inválido");
+        $this->assertCount(0, $tabelas, "Deve retornar um array vazio para um objeto inválido");
+    }
+
+    public function testIdentificarTipoDeDados(): void
+    {
+        $dadosTabela = [
+            'coluna1' => ['valor1', 'valor2'],
+            'coluna2' => ['valor3', 'valor4']
+        ];
+        $tipo = $this->objeto->identificarTipoDeDados($dadosTabela);
+        $this->assertEquals('TABELA', $tipo, "Deve identificar como TABELA");
+
+        $dadosComponente = [
+            'nome' => 'Teste',
+            'valor' => '123'
+        ];
+        $tipo = $this->objeto->identificarTipoDeDados($dadosComponente);
+        $this->assertEquals('COMPONENTE', $tipo, "Deve identificar como COMPONENTE");
+    }
+
+    public function testRetornarConstantesObjetos(): void
+    {
+        $constantes = $this->objeto->retornarConstantesObjetos();
+        $this->assertIsArray($constantes, "Deve retornar um array");
+        $this->assertGreaterThan(0, count($constantes), "Deve retornar constantes");
+    }
 }

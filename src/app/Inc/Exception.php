@@ -1,4 +1,5 @@
 <?php
+
 namespace Manzano\CvdwCli\Inc;
 
 use RuntimeException;

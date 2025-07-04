@@ -2,10 +2,10 @@
 
 namespace Tests\ApiCVDW;
 
-use Tests\Support\ApiTester;
 use Codeception\Configuration;
 use Codeception\Scenario;
 use Manzano\CvdwCli\Services\Ambientes;
+use Tests\Support\ApiTester;
 
 /**
  * Class Common

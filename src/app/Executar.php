@@ -2,22 +2,20 @@
 
 namespace Manzano\CvdwCli;
 
+use Manzano\CvdwCli\Inc\CvdwException;
+use Manzano\CvdwCli\Services\Ambientes;
+use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
+use Manzano\CvdwCli\Services\Cvdw;
+use Manzano\CvdwCli\Services\Log;
+use Manzano\CvdwCli\Services\Objeto;
+use Manzano\CvdwCli\Services\RateLimit;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputOption;
-
-
-use Manzano\CvdwCli\Services\Objeto;
-use Manzano\CvdwCli\Services\Log;
-use Manzano\CvdwCli\Services\Cvdw;
-use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
-use Manzano\CvdwCli\Services\Ambientes;
-use Manzano\CvdwCli\Inc\CvdwException;
-use Manzano\CvdwCli\Services\RateLimit;
+use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'executar',
@@ -49,7 +47,7 @@ class Executar extends Command
     protected $maxpag = null;
     public array $execucoes = [];
 
-    const OPCAO_SAIR = 'Sair (CTRL+C)';
+    public const OPCAO_SAIR = 'Sair (CTRL+C)';
 
     protected function configure()
     {
@@ -116,142 +114,160 @@ class Executar extends Command
 
         if ($input->getOption('apartir')) {
             $this->apartir = trim($input->getOption('apartir'));
-            if (!validarData($this->apartir)) {
-                throw new CvdwException('Data de referência informada (' . $this->apartir . ') é inválida.');
+            if (empty($this->apartir)) {
+                throw new CvdwException('Data de referência não pode estar vazia.');
+            }
+            if (! validarData($this->apartir)) {
+                throw new CvdwException(
+                    'Data de referência informada (' . $this->apartir . ') é inválida. ' .
+                    'Use o formato Y-m-d ou Y-m-d\TH:i:s'
+                );
             }
         }
 
-        if($input->getOption('max-pag')){
+        if ($input->getOption('max-pag')) {
             $this->maxpag = $input->getOption('max-pag');
         }
 
-        $io = new CvdwSymfonyStyle($input, $output, $this->logObjeto);
-        $io->title('Executando o CVDW-CLI');
+        $console = new CvdwSymfonyStyle($input, $output, $this->logObjeto);
+        $console->title('Executando o CVDW-CLI');
 
         $versaoCVDW = $this->ambientesObj->retornarVersao();
-        $io->text('Versão: ' . $versaoCVDW);
+        $console->text('Versão: ' . $versaoCVDW);
 
         $ambienteAtivo = $this->ambientesObj->ambienteAtivo();
-        $io->text('Ambiente ativo: ' . $ambienteAtivo);
+        $console->text('Ambiente ativo: ' . $ambienteAtivo);
 
         // Verificar a versão do repositorio
         $cvdwObj = new Cvdw($input, $output, $this, $this->rateLimitObj);
-        $cvdwObj->alertarNovaVersao($versaoCVDW, $io);
+        $cvdwObj->alertarNovaVersao($versaoCVDW, $console);
 
         if ($input->getOption('salvarlog')) {
             $this->arquivoLog = 'log_' . date('Y-m-d_H-i-s') . '.log';
             $this->logObjeto = new Log($this->arquivoLog);
             $this->logObjeto->criarArquivoLog();
         }
-        
+
         $ignorar = ['DB_SCHEMA', 'ANONIMIZAR', 'ANONIMIZAR_TIPO'];
-        $this->ambientesObj->validarConfiguracao($io, $ignorar);
+        $this->ambientesObj->validarConfiguracao($console, $ignorar);
 
         $this->input = $input;
         $this->output = $output;
 
-        if($input->getOption('tempo-execucao')){
+        if ($input->getOption('tempo-execucao')) {
             $this->tempoLimiteExecucao = $input->getOption('tempo-execucao');
             $this->rateLimitObj->setTempoLimiteExecucao($this->tempoLimiteExecucao);
-            $io->text(['Tempo limite de execução: <fg=red>' . $this->tempoLimiteExecucao . ' segundo(s)</fg=red>']);
+            $console->text(['Tempo limite de execução: <fg=red>' . $this->tempoLimiteExecucao . ' segundo(s)</fg=red>']);
         }
 
         $inputObjeto = $input->getArgument('objeto');
         $inputDataReferencia = $input->getOption('ignorar-data-referencia');
         if ($inputObjeto) {
-            $this->executarObjeto($io, $inputObjeto, $inputDataReferencia);
+            $this->executarObjeto($console, $inputObjeto, $inputDataReferencia);
+
             return Command::SUCCESS;
         }
 
-        $this->variaveisAmbiente['executar'] = $io->choice('O que deseja fazer agora?', [
+        $this->variaveisAmbiente['executar'] = $console->choice('O que deseja fazer agora?', [
             'Listar todos os objetos disponíveis no CVDW-CLI',
             'Executar todos os objetos',
             'Executar um objeto especifico',
             'Configurar o CVDW-CLI',
-            $this::OPCAO_SAIR
+            $this::OPCAO_SAIR,
         ]);
 
         if ($this->variaveisAmbiente['executar'] === $this::OPCAO_SAIR) {
-            $io->text(['Até mais!', '']);
+            $console->text(['Até mais!', '']);
+
             return Command::SUCCESS;
         }
-        $io->text(['Você escolheu: ' . $this->variaveisAmbiente['executar'], '']);
+        $console->text(['Você escolheu: ' . $this->variaveisAmbiente['executar'], '']);
         $this->voltarProMenu = true;
 
         switch ($this->variaveisAmbiente['executar']) {
             case 'Listar todos os objetos disponíveis no CVDW-CLI':
-                $this->exibirObjetos($io);
+                $this->exibirObjetos($console);
+
                 break;
             case 'Executar todos os objetos':
-                $this->executarObjeto($io, 'all', $inputDataReferencia);
+                $this->executarObjeto($console, 'all', $inputDataReferencia);
+
                 break;
             case 'Executar um objeto especifico':
-                $this->executarObjetoOpcoes($io);
+                $this->executarObjetoOpcoes($console);
+
                 break;
             case 'Configurar o CVDW-CLI':
-                if ($io->confirm('Deseja configurar o CVDW-CLI?') == true) {
-                           $io->success('Configurando o CVDW-CLI...');
-                           $this->getApplication()->find('configurar')->run($input, $output);
-                     return Command::SUCCESS;
-                    }
+                if ($console->confirm('Deseja configurar o CVDW-CLI?') == true) {
+                    $console->success('Configurando o CVDW-CLI...');
+                    $this->getApplication()->find('configurar')->run($input, $output);
+
+                    return Command::SUCCESS;
+                }
+                // no break
             default:
                 $this->execute($this->input, $this->output);
+
                 break;
         }
 
         return Command::SUCCESS;
     }
 
-    protected function voltarProMenu($io)
+    protected function voltarProMenu($console): int
     {
         if ($this->voltarProMenu) {
-            if ($io->confirm('Vamos voltar pro menu anterior?', true)) {
+            if ($console->confirm('Vamos voltar pro menu anterior?', true)) {
                 $this->limparTela();
+
                 return $this->execute($this->input, $this->output);
             } else {
-                return 0;
+                return Command::SUCCESS;
             }
         }
+
+        return Command::SUCCESS;
     }
 
-    public function exibirObjetos($io)
+    public function exibirObjetos($console)
     {
 
         $objetos = new Objeto($this->input, $this->output);
         $objetosArray = $objetos->retornarObjetos('all');
-        $io->section('Objetos disponíveis: ');
+        $console->section('Objetos disponíveis: ');
         $table = new Table($this->output);
         $table->setHeaders(['Objeto', 'nome']);
         foreach ($objetosArray as $objeto => $dados) {
             $table->addRow([$objeto, $dados['nome']]);
         }
         $table->render();
-        $this->voltarProMenu($io);
+        $this->voltarProMenu($console);
     }
 
-    public function executarObjeto($io, $inputObjeto, $inputDataReferencia = false)
+    public function executarObjeto($console, $inputObjeto, $inputDataReferencia = false)
     {
-        if ($this->output->isDebug()) {
-            $io->info('## Função: ' . __FUNCTION__);
+        if ($this->output->isDebug() || $this->input->getOption('verbose')) {
+            $console->info('## Função: ' . __FUNCTION__);
         }
 
         if ($this->input->getOption('salvarlog')) {
-            $io->text(['Salvando o Log em: ' . $this->arquivoLog]);
-            $io->text(['']);
+            $console->text(['Salvando o Log em: ' . $this->arquivoLog]);
+            $console->text(['']);
         }
 
         if ($inputObjeto) {
             if ($inputObjeto == 'all') {
-                $io->text(['Executando todos os objetos...']);
+                $console->text(['Executando todos os objetos...']);
                 $objetos = new Objeto($this->input, $this->output);
                 $objetosArray = $objetos->retornarObjetos('all');
             } else {
                 $objetos = new Objeto($this->input, $this->output);
                 $objetosArray = $objetos->retornarObjetos($inputObjeto);
                 if (count($objetosArray) > 0) {
-                    $io->text(['Executando objeto: ' . $inputObjeto]);
+                    $console->text(['Executando objeto: ' . $inputObjeto]);
                 } else {
-                    $io->error('Objeto não encontrado.');
+                    $console->error('Objeto não encontrado.');
+
                     return Command::FAILURE;
                 }
             }
@@ -262,29 +278,30 @@ class Executar extends Command
 
             foreach ($objetosArray as $objeto => $dados) {
                 $objeto = $objetoObj->retornarObjeto($objeto);
-                $io->section($dados['nome']);
-                $io->text('Executando objeto: ' . $dados['nome'] . '');
-                
-                $cvdw->processar($objeto, $this->qtd, $io, $this->apartir, $inputDataReferencia, $this->logObjeto, $this->maxpag);
-                
+                $console->section($dados['nome']);
+                $console->text('Executando objeto: ' . $dados['nome'] . '');
+
+                $cvdw->processar($objeto, $this->qtd, $console, $this->apartir, $inputDataReferencia, $this->logObjeto, $this->maxpag);
+
             }
         } else {
-            $io->error('Objeto não especificado.');
+            $console->error('Objeto não especificado.');
         }
-        $this->voltarProMenu($io);
+        $this->voltarProMenu($console);
+
         return Command::SUCCESS;
     }
 
-    public function executarObjetoOpcoes($io)
+    public function executarObjetoOpcoes($console)
     {
         $objetos = new Objeto($this->input, $this->output);
         $objetosArray = $objetos->retornarObjetos('all');
-        $objetosOpcoes = array();
+        $objetosOpcoes = [];
         foreach ($objetosArray as $objeto => $dados) {
             $objetosOpcoes[] = $dados['nome'];
         }
-        $objetosOpcoes[] =  $this::OPCAO_SAIR;
-        $inputObjeto = $io->choice('Qual objeto deseja executar?', $objetosOpcoes);
+        $objetosOpcoes[] = $this::OPCAO_SAIR;
+        $inputObjeto = $console->choice('Qual objeto deseja executar?', $objetosOpcoes);
 
         foreach ($objetosArray as $objeto => $dados) {
             if ($dados['nome'] == $inputObjeto) {
@@ -298,7 +315,7 @@ class Executar extends Command
 
         $this->limparTela();
 
-        $this->executarObjeto($io, $inputObjeto);
+        $this->executarObjeto($console, $inputObjeto);
     }
 
     protected function limparTela(): void

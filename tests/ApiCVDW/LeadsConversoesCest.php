@@ -1,10 +1,10 @@
 <?php
+
 namespace Tests\ApiCVDW;
 
-use Tests\Support\ApiTester;
-use Tests\ApiCVDW\Common;
 use Codeception\Util\HttpCode;
 use PHPUnit\Framework\Assert;
+use Tests\Support\ApiTester;
 
 class LeadsConversoesCest extends Common
 {
@@ -13,7 +13,7 @@ class LeadsConversoesCest extends Common
             'registros' => 'integer',
             'total_de_registros' => 'integer',
             'total_de_paginas' => 'integer',
-            'dados' => 'array'
+            'dados' => 'array',
     ];
 
     protected int $tempoAceitavel = 5;
@@ -43,7 +43,7 @@ class LeadsConversoesCest extends Common
         $resposta = $i->grabResponse();
         $data = json_decode($resposta, true);
 
-        if (!isset($data['dados']) || !is_array($data['dados'])) {
+        if (! isset($data['dados']) || ! is_array($data['dados'])) {
             Assert::fail("O campo 'dados' não foi encontrado ou não é um array.");
         }
 
@@ -69,7 +69,7 @@ class LeadsConversoesCest extends Common
         $getContent = [
             'pagina' => 1,
             'registros_por_pagina' => $qtdRegistrosEsperado,
-            'a_partir_data_referencia' => urlencode($this->dataReferenciaTeste)
+            'a_partir_data_referencia' => urlencode($this->dataReferenciaTeste),
         ];
 
         $i->sendGet('/leads/conversoes', $getContent);
@@ -86,7 +86,7 @@ class LeadsConversoesCest extends Common
         $resposta = $i->grabResponse();
         $data = json_decode($resposta, true);
 
-        if (!isset($data['dados']) || !is_array($data['dados'])) {
+        if (! isset($data['dados']) || ! is_array($data['dados'])) {
             Assert::fail("O campo 'dados' não foi encontrado ou não é um array.");
         }
 

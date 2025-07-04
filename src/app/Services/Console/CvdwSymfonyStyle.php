@@ -2,13 +2,13 @@
 
 namespace Manzano\CvdwCli\Services\Console;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Manzano\CvdwCli\Services\Log;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Manzano\CvdwCli\Services\Log;
+use Symfony\Component\Console\Style\SymfonyStyle;
+
 class CvdwSymfonyStyle extends SymfonyStyle
 {
-
     protected $logObjeto = false;
     public InputInterface $input;
     public OutputInterface $output;
@@ -24,10 +24,10 @@ class CvdwSymfonyStyle extends SymfonyStyle
     public function text($message)
     {
         parent::text($message);
-        if($this->logObjeto){
+        if ($this->logObjeto) {
             // Se $message for um array, então fazemos um foreach para escrever cada mensagem no arquivo de log
-            if(is_array($message)){
-                foreach($message as $msg){
+            if (is_array($message)) {
+                foreach ($message as $msg) {
                     $this->logObjeto->escreverLog($msg);
                 }
             } else {
@@ -39,7 +39,7 @@ class CvdwSymfonyStyle extends SymfonyStyle
     public function error($message)
     {
         parent::error($message);
-        
+
         if ($this->logObjeto) {
             // Se $message for um array, então fazemos um foreach para escrever cada mensagem no arquivo de log
             if (is_array($message)) {

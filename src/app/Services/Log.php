@@ -1,9 +1,9 @@
 <?php
 
 namespace Manzano\CvdwCli\Services;
+
 class Log
 {
-
     protected $salvarLog = false;
     protected $arquivoLog = null;
     public function __construct($arquivoLog)
@@ -19,7 +19,7 @@ class Log
     {
         // Verifica se o diretório /log existe, caso contrário, tenta criá-lo
         $diretorioLog = $this->retornarDiretorioLog();
-        if (!file_exists($diretorioLog)) {
+        if (! file_exists($diretorioLog)) {
             mkdir($diretorioLog, 0777, true);
         }
         // Se o arquivo de log existir, remove
@@ -33,10 +33,10 @@ class Log
         $this->escreverLog($primeiraMensagem);
     }
 
-    public function escreverLog($mensagem) : void
+    public function escreverLog($mensagem): void
     {
         // Verifica se o arquivo de log foi criado
-        if($this->arquivoLog !== null){
+        if ($this->arquivoLog !== null) {
             $diretorioLog = $this->retornarDiretorioLog();
             // Tenta abrir o arquivo de log para escrita, criando-o se não existir
             // 'a' abre o arquivo para escrita e posiciona o ponteiro no final do arquivo
@@ -50,7 +50,7 @@ class Log
         }
     }
 
-    public function retornarDiretorioLog() : string
+    public function retornarDiretorioLog(): string
     {
         return __DIR__ . '/../../../logs';
     }

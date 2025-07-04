@@ -2,17 +2,15 @@
 
 namespace Manzano\CvdwCli\Services;
 
+require_once __DIR__ . '/../Inc/Conexao.php';
+
+use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressBar;
-
-use Manzano\CvdwCli\Inc\CvdwException;
-use Manzano\CvdwCli\Services\DatabaseSetup;
-use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
 
 class RateLimit
 {
-    protected CvdwSymfonyStyle $io;
+    protected CvdwSymfonyStyle $console;
     public InputInterface $input;
     public OutputInterface $output;
     public \Doctrine\DBAL\Connection $conn;
@@ -31,7 +29,7 @@ class RateLimit
         $this->input = $input;
         $this->output = $output;
         $this->executarObj = $executarObj;
-        $this->conn = conectarDB($this->input, $this->output);
+        $this->conn = \Manzano\CvdwCli\Inc\Conexao::conectarDB($this->input, $this->output);
     }
 
     public function inserirRequisicao($objeto): int
@@ -47,11 +45,12 @@ class RateLimit
             ->setParameter('objeto', $objeto);
         $queryBuilder->executeStatement();
         $this->idrequisicao = $this->conn->lastInsertId();
+
         return $this->idrequisicao;
 
     }
 
-    public function concluirRequisicao($idrequisicao, $dados_retorno_qtd = null, $header_resultado = null): void
+    public function concluirRequisicao($idrequisicao, $dadosRetornoQtd = null, $headerResultado = null): void
     {
         $queryBuilder = $this->conn->createQueryBuilder();
         $queryBuilder
@@ -60,8 +59,8 @@ class RateLimit
             ->set('dados_retorno_qtd', ':dados_retorno_qtd')
             ->set('header_resultado', ':header_resultado')
             ->where('idrequisicao = :idrequisicao')
-            ->setParameter('dados_retorno_qtd', $dados_retorno_qtd)
-            ->setParameter('header_resultado', $header_resultado)
+            ->setParameter('dados_retorno_qtd', $dadosRetornoQtd)
+            ->setParameter('header_resultado', $headerResultado)
             ->setParameter('idrequisicao', $idrequisicao);
         $queryBuilder->executeStatement();
     }
@@ -72,10 +71,10 @@ class RateLimit
                   FROM _requisicoes 
                   ORDER BY data_inicio DESC 
                   LIMIT 19,1";
-    
+
         $stmt = $this->conn->executeQuery($query);
         $result = $stmt->fetchOne();
-    
+
         return $result !== false ? (int) $result : null;
     }
 
@@ -93,42 +92,44 @@ class RateLimit
 
     public function removerRequisicoesAntigas($dias = 30): ?int
     {
-        $query = "SELECT TIMESTAMPDIFF(SECOND, data_inicio, NOW()) AS diferenca_segundos
-                  FROM _requisicoes 
-                  ORDER BY data_inicio DESC 
-                  LIMIT 19,1";
-    
+        $query = "DELETE FROM _requisicoes 
+                  WHERE data_inicio < NOW() - INTERVAL $dias DAY";
+
         $stmt = $this->conn->executeQuery($query);
-        $result = $stmt->fetchOne();
-    
-        return $result !== false ? (int) $result : null;
+        $result = $stmt->rowCount();
+
+        return $result;
     }
 
     public function iniciarExecucao(): float
     {
         $this->inicioExecucao = time();
+
         return $this->inicioExecucao;
     }
-    
+
     public function tempoDeExecucao(): float
     {
         $tempoAtual = time();
+
         return $tempoAtual - $this->inicioExecucao;
     }
 
-    public function validarTempoExecucao(){
-        if($this->tempoLimiteExecucao){
+    public function validarTempoExecucao()
+    {
+        if ($this->tempoLimiteExecucao) {
             $tempoExecucao = $this->tempoDeExecucao();
-            if($tempoExecucao >= $this->tempoLimiteExecucao){
+            if ($tempoExecucao >= $this->tempoLimiteExecucao) {
 
-                $this->io = new CvdwSymfonyStyle($this->input, $this->output, $this->logObjeto);
-                $this->io->error("Tempo de execução excedido! Limite: {$this->tempoLimiteExecucao} segundos.");
+                $this->console = new CvdwSymfonyStyle($this->input, $this->output, $this->logObjeto);
+                $this->console->error("Tempo de execução excedido! Limite: {$this->tempoLimiteExecucao} segundos.");
                 exit;
             }
         }
     }
 
-    public function setTempoLimiteExecucao($tempoLimiteExecucao){
+    public function setTempoLimiteExecucao($tempoLimiteExecucao)
+    {
         $this->tempoLimiteExecucao = $tempoLimiteExecucao;
     }
 

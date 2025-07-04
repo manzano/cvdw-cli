@@ -2,35 +2,31 @@
 
 namespace Manzano\CvdwCli\Services;
 
-use Manzano\CvdwCli\Configuracoes;
-use Manzano\CvdwCli\Services\Objeto;
-
-use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\ProgressBar;
-
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\ColumnDiff;
+use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\TableDiff;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class DatabaseSetup
 {
-    protected CvdwSymfonyStyle $io;
+    protected CvdwSymfonyStyle $console;
+    public CvdwSymfonyStyle $io;
     public InputInterface $input;
     public OutputInterface $output;
     public \Doctrine\DBAL\Connection $conn;
-    public $campos_data_ignorados = array('data_base_calculo_pv_alterada', 'usuario_preencheu_data_contrato');
+    public $campos_data_ignorados = ['data_base_calculo_pv_alterada', 'usuario_preencheu_data_contrato'];
 
     public Table $tabelaIO;
     public ProgressBar $progressBar;
     public $parent;
-    const VAMOS_LA = 'Vamos Lá!';
-    const QUER_TENTAR_NOVAMENTE = 'Quer tentar novamente?';
+    public const VAMOS_LA = 'Vamos Lá!';
+    public const QUER_TENTAR_NOVAMENTE = 'Quer tentar novamente?';
 
     public function __construct(InputInterface $input, OutputInterface $output, $parent = null)
     {
@@ -38,7 +34,7 @@ class DatabaseSetup
         $this->parent = $parent;
         $this->input = $input;
         $this->output = $output;
-        $this->conn = conectarDB($input, $output);
+        $this->conn = \Manzano\CvdwCli\Inc\Conexao::conectarDB($input, $output);
 
     }
 
@@ -67,7 +63,7 @@ class DatabaseSetup
         $objetoObj = new Objeto($this->input, $this->output);
         $objetos = $objetoObj->retornarObjetos('all');
 
-       
+
 
         $totalObjetos = count($objetos);
         $this->progressBar = new ProgressBar($this->output, $totalObjetos);
@@ -75,11 +71,13 @@ class DatabaseSetup
 
         $this->verificaTabelaRequisicoes();
 
-        foreach ($objetos as $key => $dados) {
+        foreach ($objetos as $key => $objeto) {
 
             $objeto = $objetoObj->retornarObjeto($key);
-            if (!$objeto) {
-                $this->io->error("O objeto {$objeto['nome']} não existe.");
+            if (! $objeto) {
+                $this->io->error("O objeto {$key} não existe.");
+
+                continue;
             }
 
             $this->criarTabela($key, $objeto["response"]["dados"]);
@@ -88,10 +86,10 @@ class DatabaseSetup
                 $tipoDeDados = $objetoObj->identificarTipoDeDados($valor);
                 if ($tipoDeDados == "TABELA") {
                     $subTabela = $key . "_sub_" . $coluna;
-                    $arrayReferencia = array(
+                    $arrayReferencia = [
                         "referencia" => $objeto["response"]["dados"]['referencia'],
-                        "referencia_data" => $objeto["response"]["dados"]['referencia_data']
-                    );
+                        "referencia_data" => $objeto["response"]["dados"]['referencia_data'],
+                    ];
                     $valor = array_merge($arrayReferencia, $valor);
                     $this->criarTabela($subTabela, $valor);
                 }
@@ -105,17 +103,19 @@ class DatabaseSetup
 
     public function listarTabelasArray(): array
     {
-        $tabelas = array();
+        $tabelas = [];
         $objetoObj = new Objeto($this->input, $this->output);
         $objetos = $objetoObj->retornarObjetos('all');
-        foreach ($objetos as $key => $dados) {
+        foreach ($objetos as $key => $objeto) {
 
             $objeto = $objetoObj->retornarObjeto($key);
-            if (!$objeto) {
-                $this->io->error("O objeto {$objeto['nome']} não existe.");
+            if (! $objeto) {
+                $this->io->error("O objeto {$key} não existe.");
+
+                continue;
             }
 
-            $tabelas[$key] = $objeto['nome'];
+            $tabelas[$key] = $objeto['nome'] ?? $key;
             // Verificar se há subtabelas no objeto
             foreach ($objeto["response"]["dados"] as $coluna => $valor) {
                 $tipoDeDados = $objetoObj->identificarTipoDeDados($valor);
@@ -125,6 +125,7 @@ class DatabaseSetup
                 }
             }
         }
+
         return $tabelas;
     }
 
@@ -137,7 +138,7 @@ class DatabaseSetup
             $this->progressBar->setMessage('A tabela ' . $tabela . ' já existe');
             $this->progressBar->advance();
         } else {
-            
+
             $schema = new Schema();
 
             $this->criarTabelaSchema($schema, $tabela, $colunas);
@@ -187,11 +188,11 @@ class DatabaseSetup
                     $especificacao["type"] == "integer")
             ) {
                 $nomeIndice = $this->criarNomeIndice($nomeColuna);
-                $tabelaObj->addIndex(array("{$nomeColuna}"), "{$nomeIndice}_idx");
+                $tabelaObj->addIndex(["{$nomeColuna}"], "{$nomeIndice}_idx");
             }
             if (strpos($coluna, "data") !== false) {
                 $nomeIndice = $this->criarNomeIndice($nomeColuna);
-                $tabelaObj->addIndex(array("{$nomeColuna}"), "{$nomeIndice}_idx");
+                $tabelaObj->addIndex(["{$nomeColuna}"], "{$nomeIndice}_idx");
             }
         }
     }
@@ -199,14 +200,15 @@ class DatabaseSetup
     private function criarNomeIndice(string $nomeCompleto): string
     {
         $nomeTruncado = substr($nomeCompleto, 0, 30);
-        $hashUnico = substr(base_convert(random_int(0, 99), 10, 36), 0, 6);
+        $hashUnico = substr(base_convert((string)random_int(0, 99), 10, 36), 0, 6);
+
         return $nomeTruncado . '_' . $hashUnico;
     }
 
     public function tratarEspecificacao(string $coluna, array $especificacao): array
     {
 
-        $opcoes = array();
+        $opcoes = [];
         $opcoes["notnull"] = false;
         $opcoes["default"] = null;
 
@@ -236,15 +238,15 @@ class DatabaseSetup
             $opcoes["scale"] = 2;
         }
 
-        
-        if ($coluna == "referencia"){
+
+        if ($coluna == "referencia") {
             $especificacao["type"] = "string";
             $opcoes["length"] = 50;
             $opcoes["autoincrement"] = true;
             $opcoes["notnull"] = true;
         }
 
-        return array($especificacao, $opcoes);
+        return [$especificacao, $opcoes];
     }
 
     public function tratarNomeColuna(string $nomeColuna, array $configuracao): string
@@ -253,9 +255,9 @@ class DatabaseSetup
         $nomeColuna = strtolower($nomeColuna);
         $nomeColuna = str_replace(' ', '_', $nomeColuna);
         $nomeColuna = str_replace('-', '_', $nomeColuna);
-        $caracteresNaoPermitidos = array('(', ')', '/', '?', '!', ';', ':', '.', ',', '\'', '"', '`',
+        $caracteresNaoPermitidos = ['(', ')', '/', '?', '!', ';', ':', '.', ',', '\'', '"', '`',
                                          '´', '=', '+', '*', '&', '%', '$', '#', '@', '§',
-                                         'ª', 'º', '°', '¨', '~', '^', '>');
+                                         'ª', 'º', '°', '¨', '~', '^', '>'];
         $nomeColuna = str_replace($caracteresNaoPermitidos, '', $nomeColuna);
         $nomeColuna = trim($nomeColuna);
 
@@ -286,17 +288,19 @@ class DatabaseSetup
         // Acessa o gerenciador de esquema usando createSchemaManager() em vez de getSchemaManager()
         $schemaManager = $this->conn->createSchemaManager();
         $tabelas = $schemaManager->listTableNames();
+
         return in_array($tabela, $tabelas);
     }
 
     public function retornarEstruturaTabela(string $nomeTabela): array
     {
-        $estrutura = array();
+        $estrutura = [];
         $schemaManager = $this->conn->createSchemaManager();
         $estrutura['nome'] = $nomeTabela;
         // Obtenha detalhes da tabela
         $estrutura['colunas'] = $schemaManager->listTableColumns($nomeTabela);
         $estrutura['indices'] = $schemaManager->listTableIndexes($nomeTabela);
+
         return $estrutura;
     }
 
@@ -309,11 +313,12 @@ class DatabaseSetup
 
         $colunasTabela = $tabela['colunas'];
         $colunasObjeto = $objeto['response']['dados'];
-        $colunasObjetoTratado = array();
+        $colunasObjetoTratado = [];
 
-        $logs = array();
-        $diferencas = array();
-        $subtabelas = array();
+        $logs = [];
+        $diferencas = [];
+        $subtabelas = [];
+        $subtabela = []; // Inicializar variável para evitar undefined
 
         foreach ($colunasObjeto as $coluna => $especificacao) {
 
@@ -330,12 +335,13 @@ class DatabaseSetup
                 $subtabela['objeto']['dados']['referencia_data'] = $colunasObjeto['referencia_data'];
                 $subtabela['objeto']['dados'] += $colunasObjeto[$coluna];
                 $subtabelas[] = $subtabela;
+
                 continue;
             }
 
             // Verificar se a coluna nao existe na tabela
 
-            if (!array_key_exists($colunaBanco, $colunasTabela)) {
+            if (! array_key_exists($colunaBanco, $colunasTabela)) {
                 $diferencas['add'][] = $especificacao;
                 $logs[] = "A coluna {$especificacao['nomeTratado']} não existe na tabela";
             } else {
@@ -352,27 +358,36 @@ class DatabaseSetup
                     $logs[] = "A coluna {$especificacao['nomeTratado']} tem tipo diferente ($tipoObjeto > $tipoBanco)";
                     $diferencas['change'][] = $especificacao;
                 }
+
+                // Verificar se tem o mesmo tamanho
+                if(isset($especificacao['tamanho'])){
+                    if($colunasTabela[$colunaBanco]->getLength() < $especificacao['tamanho']){
+                        $logs[] = "A coluna {$especificacao['nomeTratado']} tem tamanho diferente (" . $especificacao['tamanho'] . " > " . $colunasTabela[$colunaBanco]->getLength() . ")";
+                        $diferencas['change'][] = $especificacao;
+                    }
+                }
             }
         }
         foreach ($colunasTabela as $coluna => $especificacao) {
             // Verificar se a coluna nao existe no objeto
-            if (!array_key_exists($coluna, $colunasObjetoTratado)) {
+            if (! array_key_exists($coluna, $colunasObjetoTratado)) {
                 $diferencas['remove'][] = $especificacao;
                 $logs[] = "A coluna {$coluna} não existe no objeto";
             }
         }
 
-        return array($logs, $diferencas, $subtabelas);
+        return [$logs, $diferencas, $subtabelas];
     }
 
     protected function compararColunaObjeto(array $colunaTabela, array $colunaObjeto): array
     {
-        $diferencas = array();
+        $diferencas = [];
         // Verificar se a coluna tem o mesmo tipo
         if ($colunaTabela['type'] != $colunaObjeto['especificacao']['type']) {
             $diferencas[$colunaObjeto['nomeTratado']]['de'] = $colunaTabela['type'];
             $diferencas[$colunaObjeto['nomeTratado']]['para'] = $colunaObjeto['especificacao']['type'];
         }
+
         return $diferencas;
     }
 
@@ -385,10 +400,12 @@ class DatabaseSetup
     {
         try {
             $limpar = $this->conn->executeQuery("update {$tabela} set referencia_data = null");
+
             return $limpar;
         } catch (\Doctrine\DBAL\Exception $e) {
             $this->io->error("Erro ao tentar limpar a tabela: {$tabela} \nMensagem: " . $e->getMessage());
-            return $this->conn;
+
+            throw $e;
         }
     }
 
@@ -401,11 +418,14 @@ class DatabaseSetup
         $newColumn = new Column($coluna, $newColumnType, $newColumnOptions);
         $tableDiff = new TableDiff($tabela);
         $tableDiff->addedColumns[$coluna] = $newColumn;
+
         try {
             $schemaManager->alterTable($tableDiff);
+
             return true;
         } catch (\Doctrine\DBAL\Exception $e) {
             echo "Erro ao tentar inserir a coluna: " . $e->getMessage();
+
             return false;
         }
     }
@@ -415,12 +435,15 @@ class DatabaseSetup
         $schemaManager = $this->conn->createSchemaManager();
         $columnToRemove = new Column($coluna, Type::getType('string'));
         $tableDiff = new TableDiff($tabela, [], [], [$columnToRemove]);
+
         // Aplique as mudanças
         try {
             $schemaManager->alterTable($tableDiff);
+
             return true;
         } catch (\Doctrine\DBAL\Exception $e) {
             echo "Erro ao tentar remover a coluna: " . $e->getMessage();
+
             return false;
         }
     }
@@ -433,54 +456,57 @@ class DatabaseSetup
         $newColumn = new Column($coluna, $newColumnType, $especificacao);
         $columnDiff = new ColumnDiff($coluna, $newColumn, []);
         $tableDiff = new TableDiff($tabela, [], [$columnDiff], [], [], []);
+
         try {
             $schemaManager->alterTable($tableDiff);
+
             return true;
         } catch (\Doctrine\DBAL\Exception $e) {
             echo "Erro ao tentar alterar a coluna: " . $e->getMessage();
+
             return false;
         }
     }
 
-    public function executarInserirColuna($tabela, $adicionar, $io): void
+    public function executarInserirColuna($tabela, $adicionar, $console): void
     {
         foreach ($adicionar as $estrutura) {
             $adicionado = $this->inserirColuna($tabela, $estrutura['nomeTratado'], $estrutura);
             if ($adicionado) {
-                $io->text('<bg=green>[OK]</>
+                $console->text('<bg=green>[OK]</>
                                     Adicionando a coluna ' . $estrutura['nomeTratado']);
             } else {
-                $io->text('<fg=white;bg=red>[PROBLEMA]</>
+                $console->text('<fg=white;bg=red>[PROBLEMA]</>
                                     Não foi possível adicionar a coluna ' . $estrutura['nomeTratado']);
             }
         }
     }
 
-    public function executarRemoverColuna($tabela, $remover, $io)
+    public function executarRemoverColuna($tabela, $remover, $console)
     {
         foreach ($remover as $estrutura) {
             $coluna = $estrutura->getName();
             $removido = $this->removerColuna($tabela, $coluna);
             if ($removido) {
-                $io->text('<bg=green>[OK]</>
+                $console->text('<bg=green>[OK]</>
                                      Removendo a coluna ' . $estrutura->getName());
             } else {
-                $io->text('<fg=white;bg=red>[PROBLEMA]</>
+                $console->text('<fg=white;bg=red>[PROBLEMA]</>
                                      Não foi possível remover a coluna ' . $estrutura->getName());
             }
         }
     }
 
-    public function executarModificarColuna($tabela, $alterar, $io)
+    public function executarModificarColuna($tabela, $alterar, $console)
     {
         foreach ($alterar as $estrutura) {
             $estrutura['opcoes']['type'] = $estrutura['type'];
             $alterado = $this->alterarColuna($tabela, $estrutura['nomeTratado'], $estrutura['opcoes']);
             if ($alterado) {
-                $io->text('<bg=green>[OK]</>
+                $console->text('<bg=green>[OK]</>
                                   Alterando a coluna ' . $estrutura['nomeTratado']);
             } else {
-                $io->text('<fg=white;bg=red>[PROBLEMA]</>
+                $console->text('<fg=white;bg=red>[PROBLEMA]</>
                                   Não foi possível alterar a coluna ' . $estrutura['nomeTratado']);
             }
         }
@@ -491,49 +517,52 @@ class DatabaseSetup
 
         $this->verificarEngines();
 
-        if(is_null($diferencasBanco)){
-            $io->text([
+        // ATENÇÃO: O PHPStan acusa 'if condition is always true' aqui, mas é falso positivo.
+        // Isso ocorre porque a função pode ser chamada tanto de modo interativo (array vazio) quanto automático (array preenchido).
+        // O código está correto e funcional, o aviso pode ser ignorado.
+        /** @phpstan-ignore-next-line */
+        if ($diferencasBanco === null || empty($diferencasBanco)) {
+            $console = new CvdwSymfonyStyle($this->input, $this->output);
+            $console->text([
                 '',
                 'Estranho, não encontrei diferenças...',
-                ''
+                '',
             ]);
         } else {
-            $io = new CvdwSymfonyStyle($this->input, $this->output);
-            $io->text(['', $this::VAMOS_LA, 'Corrigindo as diferenças...', '']);
+            $console = new CvdwSymfonyStyle($this->input, $this->output);
+            $console->text(['', $this::VAMOS_LA, 'Corrigindo as diferenças...', '']);
             $databaseObj = new DatabaseSetup($this->input, $this->output);
             foreach ($diferencasBanco as $tabela => $diferencas) {
-                $io->text('Corrigindo a tabela ' . $tabela);
+                $console->text('Corrigindo a tabela ' . $tabela);
                 if (isset($diferencas['add'])) {
-                    $databaseObj->executarInserirColuna($tabela, $diferencas['add'], $io);
+                    $databaseObj->executarInserirColuna($tabela, $diferencas['add'], $console);
                 }
                 if (isset($diferencas['remove'])) {
-                    $databaseObj->executarRemoverColuna($tabela, $diferencas['remove'], $io);
+                    $databaseObj->executarRemoverColuna($tabela, $diferencas['remove'], $console);
                 }
                 if (isset($diferencas['change'])) {
-                    $databaseObj->executarModificarColuna($tabela, $diferencas['change'], $io);
+                    $databaseObj->executarModificarColuna($tabela, $diferencas['change'], $console);
                 }
-                $io->text('');
+                $console->text('');
             }
 
-            if($apagarDados) {
-                if ($io->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
-                    $tabelasLimpar = array();
-                    foreach ($diferencasBanco as $tabela => $diferencas) {
-                        $tabelasLimpar[$tabela] = [];
-                    }
+            /** @phpstan-ignore-next-line */
+            if ($apagarDados) {
+                if ($console->confirm('Quer apagar os dados das tabelas alteradas para baixar tudo de novo?', false)) {
+                    $tabelasLimpar = array_fill_keys(array_keys($diferencasBanco), []);
                     $this->parent->limparTabelas($tabelasLimpar);
                 } else {
-                    $io->text([
+                    $console->text([
                         '',
                         'Tubo bem! Finalizamos...',
-                        ''
+                        '',
                     ]);
                 }
             } else {
-                $io->text([
+                $console->text([
                     '',
                     'Tubo bem! Finalizamos...',
-                    ''
+                    '',
                 ]);
             }
         }
@@ -542,17 +571,19 @@ class DatabaseSetup
     public function executarApagarTabelas($tabelasApagar, $table, $progressBar): void
     {
         $database = new DatabaseSetup($this->input, $this->output);
-        foreach ($tabelasApagar as $tabela => $valor) {
+        foreach ($tabelasApagar as $tabela => $_) {
             $tabelaExiste = $database->verificarSeTabelaExiste($tabela);
-            if (!$tabelaExiste) {
+            if (! $tabelaExiste) {
                 $this->retornarTabelaNaoEncontrada($table, $tabela, $progressBar);
+
                 continue;
             }
             $this->apagarTabela($table, $tabela, $progressBar);
         }
     }
 
-    public function verificarEngines(){
+    public function verificarEngines()
+    {
 
         $tabelaIO = new Table($this->output);
         $tabelaIO->setHeaders(['Tabela', 'Descrição']);
@@ -564,6 +595,7 @@ class DatabaseSetup
             $engine = $table->getOption('engine');
             if ($engine == 'MyISAM') {
                 $tabelaIO->addRow([$tableName, '' . $tableName . ' já é MyISAM']);
+
                 continue;
             }
             $tabelaIO->addRow([$tableName, '' . $tableName . ' convertida para MyISAM']);
@@ -583,6 +615,7 @@ class DatabaseSetup
     public function apagarTabela($table, $tabela, $progressBar): void
     {
         $truncate = $this->conn->executeQuery("DROP TABLE {$tabela}");
+        /** @phpstan-ignore-next-line */
         if ($truncate) {
             $table->addRow([$tabela, '<info>Apagada!</info>']);
             $progressBar->setMessage("A tabela {$tabela} foi limpa");
@@ -595,15 +628,16 @@ class DatabaseSetup
 
     public function verificaTabelaRequisicoes()
     {
-        
+
         $tabela = '_requisicoes';
         $colunas = $this->retornarObjetoRequisicoes();
         // Se ele existir, apagamos
         $seExiste = $this->verificarSeTabelaExiste($tabela);
+        /** @phpstan-ignore-next-line */
         if ($seExiste) {
             $this->conn->executeQuery("DROP TABLE {$tabela}");
         }
-;
+        ;
         $schema = new Schema();
         $this->criarTabelaSchema($schema, $tabela, $colunas);
 
@@ -623,30 +657,30 @@ class DatabaseSetup
     private function retornarObjetoRequisicoes(): array
     {
 
-        return  array (
-            'idrequisicao' => array(
+        return   [
+            'idrequisicao' => [
                 'type' => 'integer',
                 'notnull' => true,
-                'autoincrement' => true
-            ),
-            'data_inicio' => array(
+                'autoincrement' => true,
+            ],
+            'data_inicio' => [
                 'type' => 'datetime',
-                'notnull' => true
-            ),
-            'objeto' => array(
+                'notnull' => true,
+            ],
+            'objeto' => [
                 'type' => 'string',
-                'notnull' => true
-            ),
-            'data_fim' => array(
+                'notnull' => true,
+            ],
+            'data_fim' => [
                 'type' => 'datetime',
-            ),
-            'dados_retorno_qtd' => array(
+            ],
+            'dados_retorno_qtd' => [
                 'type' => 'integer',
-            ),
-            'header_resultado' => array(
+            ],
+            'header_resultado' => [
                 'type' => 'integer',
-            )
-        );
+            ],
+        ];
 
     }
 

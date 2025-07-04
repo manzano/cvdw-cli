@@ -29,7 +29,11 @@
     "codeception/module-rest": "^3.3",
     "codeception/module-phpbrowser": "^3.0",
     "codeception/module-asserts": "*",
-    "codeception/module-symfony": "^3.3"
+    "codeception/module-symfony": "^3.3",
+    "phpstan/phpstan-symfony": "^1.4",
+    "enlightn/security-checker": "^1.11",
+    "friendsofphp/php-cs-fixer": "^3.75",
+    "phpmd/phpmd": "^2.15"
   },
   "autoload": {
     "psr-4": {
