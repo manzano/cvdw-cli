@@ -220,22 +220,31 @@ class AmbientesRefatoradoTest extends TestCase
     {
         // Limpar CV_URL
         $_ENV['CV_URL'] = '';
-        
+
         // Mock do console
         $console = $this->createMock(\Manzano\CvdwCli\Services\Console\CvdwSymfonyStyle::class);
         $console->method('text')->willReturn(null);
         $console->method('confirm')->willReturn(false);
-        
+
         // Criar um parent fake com métodos necessários
-        $parent = new class {
+        $parent = new class () {
             public $voltarProMenu = false;
-            public function voltarProMenu() { return null; }
-            public function limparTela() { return null; }
-            public function configurarCV() { return null; }
+            public function voltarProMenu()
+            {
+                return null;
+            }
+            public function limparTela()
+            {
+                return null;
+            }
+            public function configurarCV()
+            {
+                return null;
+            }
         };
-        
+
         $ambientes = new Ambientes(null, $parent);
-        
+
         $this->expectNotToPerformAssertions();
         $ambientes->verificarAmbientePadrao($console);
     }

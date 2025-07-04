@@ -129,6 +129,7 @@ class Executar extends Command
         if ($input->getOption('apartir')) {
             if (! \Manzano\CvdwCli\Inc\Helper::validarData($this->apartir)) {
                 $console->error('Data de início inválida!');
+
                 return Command::FAILURE;
             }
         }
@@ -250,7 +251,7 @@ class Executar extends Command
         if ($this->output->isDebug() || $this->input->getOption('verbose')) {
             $console->info('## Função: ' . __FUNCTION__);
         }
-        
+
         if ($this->input->getOption('salvarlog')) {
             $console->text(['Salvando o Log em: ' . $this->arquivoLog]);
             $console->text(['']);

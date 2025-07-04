@@ -275,7 +275,7 @@ class EnvironmentManagerTest extends TestCase
     {
         // Limpar variáveis de ambiente
         $_ENV = [];
-        
+
         $envManager = new EnvironmentManager();
         // Como o ambiente pode estar configurado, apenas garantir que retorna string
         $this->assertIsString($envManager->getCvUrl());
