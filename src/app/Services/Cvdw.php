@@ -510,6 +510,9 @@ class Cvdw
             $tipoLinha = $objetoObj->identificarTipoDeDados($valor);
 
             if (isset($linha->$coluna) && $tipoLinha !== "TABELA") {
+                if (is_object($linha->$coluna) || is_array($linha->$coluna)) {
+                    $linha->$coluna = json_encode($linha->$coluna);
+                }
                 $linha->$coluna = trim($linha->$coluna);
                 if (strpos($coluna, "data") !== false) {
                     if ($linha->$coluna == "0000-00-00 00:00:00") {
