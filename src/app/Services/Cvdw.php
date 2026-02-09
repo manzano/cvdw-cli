@@ -363,6 +363,9 @@ class Cvdw
             $subTabelas = $this->retornarColunasTabelas($linha);
 
             foreach ($subTabelas as $subTabelaNome => $subTabelaLinhas) {
+                if (!isset($objeto["response"]["dados"][$subTabelaNome])) {
+                    continue;
+                }
                 // converter objeto em um array
                 foreach ($subTabelaLinhas as $subTabelaLinha) {
                     $subTabela = (array) $subTabelaLinha;
