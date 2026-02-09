@@ -208,9 +208,10 @@ class Cvdw
     protected function corrigeRetornoJson($resposta): object
     {
 
-        // Se resposta não for um objeto, retornar um objeto vazio
-        if (! is_object($resposta)) {
-            $resposta = (object) [];
+        // Se resposta não for um stdClass, converter para stdClass
+        // Isso evita o erro "Creation of dynamic property" no PHP 8.2+
+        if (! ($resposta instanceof \stdClass)) {
+            $resposta = new \stdClass();
         }
 
         // Se nao tiver a chave página, adicionar
