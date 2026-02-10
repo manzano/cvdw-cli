@@ -6,7 +6,7 @@ class Helper
 {
     public const ANO_MINIMO = 1900;
     public const ANO_MAXIMO = 2100;
-    public const FORMATO_DATA_HORA = 'Y-m-d\TH:i:s';
+    public const FORMATO_DATA_HORA = 'Y-m-d H:i:s';
     public const FORMATO_DATA = 'Y-m-d';
 
     public static function validarData($dataInput): bool
@@ -14,9 +14,12 @@ class Helper
         if (empty($dataInput)) {
             return false;
         }
-
         // Validar formato com hora
+        // Se tiver o T, substituir por espaço para tentar validar
+        $dataInput = str_replace('T', ' ', $dataInput);
+        
         $data = \DateTime::createFromFormat(self::FORMATO_DATA_HORA, $dataInput);
+        
         if ($data && $data->format(self::FORMATO_DATA_HORA) === $dataInput) {
             // Validar ano razoável
             $ano = (int)$data->format('Y');
