@@ -208,9 +208,10 @@ class Cvdw
     protected function corrigeRetornoJson($resposta): object
     {
 
-        // Se resposta não for um objeto, retornar um objeto vazio
-        if (! is_object($resposta)) {
-            $resposta = (object) [];
+        // Se resposta não for um stdClass, converter para stdClass
+        // Isso evita o erro "Creation of dynamic property" no PHP 8.2+
+        if (! ($resposta instanceof \stdClass)) {
+            $resposta = new \stdClass();
         }
 
         // Se nao tiver a chave página, adicionar
@@ -363,6 +364,9 @@ class Cvdw
             $subTabelas = $this->retornarColunasTabelas($linha);
 
             foreach ($subTabelas as $subTabelaNome => $subTabelaLinhas) {
+                if (!isset($objeto["response"]["dados"][$subTabelaNome])) {
+                    continue;
+                }
                 // converter objeto em um array
                 foreach ($subTabelaLinhas as $subTabelaLinha) {
                     $subTabela = (array) $subTabelaLinha;
@@ -510,6 +514,9 @@ class Cvdw
             $tipoLinha = $objetoObj->identificarTipoDeDados($valor);
 
             if (isset($linha->$coluna) && $tipoLinha !== "TABELA") {
+                if (is_object($linha->$coluna) || is_array($linha->$coluna)) {
+                    $linha->$coluna = json_encode($linha->$coluna);
+                }
                 $linha->$coluna = trim($linha->$coluna);
                 if (strpos($coluna, "data") !== false) {
                     if ($linha->$coluna == "0000-00-00 00:00:00") {
