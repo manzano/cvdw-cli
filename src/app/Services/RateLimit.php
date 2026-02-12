@@ -67,12 +67,16 @@ class RateLimit
 
     public function getDiferencaSegundosUltimaRequisicao(): ?int
     {
-        $query = "SELECT TIMESTAMPDIFF(SECOND, data_inicio, NOW()) AS diferenca_segundos
-                  FROM _requisicoes 
-                  ORDER BY data_inicio DESC 
-                  LIMIT 19,1";
+        $queryBuilder = $this->conn->createQueryBuilder();
+        // EXTRACT(EPOCH FROM (NOW() - data_inicio)) funciona em PostgreSQL e MySQL 5.6+
+        $queryBuilder
+            ->select("EXTRACT(EPOCH FROM (NOW() - data_inicio)) AS diferenca_segundos")
+            ->from('_requisicoes')
+            ->orderBy('data_inicio', 'DESC')
+            ->setFirstResult(19)
+            ->setMaxResults(1);
 
-        $stmt = $this->conn->executeQuery($query);
+        $stmt = $queryBuilder->executeQuery();
         $result = $stmt->fetchOne();
 
         return $result !== false ? (int) $result : null;
@@ -80,11 +84,20 @@ class RateLimit
 
     public function qtdRequisicoes($segundos = 60): ?int
     {
-        $query = "SELECT COUNT(*) AS total_requisicoes
-        FROM _requisicoes
-        WHERE data_inicio >= NOW() - INTERVAL $segundos SECOND";
+        $platform = $this->conn->getDatabasePlatform()->getName();
+        if (stripos($platform, 'postgres') !== false) {
+            $interval = sprintf("INTERVAL '%d seconds'", (int)$segundos);
+        } else {
+            $interval = sprintf("INTERVAL %d SECOND", (int)$segundos);
+        }
 
-        $stmt = $this->conn->executeQuery($query);
+        $queryBuilder = $this->conn->createQueryBuilder();
+        $queryBuilder
+            ->select('COUNT(*) AS total_requisicoes')
+            ->from('_requisicoes')
+            ->where("data_inicio >= (NOW() - $interval)");
+
+        $stmt = $queryBuilder->executeQuery();
         $result = $stmt->fetchOne();
 
         return (int) $result;
@@ -92,11 +105,19 @@ class RateLimit
 
     public function removerRequisicoesAntigas($dias = 30): ?int
     {
-        $query = "DELETE FROM _requisicoes 
-                  WHERE data_inicio < NOW() - INTERVAL $dias DAY";
+        $platform = $this->conn->getDatabasePlatform()->getName();
+        if (stripos($platform, 'postgres') !== false) {
+            $interval = sprintf("INTERVAL '%d days'", (int)$dias);
+        } else {
+            $interval = sprintf("INTERVAL %d DAY", (int)$dias);
+        }
 
-        $stmt = $this->conn->executeQuery($query);
-        $result = $stmt->rowCount();
+        $queryBuilder = $this->conn->createQueryBuilder();
+        $queryBuilder
+            ->delete('_requisicoes')
+            ->where("data_inicio < (NOW() - $interval)");
+
+        $result = $queryBuilder->executeStatement();
 
         return $result;
     }
