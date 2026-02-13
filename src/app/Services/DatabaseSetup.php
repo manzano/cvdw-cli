@@ -57,8 +57,6 @@ class DatabaseSetup
     public function executarCriarTabelas(): bool
     {
 
-        $this->tabelaIO = new Table($this->output);
-        $this->tabelaIO->setHeaders(['Tabela', 'Situação']);
 
         $objetoObj = new Objeto($this->input, $this->output);
         $objetos = $objetoObj->retornarObjetos('all');
@@ -70,6 +68,9 @@ class DatabaseSetup
         $this->progressBar->start();
 
         $this->verificaTabelaRequisicoes();
+
+        $this->tabelaIO = new Table($this->output);
+        $this->tabelaIO->setHeaders(['Tabela', 'Situação']);
 
         foreach ($objetos as $key => $objeto) {
 
@@ -95,8 +96,11 @@ class DatabaseSetup
                 }
             }
         }
-        $this->tabelaIO->render();
         $this->progressBar->finish();
+        $this->io->newLine();
+        $this->io->text('Tabelas criadas:');
+        $this->tabelaIO->render();
+        $this->io->newLine();
 
         return true;
     }
@@ -149,25 +153,31 @@ class DatabaseSetup
             foreach ($queries as $query) {
                 try {
                     $this->conn->executeQuery($query);
-                    if (is_object($this->tabelaIO)) {
-                        $this->tabelaIO->addRow([$tabela, '<info>Tabela criada!</info>']);
-                    }
-                    if (is_object($this->progressBar)) {
-                        $this->progressBar->setMessage('Criando a tabela ' . $tabela);
-                        $this->progressBar->advance();
-                    }
                 } catch (\Exception $e) {
                     echo $query . "\n\n";
                     echo $e->getMessage();
                 }
             }
+
+            if (is_object($this->tabelaIO)) {
+                $this->tabelaIO->addRow([$tabela, '<info>Tabela criada!</info>']);
+            }
+            if (is_object($this->progressBar)) {
+                $this->progressBar->setMessage('Criando a tabela ' . $tabela);
+                $this->progressBar->advance();
+            }
+
         }
     }
     private function criarTabelaSchema($schema, $tabela, $colunas)
     {
         $objetoObj = new Objeto($this->input, $this->output);
         $tabelaObj = $schema->createTable("{$tabela}");
-        $tabelaObj->addOption('engine', 'MyISAM');
+
+        // Se a conexao for pro Mysql
+        if ($this->conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\AbstractMySQLPlatform) {
+            $tabelaObj->addOption('engine', 'MyISAM');
+        }
 
         foreach ($colunas as $coluna => $especificacao) {
             $tipoDeDados = $objetoObj->identificarTipoDeDados($especificacao);
@@ -187,22 +197,22 @@ class DatabaseSetup
                     substr($coluna, 0, 2) == "id" &&
                     $especificacao["type"] == "integer")
             ) {
-                $nomeIndice = $this->criarNomeIndice($nomeColuna);
+                $nomeIndice = $this->criarNomeIndice($tabela, $nomeColuna);
                 $tabelaObj->addIndex(["{$nomeColuna}"], "{$nomeIndice}_idx");
             }
             if (strpos($coluna, "data") !== false) {
-                $nomeIndice = $this->criarNomeIndice($nomeColuna);
+                $nomeIndice = $this->criarNomeIndice($tabela, $nomeColuna);
                 $tabelaObj->addIndex(["{$nomeColuna}"], "{$nomeIndice}_idx");
             }
         }
     }
 
-    private function criarNomeIndice(string $nomeCompleto): string
+    private function criarNomeIndice(string $tabela, string $nomeCompleto): string
     {
         $nomeTruncado = substr($nomeCompleto, 0, 30);
         $hashUnico = substr(base_convert((string)random_int(0, 99), 10, 36), 0, 6);
 
-        return $nomeTruncado . '_' . $hashUnico;
+        return $tabela . '_' . $nomeTruncado . '_' . $hashUnico;
     }
 
     public function tratarEspecificacao(string $coluna, array $especificacao): array
@@ -575,6 +585,7 @@ class DatabaseSetup
             }
             $this->apagarTabela($table, $tabela, $progressBar);
         }
+        $this->apagarTabela($table, "_requisicoes", $progressBar);
     }
 
     public function verificarEngines()
@@ -587,14 +598,17 @@ class DatabaseSetup
         $tables = $schemaManager->listTableNames();
         foreach ($tables as $tableName) {
             $table = $schemaManager->listTableDetails($tableName);
-            $engine = $table->getOption('engine');
-            if ($engine == 'MyISAM') {
-                $tabelaIO->addRow([$tableName, '' . $tableName . ' já é MyISAM']);
 
-                continue;
+            if ($this->conn->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\AbstractMySQLPlatform) {
+                $engine = $table->getOption('engine');
+                if ($engine == 'MyISAM') {
+                    $tabelaIO->addRow([$tableName, '' . $tableName . ' já é MyISAM']);
+
+                    continue;
+                }
+                $tabelaIO->addRow([$tableName, '' . $tableName . ' convertida para MyISAM']);
+                $this->conn->executeStatement("ALTER TABLE {$tableName} ENGINE=MyISAM;");
             }
-            $tabelaIO->addRow([$tableName, '' . $tableName . ' convertida para MyISAM']);
-            $this->conn->executeStatement("ALTER TABLE {$tableName} ENGINE=MyISAM;");
         }
 
         $tabelaIO->render();

@@ -5,15 +5,14 @@ WORKDIR /app
 
 # Instalando dependências do sistema
 RUN apk add --no-cache \
-    bash \
-    unzip \
-    mariadb-client \
-    libzip-dev \
-    dcron \
-    curl \
-    zip \
-    envsubst \
-    && docker-php-ext-install pdo pdo_mysql zip
+    bash unzip mariadb-client libzip-dev dcron curl zip gettext \
+    libpq \
+  && apk add --no-cache --virtual .build-deps \
+    $PHPIZE_DEPS postgresql-dev \
+  && docker-php-ext-install pdo_mysql pdo_pgsql zip \
+  && docker-php-ext-enable pdo_pgsql \
+  && apk del .build-deps
+
 
 # Instalando o Composer antes de clonar o repositório
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -44,3 +43,4 @@ RUN chmod +x /start.sh
 
 # Comando padrão do container
 CMD ["/start.sh"]
+# CMD ["/bin/sh"]

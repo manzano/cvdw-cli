@@ -9,23 +9,24 @@ services:
     container_name: cvdw-cli
     restart: unless-stopped
     depends_on:
-      - db
+      - mysql
+      - postgres
     environment:
-      CV_URL: _SEU_AMBIENTE_
-      CV_EMAIL: _SEU_EMAIL_
-      CV_TOKEN: _SEU_TOKEN_
-      DB_CONNECTION: pdo_mysql
-      DB_PORT: 3306
-      DB_HOST: cvdw-cli-mysql
-      DB_DATABASE: cvdw
-      DB_USERNAME: cvdw_user
-      DB_PASSWORD: cvdw_pwd
-      DB_SCHEMA: ""
+      CV_URL: __URL__
+      CV_EMAIL: __EMAIL__
+      CV_TOKEN: __TOKEN__
+      DB_CONNECTION: pdo_pgsql ou pdo_mysql
+      DB_PORT: 5438
+      DB_HOST: host.docker.internal ou o nome do servico
+      DB_DATABASE: __DATABASE__
+      DB_USERNAME: __USUARIO__
+      DB_PASSWORD: __SENHA__
+      DB_SCHEMA: "public"
       ANONIMIZAR: ""
       ANONIMIZAR_TIPO: ""
       CVDW_AMBIENTE: PRD
 
-  db:
+  mysql:
     image: mysql:8.0
     container_name: cvdw-cli-mysql
     restart: always
@@ -35,9 +36,23 @@ services:
       MYSQL_USER: cvdw_user
       MYSQL_PASSWORD: cvdw_pwd
     volumes:
-      - cvdw-cli-db_data:/var/lib/mysql
+      - cvdw-cli-mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
 
+  postgres:
+    image: postgres:16
+    container_name: cvdw-cli-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: cvdw_user
+      POSTGRES_PASSWORD: cvdw_pwd
+      POSTGRES_DB: cvdw
+    ports:
+      - "5432:5432"
+    volumes:
+      - cvdw-cli-postgres_data:/var/lib/postgresql/data
+
 volumes:
-  cvdw-cli-db_data:
+  cvdw-cli-mysql_data:
+  cvdw-cli-postgres_data:
