@@ -1,7 +1,8 @@
 .env
 *.env
 vendor/*
-logs/*.log
+logs/*
+tests/_output/*
 !logs/.gitkeep
 .phpunit.cache
 coverage-report/*
