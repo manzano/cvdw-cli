@@ -68,9 +68,17 @@ class RateLimit
     public function getDiferencaSegundosUltimaRequisicao(): ?int
     {
         $queryBuilder = $this->conn->createQueryBuilder();
-        // EXTRACT(EPOCH FROM (NOW() - data_inicio)) funciona em PostgreSQL e MySQL 5.6+
+
+        $platform = $this->conn->getDatabasePlatform()->getName();
+
+        $diffExpr = match ($platform) {
+            'postgresql' => "EXTRACT(EPOCH FROM (NOW() - data_inicio))",
+            'mysql'      => "TIMESTAMPDIFF(SECOND, data_inicio, NOW())",
+            default      => throw new \RuntimeException("Plataforma não suportada: $platform"),
+        };
+
         $queryBuilder
-            ->select("EXTRACT(EPOCH FROM (NOW() - data_inicio)) AS diferenca_segundos")
+            ->select($diffExpr . " AS diferenca_segundos")
             ->from('_requisicoes')
             ->orderBy('data_inicio', 'DESC')
             ->setFirstResult(19)
