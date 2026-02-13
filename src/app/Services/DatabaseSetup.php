@@ -46,10 +46,10 @@ class DatabaseSetup
     public function listarTabelas(): void
     {
         $tabelaIO = new Table($this->output);
-        $tabelaIO->setHeaders(['Tabela', 'Descrição']);
+        $tabelaIO->setHeaders(['Tabela']);
         $tabelas = $this->listarTabelasArray();
         foreach ($tabelas as $tabela => $nome) {
-            $tabelaIO->addRow([$tabela, $nome]);
+            $tabelaIO->addRow([$tabela]);
         }
         $tabelaIO->render();
     }
@@ -209,7 +209,7 @@ class DatabaseSetup
 
     private function criarNomeIndice(string $tabela, string $nomeCompleto): string
     {
-        $nomeTruncado = substr($nomeCompleto, 0, 30);
+        $nomeTruncado = substr($nomeCompleto, 0, 15);
         $hashUnico = substr(base_convert((string)random_int(0, 99), 10, 36), 0, 6);
 
         return $tabela . '_' . $nomeTruncado . '_' . $hashUnico;
